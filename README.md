@@ -9,4 +9,4 @@
 
 ### 目录
 
-[证书管理](CertificateManager/readme.md)
+[证书管理](CertificateManager/README.md)
