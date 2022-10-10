@@ -44,6 +44,12 @@
       {
         "name": "ohos.permission.READ_MEDIA",
         "reason": "$string:read_media_permission_reason"
+      },
+      {
+        "name": "ohos.permission.ACCESS_CERT_MANAGER_INTERNAL",
+      },
+      {
+        "name": "ohos.permission.ACCESS_CERT_MANAGER",
       }
     ]
   }

@@ -649,9 +649,10 @@ struct ComponentSystem {
     .height($r("app.float.ComponentSystem_Flex_height_value"))
     .borderRadius($r("app.float.ComponentSystem_Flex_borderRadius_value"))
     .onClick(() => {
-      this.setStatus.getSystemTrustedCertificate(this.Uri);
-      console.info('this.setStatus.certInfo.status is:' + JSON.stringify(this.setStatus.certInfo));
-      this.dialogController.open();
+      this.setStatus.getSystemTrustedCertificate(this.Uri, () => {
+        console.info('this.setStatus.certInfo.status is:' + JSON.stringify(this.setStatus.certInfo));
+        this.dialogController.open();
+      });
     })
   }
 }
@@ -743,9 +744,10 @@ struct ComponentUser {
     .height($r("app.float.componentUser_flex_height_value"))
     .borderRadius($r("app.float.componentUser_flex_borderRadius_value"))
     .onClick(() => {
-      this.mUserCaPresenterDetail.getUserTrustedCertificate(this.Uri);
-      console.info('userCerInfo is:' + JSON.stringify(this.setStatus.certInfo));
-      this.dialogController.open();
+      this.mUserCaPresenterDetail.getUserTrustedCertificate(this.Uri, () => {
+        console.info('userCerInfo is:' + JSON.stringify(this.setStatus.certInfo));
+        this.dialogController.open();
+      });
     });
   }
 }

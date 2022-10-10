@@ -62,15 +62,17 @@ export default class CMShowSysCaPresenter {
     });
   }
 
-  getSystemTrustedCertificate(uri) {
+  getSystemTrustedCertificate(uri, callback) {
     certManagerModel.getCertOrCred(CMModelOptType.CM_MODEL_OPT_SYSTEM_CA, uri, (errCode, certInfo) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         console.info(TAG + 'getSystemTrustedCertificate success,errCode is ' + errCode + ' certInfo is' +
         JSON.stringify(certInfo));
         this.certInfo = certInfo;
+        callback()
       } else {
         console.info(TAG + 'getSystemTrustedCertificate fail,errCode is' + errCode);
         this.certInfo.clearCertInfoVo();
+        callback()
       }
     });
   }

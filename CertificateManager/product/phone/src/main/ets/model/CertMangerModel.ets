@@ -19,6 +19,8 @@ import { CertInfoVo } from './CertManagerVo/CertInfoVo'
 import { CredentialAbstractVo } from './CertManagerVo/CredentialAbstractVo'
 import { CredentialVo } from './CertManagerVo/CredentialVo'
 
+import CertManager from '@ohos.security.certManager'
+
 const TAG = "CertManager Model: ";
 var certManager = globalThis.certStub;
 
@@ -240,7 +242,12 @@ export class CertMangerModel {
     console.log(TAG + "getSystemTrustedCertificateList start");
     try {
       let SubjectNameCN;
-      let result = await certManager.getSystemTrustedCertificateList();
+      var context = {
+        userId: "123",
+        uid: "123",
+        packageName: "123"
+      }
+      let result = await CertManager.getSystemTrustedCertificateList(context);
       let certList = new Array();
       console.log(TAG + "certManager::getSystemTrustedCertificateList result: " + JSON.stringify(result));
       for (let i = 0; i < result.certList.length; i++) {
@@ -263,7 +270,12 @@ export class CertMangerModel {
   private async getSystemTrustedCertificate(certUri, callback) {
     console.log(TAG + "getSystemTrustedCertificate start");
     try {
-      let result = await certManager.getSystemTrustedCertificate(certUri);
+      var context = {
+        userId: "123",
+        uid: "123",
+        packageName: "123"
+      }
+      let result = await CertManager.getSystemTrustedCertificate(context, certUri);
       let subjectNameMap: Map<string, string> = new Map()
       let issuerNameMap: Map<string, string> = new Map()
       let dateMap: Map<string, string> = new Map()
@@ -312,7 +324,7 @@ export class CertMangerModel {
     console.log(TAG + "getUserTrustedCertificateList start");
     try {
       let SubjectNameCN
-      let result = await certManager.getUserTrustedCertificateList();
+      let result = await CertManager.getUserTrustedCertificateList();
       let certList = new Array();
       console.log(TAG + "getUserTrustedCertificateList result: " + JSON.stringify(result));
       for (let i = 0; i < result.certList.length; i++) {
@@ -334,7 +346,7 @@ export class CertMangerModel {
   private async getUserTrustedCertificate(certUri, callback) {
     console.log(TAG + "getUserTrustedCertificate start");
     try {
-      let result = await certManager.getUserTrustedCertificate(certUri);
+      let result = await CertManager.getUserTrustedCertificate(certUri);
       let subjectNameMap: Map<string, string> = new Map()
       let issuerNameMap: Map<string, string> = new Map()
       let dateMap: Map<string, string> = new Map()
@@ -380,7 +392,7 @@ export class CertMangerModel {
   private async deleteUserTrustedCertificate(certUri, callback) {
     console.log(TAG + "deleteUserTrustedCertificate start");
     try {
-      await certManager.uninstallUserTrustedCertificate(certUri);
+      await CertManager.uninstallUserTrustedCertificate(certUri);
       console.log(TAG + "deleteUserTrustedCertificate end");
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS)
     } catch (err) {
@@ -392,7 +404,12 @@ export class CertMangerModel {
   private async setCertificateStatus(certUri, store, status, callback) {
     console.log(TAG + "setCertificateStatus start");
     try {
-      await certManager.setCertificateStatus(certUri, store, status);
+      var context = {
+        userId: "123",
+        uid: "123",
+        packageName: "123"
+      }
+      await CertManager.setCertificateStatus(context, certUri, store, status);
       console.log(TAG + "setCertificateStatus end");
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS)
     } catch (err) {
@@ -405,7 +422,7 @@ export class CertMangerModel {
     console.log(TAG + "getAppCredList start");
 
     try {
-      let result = await certManager.getAppCertificateList();
+      let result = await CertManager.getAppCertificateList();
       let credList = new Array();
       for (let i = 0; i < result.credentialList.length; i++) {
         credList.push(new CredentialAbstractVo(result.credentialList[i].type, result.credentialList[i].alias,
@@ -422,7 +439,7 @@ export class CertMangerModel {
   private async getAppCredential(certUri, callback) {
     console.log(TAG + "getAppCredential start");
     try {
-      let result = await certManager.getAppCertificate(certUri);
+      let result = await CertManager.getAppCertificate(certUri);
       let credInfo = new CredentialVo(result.credential.type, result.credential.alias,
         result.credential.keyUri, result.credential.certNum, result.credential.keyNum, result.credential.credData);
       console.log(TAG + "getAppCredential end");
@@ -436,7 +453,7 @@ export class CertMangerModel {
   private async deleteAppCredential(certUri, callback) {
     console.log(TAG + "deleteAppCredential start");
     try {
-      await certManager.uninstallAppCertificate(certUri);
+      await CertManager.uninstallAppCertificate(certUri);
       console.log(TAG + "deleteAppCredential end");
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS)
     } catch (err) {
@@ -449,7 +466,7 @@ export class CertMangerModel {
     console.log(TAG + "getPrivateCredList start");
 
     try {
-      let result = await certManager.getPrivateCertificateList();
+      let result = await CertManager.getPrivateCertificateList();
       let credList = new Array();
       for (let i = 0; i < result.credentialList.length; i++) {
         credList.push(new CredentialAbstractVo(result.credentialList[i].type, result.credentialList[i].alias,
@@ -466,7 +483,7 @@ export class CertMangerModel {
   private async getPrivateCred(certUri, callback) {
     console.log(TAG + "getPrivateCred start");
     try {
-      let result = await certManager.getPrivateCertificate(certUri);
+      let result = await CertManager.getPrivateCertificate(certUri);
       let credInfo = new CredentialVo(result.credential.type, result.credential.alias,
         result.credential.keyUri, result.credential.certNum, result.credential.keyNum, result.credential.credData);
       console.log(TAG + "getPrivateCred end");
@@ -480,7 +497,7 @@ export class CertMangerModel {
   private async delAllUserCertificate(callback) {
     console.log(TAG + "delAllUserCertificate start");
     try {
-      await certManager.uninstallAllUserTrustedCertificate();
+      await CertManager.uninstallAllUserTrustedCertificate();
       console.log(TAG + "delAllUserCertificate end");
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS)
     } catch (err) {
@@ -492,7 +509,7 @@ export class CertMangerModel {
   private async delAllAppCredential(callback) {
     console.log(TAG + "delAllAppCredential start");
     try {
-      await certManager.uninstallAllAppCertificate();
+      await CertManager.uninstallAllAppCertificate();
       console.log(TAG + "delAllAppCredential end");
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS)
     } catch (err) {
@@ -504,7 +521,7 @@ export class CertMangerModel {
   private async getAuthorizedAppList(uri, callback) {
     console.log(TAG + "getAuthorizedAppList start");
     try {
-      let result = await certManager.getAuthorizedAppList(uri);
+      let result = await CertManager.getAuthorizedAppList(uri);
       console.log(TAG + "getAuthorizedAppList end");
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS, result.appUidList)
     } catch (err) {
@@ -517,16 +534,17 @@ export class CertMangerModel {
     console.log(TAG + "setAuthorizedAppStatus start");
     try {
       if (status) {
-        let result = await certManager.grantAppCertificate(uri, appUid);
+        let result = await CertManager.grantAppCertificate(uri, appUid);
         console.log(TAG + "setAuthorizedAppStatus true end");
-        callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS, result.authUri)
+        callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS, result.uri)
       } else {
-        await certManager.removeGrantedAppCertificate(uri, appUid);
+        console.log(TAG + "appId:" + appUid + "uri:" + uri);
+        await CertManager.removeGrantedAppCertificate(uri, appUid);
         console.log(TAG + "setAuthorizedAppStatus false end");
         callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS)
       }
     } catch (err) {
-      console.info(TAG + 'setAuthorizedAppStatus fail, err is' + err)
+      console.info(TAG + 'setAuthorizedAppStatus fail, err is' + JSON.stringify(err))
       callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION)
     }
   }
@@ -534,7 +552,7 @@ export class CertMangerModel {
   private async installUserCertificate(data, alias, callback) {
     console.info(TAG + 'installUserCertificate start alias: ' + alias + 'data' + JSON.stringify(data))
     try {
-      await certManager.installUserTrustedCertificate({
+      await CertManager.installUserTrustedCertificate({
         inData: data,
         alias: alias
       });
@@ -550,7 +568,7 @@ export class CertMangerModel {
   private async installAppCertificate(data, alias, pwd, callback) {
     console.info(TAG + 'installAppCertificate start')
     try {
-      await certManager.installAppCertificate(data, pwd, alias);
+      await CertManager.installAppCertificate(data, pwd, alias);
       console.info(TAG + 'installAppCertificate end')
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS)
     } catch (err) {
