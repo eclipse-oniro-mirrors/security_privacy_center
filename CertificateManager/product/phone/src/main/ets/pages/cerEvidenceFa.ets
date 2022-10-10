@@ -132,9 +132,10 @@ struct CustomDialogExampleAuthor {
           .height($r('app.float.wh_value_40'))
         Button($r("app.string.finishAuthApp"))
           .onClick(() => {
-            this.AuthorInfo.removeGrantedAppList(this.AuthorInfo.credInfo.keyUri)
-            this.isShowAuthDialog = false;
-            this.controller.close()
+            this.AuthorInfo.removeGrantedAppList(this.AuthorInfo.credInfo.keyUri).then(() => {
+              this.isShowAuthDialog = false;
+              this.controller.close()
+            })
           })
           .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
           .fontSize($r("sys.float.ohos_id_text_size_button1"))
@@ -607,8 +608,10 @@ struct evidenceList {
 
   aboutToAppear() {
     LogUtil.info('in aboutToAppear');
-    this.mShowAppCaPresenter.updateAppCredList();
-    this.mShowPrivateCaPresenter.updatePrivateCredList();
+    this.mShowAppCaPresenter.updateAppCredListCallback(() => {
+      console.info('get AppCredList first and then get PrivateCredList')
+      this.mShowPrivateCaPresenter.updatePrivateCredList();
+    })
   }
 
   onPageShow() {
