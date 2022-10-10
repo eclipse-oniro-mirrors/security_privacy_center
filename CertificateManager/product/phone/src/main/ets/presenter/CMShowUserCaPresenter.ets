@@ -62,15 +62,17 @@ export default class CMShowUserCaPresenter {
     });
   }
 
-  getUserTrustedCertificate(uri) {
+  getUserTrustedCertificate(uri, callback) {
     certManagerModel.getCertOrCred(CMModelOptType.CM_MODEL_OPT_USER_CA, uri, (errCode, certInfo) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         console.info(TAG + 'getUserTrustedCertificate success, errCode is ' + errCode + ' certInfo is' +
         JSON.stringify(certInfo));
         this.certInfo = certInfo;
+        callback()
       } else {
         console.info(TAG + 'getUserTrustedCertificate fail, errCode is ' + errCode);
         this.certInfo.clearCertInfoVo();
+        callback()
       }
     });
   }
@@ -78,7 +80,9 @@ export default class CMShowUserCaPresenter {
   setUserCertificateStatus(uri, status) {
     certManagerModel.setCertStatus(CMModelOptType.CM_MODEL_OPT_USER_CA, uri, status, (errCode) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
-        this.getUserTrustedCertificate(uri);
+        this.getUserTrustedCertificate(uri, () => {
+          console.info(TAG + 'setCerStatus then getUserTrustedCertificate,errCode is' + errCode);
+        });
       } else {
         console.info(TAG + 'setUserCertificateStatus fail,errCode is ' + errCode)
       }
