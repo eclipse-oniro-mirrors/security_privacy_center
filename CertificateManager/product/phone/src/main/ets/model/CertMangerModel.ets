@@ -194,6 +194,26 @@ export class CertMangerModel {
     }
   }
 
+  setAppAuthPromise(optType, uri, appUid, status) {
+    console.log(TAG + "setAppAuth start");
+    switch (optType) {
+      case CMModelOptType.CM_MODEL_OPT_APP_CRED:
+        return new Promise((resolve,reject)=>{
+          this.setAuthorizedAppStatus(uri, appUid, status, (errCode, data) => {
+            if (errCode == CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
+              resolve(data)
+            } else {
+              reject(errCode)
+            }
+          });
+        })
+      default:
+        return new Promise((resolve,reject) => {
+          reject(CMModelErrorCode.CM_MODEL_ERROR_UNKNOWN_OPT)
+        })
+    }
+  }
+
   setAppAuth(optType, uri, appUid, status, callback) {
     console.log(TAG + "setAppAuth start");
 
@@ -431,7 +451,7 @@ export class CertMangerModel {
       console.log(TAG + "getAppCredList end credList: " + JSON.stringify(credList));
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS, credList)
     } catch (err) {
-      console.info(TAG + 'getAppCredList fail, err is' + err)
+      console.info(TAG + 'getAppCredList fail, err is ' + JSON.stringify(err))
       callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION)
     }
   }
@@ -445,7 +465,7 @@ export class CertMangerModel {
       console.log(TAG + "getAppCredential end");
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS, credInfo)
     } catch (err) {
-      console.info(TAG + 'getAppCredential fail, err is' + err)
+      console.info(TAG + 'getAppCredential fail, err is ' + JSON.stringify(err))
       callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION, null)
     }
   }

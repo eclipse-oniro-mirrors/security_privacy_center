@@ -39,6 +39,28 @@ export default class CMShowAppCredPresenter {
     this.appInfoList = []
   }
 
+  updateAppCredListCallback(callback) {
+    certManagerModel.getCertOrCredList(CMModelOptType.CM_MODEL_OPT_APP_CRED, (errCode, credList) => {
+      if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
+        credList.sort((certAbs, certAbsOther) => {
+          let certAlias = certAbs.alias
+          let certAliasOther = certAbsOther.alias
+          if (certAlias <= certAliasOther) {
+            return -1
+          } else {
+            return 1
+          }
+        })
+        this.credList = credList;
+        callback()
+      } else {
+        console.log("updateAppCredList error :" + JSON.stringify(errCode));
+        this.credList = []
+        callback()
+      }
+    });
+  }
+
   updateAppCredList() {
     certManagerModel.getCertOrCredList(CMModelOptType.CM_MODEL_OPT_APP_CRED, (errCode, credList) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
@@ -99,17 +121,19 @@ export default class CMShowAppCredPresenter {
     })
   }
 
-  removeGrantedAppList(uri) {
-      for (let i = 0; i < this.appInfoList.length; i++) {
-        if (!this.appInfoList[i].status) {
-          certManagerModel.setAppAuth(CMModelOptType.CM_MODEL_OPT_APP_CRED, uri, this.appInfoList[i].uid, false, (errCode) => {
-            if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
-              console.log("removeGrantedAppList succeed" + JSON.stringify(errCode));
-            } else {
-              console.log("removeGrantedAppList error :" + JSON.stringify(errCode));
-            }
-          })
+  async removeGrantedAppList(uri) {
+    console.log("enter removeGrantedAppList")
+    for (let i = 0; i < this.appInfoList.length; i++) {
+      if (!this.appInfoList[i].status) {
+        try {
+          let res = await certManagerModel.setAppAuthPromise(CMModelOptType.CM_MODEL_OPT_APP_CRED, uri,
+            this.appInfoList[i].uid, false)
+          console.log("removeGrantedAppList succeed" + JSON.stringify(res));
+        } catch (error) {
+          console.log("removeGrantedAppList error :" + JSON.stringify(error));
         }
       }
+    }
+    console.log("leave removeGrantedAppList")
   }
 }
