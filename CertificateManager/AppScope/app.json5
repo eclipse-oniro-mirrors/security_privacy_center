@@ -14,7 +14,7 @@
  */
 {
   "app": {
-    "bundleName": "com.example.applications_certmanager",
+    "bundleName": "com.ohos.certmanager",
     "vendor": "example",
     "versionCode": 1000000,
     "versionName": "1.0.0",

@@ -39,7 +39,7 @@
 ```
 globalThis.context.startAbility(
 {
-    bundleName: "com.example.applications_certmanager",
+    bundleName: "com.ohos.certmanager",
     abilityName: "MainAbility",
     uri: "certInstall",
 })
@@ -51,7 +51,7 @@ globalThis.context.startAbility(
 //拉起应用申请应用授权
 globalThis.context.startAbilityForResult(
 {
-    bundleName: "com.example.applications_certmanager",
+    bundleName: "com.ohos.certmanager",
     abilityName: "MainAbility",
     uri: "requestAuthorize",
     parameters: {
