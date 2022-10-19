@@ -20,7 +20,7 @@
     "description": "$string:mainability_description",
     "mainElement": "MainAbility",
     "deviceTypes": [
-      "phone"
+      "default"
     ],
     "deliveryWithInstall": true,
     "installationFree": false,
@@ -34,7 +34,9 @@
         "icon": "$media:icon",
         "label": "$string:entry_MainAbility",
         "visible": true,
-        "launchType": "singleton"
+        "launchType": "singleton",
+        "startWindowIcon": "$media:icon",
+        "startWindowBackground": "$color:color_1"
       }
     ],
     "requestPermissions": [
@@ -46,10 +48,10 @@
         "reason": "$string:read_media_permission_reason"
       },
       {
-        "name": "ohos.permission.ACCESS_CERT_MANAGER_INTERNAL",
+        "name": "ohos.permission.ACCESS_CERT_MANAGER_INTERNAL"
       },
       {
-        "name": "ohos.permission.ACCESS_CERT_MANAGER",
+        "name": "ohos.permission.ACCESS_CERT_MANAGER"
       }
     ]
   }
