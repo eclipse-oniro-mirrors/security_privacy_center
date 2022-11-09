@@ -540,7 +540,6 @@ struct CustomDialogExampleSystem {
           right: $r("app.float.wh_value_24")
         })
         .borderRadius($r("app.float.CustomDialogExample_list_borderRadius_value"))
-        .backgroundColor($r("app.color.CustomDialogExample_list_backgroundColor_FFFFFF"))
         .scrollBar(BarState.Auto);
 
         Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {

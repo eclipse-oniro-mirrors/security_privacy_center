@@ -66,6 +66,7 @@ export default class CMInstallPresenter {
         } else {
           console.info(TAG + 'installCert failed');
         }
+        router.clear();
         router.replace({ uri: "pages/certManagerFa" });
       });
     })
