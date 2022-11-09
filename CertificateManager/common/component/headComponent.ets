@@ -15,6 +15,8 @@
 import ComponentConfig from './ComponentConfig';
 import Router from '@system.router';
 
+const TAG = "CertManager HeadComponent: ";
+
 /**
  * head custom component
  */
@@ -36,7 +38,9 @@ export default struct HeadComponent {
       .backgroundColor(this.isTouch ? $r('app.color.color_E3E3E3_grey') : $r('app.color.color_00000000_transparent'))
       .visibility(this.icBackIsVisibility ? Visibility.Visible : Visibility.None)
       .onClick(() => {
-        Router.back();
+        var length = Router.getLength();
+        console.log(TAG + "router length: " + Number(length));
+        Number(length) == 1 ? globalThis.certManagerAbilityContext.terminateSelf() : Router.back();
       })
       .onTouch((event: TouchEvent) => {
         if (event.type === TouchType.Down) {
