@@ -34,4 +34,4 @@ APP_HOME="`pwd -P`"
 npm_install "$APP_HOME"
 npm_install "$APP_HOME/product"
 cd $APP_HOME
-node ./node_modules/@ohos/hvigor/bin/hvigor.js --mode module assembleHap
+node ./node_modules/@ohos/hvigor/bin/hvigor.js --mode module assembleHap -p debuggable=false
