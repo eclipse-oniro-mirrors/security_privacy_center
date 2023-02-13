@@ -17,6 +17,7 @@ import router from '@system.router';
 import certManagerModel from '../model/CertMangerModel'
 import FileIoModel from '../model/FileIoModel'
 import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel'
+import abilityAccessCtrl from '@ohos.abilityAccessCtrl'
 
 const TAG = "CMFaPresenter: ";
 const PAGE_URI_PWD_INPUT = 'pages/certPwdInput';
@@ -64,11 +65,10 @@ export default class CMFaPresenter {
     })
   }
 
-   requestPermissions() {
-    let permissionList: Array<string> = [
-      "ohos.permission.READ_MEDIA"
-    ]
-    globalThis.certManagerAbilityContext.requestPermissionsFromUser(permissionList, (data) => {
+  requestPermissions() {
+    let atManager = abilityAccessCtrl.createAtManager();
+    atManager.requestPermissionsFromUser(globalThis.certManagerAbilityContext,
+      ["ohos.permission.READ_MEDIA"], (data) => {
       console.log("requestPermissions finish");
       this.startInstall();
     })
