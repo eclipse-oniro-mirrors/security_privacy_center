@@ -262,12 +262,7 @@ export class CertMangerModel {
     console.log(TAG + "getSystemTrustedCertificateList start");
     try {
       let SubjectNameCN;
-      var context = {
-        userId: "123",
-        uid: "123",
-        packageName: "123"
-      }
-      let result = await CertManager.getSystemTrustedCertificateList(context);
+      let result = await CertManager.getSystemTrustedCertificateList();
       let certList = new Array();
       console.log(TAG + "certManager::getSystemTrustedCertificateList result: " + JSON.stringify(result));
       for (let i = 0; i < result.certList.length; i++) {
@@ -290,12 +285,7 @@ export class CertMangerModel {
   private async getSystemTrustedCertificate(certUri, callback) {
     console.log(TAG + "getSystemTrustedCertificate start");
     try {
-      var context = {
-        userId: "123",
-        uid: "123",
-        packageName: "123"
-      }
-      let result = await CertManager.getSystemTrustedCertificate(context, certUri);
+      let result = await CertManager.getSystemTrustedCertificate(certUri);
       let subjectNameMap: Map<string, string> = new Map()
       let issuerNameMap: Map<string, string> = new Map()
       let dateMap: Map<string, string> = new Map()
@@ -424,12 +414,7 @@ export class CertMangerModel {
   private async setCertificateStatus(certUri, store, status, callback) {
     console.log(TAG + "setCertificateStatus start");
     try {
-      var context = {
-        userId: "123",
-        uid: "123",
-        packageName: "123"
-      }
-      await CertManager.setCertificateStatus(context, certUri, store, status);
+      await CertManager.setCertificateStatus(certUri, store, status);
       console.log(TAG + "setCertificateStatus end");
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS)
     } catch (err) {
