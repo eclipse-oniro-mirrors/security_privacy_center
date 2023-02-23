@@ -23,14 +23,14 @@ export interface BusinessError<T = void> extends Error {
 }
 
 declare namespace CertManagerFunc {
-    function getSystemTrustedCertificateList(context: CMContext, callback: AsyncCallback<CMResult>) : void;
-    function getSystemTrustedCertificateList(context: CMContext) : Promise<CMResult>;
+    function getSystemTrustedCertificateList(callback: AsyncCallback<CMResult>) : void;
+    function getSystemTrustedCertificateList() : Promise<CMResult>;
 
-    function getSystemTrustedCertificate(context: CMContext, certUri: string, callback: AsyncCallback<CMResult>) : void;
-    function getSystemTrustedCertificate(context: CMContext, certUri: string) : Promise<CMResult>;
+    function getSystemTrustedCertificate(certUri: string, callback: AsyncCallback<CMResult>) : void;
+    function getSystemTrustedCertificate(certUri: string) : Promise<CMResult>;
 
-    function setCertificateStatus(context: CMContext, certUri: string, store: number, status: boolean, callback: AsyncCallback<boolean>) : void;
-    function setCertificateStatus(context: CMContext, certUri: string, store: number, status: boolean) : Promise<boolean>;
+    function setCertificateStatus(certUri: string, store: number, status: boolean, callback: AsyncCallback<boolean>) : void;
+    function setCertificateStatus(certUri: string, store: number, status: boolean) : Promise<boolean>;
 
     function installUserTrustedCertificate(certificate: CertBlob, callback: AsyncCallback<CMResult>) : void;
     function installUserTrustedCertificate(certificate: CertBlob,) : Promise<CMResult>;
@@ -104,12 +104,6 @@ declare namespace CertManagerFunc {
 
     function abort(handle: Uint8Array, callback: AsyncCallback<boolean>) : void;
     function abort(handle: Uint8Array) : Promise<boolean>;
-
-    export interface CMContext {
-        userId: string;
-        uid: string;
-        packageName: string;
-    }
 
     export interface CertInfo {
         uri: string;
