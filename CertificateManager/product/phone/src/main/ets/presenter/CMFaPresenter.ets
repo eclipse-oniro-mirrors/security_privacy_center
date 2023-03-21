@@ -17,6 +17,7 @@ import router from '@system.router';
 import certManagerModel from '../model/CertMangerModel'
 import FileIoModel from '../model/FileIoModel'
 import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel'
+import abilityAccessCtrl from '@ohos.abilityAccessCtrl'
 
 const TAG = "CMFaPresenter: ";
 const PAGE_URI_PWD_INPUT = 'pages/certPwdInput';
@@ -64,14 +65,24 @@ export default class CMFaPresenter {
     })
   }
 
-   requestPermissions() {
-    let permissionList: Array<string> = [
-      "ohos.permission.READ_MEDIA"
-    ]
-    globalThis.certManagerAbilityContext.requestPermissionsFromUser(permissionList, (data) => {
-      console.log("requestPermissions finish");
-      this.startInstall();
-    })
+  requestPermissions() {
+    try {
+      let atManager = abilityAccessCtrl.createAtManager();
+      atManager.requestPermissionsFromUser(globalThis.certManagerAbilityContext,
+        ["ohos.permission.READ_MEDIA"]).then((data) => {
+        console.log(TAG + "requestPermissions finish, size: " + data.authResults.length);
+
+        if (data.authResults.length > 0 && data.authResults[0] == 0) { /* 0: has READ_MEDIA permission */
+          this.startInstall();
+        } else {
+          console.error(TAG + "has no READ_MEDIA permission");
+        }
+      }).catch((err) => {
+        console.error(TAG + "request permission failed");
+      })
+    } catch(err) {
+      console.error(TAG + "request permission catch error");
+    }
   }
 
   startInstall() {
