@@ -66,12 +66,23 @@ export default class CMFaPresenter {
   }
 
   requestPermissions() {
-    let atManager = abilityAccessCtrl.createAtManager();
-    atManager.requestPermissionsFromUser(globalThis.certManagerAbilityContext,
-      ["ohos.permission.READ_MEDIA"], (data) => {
-      console.log("requestPermissions finish");
-      this.startInstall();
-    })
+    try {
+      let atManager = abilityAccessCtrl.createAtManager();
+      atManager.requestPermissionsFromUser(globalThis.certManagerAbilityContext,
+        ["ohos.permission.READ_MEDIA"]).then((data) => {
+        console.log(TAG + "requestPermissions finish, size: " + data.authResults.length);
+
+        if (data.authResults.length > 0 && data.authResults[0] == 0) { /* 0: has READ_MEDIA permission */
+          this.startInstall();
+        } else {
+          console.error(TAG + "has no READ_MEDIA permission");
+        }
+      }).catch((err) => {
+        console.error(TAG + "request permission failed");
+      })
+    } catch (err) {
+      console.error(TAG + "request permission catch error");
+    }
   }
 
   startInstall() {

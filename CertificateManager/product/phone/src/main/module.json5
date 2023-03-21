@@ -42,7 +42,17 @@
         "visible": true,
         "launchType": "singleton",
         "startWindowIcon": "$media:icon",
-        "startWindowBackground": "$color:color_1"
+        "startWindowBackground": "$color:color_1",
+        "skills": [
+          {
+            "entities": [
+              "entity.system.home"
+            ],
+            "actions": [
+              "action.system.home"
+            ]
+          }
+        ]
       }
     ],
     "requestPermissions": [
