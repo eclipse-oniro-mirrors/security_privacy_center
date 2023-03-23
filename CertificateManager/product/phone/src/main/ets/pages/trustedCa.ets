@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 import LogUtil from '../../../../../../common/util/LogUtil';
-import ConfigData from '../../../../../../common/util/ConfigData';
+import { WidthPercent, LocationChoice, ConfigValue } from '../../../../../../common/util/ConfigData';
 import HeadComponent from '../../../../../../common/component/headComponent';
 import CMShowSysCaPresenter from '../presenter/CMShowSysCaPresenter';
 import CMShowUserCaPresenter from '../presenter/CMShowUserCaPresenter';
@@ -422,7 +422,7 @@ struct CustomDialogExampleUser {
             .height($r('app.float.wh_value_40'))
             .fontColor($r("sys.color.ohos_id_color_text_hyperlink"))
           Divider()
-            .strokeWidth(ConfigData.VERTICAL_DIVIDER_WIDTH)
+            .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
             .color($r("sys.color.ohos_id_color_list_separator"))
             .vertical(true)
             .height($r('app.float.wh_value_40'))
@@ -553,7 +553,7 @@ struct CustomDialogExampleSystem {
             .height($r('app.float.wh_value_40'))
             .fontColor($r("sys.color.ohos_id_color_text_hyperlink"))
           Divider()
-            .strokeWidth(ConfigData.VERTICAL_DIVIDER_WIDTH)
+            .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
             .color($r("sys.color.ohos_id_color_list_separator"))
             .vertical(true)
             .height($r('app.float.wh_value_40'))
@@ -609,7 +609,7 @@ struct ComponentSystem {
     builder: CustomDialogExampleSystem({ sysInfoPresenter: $setStatus }),
     autoCancel: true,
     alignment: DialogAlignment.Bottom,
-    offset: { dx: 0, dy: ConfigData.DIALOG_DY_OFFSET }
+    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
   })
 
   build() {
@@ -643,7 +643,7 @@ struct ComponentSystem {
             this.setStatus.setSystemCertificateStatus(this.Uri, false);
           }
         })
-        .offset({ x: ConfigData.SWITCH_BUTTON_X_OFFSET, y: 0 })
+        .offset({ x: LocationChoice.SWITCH_BUTTON_X_OFFSET, y: 0 })
     }
     .height($r("app.float.ComponentSystem_Flex_height_value"))
     .borderRadius($r("app.float.ComponentSystem_Flex_borderRadius_value"))
@@ -676,7 +676,7 @@ struct ComponentUser {
       this.setStatus.updateUserTrustedCertificateList();
     },
     alignment: DialogAlignment.Bottom,
-    offset: { dx: 0, dy: ConfigData.DIALOG_DY_OFFSET }
+    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
   })
 
   deleteWarnDialog: CustomDialogController = new CustomDialogController({
@@ -686,7 +686,7 @@ struct ComponentUser {
       mShowUserListPresenter: $setStatus }),
     autoCancel: false,
     alignment:DialogAlignment.Bottom,
-    offset: { dx: 0, dy: ConfigData.DIALOG_DY_OFFSET }
+    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
   })
 
   onShowDeleteWarnDialog() {
@@ -782,7 +782,7 @@ struct TrustedEvidence {
           .alignSelf(ItemAlign.Center)
       }
     }
-    .width(ConfigData.WH_100_100)
+    .width(WidthPercent.WH_100_100)
   }
 
   aboutToAppear() {
@@ -892,18 +892,18 @@ struct TrustedEvidence {
               .barWidth($r("app.float.tabs_barWidth_value"))
               .barHeight($r("app.float.tabs_barHeight_value"))
               .animationDuration(400)
-              .width(ConfigData.WH_100_100)
+              .width(WidthPercent.WH_100_100)
               .backgroundColor($r("app.color.TrustedEvidence_tabs_backgroundColor_F1F3F5"))
               .onChange((index: number) => {
                 this.currentIndex = index
               });
             }
-            .height(ConfigData.WH_94_100)
-            .width(ConfigData.WH_100_100);
+            .height(WidthPercent.WH_94_100)
+            .width(WidthPercent.WH_100_100);
           }
           .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
-          .width(ConfigData.WH_100_100)
-          .height(ConfigData.WH_100_100)
+          .width(WidthPercent.WH_100_100)
+          .height(WidthPercent.WH_100_100)
           .useSizeType({
             xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
             md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
@@ -911,21 +911,21 @@ struct TrustedEvidence {
 
           Column() {
           }
-          .width(ConfigData.WH_100_100)
-          .height(ConfigData.WH_100_100)
+          .width(WidthPercent.WH_100_100)
+          .height(WidthPercent.WH_100_100)
           .useSizeType({
             xs: { span: 0, offset: 12 }, sm: { span: 0, offset: 12 },
             md: { span: 0, offset: 12 }, lg: { span: 2, offset: 10 }
           });
         }
-        .width(ConfigData.WH_100_100)
-        .height(ConfigData.WH_100_100);
+        .width(WidthPercent.WH_100_100)
+        .height(WidthPercent.WH_100_100);
       }
-      .width(ConfigData.WH_100_100)
-      .height(ConfigData.WH_100_100);
+      .width(WidthPercent.WH_100_100)
+      .height(WidthPercent.WH_100_100);
     }
     .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
-    .width(ConfigData.WH_100_100)
-    .height(ConfigData.WH_100_100);
+    .width(WidthPercent.WH_100_100)
+    .height(WidthPercent.WH_100_100);
   }
 }

@@ -16,31 +16,31 @@
 /**
  * Log level
  */
-const LogLevel = {
+enum LogLevel {
   /**
      * debug
      */
-  DEBUG: 3,
+  DEBUG = 3,
 
   /**
      * info
      */
-  INFO: 4,
+  INFO = 4,
 
   /**
      * warn
      */
-  WARN: 5,
+  WARN = 5,
 
   /**
      * error
      */
-  ERROR: 6,
+  ERROR = 6,
 
   /**
      * fatal
      */
-  FATAL: 7,
+  FATAL = 7,
 };
 
 const LOG_LEVEL = LogLevel.INFO;

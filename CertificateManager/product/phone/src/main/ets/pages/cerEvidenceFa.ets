@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 import LogUtil from '../../../../../../common/util/LogUtil';
-import ConfigData from '../../../../../../common/util/ConfigData';
+import { WidthPercent, LocationChoice, ConfigValue } from '../../../../../../common/util/ConfigData';
 import HeadComponent from '../../../../../../common/component/headComponent';
 import CMShowAppCredPresenter from '../presenter/CMShowAppCredPresenter';
 import CMShowPrivateCredPresenter from '../presenter/CMShowPrivateCredPresenter';
@@ -74,7 +74,7 @@ struct CustomDialogExampleAuthor {
           right: $r('app.float.wh_value_24')
         })
         .alignSelf(ItemAlign.Start);
-      if (this.AuthorInfo.appInfoList.length > ConfigData.APP_AUTH_MAX_LENGTH) {
+      if (this.AuthorInfo.appInfoList.length > ConfigValue.APP_AUTH_MAX_LENGTH) {
         List() {
           ForEach(this.AuthorInfo.appInfoList, (item, index) => {
             ListItem() {
@@ -86,7 +86,7 @@ struct CustomDialogExampleAuthor {
           left: $r('app.float.wh_value_24'),
           right: $r('app.float.wh_value_24')
         })
-        .height(ConfigData.WH_50_100)
+        .height(WidthPercent.WH_50_100)
         .divider({
           strokeWidth: $r("app.float.Evidence_strokeWidth"),
           color: $r("app.color.Evidence_color")})
@@ -125,7 +125,7 @@ struct CustomDialogExampleAuthor {
           .width($r('app.float.wh_value_152'))
           .height($r('app.float.wh_value_40'))
         Divider()
-          .strokeWidth(ConfigData.VERTICAL_DIVIDER_WIDTH)
+          .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
           .color($r("sys.color.ohos_id_color_list_separator"))
           .vertical(true)
           .opacity($r("app.float.opacity_0_2"))
@@ -284,7 +284,7 @@ struct CustomDialogDeleteWarning {
           .width($r('app.float.wh_value_152'))
           .height($r('app.float.wh_value_40'))
         Divider()
-          .strokeWidth(ConfigData.VERTICAL_DIVIDER_WIDTH)
+          .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
           .color($r("sys.color.ohos_id_color_list_separator"))
           .vertical(true)
           .height($r('app.float.wh_value_40'))
@@ -421,7 +421,7 @@ struct CustomDialogExampleApp {
           .width($r('app.float.wh_value_152'))
           .height($r('app.float.wh_value_40'))
         Divider()
-          .strokeWidth(ConfigData.VERTICAL_DIVIDER_WIDTH)
+          .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
           .color($r("sys.color.ohos_id_color_list_separator"))
           .vertical(true)
           .height($r('app.float.wh_value_40'))
@@ -466,19 +466,19 @@ export struct componentPublic {
     }),
     autoCancel: true,
     alignment: DialogAlignment.Bottom,
-    offset: { dx: 0, dy: ConfigData.DIALOG_DY_OFFSET }
+    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
   })
   appDialogController: CustomDialogController = new CustomDialogController({
     builder: CustomDialogExampleAuthor({ isShowAuthDialog: $isShowAuthMng, AuthorInfo: $mShowAppCaPresenter }),
     autoCancel: false,
     alignment: DialogAlignment.Bottom,
-    offset: { dx: 0, dy: ConfigData.DIALOG_DY_OFFSET }
+    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
   })
   deleteWarnDialog: CustomDialogController = new CustomDialogController({
     builder: CustomDialogDeleteWarning({ isShowWarnDialog: $isShowWarning, deleteWarn: $mShowAppCaPresenter }),
     autoCancel: false,
     alignment: DialogAlignment.Bottom,
-    offset: { dx: 0, dy: ConfigData.DIALOG_DY_OFFSET }
+    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
   })
 
   onShowAuthMngChange() {
@@ -540,7 +540,7 @@ export struct componentPrivate {
     builder: CustomDialogExamplePrivate(),
     autoCancel: true,
     alignment: DialogAlignment.Bottom,
-    offset: { dx: 0, dy: ConfigData.DIALOG_DY_OFFSET }
+    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
   })
 
   build() {
@@ -603,7 +603,7 @@ struct evidenceList {
           .alignSelf(ItemAlign.Center)
       }
     }
-    .width(ConfigData.WH_100_100)
+    .width(WidthPercent.WH_100_100)
   }
 
   aboutToAppear() {
@@ -650,9 +650,9 @@ struct evidenceList {
                       }
                     }, item => JSON.stringify(item))
                   }
-                  .width(ConfigData.WH_92_100)
+                  .width(WidthPercent.WH_92_100)
                   .margin({
-                    left: ConfigData.WH_4_100
+                    left: WidthPercent.WH_4_100
                   })
                   .divider({
                     strokeWidth: $r("app.float.Evidence_strokeWidth"),
@@ -682,9 +682,9 @@ struct evidenceList {
                       }
                     }, item => JSON.stringify(item))
                   }
-                  .width(ConfigData.WH_92_100)
+                  .width(WidthPercent.WH_92_100)
                   .margin({
-                    left: ConfigData.WH_4_100
+                    left: WidthPercent.WH_4_100
                   })
                   .divider({
                     strokeWidth: $r("app.float.Evidence_strokeWidth"),
@@ -711,18 +711,18 @@ struct evidenceList {
               .barWidth('192vp')
               .barHeight($r("app.float.Evidence_barHeight"))
               .animationDuration(400)
-              .width(ConfigData.WH_100_100)
+              .width(WidthPercent.WH_100_100)
               .backgroundColor($r("app.color.TrustedEvidence_tabs_backgroundColor_F1F3F5"))
               .onChange((index: number) => {
                 this.currentIndex = index
               });
             }
-            .height(ConfigData.WH_94_100)
-            .width(ConfigData.WH_100_100)
+            .height(WidthPercent.WH_94_100)
+            .width(WidthPercent.WH_100_100)
           }
           .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
-          .width(ConfigData.WH_100_100)
-          .height(ConfigData.WH_100_100)
+          .width(WidthPercent.WH_100_100)
+          .height(WidthPercent.WH_100_100)
           .useSizeType({
             xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
             md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
@@ -730,21 +730,21 @@ struct evidenceList {
 
           Column() {
           }
-          .width(ConfigData.WH_100_100)
-          .height(ConfigData.WH_100_100)
+          .width(WidthPercent.WH_100_100)
+          .height(WidthPercent.WH_100_100)
           .useSizeType({
             xs: { span: 0, offset: 12 }, sm: { span: 0, offset: 12 },
             md: { span: 0, offset: 12 }, lg: { span: 2, offset: 10 }
           })
         }
-        .width(ConfigData.WH_100_100)
-        .height(ConfigData.WH_100_100);
+        .width(WidthPercent.WH_100_100)
+        .height(WidthPercent.WH_100_100);
       }
-      .width(ConfigData.WH_100_100)
-      .height(ConfigData.WH_100_100);
+      .width(WidthPercent.WH_100_100)
+      .height(WidthPercent.WH_100_100);
     }
     .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
-    .width(ConfigData.WH_100_100)
-    .height(ConfigData.WH_100_100);
+    .width(WidthPercent.WH_100_100)
+    .height(WidthPercent.WH_100_100);
   }
 }
