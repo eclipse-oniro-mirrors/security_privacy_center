@@ -16,7 +16,7 @@
 /**
  * Log level
  */
-let LogLevel = {
+const LogLevel = {
   /**
      * debug
      */
@@ -43,7 +43,7 @@ let LogLevel = {
   FATAL: 7,
 };
 
-const LOG_LEVEL = LogLevel.INFO
+const LOG_LEVEL = LogLevel.INFO;
 
 /**
  *  log package tool class
