@@ -14,7 +14,7 @@
  */
 
 import HeadComponent from '../../../../../../common/component/headComponent';
-import ConfigData from '../../../../../../common/util/ConfigData';
+import { WidthPercent, LocationChoice, ConfigValue } from '../../../../../../common/util/ConfigData';
 import router from '@system.router';
 import CMFaPresenter from '../presenter/CMFaPresenter';
 
@@ -54,7 +54,7 @@ struct CertPwdInput {
           .onChange((value: string) => {
             this.certPwd = value;
           })
-          .maxLength(ConfigData.PWD_MAX_LENGTH)
+          .maxLength(ConfigValue.PWD_MAX_LENGTH)
           .margin({
             top: $r('app.float.distance_16'),
             left: $r('app.float.distance_24'),
@@ -62,8 +62,8 @@ struct CertPwdInput {
           })
           .height('40vp')
       }
-      .width(ConfigData.WH_100_100)
-      .height(ConfigData.WH_75_100);
+      .width(WidthPercent.WH_100_100)
+      .height(WidthPercent.WH_75_100);
 
       Column() {
         Row() {
@@ -112,10 +112,10 @@ struct CertPwdInput {
         .margin({ bottom: $r('app.float.wh_value_24') })
       }
       .justifyContent(FlexAlign.End)
-      .height(ConfigData.WH_25_100);
+      .height(WidthPercent.WH_25_100);
     }
     .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
-    .width(ConfigData.WH_100_100)
-    .height(ConfigData.WH_100_100);
+    .width(WidthPercent.WH_100_100)
+    .height(WidthPercent.WH_100_100);
   }
 }

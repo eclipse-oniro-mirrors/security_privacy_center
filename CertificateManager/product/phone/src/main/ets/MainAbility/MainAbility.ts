@@ -14,61 +14,57 @@
  */
 
 import Ability from '@ohos.app.ability.UIAbility';
-import certManager from '../stub/certStubPromise'
 
 class PwdStore {
-    private certPwd: string = '';
-    setCertPwd(pwd) {
-        this.certPwd = pwd;
-    }
+  private certPwd: string = '';
+  setCertPwd(pwd): void {
+    this.certPwd = pwd;
+  }
 
-    getCertPwd() {
-        return this.certPwd;
-    }
+  getCertPwd(): string {
+    return this.certPwd;
+  }
 
-    clearCertPwd() {
-        this.certPwd = '';
-    }
+  clearCertPwd(): void {
+    this.certPwd = '';
+  }
 }
 
 export default class MainAbility extends Ability {
-    onCreate(want, launchParam) {
-        console.log("[Demo] MainAbility onCreate")
-        globalThis.certManagerAbilityContext = this.context
-        globalThis.PwdStore = new PwdStore();
-        globalThis.abilityWant = want;
-        globalThis.certStub = certManager;
-        globalThis.certStub.restoreAllMaps();
-    }
+  onCreate(want, launchParam): void {
+    console.log('[Demo] MainAbility onCreate');
+    globalThis.certManagerAbilityContext = this.context;
+    globalThis.PwdStore = new PwdStore();
+    globalThis.abilityWant = want;
+  }
 
-    onDestroy() {
-        console.log("[Demo] MainAbility onDestroy")
-        globalThis.certStub.saveAllMaps();
-    }
+  onDestroy(): void {
+    console.log('[Demo] MainAbility onDestroy');
+  }
 
-    onWindowStageCreate(windowStage) {
-        // Main window is created, set main page for this ability
-        console.log("[Demo] MainAbility onWindowStageCreate")
-        windowStage.setUIContent(this.context, "pages/certManagerFa", null)
-    }
+  onWindowStageCreate(windowStage): void {
+    // Main window is created, set main page for this ability
+    console.log('[Demo] MainAbility onWindowStageCreate');
+    windowStage.setUIContent(this.context, 'pages/certManagerFa', null);
+  }
 
-    onWindowStageDestroy() {
-        // Main window is destroyed, release UI related resources
-        console.log("[Demo] MainAbility onWindowStageDestroy")
-    }
+  onWindowStageDestroy(): void {
+    // Main window is destroyed, release UI related resources
+    console.log('[Demo] MainAbility onWindowStageDestroy');
+  }
 
-    onForeground() {
-        // Ability has brought to foreground
-        console.log("[Demo] MainAbility onForeground")
-    }
+  onForeground(): void {
+    // Ability has brought to foreground
+    console.log('[Demo] MainAbility onForeground');
+  }
 
-    onBackground() {
-        // Ability has back to background
-        console.log("[Demo] MainAbility onBackground")
-    }
+  onBackground(): void {
+    // Ability has back to background
+    console.log('[Demo] MainAbility onBackground');
+  }
 
-    onNewWant(want) {
-        console.log("[Demo] MainAbility onNewWant")
-        globalThis.abilityWant = want;
-    }
+  onNewWant(want): void {
+    console.log('[Demo] MainAbility onNewWant');
+    globalThis.abilityWant = want;
+  }
 };

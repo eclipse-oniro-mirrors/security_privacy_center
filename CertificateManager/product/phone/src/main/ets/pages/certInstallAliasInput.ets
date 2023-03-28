@@ -15,7 +15,7 @@
 
 import HeadComponent from '../../../../../../common/component/headComponent';
 import LogUtil from '../../../../../../common/util/LogUtil';
-import ConfigData from '../../../../../../common/util/ConfigData';
+import { WidthPercent, LocationChoice, ConfigValue } from '../../../../../../common/util/ConfigData';
 import router from '@system.router';
 import CMInstallPresenter from '../presenter/CMInstallPresenter';
 import CMFaPresenter from '../presenter/CMFaPresenter';
@@ -62,7 +62,7 @@ struct CertInstallAliasInput {
           .onChange((value: string) => {
             this.certAlias = value;
           })
-          .maxLength(ConfigData.ALIAS_MAX_LENGTH)
+          .maxLength(ConfigValue.ALIAS_MAX_LENGTH)
           .margin({
             left: $r('app.float.distance_24'),
             right: $r('app.float.distance_24')
@@ -88,8 +88,8 @@ struct CertInstallAliasInput {
           .alignSelf(ItemAlign.Start)
           .opacity($r('app.float.opacity_100_60'))
       }
-      .width(ConfigData.WH_100_100)
-      .height(ConfigData.WH_75_100);
+      .width(WidthPercent.WH_100_100)
+      .height(WidthPercent.WH_75_100);
 
       Column() {
         Row() {
@@ -150,10 +150,10 @@ struct CertInstallAliasInput {
         .margin({ bottom: $r('app.float.wh_value_24') })
       }
       .justifyContent(FlexAlign.End)
-      .height(ConfigData.WH_25_100);
+      .height(WidthPercent.WH_25_100);
     }
     .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
-    .width(ConfigData.WH_100_100)
-    .height(ConfigData.WH_100_100);
+    .width(WidthPercent.WH_100_100)
+    .height(WidthPercent.WH_100_100);
   }
 }

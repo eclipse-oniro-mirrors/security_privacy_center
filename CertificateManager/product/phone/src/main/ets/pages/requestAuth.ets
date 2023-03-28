@@ -16,7 +16,7 @@
 import LogUtil from '../../../../../../common/util/LogUtil';
 import CMAppCredAuthPresenter from '../presenter/CMAppCredAuthPresenter';
 import router from '@system.router';
-import ConfigData from '../../../../../../common/util/ConfigData';
+import { WidthPercent, LocationChoice, ConfigValue } from '../../../../../../common/util/ConfigData';
 
 @CustomDialog
 @Component
@@ -55,7 +55,7 @@ struct CustomDialogAuthForApp {
         })
         .alignSelf(ItemAlign.Start)
 
-      if (this.mAppCredAuthPresenter.credList.length > ConfigData.REQUEST_AUTH_MAX_LENGTH) {
+      if (this.mAppCredAuthPresenter.credList.length > ConfigValue.REQUEST_AUTH_MAX_LENGTH) {
         List() {
           ForEach(this.mAppCredAuthPresenter.credList, (item) => {
             ListItem() {
@@ -83,12 +83,12 @@ struct CustomDialogAuthForApp {
                 }
                 .alignItems(HorizontalAlign.End)
               }
-              .width(ConfigData.WH_100_100)
+              .width(WidthPercent.WH_100_100)
             }
             .height($r('app.float.wh_value_64'))
           }, item => JSON.stringify(item))
         }
-        .height(ConfigData.WH_50_100)
+        .height(WidthPercent.WH_50_100)
         .margin({
           left: $r('app.float.wh_value_24'),
           right: $r('app.float.wh_value_24')
@@ -127,7 +127,7 @@ struct CustomDialogAuthForApp {
                 }
                 .alignItems(HorizontalAlign.End)
               }
-              .width(ConfigData.WH_100_100)
+              .width(WidthPercent.WH_100_100)
             }
             .height($r('app.float.wh_value_64'))
           }, item => JSON.stringify(item))
@@ -178,7 +178,7 @@ struct CustomDialogAuthForApp {
           .height($r('app.float.wh_value_40'))
 
         Divider()
-          .strokeWidth(ConfigData.VERTICAL_DIVIDER_WIDTH)
+          .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
           .color($r("sys.color.ohos_id_color_list_separator"))
           .vertical(true)
           .height($r('app.float.wh_value_40'))
@@ -220,7 +220,7 @@ struct RadioAuth {
     builder: CustomDialogAuthForApp(),
     autoCancel: false,
     alignment: DialogAlignment.Bottom,
-    offset: { dx: 0, dy: ConfigData.DIALOG_DY_OFFSET }
+    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
   })
 
   aboutToAppear() {
