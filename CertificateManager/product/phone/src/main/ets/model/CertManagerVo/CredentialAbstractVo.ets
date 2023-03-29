@@ -18,9 +18,7 @@ export class CredentialAbstractVo {
   alias: string;
   keyUri: string;
 
-  constructor(credType: string,
-              alias: string,
-              keyUri: string) {
+  constructor(credType: string, alias: string, keyUri: string) {
     this.credType = credType;
     this.alias = alias;
     this.keyUri = keyUri;

@@ -18,18 +18,14 @@ export class CertAbstractVo {
   certAlias: string;
   status: boolean;
   subjectName: string;
-  SubjectNameCN : string;
+  subjectNameCN : string;
 
-  constructor(uri: string,
-              certAlias: string,
-              status: boolean,
-              subjectName: string,
-              SubjectNameCN : string) {
+  constructor(uri: string, certAlias: string, status: boolean, subjectName: string, subjectNameCN: string) {
     this.uri = uri;
     this.certAlias = certAlias;
     this.status = status;
     this.subjectName = subjectName;
-    this.SubjectNameCN = SubjectNameCN;
+    this.subjectNameCN = subjectNameCN;
   }
 
 }

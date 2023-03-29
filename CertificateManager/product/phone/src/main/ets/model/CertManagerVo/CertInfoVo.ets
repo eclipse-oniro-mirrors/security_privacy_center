@@ -28,19 +28,20 @@ export class CertInfoVo {
   issuerNameMap :Map<string, string>;
   dateMap :Map<string, string>;
 
-  constructor(uri: string,
-              certAlias: string,
-              status: boolean,
-              issuerName: string,
-              subjectName: string,
-              serial: string,
-              notBefore: string,
-              notAfter: string,
-              fingerprintSha256: string,
-              cert: Uint8Array,
-              subjectNameMap: Map<string, string>,
-              issuerNameMap :Map<string, string>,
-              dateMap :Map<string, string>) {
+  constructor(
+    uri: string,
+    certAlias: string,
+    status: boolean,
+    issuerName: string,
+    subjectName: string,
+    serial: string,
+    notBefore: string,
+    notAfter: string,
+    fingerprintSha256: string,
+    cert: Uint8Array,
+    subjectNameMap: Map<string, string>,
+    issuerNameMap :Map<string, string>,
+    dateMap :Map<string, string>) {
     this.uri = uri;
     this.certAlias = certAlias;
     this.status = status;
@@ -51,21 +52,21 @@ export class CertInfoVo {
     this.notAfter = notAfter;
     this.fingerprintSha256 = fingerprintSha256;
     this.cert = cert;
-    this.subjectNameMap = subjectNameMap
-    this.issuerNameMap = issuerNameMap
-    this.dateMap = dateMap
+    this.subjectNameMap = subjectNameMap;
+    this.issuerNameMap = issuerNameMap;
+    this.dateMap = dateMap;
   }
 
-  clearCertInfoVo() {
-    this.uri = "";
-    this.certAlias = "";
+  clearCertInfoVo(): void {
+    this.uri = '';
+    this.certAlias = '';
     this.status = false;
-    this.issuerName = "";
-    this.subjectName = "";
-    this.serial = "";
-    this.notBefore = "";
-    this.notAfter = "";
-    this.fingerprintSha256 = "";
+    this.issuerName = '';
+    this.subjectName = '';
+    this.serial = '';
+    this.notBefore = '';
+    this.notAfter = '';
+    this.fingerprintSha256 = '';
     this.cert = null;
     this.subjectNameMap = null;
     this.issuerNameMap = null;

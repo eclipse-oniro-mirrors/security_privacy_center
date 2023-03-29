@@ -13,31 +13,31 @@
  * limitations under the License.
  */
 
-import bundle from '@ohos.bundle'
-import { CMModelErrorCode } from '../model/CertMangerModel'
+import bundle from '@ohos.bundle';
+import { CMModelErrorCode } from '../model/CertMangerModel';
 
 export class BundleNameModel {
-  async getAppInfoList(AppUid, callback) {
+  async getAppInfoList(appUid, callback): Promise<void> {
     try {
-      let AppInfo = {
-        AppImage: "",
-        AppName: "",
-      }
-      let AppBundleName = await bundle.getNameForUid(AppUid)
-      var bundleContext = await globalThis.certManagerAbilityContext.createBundleContext(AppBundleName)
+      let appInfo = {
+        appImage: '',
+        appName: '',
+      };
+      let appBundleName = await bundle.getNameForUid(appUid);
+      let bundleContext = await globalThis.certManagerAbilityContext.createBundleContext(appBundleName);
 
-      let labelId = Number(bundleContext.applicationInfo.labelId)
-      let iconId = Number(bundleContext.applicationInfo.iconId)
+      let labelId = Number(bundleContext.applicationInfo.labelId);
+      let iconId = Number(bundleContext.applicationInfo.iconId);
 
-      AppInfo.AppImage = await bundleContext.resourceManager.getMediaBase64(iconId)
+      appInfo.appImage = await bundleContext.resourceManager.getMediaBase64(iconId);
 
-      AppInfo.AppName = await bundleContext.resourceManager.getString(labelId)
+      appInfo.appName = await bundleContext.resourceManager.getString(labelId);
 
-      console.log("AppName1111111111", JSON.stringify(AppInfo));
+      console.log('AppName1111111111', JSON.stringify(appInfo));
 
-      callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS, AppInfo)
+      callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS, appInfo);
     } catch (err) {
-      console.log("getAppNameListErr", JSON.stringify(err.code));
+      console.log('getAppNameListErr', JSON.stringify(err.code));
       callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION, null);
     }
   }

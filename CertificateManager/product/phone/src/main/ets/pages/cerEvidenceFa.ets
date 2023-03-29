@@ -15,13 +15,13 @@
 import LogUtil from '../../../../../../common/util/LogUtil';
 import { WidthPercent, LocationChoice, ConfigValue } from '../../../../../../common/util/ConfigData';
 import HeadComponent from '../../../../../../common/component/headComponent';
-import CMShowAppCredPresenter from '../presenter/CMShowAppCredPresenter';
-import CMShowPrivateCredPresenter from '../presenter/CMShowPrivateCredPresenter';
-import CMFaPresenter from '../presenter/CMFaPresenter';
+import CmShowAppCredPresenter from '../presenter/CmShowAppCredPresenter';
+import CMShowPrivateCredPresenter from '../presenter/CmShowPrivateCredPresenter';
+import CMFaPresenter from '../presenter/CmFaPresenter';
 
 @Component
 export struct DialogComponent {
-  @Link uidItem: CMShowAppCredPresenter;
+  @Link uidItem: CmShowAppCredPresenter;
   private AppName: string;
   private AppImage: string;
   private Index: number;
@@ -59,7 +59,7 @@ export struct DialogComponent {
 struct CustomDialogExampleAuthor {
   controller: CustomDialogController;
   @Link isShowAuthDialog: boolean;
-  @Link AuthorInfo: CMShowAppCredPresenter;
+  @Link AuthorInfo: CmShowAppCredPresenter;
   @State updateStatusList: boolean[] = [];
 
   build() {
@@ -246,7 +246,7 @@ struct CustomDialogExamplePrivate {
 @Component
 struct CustomDialogDeleteWarning {
   controller: CustomDialogController;
-  @Link deleteWarn: CMShowAppCredPresenter;
+  @Link deleteWarn: CmShowAppCredPresenter;
   @Link isShowWarnDialog: boolean;
 
   build() {
@@ -318,7 +318,7 @@ struct CustomDialogDeleteWarning {
 @Component
 struct CustomDialogExampleApp {
   controller: CustomDialogController;
-  @Link mShowAppCaPresenter: CMShowAppCredPresenter;
+  @Link mShowAppCaPresenter: CmShowAppCredPresenter;
   @Link isShowAuthDialog: boolean;
   @Link isShowWarnDialog: boolean;
 
@@ -455,7 +455,7 @@ struct CustomDialogExampleApp {
 export struct componentPublic {
   private Alias: string;
   private KeyUri: string;
-  @Link mShowAppCaPresenter: CMShowAppCredPresenter;
+  @Link mShowAppCaPresenter: CmShowAppCredPresenter;
   @State @Watch("onShowAuthMngChange") isShowAuthMng: boolean = false;
   @State @Watch("onShowDeleteWarnDialog") isShowWarning: boolean = false;
   detailsDialogController: CustomDialogController = new CustomDialogController({
@@ -577,7 +577,7 @@ export struct componentPrivate {
 @Entry
 @Component
 struct evidenceList {
-  @State mShowAppCaPresenter: CMShowAppCredPresenter = CMShowAppCredPresenter.getInstance();
+  @State mShowAppCaPresenter: CmShowAppCredPresenter = CmShowAppCredPresenter.getInstance();
   @State mShowPrivateCaPresenter: CMShowPrivateCredPresenter = CMShowPrivateCredPresenter.getInstance();
   @State mFaPresenter: CMFaPresenter = CMFaPresenter.getInstance();
   @State isTouched: boolean = false;

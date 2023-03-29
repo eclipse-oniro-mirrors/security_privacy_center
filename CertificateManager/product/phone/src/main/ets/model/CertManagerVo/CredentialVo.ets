@@ -21,12 +21,7 @@ export class CredentialVo {
   keyNum: number;
   credData: Uint8Array;
 
-  constructor(credType: string,
-              alias: string,
-              keyUri: string,
-              certNum: number,
-              keyNum: number,
-              credData: Uint8Array) {
+  constructor(credType: string, alias: string, keyUri: string, certNum: number, keyNum: number, credData: Uint8Array) {
     this.credType = credType;
     this.alias = alias;
     this.keyUri = keyUri;
@@ -35,10 +30,10 @@ export class CredentialVo {
     this.credData = credData;
   }
 
-  clearCredentialVo() {
-    this.credType = "";
-    this.alias = "";
-    this.keyUri = "";
+  clearCredentialVo(): void {
+    this.credType = '';
+    this.alias = '';
+    this.keyUri = '';
     this.certNum = 0;
     this.keyNum = 0;
     this.credData = null;

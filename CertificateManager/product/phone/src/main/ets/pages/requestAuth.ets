@@ -14,7 +14,7 @@
  */
 
 import LogUtil from '../../../../../../common/util/LogUtil';
-import CMAppCredAuthPresenter from '../presenter/CMAppCredAuthPresenter';
+import CmAppCredAuthPresenter from '../presenter/CmAppCredAuthPresenter';
 import router from '@system.router';
 import { WidthPercent, LocationChoice, ConfigValue } from '../../../../../../common/util/ConfigData';
 
@@ -22,12 +22,12 @@ import { WidthPercent, LocationChoice, ConfigValue } from '../../../../../../com
 @Component
 struct CustomDialogAuthForApp {
   controller: CustomDialogController
-  @State mAppCredAuthPresenter: CMAppCredAuthPresenter = CMAppCredAuthPresenter.getInstance();
+  @State mAppCredAuthPresenter: CmAppCredAuthPresenter = CmAppCredAuthPresenter.getInstance();
   selectUri: string = "";
 
   aboutToAppear(): void {
     LogUtil.info('certPwdInput about to appear');
-    this.mAppCredAuthPresenter.UpdateAppNameFromUid(router.getParams().appUid);
+    this.mAppCredAuthPresenter.updateAppNameFromUid(router.getParams().appUid);
     this.mAppCredAuthPresenter.updateAppCredList();
   }
 

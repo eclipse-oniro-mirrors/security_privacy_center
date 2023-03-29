@@ -17,14 +17,14 @@ import HeadComponent from '../../../../../../common/component/headComponent';
 import LogUtil from '../../../../../../common/util/LogUtil';
 import { WidthPercent, LocationChoice, ConfigValue } from '../../../../../../common/util/ConfigData';
 import router from '@system.router';
-import CMInstallPresenter from '../presenter/CMInstallPresenter';
-import CMFaPresenter from '../presenter/CMFaPresenter';
+import CmInstallPresenter from '../presenter/CmInstallPresenter';
+import CmFaPresenter from '../presenter/CmFaPresenter';
 
 @Entry
 @Component
 struct CertInstallAliasInput {
-  @State mAppCredAuthPresenter: CMInstallPresenter = CMInstallPresenter.getInstance();
-  @State mFaPresenter: CMFaPresenter = CMFaPresenter.getInstance();
+  @State mAppCredAuthPresenter: CmInstallPresenter = CmInstallPresenter.getInstance();
+  @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
   @State certAlias: string = "";
 
   onPageShow() {

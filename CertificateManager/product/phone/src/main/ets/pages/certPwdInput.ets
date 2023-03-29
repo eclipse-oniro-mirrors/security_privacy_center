@@ -16,13 +16,13 @@
 import HeadComponent from '../../../../../../common/component/headComponent';
 import { WidthPercent, LocationChoice, ConfigValue } from '../../../../../../common/util/ConfigData';
 import router from '@system.router';
-import CMFaPresenter from '../presenter/CMFaPresenter';
+import CmFaPresenter from '../presenter/CmFaPresenter';
 
 @Entry
 @Component
 struct CertPwdInput {
   certPwd: string = "";
-  @State mFaPresenter: CMFaPresenter = CMFaPresenter.getInstance();
+  @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
 
   onPageShow() {
     let uri = globalThis.abilityWant.uri;
