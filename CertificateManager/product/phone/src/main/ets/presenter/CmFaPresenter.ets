@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import picker from '@ohos.file.picker';
 import router from '@system.router';
 import certManagerModel from '../model/CertMangerModel';
 import FileIoModel from '../model/FileIoModel';
@@ -85,27 +86,23 @@ export default class CmFaPresenter {
     }
   }
 
-  startInstall() {
-    globalThis.certManagerAbilityContext.startAbilityForResult(
-      {
-        bundleName: "com.ohos.filepicker",
-        abilityName: "MainAbility",
-        parameters: {
-          'startMode': 'choose',
+  startInstall(): void {
+    try {
+      let documentSelectOptions = new picker.DocumentSelectOptions();
+      let documentPicker = new picker.DocumentViewPicker();
+      console.info(TAG + 'start documentPicker.select');
+      documentPicker.select(documentSelectOptions).then((documentSelectResult) => {
+        if (documentSelectResult.length >= 1) {
+          this.routeToNext(String(documentSelectResult[0]));
+        } else {
+          console.error(TAG + 'documentPicker.select length invalid:' + documentSelectResult.length);
         }
-      },
-      {
-        windowMode: 102
-      }
-    )
-      .then((data) => {
-        if (!data.resultCode) {
-          this.routeToNext(data.want.parameters.result)
-        }
-      })
-      .catch((error) => {
-        console.log(TAG + 'start filePicker err: ' + error);
-      })
+      }).catch((err) => {
+        console.error(TAG + 'documentPicker.select failed with err:' + err);
+      });
+    } catch (err) {
+      console.error(TAG + 'DocumentViewPicker failed with err:' + err);
+    }
   }
 
   startRequestAuth(uri): void {
