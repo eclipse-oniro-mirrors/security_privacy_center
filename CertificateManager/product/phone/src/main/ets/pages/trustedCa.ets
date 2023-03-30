@@ -815,7 +815,7 @@ struct TrustedEvidence {
                   List() {
                     ForEach(this.mShowSysCaPresenter.certList, (item, index) => {
                       ListItem() {
-                        ComponentSystem({ certAlias: item.certAlias, subjectName: item.SubjectNameCN, Status: item.status,
+                        ComponentSystem({ certAlias: item.certAlias, subjectName: item.subjectNameCN, Status: item.status,
                           Uri: item.uri, setStatus: $mShowSysCaPresenter, Index: index })
                       }
                     }, item => JSON.stringify(item))
@@ -852,7 +852,7 @@ struct TrustedEvidence {
                   List() {
                     ForEach(this.mShowUserCaPresenter.certList, (item, index) => {
                       ListItem() {
-                        ComponentUser({ certAlias: item.certAlias, subjectName: item.SubjectNameCN, Uri: item.uri,
+                        ComponentUser({ certAlias: item.certAlias, subjectName: item.subjectNameCN, Uri: item.uri,
                           setStatus: $mShowUserCaPresenter, Index: index })
                       }
                     }, item => JSON.stringify(item))
