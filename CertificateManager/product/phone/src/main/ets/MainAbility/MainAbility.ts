@@ -36,7 +36,6 @@ export default class MainAbility extends Ability {
     globalThis.certManagerAbilityContext = this.context;
     globalThis.PwdStore = new PwdStore();
     globalThis.abilityWant = want;
-    globalThis.abilityContext = this.context;
   }
 
   onDestroy(): void {
