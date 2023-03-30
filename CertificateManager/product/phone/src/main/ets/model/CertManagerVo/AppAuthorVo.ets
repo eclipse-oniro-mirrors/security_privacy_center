@@ -19,11 +19,7 @@ export class AppAuthorVo {
   appName: string;
   status: boolean;
 
-  constructor(
-            appImage: string,
-              uid: string,
-              appName: string,
-             status: boolean) {
+  constructor(appImage: string, uid: string, appName: string, status: boolean) {
     this.appImage = appImage;
     this.uid = uid;
     this.appName = appName;

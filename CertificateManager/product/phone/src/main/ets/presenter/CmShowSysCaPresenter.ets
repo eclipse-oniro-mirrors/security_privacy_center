@@ -13,48 +13,48 @@
  * limitations under the License.
  */
 
-import certManagerModel from '../model/CertMangerModel'
-import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel'
-import { CertAbstractVo } from '../model/CertManagerVo/CertAbstractVo'
-import { CertInfoVo } from '../model/CertManagerVo/CertInfoVo'
+import certManagerModel from '../model/CertMangerModel';
+import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
+import type { CertAbstractVo } from '../model/CertManagerVo/CertAbstractVo';
+import { CertInfoVo } from '../model/CertManagerVo/CertInfoVo';
 
-const TAG = "CMShowSysCa Presenter: ";
+const TAG = 'CMShowSysCa Presenter: ';
 
-export default class CMShowSysCaPresenter {
-  private static sInstance: CMShowSysCaPresenter;
+export default class CmShowSysCaPresenter {
+  private static sInstance: CmShowSysCaPresenter;
   certList: CertAbstractVo[] = [];
-  certInfo: CertInfoVo = new CertInfoVo("", "", false, "", "", "", "", "", "", null, null, null, null);
+  certInfo: CertInfoVo = new CertInfoVo('', '', false, '', '', '', '', '', '', null, null, null, null);
 
-  public static getInstance(): CMShowSysCaPresenter {
-    if (CMShowSysCaPresenter.sInstance == null) {
-      CMShowSysCaPresenter.sInstance = new CMShowSysCaPresenter();
+  public static getInstance(): CmShowSysCaPresenter {
+    if (CmShowSysCaPresenter.sInstance == null) {
+      CmShowSysCaPresenter.sInstance = new CmShowSysCaPresenter();
     }
-    return CMShowSysCaPresenter.sInstance;
+    return CmShowSysCaPresenter.sInstance;
   }
 
-  onAboutToAppear() {
+  onAboutToAppear(): void {
     this.updateSystemTrustedCertificateList();
   }
 
-  aboutToDisappear() {
+  aboutToDisappear(): void {
     this.certList = [];
-    this.certInfo = new CertInfoVo("", "", false, "", "", "", "", "", "", null, null, null, null);
+    this.certInfo = new CertInfoVo('', '', false, '', '', '', '', '', '', null, null, null, null);
   }
 
-  updateSystemTrustedCertificateList() {
+  updateSystemTrustedCertificateList(): void {
     certManagerModel.getCertOrCredList(CMModelOptType.CM_MODEL_OPT_SYSTEM_CA, (errCode, certList) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
-        certList.sort((certAbs, certAbsOther) => {
-          let certAlias = certAbs.certAlias
-          let certAliasOther = certAbsOther.certAlias
+        certList.sort((certAbs, certAbsOther): number => {
+          let certAlias = certAbs.certAlias;
+          let certAliasOther = certAbsOther.certAlias;
           if (certAlias <= certAliasOther) {
-            return -1
+            return -1;
           } else {
-            return 1
+            return 1;
           }
-        })
+        });
         this.certList = certList;
-        console.log("updateSystemTrustedCertificateList inin :" + JSON.stringify(certList));
+        console.log('updateSystemTrustedCertificateList inin :' + JSON.stringify(certList));
       } else {
         console.info(TAG + 'updateSystemTrustedCertificateList fail,errCode is' + errCode);
         this.certList = [];
@@ -62,22 +62,22 @@ export default class CMShowSysCaPresenter {
     });
   }
 
-  getSystemTrustedCertificate(uri, callback) {
+  getSystemTrustedCertificate(uri, callback): void {
     certManagerModel.getCertOrCred(CMModelOptType.CM_MODEL_OPT_SYSTEM_CA, uri, (errCode, certInfo) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         console.info(TAG + 'getSystemTrustedCertificate success,errCode is ' + errCode + ' certInfo is' +
         JSON.stringify(certInfo));
         this.certInfo = certInfo;
-        callback()
+        callback();
       } else {
         console.info(TAG + 'getSystemTrustedCertificate fail,errCode is' + errCode);
         this.certInfo.clearCertInfoVo();
-        callback()
+        callback();
       }
     });
   }
 
-  setSystemCertificateStatus(uri, status) {
+  setSystemCertificateStatus(uri, status): void {
     certManagerModel.setCertStatus(CMModelOptType.CM_MODEL_OPT_SYSTEM_CA, uri, status, (errCode) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         console.info(TAG + 'setSystemCertificateStatus success,errCode is' + errCode);
@@ -85,6 +85,6 @@ export default class CMShowSysCaPresenter {
       } else {
         console.info(TAG + 'setSystemCertificateStatus fail,errCode is' + errCode);
       }
-    })
+    });
   }
 }

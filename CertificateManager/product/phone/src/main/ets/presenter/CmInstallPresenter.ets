@@ -13,53 +13,53 @@
  * limitations under the License.
  */
 
-import certManagerModel from '../model/CertMangerModel'
-import FileIoModel from '../model/FileIoModel'
-import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel'
+import certManagerModel from '../model/CertMangerModel';
+import FileIoModel from '../model/FileIoModel';
+import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
 import router from '@system.router';
 
-const TAG = "CMInstallPresenter: ";
+const TAG = 'CMInstallPresenter: ';
 
-export default class CMInstallPresenter {
-  private static sInstance: CMInstallPresenter;
+export default class CmInstallPresenter {
+  private static sInstance: CmInstallPresenter;
   optType: CMModelOptType = CMModelOptType.CM_MODEL_OPT_UNKNOWN;
 
-  public static getInstance(): CMInstallPresenter {
-    if (CMInstallPresenter.sInstance == null) {
-      CMInstallPresenter.sInstance = new CMInstallPresenter();
+  public static getInstance(): CmInstallPresenter {
+    if (CmInstallPresenter.sInstance == null) {
+      CmInstallPresenter.sInstance = new CmInstallPresenter();
     }
-    return CMInstallPresenter.sInstance;
+    return CmInstallPresenter.sInstance;
   }
 
-  onAboutToAppear() {
+  onAboutToAppear(): void {
 
   }
 
-  aboutToDisappear() {
+  aboutToDisappear(): void {
     this.optType = CMModelOptType.CM_MODEL_OPT_UNKNOWN;
   }
 
-  updateCertFileType(suffix) {
-    console.info(TAG + 'updateCertFileType suffix: ' + suffix)
-    if ((suffix == "cer") || (suffix == "pem")) {
+  updateCertFileType(suffix): void {
+    console.info(TAG + 'updateCertFileType suffix: ' + suffix);
+    if ((suffix === 'cer') || (suffix === 'pem')) {
       this.optType = CMModelOptType.CM_MODEL_OPT_USER_CA;
-    } else if ((suffix == "p12") || (suffix == "jks") || (suffix == "pfx")) {
+    } else if ((suffix === 'p12') || (suffix === 'jks') || (suffix === 'pfx')) {
       this.optType = CMModelOptType.CM_MODEL_OPT_APP_CRED;
     }
   }
 
-  getFileDataFromUri(uri, callback) {
+  getFileDataFromUri(uri, callback): void {
     FileIoModel.getMediaFileData(uri, (data) => {
-      callback(data)
-    })
+      callback(data);
+    });
 
   }
 
-  installCert(uri, alias, suffix) {
+  installCert(uri, alias, suffix): void {
     this.updateCertFileType(suffix);
     this.getFileDataFromUri(uri, (data) => {
       certManagerModel.installCertOrCred(this.optType, alias, data, globalThis.PwdStore.getCertPwd(), (errCode) => {
-        console.info(TAG + 'installCertOrCred result: ' + JSON.stringify(errCode))
+        console.info(TAG + 'installCertOrCred result: ' + JSON.stringify(errCode));
         globalThis.PwdStore.clearCertPwd();
         if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
           console.info(TAG + 'installCert success');
@@ -67,8 +67,8 @@ export default class CMInstallPresenter {
           console.info(TAG + 'installCert failed');
         }
         router.clear();
-        router.replace({ uri: "pages/certManagerFa" });
+        router.replace({ uri: 'pages/certManagerFa' });
       });
-    })
+    });
   }
 }

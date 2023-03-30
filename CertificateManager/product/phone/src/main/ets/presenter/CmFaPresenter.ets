@@ -14,37 +14,37 @@
  */
 
 import router from '@system.router';
-import certManagerModel from '../model/CertMangerModel'
-import FileIoModel from '../model/FileIoModel'
-import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel'
-import abilityAccessCtrl from '@ohos.abilityAccessCtrl'
+import certManagerModel from '../model/CertMangerModel';
+import FileIoModel from '../model/FileIoModel';
+import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
+import abilityAccessCtrl from '@ohos.abilityAccessCtrl';
 
-const TAG = "CMFaPresenter: ";
+const TAG = 'CMFaPresenter: ';
 const PAGE_URI_PWD_INPUT = 'pages/certPwdInput';
 const PAGE_URI_ALIAS_INPUT = 'pages/certInstallAliasInput';
 
-export default class CMFaPresenter {
-  private static sInstance: CMFaPresenter;
+export default class CmFaPresenter {
+  private static sInstance: CmFaPresenter;
 
-  public static getInstance(): CMFaPresenter {
-    if (CMFaPresenter.sInstance == null) {
-      CMFaPresenter.sInstance = new CMFaPresenter();
+  public static getInstance(): CmFaPresenter {
+    if (CmFaPresenter.sInstance == null) {
+      CmFaPresenter.sInstance = new CmFaPresenter();
     }
-    return CMFaPresenter.sInstance;
+    return CmFaPresenter.sInstance;
   }
 
-  onAboutToAppear() {
+  onAboutToAppear(): void {
 
   }
 
-  aboutToDisappear() {
+  aboutToDisappear(): void {
   }
 
-  routeToNext(fileUri: string) {
+  routeToNext(fileUri: string): void {
     console.info(TAG + 'routeToNext fileUri: ' + fileUri);
     FileIoModel.getMediaFileSuffix(fileUri, (suffix) => {
       if (suffix) {
-        if ((suffix == "cer") || (suffix == "pem")) {
+        if ((suffix === 'cer') || (suffix === 'pem')) {
           router.push({
             uri: PAGE_URI_ALIAS_INPUT,
             params: {
@@ -62,26 +62,26 @@ export default class CMFaPresenter {
           });
         }
       }
-    })
+    });
   }
 
-  requestPermissions() {
+  requestPermissions(): void {
     try {
       let atManager = abilityAccessCtrl.createAtManager();
       atManager.requestPermissionsFromUser(globalThis.certManagerAbilityContext,
-        ["ohos.permission.READ_MEDIA"]).then((data) => {
-        console.log(TAG + "requestPermissions finish, size: " + data.authResults.length);
+        ['ohos.permission.READ_MEDIA']).then((data) => {
+        console.log(TAG + 'requestPermissions finish, size: ' + data.authResults.length);
 
-        if (data.authResults.length > 0 && data.authResults[0] == 0) { /* 0: has READ_MEDIA permission */
+        if (data.authResults.length > 0 && data.authResults[0] === 0) { /* 0: has READ_MEDIA permission */
           this.startInstall();
         } else {
-          console.error(TAG + "has no READ_MEDIA permission");
+          console.error(TAG + 'has no READ_MEDIA permission');
         }
       }).catch((err) => {
-        console.error(TAG + "request permission failed");
-      })
+        console.error(TAG + 'request permission failed');
+      });
     } catch (err) {
-      console.error(TAG + "request permission catch error");
+      console.error(TAG + 'request permission catch error');
     }
   }
 
@@ -108,15 +108,15 @@ export default class CMFaPresenter {
       })
   }
 
-  startRequestAuth(uri) {
+  startRequestAuth(uri): void {
     router.replace({
-      uri: "pages/requestAuth", params: {
+      uri: 'pages/requestAuth', params: {
         appUid: uri,
       }
-    })
+    });
   }
 
-  uninstallAllCert() {
+  uninstallAllCert(): void {
     certManagerModel.delAllCertOrCred(CMModelOptType.CM_MODEL_OPT_USER_CA, (errCode) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         console.log(TAG + 'uninstallAllCert CM_MODEL_OPT_USER_CA success');

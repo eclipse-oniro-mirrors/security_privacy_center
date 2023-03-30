@@ -15,9 +15,9 @@
 import LogUtil from '../../../../../../common/util/LogUtil';
 import { WidthPercent, LocationChoice, ConfigValue } from '../../../../../../common/util/ConfigData';
 import HeadComponent from '../../../../../../common/component/headComponent';
-import CMShowSysCaPresenter from '../presenter/CMShowSysCaPresenter';
-import CMShowUserCaPresenter from '../presenter/CMShowUserCaPresenter';
-import CMFaPresenter from '../presenter/CMFaPresenter';
+import CmShowSysCaPresenter from '../presenter/CmShowSysCaPresenter';
+import CMShowUserCaPresenter from '../presenter/CmShowUserCaPresenter';
+import CmFaPresenter from '../presenter/CmFaPresenter';
 
 @Component
 struct DialogSubjectComponent {
@@ -455,7 +455,7 @@ struct CustomDialogExampleUser {
 @Component
 struct CustomDialogExampleSystem {
   controller: CustomDialogController;
-  @Link sysInfoPresenter: CMShowSysCaPresenter;
+  @Link sysInfoPresenter: CmShowSysCaPresenter;
   private isTrueButton: string = '';
 
   build() {
@@ -604,7 +604,7 @@ struct ComponentSystem {
   private Uri: string;
   isSwitchTouched : boolean = false;
   @State isTouched: boolean = false;
-  @Link setStatus: CMShowSysCaPresenter;
+  @Link setStatus: CmShowSysCaPresenter;
   dialogController: CustomDialogController = new CustomDialogController({
     builder: CustomDialogExampleSystem({ sysInfoPresenter: $setStatus }),
     autoCancel: true,
@@ -754,9 +754,9 @@ struct ComponentUser {
 @Entry
 @Component
 struct TrustedEvidence {
-  @State mShowSysCaPresenter: CMShowSysCaPresenter = CMShowSysCaPresenter.getInstance();
+  @State mShowSysCaPresenter: CmShowSysCaPresenter = CmShowSysCaPresenter.getInstance();
   @State mShowUserCaPresenter: CMShowUserCaPresenter = CMShowUserCaPresenter.getInstance();
-  @State mFaPresenter: CMFaPresenter = CMFaPresenter.getInstance();
+  @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
   @State isTouched: boolean = false;
   @State currentIndex: number = 0
   @State fontColor: Resource = $r("app.color.TrustedEvidence_TabBuilder_fontColor_182431")
@@ -815,7 +815,7 @@ struct TrustedEvidence {
                   List() {
                     ForEach(this.mShowSysCaPresenter.certList, (item, index) => {
                       ListItem() {
-                        ComponentSystem({ certAlias: item.certAlias, subjectName: item.SubjectNameCN, Status: item.status,
+                        ComponentSystem({ certAlias: item.certAlias, subjectName: item.subjectNameCN, Status: item.status,
                           Uri: item.uri, setStatus: $mShowSysCaPresenter, Index: index })
                       }
                     }, item => JSON.stringify(item))
@@ -852,7 +852,7 @@ struct TrustedEvidence {
                   List() {
                     ForEach(this.mShowUserCaPresenter.certList, (item, index) => {
                       ListItem() {
-                        ComponentUser({ certAlias: item.certAlias, subjectName: item.SubjectNameCN, Uri: item.uri,
+                        ComponentUser({ certAlias: item.certAlias, subjectName: item.subjectNameCN, Uri: item.uri,
                           setStatus: $mShowUserCaPresenter, Index: index })
                       }
                     }, item => JSON.stringify(item))

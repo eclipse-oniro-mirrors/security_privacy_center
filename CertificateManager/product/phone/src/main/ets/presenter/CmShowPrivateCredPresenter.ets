@@ -13,54 +13,54 @@
  * limitations under the License.
  */
 
-import certManagerModel from '../model/CertMangerModel'
-import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel'
-import { CredentialAbstractVo } from '../model/CertManagerVo/CredentialAbstractVo'
-import { CredentialVo } from '../model/CertManagerVo/CredentialVo'
+import certManagerModel from '../model/CertMangerModel';
+import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
+import type { CredentialAbstractVo } from '../model/CertManagerVo/CredentialAbstractVo';
+import { CredentialVo } from '../model/CertManagerVo/CredentialVo';
 
-export default class CMShowPrivateCredPresenter {
-  private static sInstance: CMShowPrivateCredPresenter;
+export default class CmShowPrivateCredPresenter {
+  private static sInstance: CmShowPrivateCredPresenter;
   credList: CredentialAbstractVo[] = [];
-  credInfo: CredentialVo = new CredentialVo("", "", "", 0, 0, null);
+  credInfo: CredentialVo = new CredentialVo('', '', '', 0, 0, null);
 
-  public static getInstance(): CMShowPrivateCredPresenter {
-    if (CMShowPrivateCredPresenter.sInstance == null) {
-      CMShowPrivateCredPresenter.sInstance = new CMShowPrivateCredPresenter();
+  public static getInstance(): CmShowPrivateCredPresenter {
+    if (CmShowPrivateCredPresenter.sInstance == null) {
+      CmShowPrivateCredPresenter.sInstance = new CmShowPrivateCredPresenter();
     }
-    return CMShowPrivateCredPresenter.sInstance;
+    return CmShowPrivateCredPresenter.sInstance;
   }
 
-  aboutToDisappear() {
+  aboutToDisappear(): void {
     this.credList = [];
-    this.credInfo = new CredentialVo("", "", "", 0, 0, null);
+    this.credInfo = new CredentialVo('', '', '', 0, 0, null);
   }
 
-  updatePrivateCredList() {
+  updatePrivateCredList(): void {
     certManagerModel.getCertOrCredList(CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED, (errCode, credList) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         credList.sort((certAbs, certAbsOther) => {
-          let certAlias = certAbs.alias
-          let certAliasOther = certAbsOther.alias
+          let certAlias = certAbs.alias;
+          let certAliasOther = certAbsOther.alias;
           if (certAlias <= certAliasOther) {
-            return -1
+            return -1;
           } else {
-            return 1
+            return 1;
           }
-        })
+        });
         this.credList = credList;
       } else {
-        console.log("updatePrivateCredList error :" + JSON.stringify(errCode));
+        console.log('updatePrivateCredList error :' + JSON.stringify(errCode));
         this.credList = [];
       }
     });
   }
 
-  getPrivateCred(uri) {
+  getPrivateCred(uri): void {
     certManagerModel.getCertOrCred(CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED, uri, (errCode, credInfo) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
-        this.credInfo = credInfo
+        this.credInfo = credInfo;
       } else {
-        console.log("getPrivateCred error :" + JSON.stringify(errCode));
+        console.log('getPrivateCred error :' + JSON.stringify(errCode));
         this.credInfo.clearCredentialVo();
       }
     });

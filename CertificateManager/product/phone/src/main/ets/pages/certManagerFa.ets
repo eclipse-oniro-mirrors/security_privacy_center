@@ -16,14 +16,14 @@
 import { WidthPercent, LocationChoice, ConfigValue } from '../../../../../../common/util/ConfigData';
 import HeadComponent from '../../../../../../common/component/headComponent';
 import { SubEntryComponent } from '../../../../../../common/component/subEntryComponent';
-import CMFaPresenter from '../presenter/CMFaPresenter';
+import CmFaPresenter from '../presenter/CmFaPresenter';
 
 @Entry
 @Component
 struct CertificateComponent {
   @State touchedItem: boolean = false;
   @State columnMargin: string = '12vp';
-  @State mFaPresenter: CMFaPresenter = CMFaPresenter.getInstance();
+  @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
 
   build() {
     Column() {
@@ -104,7 +104,7 @@ struct CertificateComponent {
 @Component
 struct CustomDialogExampleDeleteAll {
   controller: CustomDialogController;
-  @Link deleteAll: CMFaPresenter;
+  @Link deleteAll: CmFaPresenter;
 
   build() {
       Column() {
@@ -172,7 +172,7 @@ struct CustomDialogExampleDeleteAll {
 @Component
 struct DeleteAll {
   @State isTouched: boolean = false;
-  @Link mFaPresenter: CMFaPresenter;
+  @Link mFaPresenter: CmFaPresenter;
 
   deleteWarnDialog: CustomDialogController = new CustomDialogController({
     builder: CustomDialogExampleDeleteAll({ deleteAll: $mFaPresenter }),
@@ -222,7 +222,7 @@ struct DeleteAll {
 @Component
 export struct CertInstallComponent {
   @State isTouched: boolean = false;
-  @Link mFaPresenter: CMFaPresenter;
+  @Link mFaPresenter: CmFaPresenter;
 
   build() {
     Column() {

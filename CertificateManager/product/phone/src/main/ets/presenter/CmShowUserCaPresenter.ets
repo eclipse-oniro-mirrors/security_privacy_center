@@ -13,48 +13,48 @@
  * limitations under the License.
  */
 
-import certManagerModel from '../model/CertMangerModel'
-import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel'
-import { CertAbstractVo } from '../model/CertManagerVo/CertAbstractVo'
-import { CertInfoVo } from '../model/CertManagerVo/CertInfoVo'
+import certManagerModel from '../model/CertMangerModel';
+import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
+import type { CertAbstractVo } from '../model/CertManagerVo/CertAbstractVo';
+import { CertInfoVo } from '../model/CertManagerVo/CertInfoVo';
 
-const TAG = "CMFaShowUserCa Presenter: ";
+const TAG = 'CMFaShowUserCa Presenter: ';
 
-export default class CMShowUserCaPresenter {
-  private static sInstance: CMShowUserCaPresenter;
+export default class CmShowUserCaPresenter {
+  private static sInstance: CmShowUserCaPresenter;
   certList: CertAbstractVo[] = [];
-  certInfo: CertInfoVo = new CertInfoVo("", "", false, "", "", "", "", "", "", null, null, null, null);
+  certInfo: CertInfoVo = new CertInfoVo('', '', false, '', '', '', '', '', '', null, null, null, null);
 
-  public static getInstance(): CMShowUserCaPresenter {
-    if (CMShowUserCaPresenter.sInstance == null) {
-      CMShowUserCaPresenter.sInstance = new CMShowUserCaPresenter();
+  public static getInstance(): CmShowUserCaPresenter {
+    if (CmShowUserCaPresenter.sInstance == null) {
+      CmShowUserCaPresenter.sInstance = new CmShowUserCaPresenter();
     }
-    return CMShowUserCaPresenter.sInstance;
+    return CmShowUserCaPresenter.sInstance;
   }
 
-  onAboutToAppear() {
+  onAboutToAppear(): void {
 
   }
 
-  aboutToDisappear() {
+  aboutToDisappear(): void {
     this.certList = [];
-    this.certInfo = new CertInfoVo("", "", false, "", "", "", "", "", "", null, null, null, null);
+    this.certInfo = new CertInfoVo('', '', false, '', '', '', '', '', '', null, null, null, null);
   }
 
-  updateUserTrustedCertificateList() {
+  updateUserTrustedCertificateList(): void {
     certManagerModel.getCertOrCredList(CMModelOptType.CM_MODEL_OPT_USER_CA, (errCode, certList) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
-        certList.sort((certAbs, certAbsOther) => {
-          let certAlias = certAbs.certAlias
-          let certAliasOther = certAbsOther.certAlias
+        certList.sort((certAbs, certAbsOther): number => {
+          let certAlias = certAbs.certAlias;
+          let certAliasOther = certAbsOther.certAlias;
           if (certAlias <= certAliasOther) {
-            return -1
+            return -1;
           } else {
-            return 1
+            return 1;
           }
-        })
+        });
         this.certList = certList;
-        console.log("updateUserTrustedCertificateList inin :" + JSON.stringify(certList));
+        console.log('updateUserTrustedCertificateList inin :' + JSON.stringify(certList));
       } else {
         console.info(TAG + 'updateUserTrustedCertificateList fail,errCode is ' + errCode);
         this.certList = [];
@@ -62,40 +62,40 @@ export default class CMShowUserCaPresenter {
     });
   }
 
-  getUserTrustedCertificate(uri, callback) {
+  getUserTrustedCertificate(uri, callback): void {
     certManagerModel.getCertOrCred(CMModelOptType.CM_MODEL_OPT_USER_CA, uri, (errCode, certInfo) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         console.info(TAG + 'getUserTrustedCertificate success, errCode is ' + errCode + ' certInfo is' +
         JSON.stringify(certInfo));
         this.certInfo = certInfo;
-        callback()
+        callback();
       } else {
         console.info(TAG + 'getUserTrustedCertificate fail, errCode is ' + errCode);
         this.certInfo.clearCertInfoVo();
-        callback()
+        callback();
       }
     });
   }
 
-  setUserCertificateStatus(uri, status) {
+  setUserCertificateStatus(uri, status): void {
     certManagerModel.setCertStatus(CMModelOptType.CM_MODEL_OPT_USER_CA, uri, status, (errCode) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         this.getUserTrustedCertificate(uri, () => {
           console.info(TAG + 'setCerStatus then getUserTrustedCertificate,errCode is' + errCode);
         });
       } else {
-        console.info(TAG + 'setUserCertificateStatus fail,errCode is ' + errCode)
+        console.info(TAG + 'setUserCertificateStatus fail,errCode is ' + errCode);
       }
-    })
+    });
   }
 
-  deleteUserCertificate(uri) {
+  deleteUserCertificate(uri): void {
     certManagerModel.deleteCertOrCred(CMModelOptType.CM_MODEL_OPT_USER_CA, uri, (errCode) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         this.updateUserTrustedCertificateList();
       } else {
         console.info(TAG + 'deleteUserCertificate fail,errCode is ' + errCode);
       }
-    })
+    });
   }
 }
