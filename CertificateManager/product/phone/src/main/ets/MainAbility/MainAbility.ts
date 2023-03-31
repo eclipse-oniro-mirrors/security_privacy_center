@@ -39,6 +39,7 @@ export default class MainAbility extends Ability {
         globalThis.abilityWant = want;
         globalThis.certStub = certManager;
         globalThis.certStub.restoreAllMaps();
+	globalThis.abilityContext = this.context;
     }
 
     onDestroy() {
