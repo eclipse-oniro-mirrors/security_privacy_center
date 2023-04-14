@@ -25,7 +25,11 @@
     "metadata": [
       {
         "name": "ArkTSPartialUpdate",
-        "value": "false"
+        "value": "true"
+      },
+      {
+        "name": "partialUpdateStrictCheck",
+        "value": "all"
       }
     ],
     "deliveryWithInstall": true,
