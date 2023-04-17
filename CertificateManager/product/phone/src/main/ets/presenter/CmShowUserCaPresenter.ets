@@ -89,13 +89,14 @@ export default class CmShowUserCaPresenter {
     });
   }
 
-  deleteUserCertificate(uri): void {
+  deleteUserCertificate(uri, callback): void {
     certManagerModel.deleteCertOrCred(CMModelOptType.CM_MODEL_OPT_USER_CA, uri, (errCode) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         this.updateUserTrustedCertificateList();
       } else {
         console.info(TAG + 'deleteUserCertificate fail,errCode is ' + errCode);
       }
+      callback();
     });
   }
 }

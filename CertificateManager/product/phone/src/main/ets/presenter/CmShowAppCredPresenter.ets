@@ -81,7 +81,7 @@ export default class CmShowAppCredPresenter {
     });
   }
 
-  getAppCred(uri): void {
+  getAppCred(uri, callback): void {
     certManagerModel.getCertOrCred(CMModelOptType.CM_MODEL_OPT_APP_CRED, uri, (errCode, credInfo) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         this.credInfo = credInfo;
@@ -89,6 +89,7 @@ export default class CmShowAppCredPresenter {
         console.log('getAppCred error :' + JSON.stringify(errCode));
         this.credInfo.clearCredentialVo();
       }
+      callback();
     });
   }
 

@@ -525,8 +525,9 @@ export struct componentPublic {
     .height($r("app.float.wh_value_48"))
     .borderRadius($r("app.float.publicList_borderRadius"))
     .onClick(() => {
-      this.mShowAppCaPresenter.getAppCred(this.KeyUri)
-      this.detailsDialogController.open()
+      this.mShowAppCaPresenter.getAppCred(this.KeyUri, () => {
+        this.detailsDialogController.open();
+      });
     })
   }
 }
@@ -568,8 +569,9 @@ export struct componentPrivate {
     .height($r("app.float.wh_value_48"))
     .borderRadius($r("app.float.publicList_borderRadius"))
     .onClick(() => {
-      this.PrivateCerPresenter.getPrivateCred(this.KeyUri)
-      this.privateDetailDialog.open()
+      this.PrivateCerPresenter.getPrivateCred(this.KeyUri, () => {
+        this.privateDetailDialog.open();
+      });
     })
   }
 }
