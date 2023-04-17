@@ -406,7 +406,6 @@ struct CustomDialogExampleUser {
           left: $r("app.float.wh_value_24"),
           right: $r("app.float.wh_value_24")
         })
-        .borderRadius($r("app.float.CustomDialogExample_list_borderRadius_value"))
         .scrollBar(BarState.Auto);
 
         Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
@@ -539,7 +538,6 @@ struct CustomDialogExampleSystem {
           bottom: $r("app.float.CustomDialogExample_secListItem_Text_margin_left_value"),
           right: $r("app.float.wh_value_24")
         })
-        .borderRadius($r("app.float.CustomDialogExample_list_borderRadius_value"))
         .scrollBar(BarState.Auto);
 
         Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
@@ -643,10 +641,9 @@ struct ComponentSystem {
             this.setStatus.setSystemCertificateStatus(this.Uri, false);
           }
         })
-        .offset({ x: LocationChoice.SWITCH_BUTTON_X_OFFSET, y: 0 })
+        .margin({ right: 0 });
     }
     .height($r("app.float.ComponentSystem_Flex_height_value"))
-    .borderRadius($r("app.float.ComponentSystem_Flex_borderRadius_value"))
     .onClick(() => {
       this.setStatus.getSystemTrustedCertificate(this.Uri, () => {
         console.info('this.setStatus.certInfo.status is:' + JSON.stringify(this.setStatus.certInfo));
@@ -741,7 +738,6 @@ struct ComponentUser {
       }
     }
     .height($r("app.float.componentUser_flex_height_value"))
-    .borderRadius($r("app.float.componentUser_flex_borderRadius_value"))
     .onClick(() => {
       this.mUserCaPresenterDetail.getUserTrustedCertificate(this.Uri, () => {
         console.info('userCerInfo is:' + JSON.stringify(this.setStatus.certInfo));
@@ -826,6 +822,7 @@ struct TrustedEvidence {
                     right: $r("app.float.wh_value_12")
                   })
                   .padding({
+                    right: $r("app.float.wh_value_12"),
                     left: $r("app.float.wh_value_12"),
                     top: $r("app.float.wh_value_4"),
                     bottom: $r("app.float.wh_value_4")
@@ -865,7 +862,7 @@ struct TrustedEvidence {
                   })
                   .padding({
                     left: $r("app.float.wh_value_12"),
-                    right: $r("app.float.wh_value_8"),
+                    right: $r("app.float.wh_value_12"),
                     top: $r("app.float.wh_value_4"),
                     bottom: $r("app.float.wh_value_4")
                   })

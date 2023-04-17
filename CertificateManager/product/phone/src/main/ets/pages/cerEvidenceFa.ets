@@ -48,7 +48,7 @@ export struct DialogComponent {
         .onChange((isOn: boolean) => {
           this.uidItem.appInfoList[this.Index].status = isOn
         })
-        .offset({ x: 7, y:0 })
+        .margin({ right: $r("app.float.wh_value_16") })
 
     }.height($r("app.float.wh_value_72"))
   }
@@ -508,22 +508,14 @@ export struct componentPublic {
           .fontColor($r("sys.color.ohos_id_color_text_primary"))
           .fontWeight(FontWeight.Medium)
       }
-      .margin({
-        left: $r("app.float.publicList_margin")
-      })
 
       Row() {
         Image($r('app.media.ic_settings_arrow'))
           .width($r("app.float.publicList_image_wh"))
           .height($r("app.float.publicList_image_hg"))
       }
-      .margin({
-        left: $r("app.float.publicList_margin"),
-        right: $r("app.float.publicList_image_margin")
-      })
     }
     .height($r("app.float.wh_value_48"))
-    .borderRadius($r("app.float.publicList_borderRadius"))
     .onClick(() => {
       this.mShowAppCaPresenter.getAppCred(this.KeyUri)
       this.detailsDialogController.open()
@@ -551,22 +543,14 @@ export struct componentPrivate {
           .fontColor($r("sys.color.ohos_id_color_text_primary"))
           .fontWeight(FontWeight.Medium)
       }
-      .margin({
-        left: $r("app.float.publicList_margin")
-      })
 
       Row() {
         Image($r('app.media.ic_settings_arrow'))
           .width($r("app.float.publicList_image_wh"))
           .height($r("app.float.publicList_image_hg"))
       }
-      .margin({
-        left: $r("app.float.publicList_margin"),
-        right: $r("app.float.publicList_image_margin")
-      })
     }
     .height($r("app.float.wh_value_48"))
-    .borderRadius($r("app.float.publicList_borderRadius"))
     .onClick(() => {
       this.PrivateCerPresenter.getPrivateCred(this.KeyUri)
       this.privateDetailDialog.open()
@@ -651,15 +635,20 @@ struct evidenceList {
                     }, item => JSON.stringify(item))
                   }
                   .position({ x: $r("app.float.wh_value_12"), y: 0 })
-                  .width(WidthPercent.WH_92_100)
                   .margin({
-                    left: WidthPercent.WH_4_100
+                    left: $r("app.float.wh_value_12"),
+                    right: $r("app.float.wh_value_12")
+                  })
+                  .padding({
+                    right: $r("app.float.wh_value_12"),
+                    left: $r("app.float.wh_value_12"),
+                    top: $r("app.float.wh_value_4"),
+                    bottom: $r("app.float.wh_value_4")
                   })
                   .divider({
-                    strokeWidth: $r("app.float.Evidence_strokeWidth"),
-                    color: $r("app.color.Evidence_color"),
-                    startMargin: $r("app.float.Evidence_startMargin"),
-                    endMargin: $r("app.float.Evidence_endMargin")
+                    strokeWidth: $r("app.float.user_list_divider_strokeWidth_value"),
+                    color: $r("app.color.user_list_divider_color_000000"),
+                    endMargin: '3vp'
                   })
                   .borderRadius($r("app.float.Evidence_borderRadius"))
                   .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
@@ -684,15 +673,21 @@ struct evidenceList {
                     }, item => JSON.stringify(item))
                   }
                   .position({ x: $r("app.float.wh_value_12"), y: 0 })
-                  .width(WidthPercent.WH_92_100)
                   .margin({
-                    left: WidthPercent.WH_4_100
+                    left: $r("app.float.wh_value_12"),
+                    right: $r("app.float.wh_value_12")
+                  })
+                  .padding({
+                    right: $r("app.float.wh_value_12"),
+                    left: $r("app.float.wh_value_12"),
+                    top: $r("app.float.wh_value_4"),
+                    bottom: $r("app.float.wh_value_4")
                   })
                   .divider({
-                    strokeWidth: $r("app.float.Evidence_strokeWidth"),
-                    color: $r("app.color.Evidence_color"),
-                    startMargin: $r("app.float.Evidence_startMargin"),
-                    endMargin: $r("app.float.Evidence_endMargin") })
+                    strokeWidth: $r("app.float.user_list_divider_strokeWidth_value"),
+                    color: $r("app.color.user_list_divider_color_000000"),
+                    endMargin: '3vp'
+                  })
                   .borderRadius($r("app.float.Evidence_borderRadius"))
                   .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
                   .visibility(this.mShowPrivateCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
