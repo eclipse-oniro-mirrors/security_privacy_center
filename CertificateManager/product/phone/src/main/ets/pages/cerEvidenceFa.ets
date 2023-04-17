@@ -650,6 +650,7 @@ struct evidenceList {
                       }
                     }, item => JSON.stringify(item))
                   }
+                  .position({ x: $r("app.float.wh_value_12"), y: 0 })
                   .width(WidthPercent.WH_92_100)
                   .margin({
                     left: WidthPercent.WH_4_100
@@ -682,6 +683,7 @@ struct evidenceList {
                       }
                     }, item => JSON.stringify(item))
                   }
+                  .position({ x: $r("app.float.wh_value_12"), y: 0 })
                   .width(WidthPercent.WH_92_100)
                   .margin({
                     left: WidthPercent.WH_4_100
@@ -712,6 +714,9 @@ struct evidenceList {
               .barHeight($r("app.float.Evidence_barHeight"))
               .animationDuration(400)
               .width(WidthPercent.WH_100_100)
+              .margin({
+                bottom: $r("app.float.wh_value_24")
+              })
               .backgroundColor($r("app.color.TrustedEvidence_tabs_backgroundColor_F1F3F5"))
               .onChange((index: number) => {
                 this.currentIndex = index

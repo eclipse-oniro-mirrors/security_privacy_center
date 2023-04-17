@@ -820,6 +820,7 @@ struct TrustedEvidence {
                       }
                     }, item => JSON.stringify(item))
                   }
+                  .position({ x: $r("app.float.wh_value_12"), y: 0 })
                   .margin({
                     left: $r("app.float.wh_value_12"),
                     right: $r("app.float.wh_value_12")
@@ -857,6 +858,7 @@ struct TrustedEvidence {
                       }
                     }, item => JSON.stringify(item))
                   }
+                  .position({ x: $r("app.float.wh_value_12"), y: 0 })
                   .margin({
                     left: $r("app.float.wh_value_12"),
                     right: $r("app.float.wh_value_12")
@@ -893,6 +895,9 @@ struct TrustedEvidence {
               .barHeight($r("app.float.tabs_barHeight_value"))
               .animationDuration(400)
               .width(WidthPercent.WH_100_100)
+              .margin({
+                bottom: $r("app.float.wh_value_24")
+              })
               .backgroundColor($r("app.color.TrustedEvidence_tabs_backgroundColor_F1F3F5"))
               .onChange((index: number) => {
                 this.currentIndex = index
