@@ -55,7 +55,7 @@ export default class CmShowPrivateCredPresenter {
     });
   }
 
-  getPrivateCred(uri): void {
+  getPrivateCred(uri, callback): void {
     certManagerModel.getCertOrCred(CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED, uri, (errCode, credInfo) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         this.credInfo = credInfo;
@@ -63,6 +63,7 @@ export default class CmShowPrivateCredPresenter {
         console.log('getPrivateCred error :' + JSON.stringify(errCode));
         this.credInfo.clearCredentialVo();
       }
+      callback();
     });
   }
 }

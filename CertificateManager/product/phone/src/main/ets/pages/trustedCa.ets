@@ -251,10 +251,11 @@ struct CustomDialogDeleteWarning {
           .opacity($r("app.float.opacity_0_2"))
         Button($r("app.string.deleteAllCredDelete"))
           .onClick(() => {
-            this.deleteWarn.deleteUserCertificate(this.deleteWarn.certInfo.uri);
-            this.mShowUserListPresenter.updateUserTrustedCertificateList();
-            this.isShowWarnDialog = false;
-            this.controller.close()
+            this.deleteWarn.deleteUserCertificate(this.deleteWarn.certInfo.uri, () => {
+              this.mShowUserListPresenter.updateUserTrustedCertificateList();
+              this.isShowWarnDialog = false;
+              this.controller.close();
+            });
           })
           .backgroundColor($r("app.color.CustomDialogExample_Button_backgroundColor_FFFFFF"))
           .fontSize($r("sys.float.ohos_id_text_size_button1"))
