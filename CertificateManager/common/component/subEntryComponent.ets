@@ -32,20 +32,20 @@ export struct SubEntryComponent {
             .lineHeight($r('app.float.wh_value_22'))
             .fontColor($r('app.color.font_color_182431'))
             .fontWeight(FontWeight.Medium)
-            .margin({ left: $r('app.float.distance_8') })
+            .margin({ left: $r('app.float.wh_value_8') })
             .textAlign(TextAlign.Start);
         }
 
-        Image('/res/image/ic_settings_arrow.svg')
+        Image($r('app.media.ic_settings_arrow'))
           .width($r('app.float.wh_value_12'))
           .height($r('app.float.wh_value_24'))
-          .margin({ right: $r('app.float.distance_8') })
           .fillColor($r("sys.color.ohos_id_color_primary"))
           .opacity($r("app.float.opacity_0_2"))
+          .margin({ right: $r('app.float.wh_value_8') });
       }
+      .borderRadius($r('app.float.radius_20'))
       .height(ComponentConfig.WH_100_100)
       .width(ComponentConfig.WH_100_100)
-      .borderRadius($r('app.float.radius_20'))
       .linearGradient(this.isTouched ? {
                                          angle: 90,
                                          direction: GradientDirection.Right,
@@ -64,9 +64,7 @@ export struct SubEntryComponent {
         }
       })
     }
-    .padding($r('app.float.distance_4'))
-    .height($r('app.float.wh_value_56'))
-    .borderRadius($r('app.float.radius_24'))
+    .height($r('app.float.wh_value_48'))
     .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"));
   }
 }

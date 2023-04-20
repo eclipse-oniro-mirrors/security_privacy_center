@@ -210,6 +210,13 @@ struct CustomDialogAuthForApp {
         right: $r('app.float.wh_value_24')
       })
     }
+    .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
+    .margin({
+      bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
+      left: $r("sys.float.ohos_id_dialog_margin_start"),
+      right: $r("sys.float.ohos_id_dialog_margin_end"),
+    })
+    .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
   }
 }
 
@@ -220,7 +227,7 @@ struct RadioAuth {
     builder: CustomDialogAuthForApp(),
     autoCancel: false,
     alignment: DialogAlignment.Bottom,
-    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
+    customStyle: true,
   })
 
   aboutToAppear() {

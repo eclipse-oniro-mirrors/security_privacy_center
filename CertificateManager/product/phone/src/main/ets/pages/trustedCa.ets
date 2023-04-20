@@ -268,11 +268,17 @@ struct CustomDialogDeleteWarning {
         bottom: $r('app.float.wh_value_16')
       })
       .margin({
-        top: $r('app.float.wh_value_16'),
         left: $r('app.float.wh_value_24'),
         right: $r('app.float.wh_value_24')
       })
     }
+    .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
+    .margin({
+      bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
+      left: $r("sys.float.ohos_id_dialog_margin_start"),
+      right: $r("sys.float.ohos_id_dialog_margin_end"),
+    })
+    .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
   }
 }
 
@@ -403,7 +409,6 @@ struct CustomDialogExampleUser {
         }
         .height($r("app.float.CustomDialogExample_list_height_value"))
         .margin({
-          bottom: $r("app.float.CustomDialogExample_secListItem_Text_margin_left_value"),
           left: $r("app.float.wh_value_24"),
           right: $r("app.float.wh_value_24")
         })
@@ -443,11 +448,17 @@ struct CustomDialogExampleUser {
           bottom: $r('app.float.wh_value_16')
         })
         .margin({
-          top: $r('app.float.wh_value_16'),
           left: $r('app.float.wh_value_24'),
           right: $r('app.float.wh_value_24')
         })
       }
+      .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
+      .margin({
+        bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
+        left: $r("sys.float.ohos_id_dialog_margin_start"),
+        right: $r("sys.float.ohos_id_dialog_margin_end"),
+      })
+      .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
   }
 }
 
@@ -464,9 +475,10 @@ struct CustomDialogExampleSystem {
           .fontSize($r("sys.float.ohos_id_text_size_dialog_tittle"))
           .fontColor($r("sys.color.ohos_id_color_text_primary"))
           .fontWeight(FontWeight.Medium)
+          .height($r("app.float.wh_value_56"))
           .margin({
-            left: $r("app.float.CustomDialogExample_firText_margin_left_value"),
-            top: $r("app.float.CustomDialogExample_firText_margin_top_value")
+            top: 0,
+            bottom: $r("app.float.wh_value_8")
           })
           .alignSelf(ItemAlign.Start)
         Text(this.sysInfoPresenter.certInfo.certAlias)
@@ -474,8 +486,8 @@ struct CustomDialogExampleSystem {
           .fontColor($r("sys.color.ohos_id_color_text_primary"))
           .fontWeight(FontWeight.Medium)
           .margin({
-            top: $r("app.float.wh_value_16"),
-            left: $r("app.float.CustomDialogExample_secText_margin_left_value")
+            top: 0,
+            bottom: $r("app.float.wh_value_24")
           })
           .alignSelf(ItemAlign.Start)
         List() {
@@ -495,10 +507,10 @@ struct CustomDialogExampleSystem {
               .fontSize($r("sys.float.ohos_id_text_size_body2"))
               .fontColor($r("sys.color.ohos_id_color_text_primary"))
               .fontWeight(FontWeight.Regular)
-              .margin({
-                top: $r("app.float.wh_value_12")
-              })
           }.width('100%').align(Alignment.Start)
+          .margin({
+            top: $r("app.float.wh_value_12")
+          })
 
           ListItem() {
             DialogIssuerComponent({ map: this.sysInfoPresenter.certInfo.issuerNameMap });
@@ -509,10 +521,10 @@ struct CustomDialogExampleSystem {
               .fontSize($r("sys.float.ohos_id_text_size_body2"))
               .fontColor($r("sys.color.ohos_id_color_text_primary"))
               .fontWeight(FontWeight.Regular)
-              .margin({
-                top: $r("app.float.wh_value_12")
-              })
           }.width('100%').align(Alignment.Start)
+          .margin({
+            top: $r("app.float.wh_value_12")
+          })
 
           ListItem() {
             DialogDateComponent({ map: this.sysInfoPresenter.certInfo.dateMap });
@@ -523,22 +535,16 @@ struct CustomDialogExampleSystem {
               .fontSize($r("sys.float.ohos_id_text_size_body2"))
               .fontColor($r("sys.color.ohos_id_color_text_primary"))
               .fontWeight(FontWeight.Regular)
-              .margin({
-                top: $r("app.float.wh_value_12")
-              })
           }.width('100%').align(Alignment.Start)
+          .margin({
+            top: $r("app.float.wh_value_12")
+          })
 
           ListItem() {
             DialogFingerPrintComponent({ fingerprintSha256: this.sysInfoPresenter.certInfo.fingerprintSha256 });
           }.width('100%').align(Alignment.Start)
         }
         .height($r("app.float.CustomDialogExample_list_height_value"))
-        .margin({
-          left: $r("app.float.wh_value_24"),
-          top: $r("app.float.CustomDialogExample_list_margin_top_value"),
-          bottom: $r("app.float.CustomDialogExample_secListItem_Text_margin_left_value"),
-          right: $r("app.float.wh_value_24")
-        })
         .scrollBar(BarState.Auto);
 
         Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
@@ -585,12 +591,20 @@ struct CustomDialogExampleSystem {
         .padding({
           bottom: $r('app.float.wh_value_16')
         })
-        .margin({
-          top: $r('app.float.wh_value_16'),
-          left: $r('app.float.wh_value_24'),
-          right: $r('app.float.wh_value_24')
-        })
       }
+      .padding({
+        top: 0,
+        bottom: 0,
+        left: $r('app.float.wh_value_24'),
+        right: $r('app.float.wh_value_24')
+      })
+      .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
+      .margin({
+        bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
+        left: $r("sys.float.ohos_id_dialog_margin_start"),
+        right: $r("sys.float.ohos_id_dialog_margin_end"),
+      })
+      .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
   }
 }
 
@@ -608,7 +622,7 @@ struct ComponentSystem {
     builder: CustomDialogExampleSystem({ sysInfoPresenter: $setStatus }),
     autoCancel: true,
     alignment: DialogAlignment.Bottom,
-    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
+    customStyle: true,
   })
 
   build() {
@@ -674,7 +688,7 @@ struct ComponentUser {
       this.setStatus.updateUserTrustedCertificateList();
     },
     alignment: DialogAlignment.Bottom,
-    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
+    customStyle: true,
   })
 
   deleteWarnDialog: CustomDialogController = new CustomDialogController({
@@ -684,7 +698,7 @@ struct ComponentUser {
       mShowUserListPresenter: $setStatus }),
     autoCancel: false,
     alignment:DialogAlignment.Bottom,
-    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
+    customStyle: true,
   })
 
   onShowDeleteWarnDialog() {
@@ -817,11 +831,7 @@ struct TrustedEvidence {
                       }
                     }, item => JSON.stringify(item))
                   }
-                  .position({ x: $r("app.float.wh_value_12"), y: 0 })
-                  .margin({
-                    left: $r("app.float.wh_value_12"),
-                    right: $r("app.float.wh_value_12")
-                  })
+                  .position({ y: 0 })
                   .padding({
                     right: $r("app.float.wh_value_12"),
                     left: $r("app.float.wh_value_12"),
@@ -856,11 +866,7 @@ struct TrustedEvidence {
                       }
                     }, item => JSON.stringify(item))
                   }
-                  .position({ x: $r("app.float.wh_value_12"), y: 0 })
-                  .margin({
-                    left: $r("app.float.wh_value_12"),
-                    right: $r("app.float.wh_value_12")
-                  })
+                  .position({ y: 0 })
                   .padding({
                     left: $r("app.float.wh_value_12"),
                     right: $r("app.float.wh_value_12"),
@@ -904,6 +910,10 @@ struct TrustedEvidence {
             .height(WidthPercent.WH_94_100)
             .width(WidthPercent.WH_100_100);
           }
+          .padding({
+            left: $r("app.float.wh_value_12"),
+            right: $r("app.float.wh_value_12")
+          })
           .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
           .width(WidthPercent.WH_100_100)
           .height(WidthPercent.WH_100_100)
