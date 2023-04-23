@@ -63,7 +63,7 @@ export default struct HeadComponent {
         .margin({ top: $r('app.float.wh_value_13'), bottom: $r('app.float.wh_value_15') });
     }
     .width(ComponentConfig.WH_100_100)
-    .padding({ left: $r('app.float.wh_value_24') })
+    .padding({ left: $r('app.float.wh_value_12') })
     .height($r('app.float.wh_value_56'))
     .alignItems(VerticalAlign.Center)
     .align(Alignment.Start)

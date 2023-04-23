@@ -153,6 +153,13 @@ struct CustomDialogExampleAuthor {
         right: $r('app.float.wh_value_24')
       })
     }
+    .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
+    .margin({
+      bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
+      left: $r("sys.float.ohos_id_dialog_margin_start"),
+      right: $r("sys.float.ohos_id_dialog_margin_end"),
+    })
+    .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
   }
 }
 
@@ -239,6 +246,13 @@ struct CustomDialogExamplePrivate {
         right: $r('app.float.wh_value_24')
       })
     }
+    .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
+    .margin({
+      bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
+      left: $r("sys.float.ohos_id_dialog_margin_start"),
+      right: $r("sys.float.ohos_id_dialog_margin_end"),
+    })
+    .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
   }
 }
 
@@ -311,6 +325,13 @@ struct CustomDialogDeleteWarning {
         right: $r('app.float.wh_value_24')
       })
     }
+    .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
+    .margin({
+      bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
+      left: $r("sys.float.ohos_id_dialog_margin_start"),
+      right: $r("sys.float.ohos_id_dialog_margin_end"),
+    })
+    .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
   }
 }
 
@@ -448,6 +469,13 @@ struct CustomDialogExampleApp {
         right: $r('app.float.wh_value_24')
       })
     }
+    .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
+    .margin({
+      bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
+      left: $r("sys.float.ohos_id_dialog_margin_start"),
+      right: $r("sys.float.ohos_id_dialog_margin_end"),
+    })
+    .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
   }
 }
 
@@ -466,19 +494,19 @@ export struct componentPublic {
     }),
     autoCancel: true,
     alignment: DialogAlignment.Bottom,
-    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
+    customStyle: true,
   })
   appDialogController: CustomDialogController = new CustomDialogController({
     builder: CustomDialogExampleAuthor({ isShowAuthDialog: $isShowAuthMng, AuthorInfo: $mShowAppCaPresenter }),
     autoCancel: false,
     alignment: DialogAlignment.Bottom,
-    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
+    customStyle: true,
   })
   deleteWarnDialog: CustomDialogController = new CustomDialogController({
     builder: CustomDialogDeleteWarning({ isShowWarnDialog: $isShowWarning, deleteWarn: $mShowAppCaPresenter }),
     autoCancel: false,
     alignment: DialogAlignment.Bottom,
-    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
+    customStyle: true,
   })
 
   onShowAuthMngChange() {
@@ -533,7 +561,7 @@ export struct componentPrivate {
     builder: CustomDialogExamplePrivate(),
     autoCancel: true,
     alignment: DialogAlignment.Bottom,
-    offset: { dx: 0, dy: LocationChoice.DIALOG_DY_OFFSET }
+    customStyle: true,
   })
 
   build() {
@@ -636,11 +664,7 @@ struct evidenceList {
                       }
                     }, item => JSON.stringify(item))
                   }
-                  .position({ x: $r("app.float.wh_value_12"), y: 0 })
-                  .margin({
-                    left: $r("app.float.wh_value_12"),
-                    right: $r("app.float.wh_value_12")
-                  })
+                  .position({ y: 0 })
                   .padding({
                     right: $r("app.float.wh_value_12"),
                     left: $r("app.float.wh_value_12"),
@@ -674,11 +698,7 @@ struct evidenceList {
                       }
                     }, item => JSON.stringify(item))
                   }
-                  .position({ x: $r("app.float.wh_value_12"), y: 0 })
-                  .margin({
-                    left: $r("app.float.wh_value_12"),
-                    right: $r("app.float.wh_value_12")
-                  })
+                  .position({ y: 0 })
                   .padding({
                     right: $r("app.float.wh_value_12"),
                     left: $r("app.float.wh_value_12"),
@@ -722,6 +742,10 @@ struct evidenceList {
             .height(WidthPercent.WH_94_100)
             .width(WidthPercent.WH_100_100)
           }
+          .padding({
+            left: $r("app.float.wh_value_12"),
+            right: $r("app.float.wh_value_12")
+          })
           .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
           .width(WidthPercent.WH_100_100)
           .height(WidthPercent.WH_100_100)
