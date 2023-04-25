@@ -22,24 +22,18 @@ export class FileIoModel {
     this.media = mediaLibrary.getMediaLibrary(globalThis.certManagerAbilityContext);
   }
 
-  getFileIdFromMediaUri(mediaUri) {
-    console.log("getMediaFileSuffix getFileIdFromMediaUri  uri: " + mediaUri);
-
-    let elemList = mediaUri.split("/");
-    let fileIdString = elemList[elemList.length - 1];
-    let fileIdNum = fileIdString.match(/\d+/g);
-
-    return fileIdNum;
-  }
-
   getMediaFileSuffix(mediaUri, callback) {
-    console.log("getMediaFileSuffix start  uri: " + mediaUri);
-    let fileKeyObj = mediaLibrary.FileKey
-    let fileId = this.getFileIdFromMediaUri(mediaUri);
-    console.log("getMediaFileSuffix start  fileId: " + fileId);
+    console.log('getMediaFileSuffix start  uri: ' + mediaUri);
+    let fileKeyObj = mediaLibrary.FileKey;
+    let fileType = mediaLibrary.MediaType.FILE;
+    let imageType = mediaLibrary.MediaType.IMAGE;
+    let videoType = mediaLibrary.MediaType.VIDEO;
+    let audioType = mediaLibrary.MediaType.AUDIO;
     let imagesFetchOp = {
-      selections: fileKeyObj.ID + '= ?',
-      selectionArgs: [fileId.toString()],
+      selections: fileKeyObj.MEDIA_TYPE + '= ? or ' + fileKeyObj.MEDIA_TYPE + '= ? or ' +
+        fileKeyObj.MEDIA_TYPE + '= ? or ' + fileKeyObj.MEDIA_TYPE + '= ?',
+      selectionArgs: [fileType.toString(), imageType.toString(), videoType.toString(), audioType.toString()],
+      uri: mediaUri,
     };
     let suffix;
 
@@ -64,13 +58,17 @@ export class FileIoModel {
   }
 
   getMediaFileData(mediaUri, callback) {
-    console.log("getMediaFile start");
-
+    console.log('getMediaFile start');
     let fileKeyObj = mediaLibrary.FileKey;
-    let fileId = this.getFileIdFromMediaUri(mediaUri);
+    let fileType = mediaLibrary.MediaType.FILE;
+    let imageType = mediaLibrary.MediaType.IMAGE;
+    let videoType = mediaLibrary.MediaType.VIDEO;
+    let audioType = mediaLibrary.MediaType.AUDIO;
     let imagesFetchOp = {
-      selections: fileKeyObj.ID + '= ?',
-      selectionArgs: [fileId.toString()],
+      selections: fileKeyObj.MEDIA_TYPE + '= ? or ' + fileKeyObj.MEDIA_TYPE + '= ? or ' +
+        fileKeyObj.MEDIA_TYPE + '= ? or ' + fileKeyObj.MEDIA_TYPE + '= ?',
+      selectionArgs: [fileType.toString(), imageType.toString(), videoType.toString(), audioType.toString()],
+      uri: mediaUri,
     };
     let fd;
 
