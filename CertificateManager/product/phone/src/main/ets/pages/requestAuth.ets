@@ -97,7 +97,6 @@ struct CustomDialogAuthForApp {
           strokeWidth: $r("app.float.request_auth_strokeWidth"),
           color: $r("app.color.request_auth_color"),
           endMargin: $r("app.float.request_auth_divider_endMargin")})
-        .borderRadius($r("app.float.request_auth_borderRadius"))
         .backgroundColor($r("app.color.request_auth_background_color"))
         .visibility(this.mAppCredAuthPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
       } else {
@@ -160,7 +159,6 @@ struct CustomDialogAuthForApp {
           strokeWidth: $r("app.float.request_auth_strokeWidth"),
           color: $r("app.color.request_auth_color"),
           endMargin: $r("app.float.request_auth_divider_endMargin") })
-        .borderRadius($r("app.float.request_auth_borderRadius"))
         .backgroundColor($r("app.color.request_auth_background_color"))
         .visibility(this.mAppCredAuthPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
       }

@@ -15,8 +15,8 @@
 
 import Ability from '@ohos.app.ability.UIAbility';
 import Want from '@ohos.app.ability.Want';
-import UIAbilityContext from 'application/UIAbilityContext';
 import Window from '@ohos.window';
+import type UIAbilityContext from 'application/UIAbilityContext';
 
 class PwdStore {
   private certPwd: string = '';
