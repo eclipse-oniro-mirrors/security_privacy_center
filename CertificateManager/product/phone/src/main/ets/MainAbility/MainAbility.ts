@@ -14,9 +14,10 @@
  */
 
 import Ability from '@ohos.app.ability.UIAbility';
-import Want from '@ohos.app.ability.Want';
-import Window from '@ohos.window';
+import type Want from '@ohos.app.ability.Want';
+import type Window from '@ohos.window';
 import type UIAbilityContext from 'application/UIAbilityContext';
+import { BusinessError } from '@ohos.base';
 
 class PwdStore {
   private certPwd: string = '';
@@ -36,11 +37,10 @@ class PwdStore {
 export default class MainAbility extends Ability {
   onCreate(want: Want, launchParam): void {
     console.log('[Demo] MainAbility onCreate');
-    let context: UIAbilityContext = this.context;
-    globalThis.certManagerAbilityContext = context;
+    globalThis.certManagerAbilityContext = this.context as UIAbilityContext;
     globalThis.PwdStore = new PwdStore();
-    globalThis.abilityWant = want;
-    globalThis.abilityContext = context;
+    globalThis.abilityWant =  want as Want;
+    globalThis.abilityContext = this.context as UIAbilityContext;;
   }
 
   onDestroy(): void {
@@ -50,7 +50,8 @@ export default class MainAbility extends Ability {
   onWindowStageCreate(windowStage: Window.WindowStage): void {
     // Main window is created, set main page for this ability
     console.log('[Demo] MainAbility onWindowStageCreate');
-    windowStage.loadContent('pages/certManagerFa', (err, data) => {
+    let stage: Window.WindowStage = windowStage as Window.WindowStage;
+    stage.loadContent('pages/certManagerFa', (err: BusinessError<void>, data) => {
       if (err.code) {
         console.error('onWindowStageCreate failed, cause:' + JSON.stringify(err));
         return;
@@ -75,6 +76,6 @@ export default class MainAbility extends Ability {
 
   onNewWant(want: Want): void {
     console.log('[Demo] MainAbility onNewWant');
-    globalThis.abilityWant = want;
+    globalThis.abilityWant = want as Want;
   }
 };
