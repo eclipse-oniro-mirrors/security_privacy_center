@@ -39,7 +39,7 @@ export default class MainAbility extends Ability {
     console.log('[Demo] MainAbility onCreate');
     globalThis.certManagerAbilityContext = this.context as UIAbilityContext;
     globalThis.PwdStore = new PwdStore();
-    globalThis.abilityWant =  want as Want;
+    globalThis.abilityWant = want as Want;
     globalThis.abilityContext = this.context as UIAbilityContext;;
   }
 
