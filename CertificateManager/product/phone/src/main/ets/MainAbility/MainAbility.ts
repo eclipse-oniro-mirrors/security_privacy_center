@@ -17,7 +17,6 @@ import Ability from '@ohos.app.ability.UIAbility';
 import type Want from '@ohos.app.ability.Want';
 import type Window from '@ohos.window';
 import type UIAbilityContext from 'application/UIAbilityContext';
-import { BusinessError } from '@ohos.base';
 
 class PwdStore {
   private certPwd: string = '';
@@ -50,8 +49,7 @@ export default class MainAbility extends Ability {
   onWindowStageCreate(windowStage: Window.WindowStage): void {
     // Main window is created, set main page for this ability
     console.log('[Demo] MainAbility onWindowStageCreate');
-    let stage: Window.WindowStage = windowStage as Window.WindowStage;
-    stage.loadContent('pages/certManagerFa', (err: BusinessError<void>, data) => {
+    windowStage.loadContent('pages/certManagerFa', (err, data) => {
       if (err.code) {
         console.error('onWindowStageCreate failed, cause:' + JSON.stringify(err));
         return;
