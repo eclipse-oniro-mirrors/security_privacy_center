@@ -36,10 +36,11 @@ class PwdStore {
 export default class MainAbility extends Ability {
   onCreate(want: Want, launchParam): void {
     console.log('[Demo] MainAbility onCreate');
-    globalThis.certManagerAbilityContext = this.context as UIAbilityContext;
+    let context: UIAbilityContext = this.context;
+    globalThis.certManagerAbilityContext = context;
     globalThis.PwdStore = new PwdStore();
-    globalThis.abilityWant = want as Want;
-    globalThis.abilityContext = this.context as UIAbilityContext;;
+    globalThis.abilityWant = want;
+    globalThis.abilityContext = context;
   }
 
   onDestroy(): void {
@@ -74,6 +75,6 @@ export default class MainAbility extends Ability {
 
   onNewWant(want: Want): void {
     console.log('[Demo] MainAbility onNewWant');
-    globalThis.abilityWant = want as Want;
+    globalThis.abilityWant = want;
   }
 };
