@@ -14,8 +14,8 @@
  */
 
 import Ability from '@ohos.app.ability.UIAbility';
-import Want from '@ohos.app.ability.Want';
-import Window from '@ohos.window';
+import type Want from '@ohos.app.ability.Want';
+import type Window from '@ohos.window';
 import type UIAbilityContext from 'application/UIAbilityContext';
 
 class PwdStore {
