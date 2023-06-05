@@ -30,7 +30,6 @@ struct CertificateComponent {
 
   build() {
     Column() {
-
       GridContainer({
         columns: 12,
         sizeType: SizeType.Auto,
@@ -121,72 +120,104 @@ struct CustomDialogExampleDeleteAll {
   @Link deleteAll: CmFaPresenter;
 
   build() {
-      Column() {
-        Text($r("app.string.deleteAllCredDialogTitle"))
-          .height($r("app.float.wh_value_56"))
-          .fontSize($r("sys.float.ohos_id_text_size_dialog_tittle"))
-          .fontColor($r("sys.color.ohos_id_color_text_primary"))
-          .fontWeight(FontWeight.Medium)
-          .margin({
-            left: $r('app.float.wh_value_24'),
-            right: $r('app.float.wh_value_24')
-          })
-          .alignSelf(ItemAlign.Start)
-        Text($r("app.string.deleteAllCredDialogMessage"))
-          .fontSize($r('sys.float.ohos_id_text_size_body1'))
-          .fontWeight(FontWeight.Regular)
-          .fontColor($r("sys.color.ohos_id_color_text_primary"))
-          .margin({
-            top: $r("app.float.wh_value_16"),
-            left: $r('app.float.wh_value_24'),
-            right: $r('app.float.wh_value_24')
-          })
-          .alignSelf(ItemAlign.Start)
+    Column() {
+      GridContainer({
+        columns: 12,
+        sizeType: SizeType.Auto,
+        gutter: vp2px(1) === 2 ? '12vp' : '0vp',
+        margin: vp2px(1) === 2 ? '24vp' : '0vp'
+      }) {
+        Row({}) {
+          Column() {
+          }
+          .width(WidthPercent.WH_100_100)
+          .useSizeType({
+            xs: { span: 0, offset: 0 }, sm: { span: 0, offset: 0 },
+            md: { span: 0, offset: 0 }, lg: { span: 2, offset: 0 }
+          });
 
-        Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
-          Button($r("app.string.deleteAllCredCancel"))
-            .onClick(() => {
-              this.controller.close()
+          Column() {
+            Text($r("app.string.deleteAllCredDialogTitle"))
+              .height($r("app.float.wh_value_56"))
+              .fontSize($r("sys.float.ohos_id_text_size_dialog_tittle"))
+              .fontColor($r("sys.color.ohos_id_color_text_primary"))
+              .fontWeight(FontWeight.Medium)
+              .margin({
+                left: $r('app.float.wh_value_24'),
+                right: $r('app.float.wh_value_24')
+              })
+              .alignSelf(ItemAlign.Start)
+            Text($r("app.string.deleteAllCredDialogMessage"))
+              .fontSize($r('sys.float.ohos_id_text_size_body1'))
+              .fontWeight(FontWeight.Regular)
+              .fontColor($r("sys.color.ohos_id_color_text_primary"))
+              .margin({
+                top: $r("app.float.wh_value_16"),
+                left: $r('app.float.wh_value_24'),
+                right: $r('app.float.wh_value_24')
+              })
+              .alignSelf(ItemAlign.Start)
+
+            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
+              Button($r("app.string.deleteAllCredCancel"))
+                .onClick(() => {
+                  this.controller.close()
+                })
+                .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
+                .fontSize($r("sys.float.ohos_id_text_size_button1"))
+                .fontColor($r("sys.color.ohos_id_color_text_hyperlink"))
+                .width($r('app.float.wh_value_152'))
+                .height($r('app.float.wh_value_40'))
+              Divider()
+                .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
+                .color($r("sys.color.ohos_id_color_list_separator"))
+                .vertical(true)
+                .height($r('app.float.wh_value_40'))
+                .opacity($r("app.float.opacity_0_2"))
+              Button($r("app.string.deleteAllCredDelete"))
+                .onClick(() => {
+                  this.deleteAll.uninstallAllCert();
+                  this.controller.close()
+                })
+                .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
+                .fontSize($r("sys.float.ohos_id_text_size_button1"))
+                .fontColor($r("sys.color.ohos_id_color_warning"))
+                .width($r('app.float.wh_value_152'))
+                .height($r('app.float.wh_value_40'))
+            }
+            .height($r('app.float.wh_value_64'))
+            .padding({
+              bottom: $r('app.float.wh_value_16')
             })
-            .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
-            .fontSize($r("sys.float.ohos_id_text_size_button1"))
-            .fontColor($r("sys.color.ohos_id_color_text_hyperlink"))
-            .width($r('app.float.wh_value_152'))
-            .height($r('app.float.wh_value_40'))
-          Divider()
-            .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
-            .color($r("sys.color.ohos_id_color_list_separator"))
-            .vertical(true)
-            .height($r('app.float.wh_value_40'))
-            .opacity($r("app.float.opacity_0_2"))
-          Button($r("app.string.deleteAllCredDelete"))
-            .onClick(() => {
-              this.deleteAll.uninstallAllCert();
-              this.controller.close()
+            .margin({
+              top: $r('app.float.wh_value_16'),
+              left: $r('app.float.wh_value_24'),
+              right: $r('app.float.wh_value_24')
             })
-            .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
-            .fontSize($r("sys.float.ohos_id_text_size_button1"))
-            .fontColor($r("sys.color.ohos_id_color_warning"))
-            .width($r('app.float.wh_value_152'))
-            .height($r('app.float.wh_value_40'))
+          }
+          .width(WidthPercent.WH_100_100)
+          .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
+          .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
+          .useSizeType({
+            xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
+            md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
+          });
+
+          Column() {
+          }
+          .width(WidthPercent.WH_100_100)
+          .useSizeType({
+            xs: { span: 0, offset: 12 }, sm: { span: 0, offset: 12 },
+            md: { span: 0, offset: 12 }, lg: { span: 2, offset: 10 }
+          });
         }
-        .height($r('app.float.wh_value_64'))
-        .padding({
-          bottom: $r('app.float.wh_value_16')
-        })
-        .margin({
-          top: $r('app.float.wh_value_16'),
-          left: $r('app.float.wh_value_24'),
-          right: $r('app.float.wh_value_24')
-        })
       }
-      .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
-      .margin({
-        bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
-        left: $r("sys.float.ohos_id_dialog_margin_start"),
-        right: $r("sys.float.ohos_id_dialog_margin_end"),
-      })
-      .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
+    }
+    .margin({
+      bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
+      left: $r("sys.float.ohos_id_dialog_margin_start"),
+      right: $r("sys.float.ohos_id_dialog_margin_end"),
+    })
   }
 }
 

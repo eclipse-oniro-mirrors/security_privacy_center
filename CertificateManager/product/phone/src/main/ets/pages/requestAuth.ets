@@ -33,188 +33,220 @@ struct CustomDialogAuthForApp {
 
   build() {
     Column() {
-      Text($r('app.string.pickCredToAuth'))
-        .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
-        .height($r("app.float.wh_value_56"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
-        .fontWeight(FontWeight.Medium)
-        .margin({
-          left: $r('app.float.wh_value_24'),
-          right: $r('app.float.wh_value_24')
-        })
-        .alignSelf(ItemAlign.Start)
-
-      Text($r('app.string.requestAuthMsg', this.mAppCredAuthPresenter.appName))
-        .fontSize($r('sys.float.ohos_id_text_size_body1'))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
-        .fontWeight(FontWeight.Regular)
-        .margin({
-          top: $r('app.float.wh_value_8'),
-          left: $r('app.float.wh_value_24'),
-          right: $r('app.float.wh_value_24')
-        })
-        .alignSelf(ItemAlign.Start)
-
-      if (this.mAppCredAuthPresenter.credList.length > ConfigValue.REQUEST_AUTH_MAX_LENGTH) {
-        List() {
-          ForEach(this.mAppCredAuthPresenter.credList, (item) => {
-            ListItem() {
-              Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-
-                Column() {
-                  Text(item.alias)
-                    .fontSize($r('app.float.font_18'))
-                    .fontColor($r('app.color.request_auth_font_color'))
-                    .fontWeight(FontWeight.Medium)
-                    .textAlign(TextAlign.Start);
-                }
-                .alignItems(HorizontalAlign.Start)
-
-                Column() {
-                  Radio({ value: item.alias, group: 'appCredGroup' })
-                    .checked(false)
-                    .onChange((value: boolean) => {
-                      console.log(item.alias + ' status is ' + value)
-                      if (value) {
-                        this.selectUri = item.keyUri;
-                        console.log('selectUri is ' + this.selectUri)
-                      }
-                    })
-                }
-                .alignItems(HorizontalAlign.End)
-              }
-              .width(WidthPercent.WH_100_100)
-            }
-            .height($r('app.float.wh_value_64'))
-          }, item => JSON.stringify(item))
-        }
-        .height(WidthPercent.WH_50_100)
-        .margin({
-          left: $r('app.float.wh_value_24'),
-          right: $r('app.float.wh_value_24')
-        })
-        .divider({
-          strokeWidth: $r("app.float.request_auth_strokeWidth"),
-          color: $r("app.color.request_auth_color"),
-          endMargin: $r("app.float.request_auth_divider_endMargin")})
-        .backgroundColor($r("app.color.request_auth_background_color"))
-        .visibility(this.mAppCredAuthPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
-      } else {
-        List() {
-          ForEach(this.mAppCredAuthPresenter.credList, (item) => {
-            ListItem() {
-              Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-                Column() {
-                  Text(item.alias)
-                    .fontSize($r('app.float.font_18'))
-                    .fontColor($r('app.color.request_auth_font_color'))
-                    .fontWeight(FontWeight.Medium)
-                    .textAlign(TextAlign.Start);
-                }
-                .alignItems(HorizontalAlign.Start)
-
-                Column() {
-                  Radio({ value: item.alias, group: 'appCredGroup' })
-                    .checked(false)
-                    .onChange((value: boolean) => {
-                      console.log(item.alias + ' status is ' + value)
-                      if (value) {
-                        this.selectUri = item.keyUri;
-                        console.log('selectUri is ' + this.selectUri)
-                      }
-                    })
-                }
-                .alignItems(HorizontalAlign.End)
-              }
-              .width(WidthPercent.WH_100_100)
-            }
-            .height($r('app.float.wh_value_64'))
-          }, item => JSON.stringify(item))
-          ListItem() {
-            Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-              Column() {
-                Text()
-              }
-              .alignItems(HorizontalAlign.Start)
-
-              Column() {
-                Radio({ value: 'null', group: 'appCredGroup' })
-                  .checked(false)
-                  .onChange((value: boolean) => {
-                    if (value) {
-                      this.selectUri = 'null';
-                      console.log('selectUri is ' + this.selectUri)
-                    }
-                  })
-              }
-            }
-            .visibility(Visibility.None)
+      GridContainer({
+        columns: 12,
+        sizeType: SizeType.Auto,
+        gutter: vp2px(1) === 2 ? '12vp' : '0vp',
+        margin: vp2px(1) === 2 ? '24vp' : '0vp'
+      }) {
+        Row({}) {
+          Column() {
           }
-        }
-        .margin({
-          left: $r('app.float.wh_value_24'),
-          right: $r('app.float.wh_value_24')
-        })
-        .divider({
-          strokeWidth: $r("app.float.request_auth_strokeWidth"),
-          color: $r("app.color.request_auth_color"),
-          endMargin: $r("app.float.request_auth_divider_endMargin") })
-        .backgroundColor($r("app.color.request_auth_background_color"))
-        .visibility(this.mAppCredAuthPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
-      }
+          .width(WidthPercent.WH_100_100)
+          .useSizeType({
+            xs: { span: 0, offset: 0 }, sm: { span: 0, offset: 0 },
+            md: { span: 0, offset: 0 }, lg: { span: 2, offset: 0 }
+          });
 
-      Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
-        Button($r('app.string.requestAuthCancel'))
-          .onClick(() => {
-            this.mAppCredAuthPresenter.cancelProcess();
-            this.controller.close();
-          })
-          .backgroundColor($r('app.color.request_auth_background_color'))
-          .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
-          .fontSize($r('sys.float.ohos_id_text_size_button1'))
-          .width($r('app.float.wh_value_152'))
-          .height($r('app.float.wh_value_40'))
+          Column() {
+            Text($r('app.string.pickCredToAuth'))
+              .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
+              .height($r("app.float.wh_value_56"))
+              .fontColor($r("sys.color.ohos_id_color_text_primary"))
+              .fontWeight(FontWeight.Medium)
+              .margin({
+                left: $r('app.float.wh_value_24'),
+                right: $r('app.float.wh_value_24')
+              })
+              .alignSelf(ItemAlign.Start)
 
-        Divider()
-          .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
-          .color($r("sys.color.ohos_id_color_list_separator"))
-          .vertical(true)
-          .height($r('app.float.wh_value_40'))
-          .opacity($r("app.float.opacity_0_2"))
+            Text($r('app.string.requestAuthMsg', this.mAppCredAuthPresenter.appName))
+              .fontSize($r('sys.float.ohos_id_text_size_body1'))
+              .fontColor($r("sys.color.ohos_id_color_text_primary"))
+              .fontWeight(FontWeight.Regular)
+              .margin({
+                top: $r('app.float.wh_value_8'),
+                left: $r('app.float.wh_value_24'),
+                right: $r('app.float.wh_value_24')
+              })
+              .alignSelf(ItemAlign.Start)
 
-        Button($r('app.string.requestAuthFinish'))
-          .onClick(() => {
-            LogUtil.info('requestAuthorize uri: ' + this.selectUri);
-            if (router.getParams() && router.getParams().appUid) {
-              LogUtil.info('requestAuthorize appUid: ' + router.getParams().appUid);
-              this.mAppCredAuthPresenter.requestAuthorize(this.selectUri, router.getParams().appUid);
-              this.controller.close();
+            if (this.mAppCredAuthPresenter.credList.length > ConfigValue.REQUEST_AUTH_MAX_LENGTH) {
+              List() {
+                ForEach(this.mAppCredAuthPresenter.credList, (item) => {
+                  ListItem() {
+                    Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+
+                      Column() {
+                        Text(item.alias)
+                          .fontSize($r('app.float.font_18'))
+                          .fontColor($r('app.color.request_auth_font_color'))
+                          .fontWeight(FontWeight.Medium)
+                          .textAlign(TextAlign.Start);
+                      }
+                      .alignItems(HorizontalAlign.Start)
+
+                      Column() {
+                        Radio({ value: item.alias, group: 'appCredGroup' })
+                          .checked(false)
+                          .onChange((value: boolean) => {
+                            console.log(item.alias + ' status is ' + value)
+                            if (value) {
+                              this.selectUri = item.keyUri;
+                              console.log('selectUri is ' + this.selectUri)
+                            }
+                          })
+                      }
+                      .alignItems(HorizontalAlign.End)
+                    }
+                    .width(WidthPercent.WH_100_100)
+                  }
+                  .height($r('app.float.wh_value_64'))
+                }, item => JSON.stringify(item))
+              }
+              .height(WidthPercent.WH_50_100)
+              .margin({
+                left: $r('app.float.wh_value_24'),
+                right: $r('app.float.wh_value_24')
+              })
+              .divider({
+                strokeWidth: $r("app.float.request_auth_strokeWidth"),
+                color: $r("app.color.request_auth_color"),
+                endMargin: $r("app.float.request_auth_divider_endMargin")})
+              .backgroundColor($r("app.color.request_auth_background_color"))
+              .visibility(this.mAppCredAuthPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
             } else {
-              LogUtil.info('requestAuthorize fail');
+              List() {
+                ForEach(this.mAppCredAuthPresenter.credList, (item) => {
+                  ListItem() {
+                    Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+                      Column() {
+                        Text(item.alias)
+                          .fontSize($r('app.float.font_18'))
+                          .fontColor($r('app.color.request_auth_font_color'))
+                          .fontWeight(FontWeight.Medium)
+                          .textAlign(TextAlign.Start);
+                      }
+                      .alignItems(HorizontalAlign.Start)
+
+                      Column() {
+                        Radio({ value: item.alias, group: 'appCredGroup' })
+                          .checked(false)
+                          .onChange((value: boolean) => {
+                            console.log(item.alias + ' status is ' + value)
+                            if (value) {
+                              this.selectUri = item.keyUri;
+                              console.log('selectUri is ' + this.selectUri)
+                            }
+                          })
+                      }
+                      .alignItems(HorizontalAlign.End)
+                    }
+                    .width(WidthPercent.WH_100_100)
+                  }
+                  .height($r('app.float.wh_value_64'))
+                }, item => JSON.stringify(item))
+                ListItem() {
+                  Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+                    Column() {
+                      Text()
+                    }
+                    .alignItems(HorizontalAlign.Start)
+
+                    Column() {
+                      Radio({ value: 'null', group: 'appCredGroup' })
+                        .checked(false)
+                        .onChange((value: boolean) => {
+                          if (value) {
+                            this.selectUri = 'null';
+                            console.log('selectUri is ' + this.selectUri)
+                          }
+                        })
+                    }
+                  }
+                  .visibility(Visibility.None)
+                }
+              }
+              .margin({
+                left: $r('app.float.wh_value_24'),
+                right: $r('app.float.wh_value_24')
+              })
+              .divider({
+                strokeWidth: $r("app.float.request_auth_strokeWidth"),
+                color: $r("app.color.request_auth_color"),
+                endMargin: $r("app.float.request_auth_divider_endMargin") })
+              .backgroundColor($r("app.color.request_auth_background_color"))
+              .visibility(this.mAppCredAuthPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
             }
-          })
-          .backgroundColor($r('app.color.request_auth_background_color'))
-          .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
-          .fontSize($r('sys.float.ohos_id_text_size_button1'))
-          .width($r('app.float.wh_value_152'))
-          .height($r('app.float.wh_value_40'))
+
+            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
+              Button($r('app.string.requestAuthCancel'))
+                .onClick(() => {
+                  this.mAppCredAuthPresenter.cancelProcess();
+                  this.controller.close();
+                })
+                .backgroundColor($r('app.color.request_auth_background_color'))
+                .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
+                .fontSize($r('sys.float.ohos_id_text_size_button1'))
+                .width($r('app.float.wh_value_152'))
+                .height($r('app.float.wh_value_40'))
+
+              Divider()
+                .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
+                .color($r("sys.color.ohos_id_color_list_separator"))
+                .vertical(true)
+                .height($r('app.float.wh_value_40'))
+                .opacity($r("app.float.opacity_0_2"))
+
+              Button($r('app.string.requestAuthFinish'))
+                .onClick(() => {
+                  LogUtil.info('requestAuthorize uri: ' + this.selectUri);
+                  if (router.getParams() && router.getParams().appUid) {
+                    LogUtil.info('requestAuthorize appUid: ' + router.getParams().appUid);
+                    this.mAppCredAuthPresenter.requestAuthorize(this.selectUri, router.getParams().appUid);
+                    this.controller.close();
+                  } else {
+                    LogUtil.info('requestAuthorize fail');
+                  }
+                })
+                .backgroundColor($r('app.color.request_auth_background_color'))
+                .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
+                .fontSize($r('sys.float.ohos_id_text_size_button1'))
+                .width($r('app.float.wh_value_152'))
+                .height($r('app.float.wh_value_40'))
+            }
+            .height($r('app.float.wh_value_64'))
+            .padding({
+              bottom: $r('app.float.wh_value_16')
+            })
+            .margin({
+              left: $r('app.float.wh_value_24'),
+              right: $r('app.float.wh_value_24')
+            })
+          }
+          .width(WidthPercent.WH_100_100)
+          .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
+          .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
+          .useSizeType({
+            xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
+            md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
+          });
+
+          Column() {
+          }
+          .width(WidthPercent.WH_100_100)
+          .useSizeType({
+            xs: { span: 0, offset: 12 }, sm: { span: 0, offset: 12 },
+            md: { span: 0, offset: 12 }, lg: { span: 2, offset: 10 }
+          });
+        }
       }
-      .height($r('app.float.wh_value_64'))
-      .padding({
-        bottom: $r('app.float.wh_value_16')
-      })
-      .margin({
-        left: $r('app.float.wh_value_24'),
-        right: $r('app.float.wh_value_24')
-      })
     }
-    .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
     .margin({
       bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
       left: $r("sys.float.ohos_id_dialog_margin_start"),
       right: $r("sys.float.ohos_id_dialog_margin_end"),
     })
-    .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
   }
 }
 
