@@ -594,10 +594,17 @@ export class CertStubPromise {
         } catch (err) {
             console.log(TAG + "saveAllMaps unlinkSync err: " + err);
         }
-        let fd = fileio.openSync(path, 0o102, 0o666);
-        fileio.writeSync(fd, JSON.stringify(dataList));
-        fileio.closeSync(fd);
-        console.log(TAG + "saveAllMaps end");
+
+        try {
+            let fd = fileio.openSync(path, 0o102, 0o600);
+            fileio.writeSync(fd, JSON.stringify(dataList));
+            fileio.closeSync(fd);
+        } catch (err) {
+            console.log(TAG + "saveAllMaps File operation fail, err: " + err);
+            return;
+        }
+
+        console.log(TAG + "saveAllMaps success");
     }
 
     uint8ArrayToString(fileData) {
