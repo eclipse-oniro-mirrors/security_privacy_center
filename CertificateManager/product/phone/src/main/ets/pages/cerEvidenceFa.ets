@@ -761,7 +761,7 @@ struct evidenceList {
     globalThis.abilityWant.uri = "";
 
     if (uri === "certInstall") {
-      this.mFaPresenter.startInstall();
+      this.mFaPresenter.requestPermissions();
     } else if (uri === "requestAuthorize") {
       this.mFaPresenter.startRequestAuth(globalThis.abilityWant.parameters.appUid);
     }
