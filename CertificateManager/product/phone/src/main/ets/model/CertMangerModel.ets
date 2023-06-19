@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import { CertManagerStore } from '../stub/certStubStruct'
 import { CertAbstractVo } from './CertManagerVo/CertAbstractVo'
 import { CertInfoVo } from './CertManagerVo/CertInfoVo'
 import { CredentialAbstractVo } from './CertManagerVo/CredentialAbstractVo'
@@ -22,7 +21,6 @@ import { CredentialVo } from './CertManagerVo/CredentialVo'
 import CertManager from '@ohos.security.certManager'
 
 const TAG = "CertManager Model: ";
-var certManager = globalThis.certStub;
 
 export enum CMModelErrorCode {
   CM_MODEL_ERROR_SUCCESS = 0,
@@ -38,6 +36,13 @@ export enum CMModelOptType {
   CM_MODEL_OPT_USER_CA = 2,
   CM_MODEL_OPT_APP_CRED = 3,
   CM_MODEL_OPT_PRIVATE_CRED = 4,
+}
+
+export enum CertManagerStore {
+  CERT_MANAGER_CREDENTIAL_STORE = 0, /* credential certificate store for end entity certificates. */
+  CERT_MANAGER_SYSTEM_TRUSTED_STORE = 1, /* read only, updated by system only. */
+  CERT_MANAGER_USER_TRUSTED_STORE = 2, /* modifiable by applications and user. */
+  CERT_MANAGER_APPLICATION_TRUSTED_STORE = 3, /* application specific trusted certificate store; modifiable by the application only. */
 }
 
 export class CertMangerModel {

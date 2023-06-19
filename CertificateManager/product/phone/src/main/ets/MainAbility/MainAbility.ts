@@ -14,7 +14,6 @@
  */
 
 import Ability from '@ohos.app.ability.UIAbility';
-import certManager from '../stub/certStubPromise'
 
 class PwdStore {
     private certPwd: string = '';
@@ -37,14 +36,11 @@ export default class MainAbility extends Ability {
         globalThis.certManagerAbilityContext = this.context
         globalThis.PwdStore = new PwdStore();
         globalThis.abilityWant = want;
-        globalThis.certStub = certManager;
-        globalThis.certStub.restoreAllMaps();
 	globalThis.abilityContext = this.context;
     }
 
     onDestroy() {
         console.log("[Demo] MainAbility onDestroy")
-        globalThis.certStub.saveAllMaps();
     }
 
     onWindowStageCreate(windowStage) {
