@@ -352,8 +352,10 @@ export class CertMangerModel {
           subjectNameCN = result.certList[i].subjectName.match(/(?<=CN=).*?(?=,)/g).toString();
           console.info('subjectNameCN is:' + subjectNameCN);
         }
-        certList.push(new CertAbstractVo(String(result.certList[i].uri), String(result.certList[i].certAlias),
-          Boolean(result.certList[i].status), String(result.certList[i].subjectName), String(subjectNameCN)));
+        if (String(result.certList[i].uri).indexOf('u=0;') === -1) {
+          certList.push(new CertAbstractVo(String(result.certList[i].uri), String(result.certList[i].certAlias),
+            Boolean(result.certList[i].status), String(result.certList[i].subjectName), String(subjectNameCN)));
+        }
       }
       console.log(TAG + 'getUserTrustedCertificateList end');
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS, certList);
