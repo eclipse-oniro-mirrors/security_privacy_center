@@ -42,7 +42,7 @@
     },
     {
       "name": "deleteAllCred",
-      "value": "删除所有凭据"
+      "value": "删除所有证书与凭据"
     }
   ]
 }
