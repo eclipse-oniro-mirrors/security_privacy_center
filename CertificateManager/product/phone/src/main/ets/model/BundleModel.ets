@@ -13,31 +13,36 @@
  * limitations under the License.
  */
 
-import bundle from '@ohos.bundle';
+import bundleManager from '@ohos.bundle.bundleManager';
 import { CMModelErrorCode } from '../model/CertMangerModel';
+
+const TAG = 'certManager BUNDLE:';
 
 export class BundleNameModel {
   async getAppInfoList(appUid, callback): Promise<void> {
+    console.log(TAG + 'getAppInfoList enter uid: ' + appUid);
     try {
       let appInfo = {
         appImage: '',
         appName: '',
       };
-      let appBundleName = await bundle.getNameForUid(appUid);
-      let bundleContext = await globalThis.certManagerAbilityContext.createBundleContext(appBundleName);
 
-      let labelId = Number(bundleContext.applicationInfo.labelId);
-      let iconId = Number(bundleContext.applicationInfo.iconId);
+      let appBundleName = await bundleManager.getBundleNameByUid(appUid);
+      console.log(TAG + 'appBundleName: ' + appBundleName);
 
-      appInfo.appImage = await bundleContext.resourceManager.getMediaBase64(iconId);
+      let bundleContext = globalThis.certManagerAbilityContext.createBundleContext(appBundleName);
+      let info = await bundleManager.getBundleInfo(appBundleName,
+        bundleManager.BundleFlag.GET_BUNDLE_INFO_WITH_APPLICATION);
+      console.log(TAG + 'appName: ' + appBundleName + ', iconId: ' + info.appInfo.iconId +
+        ', labelId: ' + info.appInfo.labelId);
 
-      appInfo.appName = await bundleContext.resourceManager.getString(labelId);
-
-      console.log('AppName1111111111', JSON.stringify(appInfo));
+      appInfo.appName = await bundleContext.resourceManager.getStringValue(info.appInfo.labelId);
+      appInfo.appImage = await bundleContext.resourceManager.getMediaContentBase64(info.appInfo.iconId);
+      console.log(TAG + 'get bundle info success');
 
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS, appInfo);
     } catch (err) {
-      console.log('getAppNameListErr', JSON.stringify(err.code));
+      console.error(TAG + 'getAppInfoList failed', JSON.stringify(err.code));
       callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION, null);
     }
   }
