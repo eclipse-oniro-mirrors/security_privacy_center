@@ -24,6 +24,7 @@ struct CustomDialogAuthForApp {
   controller: CustomDialogController
   @State mAppCredAuthPresenter: CmAppCredAuthPresenter = CmAppCredAuthPresenter.getInstance();
   selectUri: string = "";
+  private authScroller: Scroller = new Scroller();
 
   aboutToAppear(): void {
     LogUtil.info('certPwdInput about to appear');
@@ -72,49 +73,67 @@ struct CustomDialogAuthForApp {
               .alignSelf(ItemAlign.Start)
 
             if (this.mAppCredAuthPresenter.credList.length > ConfigValue.REQUEST_AUTH_MAX_LENGTH) {
-              List() {
-                ForEach(this.mAppCredAuthPresenter.credList, (item) => {
-                  ListItem() {
-                    Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+              Stack({ alignContent: Alignment.End }) {
+                Scroll(this.authScroller) {
+                  List() {
+                    ForEach(this.mAppCredAuthPresenter.credList, (item) => {
+                      ListItem() {
+                        Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
 
-                      Column() {
-                        Text(item.alias)
-                          .fontSize($r('app.float.font_18'))
-                          .fontColor($r('app.color.request_auth_font_color'))
-                          .fontWeight(FontWeight.Medium)
-                          .textAlign(TextAlign.Start);
-                      }
-                      .alignItems(HorizontalAlign.Start)
+                          Column() {
+                            Text(item.alias)
+                              .fontSize($r('app.float.font_18'))
+                              .fontColor($r('app.color.request_auth_font_color'))
+                              .fontWeight(FontWeight.Medium)
+                              .textAlign(TextAlign.Start);
+                          }
+                          .alignItems(HorizontalAlign.Start)
 
-                      Column() {
-                        Radio({ value: item.alias, group: 'appCredGroup' })
-                          .checked(false)
-                          .onChange((value: boolean) => {
-                            console.log(item.alias + ' status is ' + value)
-                            if (value) {
-                              this.selectUri = item.keyUri;
-                              console.log('selectUri is ' + this.selectUri)
-                            }
-                          })
+                          Column() {
+                            Radio({ value: item.alias, group: 'appCredGroup' })
+                              .checked(false)
+                              .onChange((value: boolean) => {
+                                console.log(item.alias + ' status is ' + value)
+                                if (value) {
+                                  this.selectUri = item.keyUri;
+                                  console.log('selectUri is ' + this.selectUri)
+                                }
+                              })
+                          }
+                          .alignItems(HorizontalAlign.End)
+                        }
+                        .width(WidthPercent.WH_100_100)
                       }
-                      .alignItems(HorizontalAlign.End)
-                    }
-                    .width(WidthPercent.WH_100_100)
+                      .height($r('app.float.wh_value_64'))
+                    }, item => JSON.stringify(item))
                   }
-                  .height($r('app.float.wh_value_64'))
-                }, item => JSON.stringify(item))
+                  .scrollBar(BarState.Off)
+                  .divider({
+                    strokeWidth: $r("app.float.request_auth_strokeWidth"),
+                    color: $r("app.color.request_auth_color"),
+                    endMargin: $r("app.float.request_auth_divider_endMargin") })
+                  .backgroundColor($r("app.color.request_auth_background_color"))
+                  .visibility(this.mAppCredAuthPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
+                }
+                .scrollBar(BarState.Off)
+                .margin({
+                  left: $r('app.float.wh_value_24'),
+                  right: $r('app.float.wh_value_24')
+                })
+                ScrollBar({ scroller: this.authScroller, direction: ScrollBarDirection.Vertical, state: BarState.Auto }) {
+                  Text()
+                    .width($r("app.float.wh_value_3"))
+                    .height($r("app.float.wh_value_50"))
+                    .borderRadius($r("app.float.wh_value_10"))
+                    .backgroundColor($r("sys.color.ohos_id_color_foreground"))
+                    .opacity(0.4)
+                }
+                .width($r("app.float.wh_value_3"))
+                .margin({
+                  right: $r("app.float.wh_value_3")
+                })
               }
               .height(WidthPercent.WH_50_100)
-              .margin({
-                left: $r('app.float.wh_value_24'),
-                right: $r('app.float.wh_value_24')
-              })
-              .divider({
-                strokeWidth: $r("app.float.request_auth_strokeWidth"),
-                color: $r("app.color.request_auth_color"),
-                endMargin: $r("app.float.request_auth_divider_endMargin")})
-              .backgroundColor($r("app.color.request_auth_background_color"))
-              .visibility(this.mAppCredAuthPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
             } else {
               List() {
                 ForEach(this.mAppCredAuthPresenter.credList, (item) => {
@@ -171,6 +190,7 @@ struct CustomDialogAuthForApp {
                 left: $r('app.float.wh_value_24'),
                 right: $r('app.float.wh_value_24')
               })
+              .scrollBar(BarState.Off)
               .divider({
                 strokeWidth: $r("app.float.request_auth_strokeWidth"),
                 color: $r("app.color.request_auth_color"),

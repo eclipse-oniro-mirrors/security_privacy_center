@@ -61,6 +61,7 @@ struct CustomDialogExampleAuthor {
   @Link isShowAuthDialog: boolean;
   @Link AuthorInfo: CmShowAppCredPresenter;
   @State updateStatusList: boolean[] = [];
+  private authorScroller: Scroller = new Scroller();
 
   build() {
     Column() {
@@ -91,24 +92,41 @@ struct CustomDialogExampleAuthor {
               })
               .alignSelf(ItemAlign.Start);
             if (this.AuthorInfo.appInfoList.length > ConfigValue.APP_AUTH_MAX_LENGTH) {
-              List() {
-                ForEach(this.AuthorInfo.appInfoList, (item, index) => {
-                  ListItem() {
-                    DialogComponent({ AppImage: item.appImage, AppName: item.appName, Index: index, uidItem: $AuthorInfo })
+              Stack({ alignContent: Alignment.End }) {
+                Scroll(this.authorScroller) {
+                  List() {
+                    ForEach(this.AuthorInfo.appInfoList, (item, index) => {
+                      ListItem() {
+                        DialogComponent({ AppImage: item.appImage, AppName: item.appName, Index: index, uidItem: $AuthorInfo })
+                      }
+                    })
                   }
+                  .scrollBar(BarState.Off)
+                  .divider({
+                    strokeWidth: $r("app.float.Evidence_strokeWidth"),
+                    color: $r("app.color.Evidence_color")})
+                  .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
+                  .visibility(this.AuthorInfo.appInfoList.length > 0 ? Visibility.Visible : Visibility.None)
+                }
+                .scrollBar(BarState.Off)
+                .margin({
+                  left: $r('app.float.wh_value_24'),
+                  right: $r('app.float.wh_value_24')
+                })
+                ScrollBar({ scroller: this.authorScroller, direction: ScrollBarDirection.Vertical, state: BarState.Auto}) {
+                  Text()
+                    .width($r("app.float.wh_value_3"))
+                    .height($r("app.float.wh_value_50"))
+                    .borderRadius($r("app.float.wh_value_10"))
+                    .backgroundColor($r("sys.color.ohos_id_color_foreground"))
+                    .opacity(0.4)
+                }
+                .width($r("app.float.wh_value_3"))
+                .margin({
+                  right: $r("app.float.wh_value_3")
                 })
               }
-              .margin({
-                left: $r('app.float.wh_value_24'),
-                right: $r('app.float.wh_value_24')
-              })
               .height(WidthPercent.WH_50_100)
-              .divider({
-                strokeWidth: $r("app.float.Evidence_strokeWidth"),
-                color: $r("app.color.Evidence_color")})
-              .borderRadius($r("app.float.Evidence_borderRadius"))
-              .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
-              .visibility(this.AuthorInfo.appInfoList.length > 0 ? Visibility.Visible : Visibility.None)
             } else {
               List() {
                 ForEach(this.AuthorInfo.appInfoList, (item, index) => {
@@ -117,6 +135,7 @@ struct CustomDialogExampleAuthor {
                   }
                 })
               }
+              .scrollBar(BarState.Off)
               .margin({
                 left: $r('app.float.wh_value_24'),
                 right: $r('app.float.wh_value_24')
@@ -124,7 +143,6 @@ struct CustomDialogExampleAuthor {
               .divider({
                 strokeWidth: $r("app.float.Evidence_strokeWidth"),
                 color: $r("app.color.Evidence_color")})
-              .borderRadius($r("app.float.Evidence_borderRadius"))
               .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
               .visibility(this.AuthorInfo.appInfoList.length > 0 ? Visibility.Visible : Visibility.None)
             }
@@ -726,6 +744,8 @@ struct evidenceList {
   @State currentIndex: number = 0
   @State fontColor: Resource = $r("app.color.evidenceList_TabBuilder_fontColor_182431")
   private controller: TabsController = new TabsController();
+  private publicScroller: Scroller = new Scroller();
+  private privateScroller: Scroller = new Scroller();
 
   @Builder TabBuilder(index: number) {
     Column() {
@@ -778,35 +798,63 @@ struct evidenceList {
         Row() {
           Column() {
             HeadComponent({ headName: $r('app.string.userEvidence') })
+              .margin({
+                left: $r("app.float.wh_value_12")
+              })
+
             Column() {
               Tabs({ barPosition: BarPosition.Start, index: 0, controller: this.controller }) {
                 TabContent() {
-                  List() {
-                    ForEach(this.mShowAppCaPresenter.credList, (item) => {
-                      ListItem() {
-                        componentPublic({
-                          Alias: item.alias,
-                          KeyUri: item.keyUri,
-                          mShowAppCaPresenter: $mShowAppCaPresenter
-                        })
+                  Stack({ alignContent: Alignment.End }) {
+                    Scroll(this.publicScroller) {
+                      List() {
+                        ForEach(this.mShowAppCaPresenter.credList, (item) => {
+                          ListItem() {
+                            componentPublic({
+                              Alias: item.alias,
+                              KeyUri: item.keyUri,
+                              mShowAppCaPresenter: $mShowAppCaPresenter
+                            })
+                          }
+                        }, item => JSON.stringify(item))
                       }
-                    }, item => JSON.stringify(item))
+                      .scrollBar(BarState.Off)
+                      .padding({
+                        right: $r("app.float.wh_value_12"),
+                        left: $r("app.float.wh_value_12"),
+                        top: $r("app.float.wh_value_4"),
+                        bottom: $r("app.float.wh_value_4")
+                      })
+                      .divider({
+                        strokeWidth: $r("app.float.user_list_divider_strokeWidth_value"),
+                        color: $r("app.color.user_list_divider_color_000000"),
+                        endMargin: '3vp'
+                      })
+                      .visibility(this.mShowAppCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
+                    }
+                    .position({ y: 0 })
+                    .scrollable(ScrollDirection.Vertical)
+                    .scrollBar(BarState.Off)
+                    .margin({
+                      left: $r("app.float.wh_value_12"),
+                      right: $r("app.float.wh_value_12")
+                    })
+                    .borderRadius($r("app.float.Evidence_borderRadius"))
+                    .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
+                    ScrollBar({ scroller: this.publicScroller, direction: ScrollBarDirection.Vertical, state: BarState.Auto}) {
+                      Text()
+                        .width($r("app.float.wh_value_3"))
+                        .height($r("app.float.wh_value_50"))
+                        .borderRadius($r("app.float.wh_value_10"))
+                        .backgroundColor($r("sys.color.ohos_id_color_foreground"))
+                        .opacity(0.4)
+                    }
+                    .width($r("app.float.wh_value_3"))
+                    .margin({
+                      right: $r("app.float.wh_value_3")
+                    })
+                    .visibility(this.mShowAppCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
                   }
-                  .position({ y: 0 })
-                  .padding({
-                    right: $r("app.float.wh_value_12"),
-                    left: $r("app.float.wh_value_12"),
-                    top: $r("app.float.wh_value_4"),
-                    bottom: $r("app.float.wh_value_4")
-                  })
-                  .divider({
-                    strokeWidth: $r("app.float.user_list_divider_strokeWidth_value"),
-                    color: $r("app.color.user_list_divider_color_000000"),
-                    endMargin: '3vp'
-                  })
-                  .borderRadius($r("app.float.Evidence_borderRadius"))
-                  .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
-                  .visibility(this.mShowAppCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
                 }
                 .tabBar(this.TabBuilder(0))
                 .onTouch((event: TouchEvent) => {
@@ -819,28 +867,58 @@ struct evidenceList {
                 })
 
                 TabContent() {
-                  List() {
-                    ForEach(this.mShowPrivateCaPresenter.credList, (item) => {
-                      ListItem() {
-                        componentPrivate({ Alias: item.alias, KeyUri: item.keyUri })
+                  Stack({ alignContent: Alignment.End }) {
+                    Scroll(this.privateScroller) {
+                      List() {
+                        ForEach(this.mShowPrivateCaPresenter.credList, (item) => {
+                          ListItem() {
+                            componentPrivate({ Alias: item.alias, KeyUri: item.keyUri })
+                          }
+                        }, item => JSON.stringify(item))
                       }
-                    }, item => JSON.stringify(item))
+                      .scrollBar(BarState.Off)
+                      .padding({
+                        right: $r("app.float.wh_value_12"),
+                        left: $r("app.float.wh_value_12"),
+                        top: $r("app.float.wh_value_4"),
+                        bottom: $r("app.float.wh_value_4")
+                      })
+                      .divider({
+                        strokeWidth: $r("app.float.user_list_divider_strokeWidth_value"),
+                        color: $r("app.color.user_list_divider_color_000000"),
+                        endMargin: '3vp'
+                      })
+                      .borderRadius($r("app.float.Evidence_borderRadius"))
+                      .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
+                      .visibility(this.mShowPrivateCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
+                    }
+                    .position({ y: 0 })
+                    .scrollable(ScrollDirection.Vertical)
+                    .scrollBar(BarState.Off)
+                    .margin({
+                      left: $r("app.float.wh_value_12"),
+                      right: $r("app.float.wh_value_12")
+                    })
+                    .borderRadius($r("app.float.Evidence_borderRadius"))
+                    .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
+                    ScrollBar({
+                      scroller: this.privateScroller,
+                      direction: ScrollBarDirection.Vertical,
+                      state: BarState.Auto
+                    }) {
+                      Text()
+                        .width($r("app.float.wh_value_3"))
+                        .height($r("app.float.wh_value_50"))
+                        .borderRadius($r("app.float.wh_value_10"))
+                        .backgroundColor($r("sys.color.ohos_id_color_foreground"))
+                        .opacity(0.4)
+                    }
+                    .width($r("app.float.wh_value_3"))
+                    .margin({
+                      right: $r("app.float.wh_value_3")
+                    })
+                    .visibility(this.mShowPrivateCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
                   }
-                  .position({ y: 0 })
-                  .padding({
-                    right: $r("app.float.wh_value_12"),
-                    left: $r("app.float.wh_value_12"),
-                    top: $r("app.float.wh_value_4"),
-                    bottom: $r("app.float.wh_value_4")
-                  })
-                  .divider({
-                    strokeWidth: $r("app.float.user_list_divider_strokeWidth_value"),
-                    color: $r("app.color.user_list_divider_color_000000"),
-                    endMargin: '3vp'
-                  })
-                  .borderRadius($r("app.float.Evidence_borderRadius"))
-                  .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
-                  .visibility(this.mShowPrivateCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
                 }
                 .tabBar(this.TabBuilder(1))
                 .onTouch((event: TouchEvent) => {
@@ -870,10 +948,6 @@ struct evidenceList {
             .height(WidthPercent.WH_94_100)
             .width(WidthPercent.WH_100_100)
           }
-          .padding({
-            left: $r("app.float.wh_value_12"),
-            right: $r("app.float.wh_value_12")
-          })
           .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
           .width(WidthPercent.WH_100_100)
           .height(WidthPercent.WH_100_100)

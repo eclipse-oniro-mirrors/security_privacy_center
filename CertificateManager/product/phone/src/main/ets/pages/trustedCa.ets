@@ -869,6 +869,8 @@ struct TrustedEvidence {
   @State fontColor: Resource = $r("app.color.TrustedEvidence_TabBuilder_fontColor_182431")
   @State selectedFontColor: Resource = $r("app.color.font_color_007DFF")
   private controller: TabsController = new TabsController();
+  private sysCaScroller: Scroller = new Scroller();
+  private userCaScroller: Scroller = new Scroller();
 
   @Builder TabBuilder(index: number) {
     Column() {
@@ -916,32 +918,60 @@ struct TrustedEvidence {
         Row() {
           Column() {
             HeadComponent({ headName: $r('app.string.trustedEvidence') })
+              .margin({
+                left: $r("app.float.wh_value_12")
+              })
+
             Column() {
               Tabs({ barPosition: BarPosition.Start, index: 0, controller: this.controller }) {
                 TabContent() {
-                  List() {
-                    ForEach(this.mShowSysCaPresenter.certList, (item, index) => {
-                      ListItem() {
-                        ComponentSystem({ certAlias: item.certAlias, subjectName: item.subjectNameCN, Status: item.status,
-                          Uri: item.uri, setStatus: $mShowSysCaPresenter, Index: index })
+                  Stack({ alignContent: Alignment.End }) {
+                    Scroll(this.sysCaScroller) {
+                      List() {
+                        ForEach(this.mShowSysCaPresenter.certList, (item, index) => {
+                          ListItem() {
+                            ComponentSystem({ certAlias: item.certAlias, subjectName: item.subjectNameCN, Status: item.status,
+                              Uri: item.uri, setStatus: $mShowSysCaPresenter, Index: index })
+                          }
+                        }, item => JSON.stringify(item))
                       }
-                    }, item => JSON.stringify(item))
+                      .scrollBar(BarState.Off)
+                      .padding({
+                        right: $r("app.float.wh_value_12"),
+                        left: $r("app.float.wh_value_12"),
+                        top: $r("app.float.wh_value_4"),
+                        bottom: $r("app.float.wh_value_4")
+                      })
+                      .divider({
+                        strokeWidth: $r("app.float.sys_list_divider_strokeWidth_value"),
+                        color: $r("app.color.sys_list_divider_color_000000"),
+                        endMargin: '12vp'
+                      })
+                      .visibility(this.mShowSysCaPresenter.certList.length > 0 ? Visibility.Visible : Visibility.None);
+                    }
+                    .position({ y: 0 })
+                    .scrollable(ScrollDirection.Vertical)
+                    .scrollBar(BarState.Off)
+                    .margin({
+                      left: $r("app.float.wh_value_12"),
+                      right: $r("app.float.wh_value_12")
+                    })
+                    .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
+                    .backgroundColor($r("app.color.user_list_backgroundColor_FFFFFF"))
+                    ScrollBar({ scroller: this.sysCaScroller, direction: ScrollBarDirection.Vertical, state: BarState.Auto}) {
+                      Text()
+                        .width($r("app.float.wh_value_3"))
+                        .height($r("app.float.wh_value_50"))
+                        .borderRadius($r("app.float.wh_value_10"))
+                        .backgroundColor($r("sys.color.ohos_id_color_foreground"))
+                        .opacity(0.4)
+                    }
+                    .width($r("app.float.wh_value_3"))
+                    .margin({
+                      right: $r("app.float.wh_value_3")
+                    })
+                    .visibility(this.mShowSysCaPresenter.certList.length > 0 ? Visibility.Visible : Visibility.None);
                   }
-                  .position({ y: 0 })
-                  .padding({
-                    right: $r("app.float.wh_value_12"),
-                    left: $r("app.float.wh_value_12"),
-                    top: $r("app.float.wh_value_4"),
-                    bottom: $r("app.float.wh_value_4")
-                  })
-                  .divider({
-                    strokeWidth: $r("app.float.sys_list_divider_strokeWidth_value"),
-                    color: $r("app.color.sys_list_divider_color_000000"),
-                    endMargin: '12vp'
-                  })
-                  .borderRadius($r("sys.float.ohos_id_corner_radius_default_l"))
-                  .backgroundColor($r("app.color.sys_list_backgroundColor_FFFFFF"))
-                  .visibility(this.mShowSysCaPresenter.certList.length > 0 ? Visibility.Visible : Visibility.None);
                 }
                 .tabBar(this.TabBuilder(0))
                 .onTouch((event: TouchEvent) => {
@@ -954,29 +984,53 @@ struct TrustedEvidence {
                 });
 
                 TabContent() {
-                  List() {
-                    ForEach(this.mShowUserCaPresenter.certList, (item, index) => {
-                      ListItem() {
-                        ComponentUser({ certAlias: item.certAlias, subjectName: item.subjectNameCN, Uri: item.uri,
-                          setStatus: $mShowUserCaPresenter, Index: index })
+                  Stack({ alignContent: Alignment.End }) {
+                    Scroll(this.userCaScroller) {
+                      List() {
+                        ForEach(this.mShowUserCaPresenter.certList, (item, index) => {
+                          ListItem() {
+                            ComponentUser({ certAlias: item.certAlias, subjectName: item.subjectNameCN, Uri: item.uri,
+                              setStatus: $mShowUserCaPresenter, Index: index })
+                          }
+                        }, item => JSON.stringify(item))
                       }
-                    }, item => JSON.stringify(item))
+                      .scrollBar(BarState.Off)
+                      .padding({
+                        left: $r("app.float.wh_value_12"),
+                        right: $r("app.float.wh_value_12"),
+                        top: $r("app.float.wh_value_4"),
+                        bottom: $r("app.float.wh_value_4")
+                      })
+                      .divider({
+                        strokeWidth: $r("app.float.user_list_divider_strokeWidth_value"),
+                        color: $r("app.color.user_list_divider_color_000000"),
+                        endMargin: '3vp'
+                      })
+                      .visibility(this.mShowUserCaPresenter.certList.length > 0 ? Visibility.Visible : Visibility.None)
+                    }
+                    .position({ y: 0 })
+                    .scrollable(ScrollDirection.Vertical)
+                    .scrollBar(BarState.Off)
+                    .margin({
+                      left: $r("app.float.wh_value_12"),
+                      right: $r("app.float.wh_value_12")
+                    })
+                    .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
+                    .backgroundColor($r("app.color.user_list_backgroundColor_FFFFFF"))
+                    ScrollBar({ scroller: this.userCaScroller, direction: ScrollBarDirection.Vertical, state: BarState.Auto}) {
+                      Text()
+                        .width($r("app.float.wh_value_3"))
+                        .height($r("app.float.wh_value_50"))
+                        .borderRadius($r("app.float.wh_value_10"))
+                        .backgroundColor($r("sys.color.ohos_id_color_foreground"))
+                        .opacity(0.4)
+                    }
+                    .width($r("app.float.wh_value_3"))
+                    .margin({
+                      right: $r("app.float.wh_value_3")
+                    })
+                    .visibility(this.mShowUserCaPresenter.certList.length > 0 ? Visibility.Visible : Visibility.None)
                   }
-                  .position({ y: 0 })
-                  .padding({
-                    left: $r("app.float.wh_value_12"),
-                    right: $r("app.float.wh_value_12"),
-                    top: $r("app.float.wh_value_4"),
-                    bottom: $r("app.float.wh_value_4")
-                  })
-                  .divider({
-                    strokeWidth: $r("app.float.user_list_divider_strokeWidth_value"),
-                    color: $r("app.color.user_list_divider_color_000000"),
-                    endMargin: '3vp'
-                  })
-                  .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
-                  .backgroundColor($r("app.color.user_list_backgroundColor_FFFFFF"))
-                  .visibility(this.mShowUserCaPresenter.certList.length > 0 ? Visibility.Visible : Visibility.None)
                 }
                 .tabBar(this.TabBuilder(1))
                 .onTouch((event: TouchEvent) => {
@@ -1006,10 +1060,6 @@ struct TrustedEvidence {
             .height(WidthPercent.WH_94_100)
             .width(WidthPercent.WH_100_100);
           }
-          .padding({
-            left: $r("app.float.wh_value_12"),
-            right: $r("app.float.wh_value_12")
-          })
           .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
           .width(WidthPercent.WH_100_100)
           .height(WidthPercent.WH_100_100)
