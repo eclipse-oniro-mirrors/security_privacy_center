@@ -47,6 +47,7 @@
         "launchType": "singleton",
         "startWindowIcon": "$media:icon",
         "startWindowBackground": "$color:color_1",
+        "orientation": "auto_rotation_restricted",
         "skills": [
           {
             "entities": [
@@ -72,6 +73,9 @@
       },
       {
         "name": "ohos.permission.ACCESS_CERT_MANAGER"
+      },
+      {
+        "name": "ohos.permission.GET_BUNDLE_INFO_PRIVILEGED"
       }
     ]
   }

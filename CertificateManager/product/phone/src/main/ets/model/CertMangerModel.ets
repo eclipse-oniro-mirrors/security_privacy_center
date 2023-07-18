@@ -245,7 +245,7 @@ export class CertMangerModel {
 
   installCertOrCred(optType, alias, data, pwd, callback): void {
     console.log(TAG + 'installCertOrCred start');
-    console.info(TAG + 'installCert optType: ' + optType + 'alias: ' + alias + ' pwd: ' + pwd);
+    console.info(TAG + 'installCert optType: ' + optType + ',alias: ' + alias);
     switch (optType) {
       case CMModelOptType.CM_MODEL_OPT_USER_CA:
         this.installUserCertificate(data, alias, (errCode) => {
