@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,86 +13,37 @@
  * limitations under the License.
  */
 
-import fileio from '@ohos.fileio';
-import mediaLibrary from '@ohos.multimedia.mediaLibrary';
+import fileUri from '@ohos.file.fileuri';
+import fs from '@ohos.file.fs';
 
 export class FileIoModel {
-  media;
-  constructor() {
-    this.media = mediaLibrary.getMediaLibrary(globalThis.certManagerAbilityContext);
+  getMediaFileData(mediaUri, callback): void {
+    console.log('CertManager FA getMediaFile start');
+    try {
+      let file = fs.openSync(mediaUri, fs.OpenMode.READ_ONLY);
+      let stat = fs.statSync(file.fd);
+      let buf = new ArrayBuffer(Number(stat.size));
+      let num = fs.readSync(file.fd, buf);
+      fs.closeSync(file.fd);
+      console.log('CertManager FA getMediaFile success');
+      callback(new Uint8Array(buf));
+    } catch(err) {
+      console.error('CertManager FA getMediaFileData failed');
+      callback(undefined);
+    }
   }
 
   getMediaFileSuffix(mediaUri, callback): void {
-    console.log('getMediaFileSuffix start  uri: ' + mediaUri);
-    let fileKeyObj = mediaLibrary.FileKey;
-    let fileType = mediaLibrary.MediaType.FILE;
-    let imageType = mediaLibrary.MediaType.IMAGE;
-    let videoType = mediaLibrary.MediaType.VIDEO;
-    let audioType = mediaLibrary.MediaType.AUDIO;
-    let imagesFetchOp = {
-      selections: fileKeyObj.MEDIA_TYPE + '= ? or ' + fileKeyObj.MEDIA_TYPE + '= ? or ' +
-      fileKeyObj.MEDIA_TYPE + '= ? or ' + fileKeyObj.MEDIA_TYPE + '= ?',
-      selectionArgs: [fileType.toString(), imageType.toString(), videoType.toString(), audioType.toString()],
-      uri: mediaUri,
-    };
-    let suffix;
-
-    this.media.getFileAssets(imagesFetchOp, (error, fetchFileResult) => {
-      console.log('getMediaFile getFileAssets callback in fetchFileResult: ');
-      if (fetchFileResult !== undefined) {
-        fetchFileResult.getFirstObject(async (error, fileAsset) => {
-          console.log('getMediaFile getFileAssets callback  getFirstObject: ');
-          if (fileAsset) {
-            console.log('getMediaFile getFileAssets fileAsset: ' + fileAsset.displayName);
-            suffix = fileAsset.displayName.substring(fileAsset.displayName.lastIndexOf('.') + 1);
-            callback(suffix);
-          } else {
-            console.log('getMediaFile getFileAssets callback  getFirstObject else');
-          }
-        });
-      } else {
-        console.log('getMediaFile getFileAssets callback in else: ');
-        callback(undefined);
-      }
-    });
-  }
-
-  getMediaFileData(mediaUri, callback): void {
-    console.log('getMediaFile start');
-    let fileKeyObj = mediaLibrary.FileKey;
-    let fileType = mediaLibrary.MediaType.FILE;
-    let imageType = mediaLibrary.MediaType.IMAGE;
-    let videoType = mediaLibrary.MediaType.VIDEO;
-    let audioType = mediaLibrary.MediaType.AUDIO;
-    let imagesFetchOp = {
-      selections: fileKeyObj.MEDIA_TYPE + '= ? or ' + fileKeyObj.MEDIA_TYPE + '= ? or ' +
-      fileKeyObj.MEDIA_TYPE + '= ? or ' + fileKeyObj.MEDIA_TYPE + '= ?',
-      selectionArgs: [fileType.toString(), imageType.toString(), videoType.toString(), audioType.toString()],
-      uri: mediaUri,
-    };
-    let fd;
-
-    this.media.getFileAssets(imagesFetchOp, (error, fetchFileResult) => {
-      if (fetchFileResult !== undefined) {
-        fetchFileResult.getFirstObject(async (error, fileAsset) => {
-          console.log('getMediaFile getFileAssets fileAsset: ' + fileAsset.displayName);
-
-          if (fileAsset) {
-            let buf = new ArrayBuffer(Number(fileAsset.size));
-            fd = await fileAsset.open('r');
-            fileio.read(fd, buf, (err, data) => {
-              if (data) {
-                console.info('getMediaFile read file data exist ');
-                let dataArray:ArrayBuffer = data.buffer;
-                callback(new Uint8Array(dataArray));
-              } else {
-                console.info('getMediaFile read file data: null');
-              }
-            });
-          }
-        });
-      }
-    });
+    try {
+      console.log('CertManager FA getMediaFileSuffix start  uri: ' + mediaUri);
+      // @ts-ignore
+      let uri = new fileUri.FileUri(mediaUri);
+      let suffix = uri.name.substring(uri.name.lastIndexOf('.') + 1);
+      callback(suffix);
+    } catch(err) {
+      console.error('CertManager FA getMediaFileSuffix failed');
+      callback(undefined);
+    }
   }
 }
 
