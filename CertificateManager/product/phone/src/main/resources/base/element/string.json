@@ -9,10 +9,6 @@
       "value": "ETS_Empty Feature Ability"
     },
     {
-      "name": "read_media_permission_reason",
-      "value": "安装证书功能需使用媒体库权限"
-    },
-    {
       "name": "version",
       "value": "版本 "
     },

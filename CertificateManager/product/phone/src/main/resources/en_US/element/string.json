@@ -9,10 +9,6 @@
       "value": "ETS_Empty Feature Ability"
     },
     {
-      "name": "read_media_permission_reason",
-      "value": "Media library permission is required when installing certificates"
-    },
-    {
       "name": "version",
       "value": "Version "
     },
