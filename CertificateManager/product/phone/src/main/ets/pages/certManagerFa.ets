@@ -106,7 +106,7 @@ struct CertificateComponent {
     globalThis.abilityWant.uri = "";
 
     if (uri === "certInstall") {
-      this.mFaPresenter.requestPermissions();
+      this.mFaPresenter.startInstall();
     } else if (uri === "requestAuthorize") {
       this.mFaPresenter.startRequestAuth(globalThis.abilityWant.parameters.appUid);
     }
@@ -326,7 +326,7 @@ export struct CertInstallComponent {
     .height($r('app.float.wh_value_56'))
     .borderRadius($r('app.float.radius_24'))
     .onClick(() => {
-      this.mFaPresenter.requestPermissions()
+      this.mFaPresenter.startInstall()
     });
   }
 }

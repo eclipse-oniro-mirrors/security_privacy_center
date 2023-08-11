@@ -905,7 +905,7 @@ struct TrustedEvidence {
     globalThis.abilityWant.uri = "";
 
     if (uri === "certInstall") {
-      this.mFaPresenter.requestPermissions();
+      this.mFaPresenter.startInstall();
     } else if (uri === "requestAuthorize") {
       this.mFaPresenter.startRequestAuth(globalThis.abilityWant.parameters.appUid);
     }
