@@ -16,7 +16,7 @@
   "module": {
     "name": "phone",
     "type": "entry",
-    "srcEntrance": "./ets/Application/AbilityStage.ts",
+    "srcEntry": "./ets/Application/AbilityStage.ts",
     "description": "$string:mainability_description",
     "mainElement": "MainAbility",
     "deviceTypes": [
@@ -35,7 +35,6 @@
     "deliveryWithInstall": true,
     "installationFree": false,
     "pages": "$profile:main_pages",
-    "uiSyntax": "ets",
     "abilities": [
       {
         "name": "MainAbility",
