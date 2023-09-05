@@ -13,16 +13,12 @@
  * limitations under the License.
  */
 {
-  "apiType": "stageMode",
+  "apiType": 'stageMode',
   "buildOption": {
   },
   "targets": [
     {
       "name": "default",
-      "runtimeOS": "OpenHarmony"
-    },
-    {
-      "name": "ohosTest",
     }
   ]
 }

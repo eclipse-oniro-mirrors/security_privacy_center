@@ -28,11 +28,10 @@
         }
       }
     ],
+    "compileSdkVersion": 10,
+    "compatibleSdkVersion": 10,
     "products": [
       {
-        "compileSdkVersion": 10,
-        "compatibleSdkVersion": 10,
-        "runtimeOS": "OpenHarmony",
         "name": "default",
         "signingConfig": "default",
       }
