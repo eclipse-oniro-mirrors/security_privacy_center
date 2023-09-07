@@ -18,6 +18,7 @@ import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/Config
 import router from '@system.router';
 import CmInstallPresenter from '../presenter/CmInstallPresenter';
 import CmFaPresenter from '../presenter/CmFaPresenter';
+import { GlobalContext } from '../common/GlobalContext';
 
 @Entry
 @Component
@@ -27,13 +28,13 @@ struct CertInstallAliasInput {
   @State certAlias: string = "";
 
   onPageShow() {
-    let uri = globalThis.abilityWant.uri;
-    globalThis.abilityWant.uri = "";
+    let uri = GlobalContext.getContext().getAbilityWant().uri;
+    GlobalContext.getContext().clearAbilityWantUri();
 
     if (uri === "certInstall") {
       this.mFaPresenter.startInstall();
     } else if (uri === "requestAuthorize") {
-      this.mFaPresenter.startRequestAuth(globalThis.abilityWant.parameters.appUid);
+      this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
     }
   }
 
@@ -125,9 +126,9 @@ struct CertInstallAliasInput {
               right: $r('app.float.distance_24'),
             })
             .onClick(() => {
-              this.mAppCredAuthPresenter.installCert(router.getParams().uri,
+              this.mAppCredAuthPresenter.installCert(router.getParams().uri as string,
                 this.certAlias,
-                router.getParams().suffix);
+                router.getParams().suffix as string);
             })
           } else {
             Button() {

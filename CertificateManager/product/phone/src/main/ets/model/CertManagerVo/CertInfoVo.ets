@@ -67,10 +67,10 @@ export class CertInfoVo {
     this.notBefore = '';
     this.notAfter = '';
     this.fingerprintSha256 = '';
-    this.cert = null;
-    this.subjectNameMap = null;
-    this.issuerNameMap = null;
-    this.dateMap = null;
+    this.cert = new Uint8Array();
+    this.subjectNameMap.clear();
+    this.issuerNameMap.clear();
+    this.dateMap.clear();
   }
 
 }

@@ -15,7 +15,7 @@
 
 import certManagerModel from '../model/CertMangerModel';
 import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
-import type { CertAbstractVo } from '../model/CertManagerVo/CertAbstractVo';
+import { CertAbstractVo } from '../model/CertManagerVo/CertAbstractVo';
 import { CertInfoVo } from '../model/CertManagerVo/CertInfoVo';
 
 const TAG = 'CMShowSysCa Presenter: ';
@@ -23,7 +23,8 @@ const TAG = 'CMShowSysCa Presenter: ';
 export default class CmShowSysCaPresenter {
   private static sInstance: CmShowSysCaPresenter;
   certList: CertAbstractVo[] = [];
-  certInfo: CertInfoVo = new CertInfoVo('', '', false, '', '', '', '', '', '', null, null, null, null);
+  certInfo: CertInfoVo = new CertInfoVo('', '', false, '', '', '', '', '', '',
+    new Uint8Array(), new Map(), new Map(), new Map());
 
   public static getInstance(): CmShowSysCaPresenter {
     if (CmShowSysCaPresenter.sInstance == null) {
@@ -38,11 +39,13 @@ export default class CmShowSysCaPresenter {
 
   aboutToDisappear(): void {
     this.certList = [];
-    this.certInfo = new CertInfoVo('', '', false, '', '', '', '', '', '', null, null, null, null);
+    this.certInfo = new CertInfoVo('', '', false, '', '', '', '', '', '',
+      new Uint8Array(), new Map(), new Map(), new Map());
   }
 
   updateSystemTrustedCertificateList(): void {
-    certManagerModel.getCertOrCredList(CMModelOptType.CM_MODEL_OPT_SYSTEM_CA, (errCode, certList) => {
+    certManagerModel.getCertOrCredList(CMModelOptType.CM_MODEL_OPT_SYSTEM_CA,
+      (errCode: CMModelErrorCode, certList: Array<CertAbstractVo>) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         certList.sort((certAbs, certAbsOther): number => {
           let certAlias = certAbs.certAlias;
@@ -54,36 +57,38 @@ export default class CmShowSysCaPresenter {
           }
         });
         this.certList = certList;
-        console.log('updateSystemTrustedCertificateList inin :' + JSON.stringify(certList));
+        console.log('updateSystemTrustedCertificateList success, list: ' + JSON.stringify(certList));
       } else {
-        console.info(TAG + 'updateSystemTrustedCertificateList fail,errCode is' + errCode);
+        console.error(TAG + 'updateSystemTrustedCertificateList fail,errCode is' + errCode);
         this.certList = [];
       }
     });
   }
 
-  getSystemTrustedCertificate(uri, callback): void {
-    certManagerModel.getCertOrCred(CMModelOptType.CM_MODEL_OPT_SYSTEM_CA, uri, (errCode, certInfo) => {
+  getSystemTrustedCertificate(uri: string, callback: Function): void {
+    certManagerModel.getCertOrCred(CMModelOptType.CM_MODEL_OPT_SYSTEM_CA, uri,
+      (errCode: CMModelErrorCode, certInfo: CertInfoVo) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         console.info(TAG + 'getSystemTrustedCertificate success,errCode is ' + errCode + ' certInfo is' +
         JSON.stringify(certInfo));
         this.certInfo = certInfo;
         callback();
       } else {
-        console.info(TAG + 'getSystemTrustedCertificate fail,errCode is' + errCode);
+        console.error(TAG + 'getSystemTrustedCertificate fail,errCode is' + errCode);
         this.certInfo.clearCertInfoVo();
         callback();
       }
     });
   }
 
-  setSystemCertificateStatus(uri, status): void {
-    certManagerModel.setCertStatus(CMModelOptType.CM_MODEL_OPT_SYSTEM_CA, uri, status, (errCode) => {
+  setSystemCertificateStatus(uri: string, status: boolean): void {
+    certManagerModel.setCertStatus(CMModelOptType.CM_MODEL_OPT_SYSTEM_CA, uri, status,
+      (errCode: CMModelErrorCode) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         console.info(TAG + 'setSystemCertificateStatus success,errCode is' + errCode);
         this.updateSystemTrustedCertificateList();
       } else {
-        console.info(TAG + 'setSystemCertificateStatus fail,errCode is' + errCode);
+        console.error(TAG + 'setSystemCertificateStatus fail,errCode is' + errCode);
       }
     });
   }

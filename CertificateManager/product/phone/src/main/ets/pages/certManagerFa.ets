@@ -17,6 +17,12 @@ import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/Config
 import HeadComponent from '../common/component/headComponent';
 import { SubEntryComponent } from '../common/component/subEntryComponent';
 import CmFaPresenter from '../presenter/CmFaPresenter';
+import { GlobalContext } from '../common/GlobalContext';
+
+class CertListItem {
+  targetPage: string = '';
+  title: Resource = $r("app.string.trustedEvidence");
+};
 
 @Entry
 @Component
@@ -24,7 +30,7 @@ struct CertificateComponent {
   @State touchedItem: boolean = false;
   @State columnMargin: string = '12vp';
   @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
-  private listItems = [
+  private listItems: Array<CertListItem> = [
     { targetPage: "pages/trustedCa", title: $r("app.string.trustedEvidence") },
     { targetPage: "pages/cerEvidenceFa", title: $r("app.string.userEvidence") } ];
 
@@ -50,11 +56,11 @@ struct CertificateComponent {
             HeadComponent({ headName: $r('app.string.certificateTab') })
             Column({ space: this.columnMargin }) {
               List() {
-                ForEach(this.listItems, (item) => {
+                ForEach(this.listItems, (item: CertListItem) => {
                   ListItem() {
                     SubEntryComponent({ targetPage: item.targetPage, title: item.title})
                   }
-                }, item => JSON.stringify(item))
+                }, (item: CertListItem) => JSON.stringify(item))
               }
               .padding($r('app.float.wh_value_4'))
               .divider({
@@ -102,13 +108,13 @@ struct CertificateComponent {
   }
 
   onPageShow() {
-    let uri = globalThis.abilityWant.uri;
-    globalThis.abilityWant.uri = "";
+    let uri = GlobalContext.getContext().getAbilityWant().uri;
+    GlobalContext.getContext().clearAbilityWantUri();
 
     if (uri === "certInstall") {
       this.mFaPresenter.startInstall();
     } else if (uri === "requestAuthorize") {
-      this.mFaPresenter.startRequestAuth(globalThis.abilityWant.parameters.appUid);
+      this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
     }
   }
 }
@@ -116,7 +122,7 @@ struct CertificateComponent {
 @CustomDialog
 @Component
 struct CustomDialogExampleDeleteAll {
-  controller: CustomDialogController;
+  controller?: CustomDialogController;
   @Link deleteAll: CmFaPresenter;
 
   build() {
@@ -158,10 +164,13 @@ struct CustomDialogExampleDeleteAll {
               })
               .alignSelf(ItemAlign.Start)
 
-            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
+            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
+              justifyContent: FlexAlign.SpaceAround }) {
               Button($r("app.string.deleteAllCredCancel"))
                 .onClick(() => {
-                  this.controller.close()
+                  if (this.controller !== undefined) {
+                    this.controller.close()
+                  }
                 })
                 .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
                 .fontSize($r("sys.float.ohos_id_text_size_button1"))
@@ -177,7 +186,9 @@ struct CustomDialogExampleDeleteAll {
               Button($r("app.string.deleteAllCredDelete"))
                 .onClick(() => {
                   this.deleteAll.uninstallAllCert();
-                  this.controller.close()
+                  if (this.controller !== undefined) {
+                    this.controller.close()
+                  }
                 })
                 .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
                 .fontSize($r("sys.float.ohos_id_text_size_button1"))
@@ -260,12 +271,14 @@ struct DeleteAll {
     .height($r('app.float.wh_value_56'))
     .width(WidthPercent.WH_100_100)
     .borderRadius($r('app.float.radius_24'))
-    .onTouch((event: TouchEvent) => {
-      if (event.type === TouchType.Down) {
-        this.isTouched = true;
-      }
-      if (event.type === TouchType.Up) {
-        this.isTouched = false;
+    .onTouch((event?: TouchEvent) => {
+      if (event !== undefined) {
+        if (event.type === TouchType.Down) {
+          this.isTouched = true;
+        }
+        if (event.type === TouchType.Up) {
+          this.isTouched = false;
+        }
       }
     })
     .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
@@ -312,12 +325,14 @@ export struct CertInstallComponent {
                                              colors: [[$r("sys.color.ohos_id_color_foreground_contrary"), 1],
                                              [$r("sys.color.ohos_id_color_foreground_contrary"), 1]]
                                            })
-      .onTouch((event: TouchEvent) => {
-        if (event.type === TouchType.Down) {
-          this.isTouched = true;
-        }
-        if (event.type === TouchType.Up) {
-          this.isTouched = false;
+      .onTouch((event?: TouchEvent) => {
+        if (event !== undefined) {
+          if (event.type === TouchType.Down) {
+            this.isTouched = true;
+          }
+          if (event.type === TouchType.Up) {
+            this.isTouched = false;
+          }
         }
       })
     }

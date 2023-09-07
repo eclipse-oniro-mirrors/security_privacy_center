@@ -16,8 +16,12 @@
 import certManagerModel from '../model/CertMangerModel';
 import BundleModel from '../model/BundleModel';
 import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
-import type { CredentialAbstractVo } from '../model/CertManagerVo/CredentialAbstractVo';
+import { CredentialAbstractVo } from '../model/CertManagerVo/CredentialAbstractVo';
 import router from '@system.router';
+import { GlobalContext } from '../common/GlobalContext';
+import { AppInfoVo } from '../model/CertManagerVo/AppInfoVo';
+import { BusinessError } from '@ohos.base';
+import Common from '@ohos.app.ability.common'
 
 const TAG = 'CMAppCredAuthPresenter Presenter: ';
 const SUCCESS = 0;
@@ -45,10 +49,10 @@ export default class CmAppCredAuthPresenter {
     this.credList = [];
   }
 
-  updateAppNameFromUid(uid): void {
+  updateAppNameFromUid(uid: string): void {
     try {
       console.log('getAppNameFromUid start uid = ' + uid);
-      BundleModel.getAppInfoList(Number(uid), (errCode, appInfo) => {
+      BundleModel.getAppInfoList(Number(uid), (errCode: CMModelErrorCode, appInfo: AppInfoVo) => {
         if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
           this.appName = appInfo.appName;
           console.log('getAppNameFromUid success, appName = ' + this.appName);
@@ -57,41 +61,54 @@ export default class CmAppCredAuthPresenter {
         }
       });
     } catch (err) {
-      console.error('updateAppNameFromUid failed');
+      let e: BusinessError = err as BusinessError;
+      console.error('updateAppNameFromUid failed with err, message: ' + e.message + ', code: ' + e.code);
     }
   }
 
   updateAppCredList(): void {
-    certManagerModel.getCertOrCredList(CMModelOptType.CM_MODEL_OPT_APP_CRED, (errCode, credList) => {
+    certManagerModel.getCertOrCredList(CMModelOptType.CM_MODEL_OPT_APP_CRED,
+      (errCode: CMModelErrorCode, credList: Array<CredentialAbstractVo>) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         this.credList = credList;
-        console.log('updateSystemTrustedCertificateList inin :' + JSON.stringify(credList));
+        console.log('updateSystemTrustedCertificateList success, list: ' + JSON.stringify(credList));
       } else {
-        console.log('updateSystemTrustedCertificateList fail');
+        console.error('updateSystemTrustedCertificateList failed');
       }
     });
   }
 
-  requestAuthorize(uri, appUid): void {
+  requestAuthorize(uri: string, appUid: string): void {
     console.log(TAG + 'requestAuthorize start uri :' + uri + 'appUid: ' + appUid);
-    let want = globalThis.abilityWant;
+    let want = GlobalContext.getContext().getAbilityWant();
 
     certManagerModel.setAppAuth(CMModelOptType.CM_MODEL_OPT_APP_CRED, uri, appUid,
-      true, (errCode, data) => {
+      true, (errCode: CMModelErrorCode, data: string) => {
         router.clear();
         if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
           console.log('requestAuthorize success data: ' + data);
-          want.parameters.authUri = data;
-          globalThis.certManagerAbilityContext.terminateSelfWithResult({
-            resultCode: SUCCESS,
-            want: want
-          });
+          if (want.parameters != undefined) {
+            want.parameters.authUri = data;
+            let ret1: Common.AbilityResult = {
+              resultCode: SUCCESS,
+              want: want
+            };
+            GlobalContext.getContext().getCmContext().terminateSelfWithResult(ret1);
+          } else {
+            let ret2: Common.AbilityResult = {
+              resultCode: FAIL,
+              want: want
+            };
+            console.error(TAG + 'requestAuthorize failed, undefined');
+            GlobalContext.getContext().getCmContext().terminateSelfWithResult(ret2);
+          }
         } else {
-          console.log('requestAuthorize fail');
-          globalThis.certManagerAbilityContext.terminateSelfWithResult({
+          console.error('requestAuthorize fail');
+          let ret3: Common.AbilityResult = {
             resultCode: FAIL,
             want: want
-          });
+          };
+          GlobalContext.getContext().getCmContext().terminateSelfWithResult(ret3);
         }
       });
   }
@@ -99,9 +116,10 @@ export default class CmAppCredAuthPresenter {
   cancelProcess(): void {
     console.log('cancelProcess start');
     router.clear();
-    globalThis.certManagerAbilityContext.terminateSelfWithResult({
+    let ret: Common.AbilityResult = {
       resultCode: FAIL,
-      want: globalThis.abilityWant
-    });
+      want: GlobalContext.getContext().getAbilityWant()
+    };
+    GlobalContext.getContext().getCmContext().terminateSelfWithResult(ret);
   }
 }

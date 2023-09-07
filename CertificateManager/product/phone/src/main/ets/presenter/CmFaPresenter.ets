@@ -18,6 +18,7 @@ import router from '@system.router';
 import certManagerModel from '../model/CertMangerModel';
 import FileIoModel from '../model/FileIoModel';
 import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
+import { BusinessError } from '@ohos.base';
 
 const TAG = 'CMFaPresenter: ';
 const PAGE_URI_PWD_INPUT = 'pages/certPwdInput';
@@ -42,8 +43,8 @@ export default class CmFaPresenter {
 
   routeToNext(fileUri: string): void {
     console.info(TAG + 'routeToNext fileUri: ' + fileUri);
-    FileIoModel.getMediaFileSuffix(fileUri, (suffix) => {
-      if (suffix) {
+    FileIoModel.getMediaFileSuffix(fileUri, (suffix: string | undefined) => {
+      if (suffix !== undefined) {
         if ((suffix === 'cer') || (suffix === 'pem')) {
           router.push({
             uri: PAGE_URI_ALIAS_INPUT,
@@ -76,15 +77,16 @@ export default class CmFaPresenter {
         } else {
           console.error(TAG + 'documentPicker.select length invalid:' + documentSelectResult.length);
         }
-      }).catch((err) => {
-        console.error(TAG + 'documentPicker.select failed with err:' + err);
+      }).catch((err: BusinessError) => {
+        console.error(TAG + 'documentPicker.select failed with err, message: ' + err.message + ', code: ' + err.code);
       });
     } catch (err) {
-      console.error(TAG + 'DocumentViewPicker failed with err:' + err);
+      let e: BusinessError = err as BusinessError;
+      console.error(TAG + 'DocumentViewPicker failed with err, message: ' + e.message + ', code: ' + e.code);
     }
   }
 
-  startRequestAuth(uri): void {
+  startRequestAuth(uri: string): void {
     router.replace({
       uri: 'pages/requestAuth', params: {
         appUid: uri,
@@ -93,19 +95,19 @@ export default class CmFaPresenter {
   }
 
   uninstallAllCert(): void {
-    certManagerModel.delAllCertOrCred(CMModelOptType.CM_MODEL_OPT_USER_CA, (errCode) => {
+    certManagerModel.delAllCertOrCred(CMModelOptType.CM_MODEL_OPT_USER_CA, (errCode: CMModelErrorCode) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         console.log(TAG + 'uninstallAllCert CM_MODEL_OPT_USER_CA success');
       } else {
-        console.log(TAG + 'uninstallAllCert CM_MODEL_OPT_USER_CA failed');
+        console.error(TAG + 'uninstallAllCert CM_MODEL_OPT_USER_CA failed');
       }
     });
 
-    certManagerModel.delAllCertOrCred(CMModelOptType.CM_MODEL_OPT_APP_CRED, (errCode) => {
+    certManagerModel.delAllCertOrCred(CMModelOptType.CM_MODEL_OPT_APP_CRED, (errCode: CMModelErrorCode) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         console.log(TAG + 'uninstallAllCert CM_MODEL_OPT_APP_CRED success');
       } else {
-        console.log(TAG + 'uninstallAllCert CM_MODEL_OPT_APP_CRED failed');
+        console.error(TAG + 'uninstallAllCert CM_MODEL_OPT_APP_CRED failed');
       }
     });
   }
