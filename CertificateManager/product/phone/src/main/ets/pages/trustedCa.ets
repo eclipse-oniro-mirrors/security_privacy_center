@@ -18,20 +18,37 @@ import HeadComponent from '../common/component/headComponent';
 import CmShowSysCaPresenter from '../presenter/CmShowSysCaPresenter';
 import CMShowUserCaPresenter from '../presenter/CmShowUserCaPresenter';
 import CmFaPresenter from '../presenter/CmFaPresenter';
+import { GlobalContext } from '../common/GlobalContext';
+import { CertAbstractVo } from '../model/CertManagerVo/CertAbstractVo';
 
 @Component
 struct DialogSubjectComponent {
-  private map: Map<string, string>;
+  private map?: Map<string, string>;
   private subjectNameCN: string = ''
   private subjectNameO: string = ''
   private subjectNameOU: string = ''
   private serial: string = ''
   aboutToAppear() {
     if (this.map != null) {
-      this.subjectNameCN = this.map.get('常用名称:')
-      this.subjectNameO = this.map.get('组织:')
-      this.subjectNameOU = this.map.get('组织单位:')
-      this.serial = this.map.get('序列号:')
+      let subjectNameCN = this.map.get('常用名称:');
+      if (subjectNameCN !== undefined) {
+        this.subjectNameCN = subjectNameCN;
+      }
+
+      let subjectNameO = this.map.get('组织:');
+      if (subjectNameO !== undefined) {
+        this.subjectNameO = subjectNameO;
+      }
+
+      let subjectNameOU = this.map.get('组织单位:');
+      if (subjectNameOU !== undefined) {
+        this.subjectNameOU = subjectNameOU;
+      }
+
+      let serial = this.map.get('序列号:');
+      if (serial !== undefined) {
+        this.serial = serial;
+      }
     }
   }
   build() {
@@ -86,15 +103,26 @@ struct DialogSubjectComponent {
 
 @Component
 struct DialogIssuerComponent {
-  private map: Map<string, string>;
+  private map?: Map<string, string>;
   private issuerNameCN: string = ''
   private issuerNameO: string = ''
   private issuerNameOU: string = ''
   aboutToAppear() {
     if (this.map != null) {
-      this.issuerNameCN = this.map.get('常用名称:')
-      this.issuerNameO = this.map.get('组织:')
-      this.issuerNameOU = this.map.get('组织单位:')
+      let issuerNameCN = this.map.get('常用名称:');
+      if (issuerNameCN !== undefined) {
+        this.issuerNameCN = issuerNameCN;
+      }
+
+      let issuerNameO = this.map.get('组织:');
+      if (issuerNameO !== undefined) {
+        this.issuerNameO = issuerNameO;
+      }
+
+      let issuerNameOU = this.map.get('组织单位:');
+      if (issuerNameOU !== undefined) {
+        this.issuerNameOU = issuerNameOU;
+      }
     }
   }
 
@@ -139,13 +167,20 @@ struct DialogIssuerComponent {
 
 @Component
 struct DialogDateComponent {
-  private map: Map<string, string>;
-  private notBefore: string = ''
-  private notAfter: string = ''
+  private map?: Map<string, string>;
+  private notBefore: string = '';
+  private notAfter: string = '';
   aboutToAppear() {
     if (this.map != null) {
-      this.notBefore = this.map.get('颁发时间:')
-      this.notAfter = this.map.get('有效期至:')
+      let notBefore = this.map.get('颁发时间:');
+      if (notBefore != undefined) {
+        this.notBefore = notBefore;
+      }
+
+      let notAfter = this.map.get('有效期至:');
+      if (notAfter != undefined) {
+        this.notAfter = notAfter;
+      }
     }
   }
 
@@ -179,7 +214,7 @@ struct DialogDateComponent {
 
 @Component
 struct DialogFingerPrintComponent {
-  private fingerprintSha256: string;
+  private fingerprintSha256: string = '';
 
   build() {
     Column() {
@@ -204,7 +239,7 @@ struct DialogFingerPrintComponent {
 @CustomDialog
 @Component
 struct CustomDialogDeleteWarning {
-  controller: CustomDialogController;
+  controller?: CustomDialogController;
   @Link deleteWarn: CMShowUserCaPresenter;
   @Link mShowUserListPresenter: CMShowUserCaPresenter;
   @Link isShowWarnDialog: boolean;
@@ -248,11 +283,14 @@ struct CustomDialogDeleteWarning {
               })
               .alignSelf(ItemAlign.Start)
 
-            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
+            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
+              justifyContent: FlexAlign.SpaceAround }) {
               Button($r("app.string.deleteAllCredCancel"))
                 .onClick(() => {
                   this.isShowWarnDialog = false;
-                  this.controller.close()
+                  if (this.controller !== undefined) {
+                    this.controller.close();
+                  }
                 })
                 .backgroundColor($r("app.color.CustomDialogExample_Button_backgroundColor_FFFFFF"))
                 .fontSize($r("sys.float.ohos_id_text_size_button1"))
@@ -270,7 +308,9 @@ struct CustomDialogDeleteWarning {
                   this.deleteWarn.deleteUserCertificate(this.deleteWarn.certInfo.uri, () => {
                     this.mShowUserListPresenter.updateUserTrustedCertificateList();
                     this.isShowWarnDialog = false;
-                    this.controller.close();
+                    if (this.controller !== undefined) {
+                      this.controller.close();
+                    }
                   });
                 })
                 .backgroundColor($r("app.color.CustomDialogExample_Button_backgroundColor_FFFFFF"))
@@ -317,7 +357,7 @@ struct CustomDialogDeleteWarning {
 @CustomDialog
 @Component
 struct CustomDialogExampleUser {
-  controller: CustomDialogController;
+  controller?: CustomDialogController;
   @Link userInfoPresenter: CMShowUserCaPresenter;
   @Link userInfoPresenterForAbstractList: CMShowUserCaPresenter;
   @Link isShowWarnDialog: boolean;
@@ -462,12 +502,15 @@ struct CustomDialogExampleUser {
             })
             .scrollBar(BarState.Auto);
 
-            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
+            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
+              justifyContent: FlexAlign.SpaceAround }) {
               Button($r("app.string.CustomDialogExampleUser_Flex_firButton_text"))
                 .onClick(() => {
                   this.userInfoPresenterForAbstractList.updateUserTrustedCertificateList();
                   this.isShowWarnDialog = false;
-                  this.controller.close();
+                  if (this.controller !== undefined) {
+                    this.controller.close();
+                  }
                 })
                 .backgroundColor($r("app.color.CustomDialogExample_Button_backgroundColor_FFFFFF"))
                 .fontSize($r("sys.float.ohos_id_text_size_button1"))
@@ -483,7 +526,9 @@ struct CustomDialogExampleUser {
               Button($r("app.string.CustomDialogExampleUser_Flex_secButton_text"))
                 .onClick(() => {
                   this.isShowWarnDialog = true;
-                  this.controller.close();
+                  if (this.controller !== undefined) {
+                    this.controller.close();
+                  }
                 })
                 .backgroundColor($r("app.color.CustomDialogExample_Button_backgroundColor_FFFFFF"))
                 .fontSize($r("sys.float.ohos_id_text_size_button1"))
@@ -529,7 +574,7 @@ struct CustomDialogExampleUser {
 @CustomDialog
 @Component
 struct CustomDialogExampleSystem {
-  controller: CustomDialogController;
+  controller?: CustomDialogController;
   @Link sysInfoPresenter: CmShowSysCaPresenter;
   private isTrueButton: string = '';
 
@@ -627,10 +672,13 @@ struct CustomDialogExampleSystem {
             .height($r("app.float.CustomDialogExample_list_height_value"))
             .scrollBar(BarState.Auto);
 
-            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
+            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
+              justifyContent: FlexAlign.SpaceAround }) {
               Button($r("app.string.CustomDialogExample_Button_text"))
                 .onClick(() => {
-                  this.controller.close();
+                  if (this.controller !== undefined) {
+                    this.controller.close();
+                  }
                 })
                 .backgroundColor($r("app.color.CustomDialogExample_Button_backgroundColor_FFFFFF"))
                 .fontSize($r("sys.float.ohos_id_text_size_button1"))
@@ -647,7 +695,9 @@ struct CustomDialogExampleSystem {
                 Button($r("app.string.CustomDialogExample_Button_off"))
                   .onClick(() => {
                     this.sysInfoPresenter.setSystemCertificateStatus(this.sysInfoPresenter.certInfo.uri, false);
-                    this.controller.close();
+                    if (this.controller !== undefined) {
+                      this.controller.close();
+                    }
                   })
                   .backgroundColor($r("app.color.CustomDialogExample_Button_backgroundColor_FFFFFF"))
                   .fontSize($r("sys.float.ohos_id_text_size_button1"))
@@ -658,7 +708,9 @@ struct CustomDialogExampleSystem {
                 Button($r("app.string.CustomDialogExample_Button_on"))
                   .onClick(() => {
                     this.sysInfoPresenter.setSystemCertificateStatus(this.sysInfoPresenter.certInfo.uri, true);
-                    this.controller.close();
+                    if (this.controller !== undefined) {
+                      this.controller.close();
+                    }
                   })
                   .backgroundColor($r("app.color.CustomDialogExample_Button_backgroundColor_FFFFFF"))
                   .fontSize($r("sys.float.ohos_id_text_size_button1"))
@@ -706,11 +758,11 @@ struct CustomDialogExampleSystem {
 
 @Component
 struct ComponentSystem {
-  private certAlias: string;
-  private subjectName: string;
-  private Status: boolean;
-  private Index : number;
-  private Uri: string;
+  private certAlias: string = '';
+  private subjectName: string = '';
+  private Status: boolean = false;
+  private Index : number = 0;
+  private Uri: string = '';
   isSwitchTouched : boolean = false;
   @State isTouched: boolean = false;
   @Link setStatus: CmShowSysCaPresenter;
@@ -766,10 +818,10 @@ struct ComponentSystem {
 
 @Component
 struct ComponentUser {
-  private certAlias: string;
-  private subjectName: string;
+  private certAlias: string = '';
+  private subjectName: string = '';
   private Index : number = -1;
-  private Uri: string;
+  private Uri: string = '';
   @State StatusText : Resource = $r("app.string.CustomDialogExampleUser_Status_false");
   @State isTouched: boolean = false;
   @Link setStatus: CMShowUserCaPresenter;
@@ -901,13 +953,13 @@ struct TrustedEvidence {
   }
 
   onPageShow() {
-    let uri = globalThis.abilityWant.uri;
-    globalThis.abilityWant.uri = "";
+    let uri = GlobalContext.getContext().getAbilityWant().uri;
+    GlobalContext.getContext().clearAbilityWantUri();
 
     if (uri === "certInstall") {
       this.mFaPresenter.startInstall();
     } else if (uri === "requestAuthorize") {
-      this.mFaPresenter.startRequestAuth(globalThis.abilityWant.parameters.appUid);
+      this.mFaPresenter.startRequestAuth( GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
     }
   }
 
@@ -928,12 +980,12 @@ struct TrustedEvidence {
                   Stack({ alignContent: Alignment.End }) {
                     Scroll(this.sysCaScroller) {
                       List() {
-                        ForEach(this.mShowSysCaPresenter.certList, (item, index) => {
+                        ForEach(this.mShowSysCaPresenter.certList, (item: CertAbstractVo, index) => {
                           ListItem() {
-                            ComponentSystem({ certAlias: item.certAlias, subjectName: item.subjectNameCN, Status: item.status,
-                              Uri: item.uri, setStatus: $mShowSysCaPresenter, Index: index })
+                            ComponentSystem({ certAlias: item.certAlias, subjectName: item.subjectNameCN,
+                              Status: item.status, Uri: item.uri, setStatus: $mShowSysCaPresenter, Index: index })
                           }
-                        }, item => JSON.stringify(item))
+                        }, (item: CertAbstractVo) => JSON.stringify(item))
                       }
                       .scrollBar(BarState.Off)
                       .padding({
@@ -958,7 +1010,8 @@ struct TrustedEvidence {
                     })
                     .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
                     .backgroundColor($r("app.color.user_list_backgroundColor_FFFFFF"))
-                    ScrollBar({ scroller: this.sysCaScroller, direction: ScrollBarDirection.Vertical, state: BarState.Auto}) {
+                    ScrollBar({ scroller: this.sysCaScroller, direction: ScrollBarDirection.Vertical,
+                      state: BarState.Auto}) {
                       Text()
                         .width($r("app.float.wh_value_3"))
                         .height($r("app.float.wh_value_50"))
@@ -974,12 +1027,14 @@ struct TrustedEvidence {
                   }
                 }
                 .tabBar(this.TabBuilder(0))
-                .onTouch((event: TouchEvent) => {
-                  if (event.type === TouchType.Down) {
-                    this.isTouched = true;
-                  }
-                  if (event.type === TouchType.Up) {
-                    this.isTouched = false;
+                .onTouch((event?: TouchEvent) => {
+                  if (event !== undefined) {
+                    if (event.type === TouchType.Down) {
+                      this.isTouched = true;
+                    }
+                    if (event.type === TouchType.Up) {
+                      this.isTouched = false;
+                    }
                   }
                 });
 
@@ -987,12 +1042,12 @@ struct TrustedEvidence {
                   Stack({ alignContent: Alignment.End }) {
                     Scroll(this.userCaScroller) {
                       List() {
-                        ForEach(this.mShowUserCaPresenter.certList, (item, index) => {
+                        ForEach(this.mShowUserCaPresenter.certList, (item: CertAbstractVo, index) => {
                           ListItem() {
                             ComponentUser({ certAlias: item.certAlias, subjectName: item.subjectNameCN, Uri: item.uri,
                               setStatus: $mShowUserCaPresenter, Index: index })
                           }
-                        }, item => JSON.stringify(item))
+                        }, (item: CertAbstractVo) => JSON.stringify(item))
                       }
                       .scrollBar(BarState.Off)
                       .padding({
@@ -1017,7 +1072,8 @@ struct TrustedEvidence {
                     })
                     .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
                     .backgroundColor($r("app.color.user_list_backgroundColor_FFFFFF"))
-                    ScrollBar({ scroller: this.userCaScroller, direction: ScrollBarDirection.Vertical, state: BarState.Auto}) {
+                    ScrollBar({ scroller: this.userCaScroller, direction: ScrollBarDirection.Vertical,
+                      state: BarState.Auto}) {
                       Text()
                         .width($r("app.float.wh_value_3"))
                         .height($r("app.float.wh_value_50"))
@@ -1033,12 +1089,14 @@ struct TrustedEvidence {
                   }
                 }
                 .tabBar(this.TabBuilder(1))
-                .onTouch((event: TouchEvent) => {
-                  if (event.type === TouchType.Down) {
-                    this.isTouched = true;
-                  }
-                  if (event.type === TouchType.Up) {
-                    this.isTouched = false;
+                .onTouch((event?: TouchEvent) => {
+                  if (event !== undefined) {
+                    if (event.type === TouchType.Down) {
+                      this.isTouched = true;
+                    }
+                    if (event.type === TouchType.Up) {
+                      this.isTouched = false;
+                    }
                   }
                 });
               }

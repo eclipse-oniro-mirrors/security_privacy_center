@@ -36,7 +36,7 @@ export class CredentialVo {
     this.keyUri = '';
     this.certNum = 0;
     this.keyNum = 0;
-    this.credData = null;
+    this.credData = new Uint8Array();
   }
 
 }

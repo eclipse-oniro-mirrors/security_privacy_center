@@ -17,6 +17,7 @@ import certManagerModel from '../model/CertMangerModel';
 import FileIoModel from '../model/FileIoModel';
 import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
 import router from '@system.router';
+import { GlobalContext } from '../common/GlobalContext';
 
 const TAG = 'CMInstallPresenter: ';
 
@@ -39,7 +40,7 @@ export default class CmInstallPresenter {
     this.optType = CMModelOptType.CM_MODEL_OPT_UNKNOWN;
   }
 
-  updateCertFileType(suffix): void {
+  updateCertFileType(suffix: string): void {
     console.info(TAG + 'updateCertFileType suffix: ' + suffix);
     if ((suffix === 'cer') || (suffix === 'pem')) {
       this.optType = CMModelOptType.CM_MODEL_OPT_USER_CA;
@@ -48,23 +49,24 @@ export default class CmInstallPresenter {
     }
   }
 
-  getFileDataFromUri(uri, callback): void {
-    FileIoModel.getMediaFileData(uri, (data) => {
+  getFileDataFromUri(uri: string, callback: Function): void {
+    FileIoModel.getMediaFileData(uri, (data: Uint8Array) => {
       callback(data);
     });
 
   }
 
-  installCert(uri, alias, suffix): void {
+  installCert(uri: string, alias: string, suffix: string): void {
     this.updateCertFileType(suffix);
-    this.getFileDataFromUri(uri, (data) => {
-      certManagerModel.installCertOrCred(this.optType, alias, data, globalThis.PwdStore.getCertPwd(), (errCode) => {
+    this.getFileDataFromUri(uri, (data: Uint8Array) => {
+      certManagerModel.installCertOrCred(this.optType, alias, data,
+        GlobalContext.getContext().getPwdStore().getCertPwd(), (errCode: CMModelErrorCode) => {
         console.info(TAG + 'installCertOrCred result: ' + JSON.stringify(errCode));
-        globalThis.PwdStore.clearCertPwd();
+        GlobalContext.getContext().getPwdStore().clearCertPwd();
         if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
           console.info(TAG + 'installCert success');
         } else {
-          console.info(TAG + 'installCert failed');
+          console.error(TAG + 'installCert failed');
         }
         router.clear();
         router.replace({ uri: 'pages/certManagerFa' });

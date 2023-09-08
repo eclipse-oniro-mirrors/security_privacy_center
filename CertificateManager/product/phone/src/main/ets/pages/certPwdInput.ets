@@ -17,6 +17,7 @@ import HeadComponent from '../common/component/headComponent';
 import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/ConfigData';
 import router from '@system.router';
 import CmFaPresenter from '../presenter/CmFaPresenter';
+import { GlobalContext } from '../common/GlobalContext';
 
 @Entry
 @Component
@@ -25,13 +26,13 @@ struct CertPwdInput {
   @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
 
   onPageShow() {
-    let uri = globalThis.abilityWant.uri;
-    globalThis.abilityWant.uri = "";
+    let uri = GlobalContext.getContext().getAbilityWant().uri;
+    GlobalContext.getContext().clearAbilityWantUri();
 
     if (uri === "certInstall") {
       this.mFaPresenter.startInstall();
     } else if (uri === "requestAuthorize") {
-      this.mFaPresenter.startRequestAuth(globalThis.abilityWant.parameters.appUid);
+      this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
     }
   }
 
@@ -99,7 +100,7 @@ struct CertPwdInput {
             right: $r('app.float.distance_24'),
           })
           .onClick(() => {
-            globalThis.PwdStore.setCertPwd(this.certPwd)
+            GlobalContext.getContext().getPwdStore().setCertPwd(this.certPwd)
             router.push({
               uri: 'pages/certInstallAliasInput',
               params: {

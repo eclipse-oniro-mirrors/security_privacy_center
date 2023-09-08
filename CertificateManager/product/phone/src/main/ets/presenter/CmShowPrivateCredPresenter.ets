@@ -15,13 +15,13 @@
 
 import certManagerModel from '../model/CertMangerModel';
 import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
-import type { CredentialAbstractVo } from '../model/CertManagerVo/CredentialAbstractVo';
+import { CredentialAbstractVo } from '../model/CertManagerVo/CredentialAbstractVo';
 import { CredentialVo } from '../model/CertManagerVo/CredentialVo';
 
 export default class CmShowPrivateCredPresenter {
   private static sInstance: CmShowPrivateCredPresenter;
   credList: CredentialAbstractVo[] = [];
-  credInfo: CredentialVo = new CredentialVo('', '', '', 0, 0, null);
+  credInfo: CredentialVo = new CredentialVo('', '', '', 0, 0, new Uint8Array());
 
   public static getInstance(): CmShowPrivateCredPresenter {
     if (CmShowPrivateCredPresenter.sInstance == null) {
@@ -32,11 +32,12 @@ export default class CmShowPrivateCredPresenter {
 
   aboutToDisappear(): void {
     this.credList = [];
-    this.credInfo = new CredentialVo('', '', '', 0, 0, null);
+    this.credInfo = new CredentialVo('', '', '', 0, 0, new Uint8Array());
   }
 
   updatePrivateCredList(): void {
-    certManagerModel.getCertOrCredList(CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED, (errCode, credList) => {
+    certManagerModel.getCertOrCredList(CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED,
+      (errCode: CMModelErrorCode, credList: Array<CredentialAbstractVo>) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         credList.sort((certAbs, certAbsOther) => {
           let certAlias = certAbs.alias;
@@ -49,18 +50,19 @@ export default class CmShowPrivateCredPresenter {
         });
         this.credList = credList;
       } else {
-        console.log('updatePrivateCredList error :' + JSON.stringify(errCode));
+        console.error('updatePrivateCredList error :' + JSON.stringify(errCode));
         this.credList = [];
       }
     });
   }
 
-  getPrivateCred(uri, callback): void {
-    certManagerModel.getCertOrCred(CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED, uri, (errCode, credInfo) => {
+  getPrivateCred(uri: string, callback: Function): void {
+    certManagerModel.getCertOrCred(CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED, uri,
+      (errCode: CMModelErrorCode, credInfo: CredentialVo) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         this.credInfo = credInfo;
       } else {
-        console.log('getPrivateCred error :' + JSON.stringify(errCode));
+        console.error('getPrivateCred error :' + JSON.stringify(errCode));
         this.credInfo.clearCredentialVo();
       }
       callback();
