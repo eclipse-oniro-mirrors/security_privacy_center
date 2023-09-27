@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -38,7 +38,7 @@ export default struct HeadComponent {
       .backgroundColor(this.isTouch ? $r('app.color.color_E3E3E3_grey') : $r('app.color.color_00000000_transparent'))
       .visibility(this.icBackIsVisibility ? Visibility.Visible : Visibility.None)
       .onClick(() => {
-        var length = Router.getLength();
+        let length = Router.getLength();
         console.log(TAG + "router length: " + Number(length));
         Number(length) == 1 ? globalThis.certManagerAbilityContext.terminateSelf() : Router.back();
       })
