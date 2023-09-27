@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,7 +18,6 @@ import router from '@system.router';
 import certManagerModel from '../model/CertMangerModel';
 import FileIoModel from '../model/FileIoModel';
 import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
-import abilityAccessCtrl from '@ohos.abilityAccessCtrl';
 
 const TAG = 'CMFaPresenter: ';
 const PAGE_URI_PWD_INPUT = 'pages/certPwdInput';
