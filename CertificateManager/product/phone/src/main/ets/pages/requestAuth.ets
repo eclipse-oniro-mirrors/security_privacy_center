@@ -17,18 +17,19 @@ import LogUtil from '../common/util/LogUtil';
 import CmAppCredAuthPresenter from '../presenter/CmAppCredAuthPresenter';
 import router from '@system.router';
 import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/ConfigData';
+import { CredentialAbstractVo } from '../model/CertManagerVo/CredentialAbstractVo';
 
 @CustomDialog
 @Component
 struct CustomDialogAuthForApp {
-  controller: CustomDialogController
+  controller?: CustomDialogController
   @State mAppCredAuthPresenter: CmAppCredAuthPresenter = CmAppCredAuthPresenter.getInstance();
-  selectUri: string = "";
+  selectUri: string = '';
   private authScroller: Scroller = new Scroller();
 
   aboutToAppear(): void {
     LogUtil.info('certPwdInput about to appear');
-    this.mAppCredAuthPresenter.updateAppNameFromUid(router.getParams().appUid);
+    this.mAppCredAuthPresenter.updateAppNameFromUid(router.getParams().appUid as string);
     this.mAppCredAuthPresenter.updateAppCredList();
   }
 
@@ -76,7 +77,7 @@ struct CustomDialogAuthForApp {
               Stack({ alignContent: Alignment.End }) {
                 Scroll(this.authScroller) {
                   List() {
-                    ForEach(this.mAppCredAuthPresenter.credList, (item) => {
+                    ForEach(this.mAppCredAuthPresenter.credList, (item: CredentialAbstractVo) => {
                       ListItem() {
                         Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
 
@@ -105,7 +106,7 @@ struct CustomDialogAuthForApp {
                         .width(WidthPercent.WH_100_100)
                       }
                       .height($r('app.float.wh_value_64'))
-                    }, item => JSON.stringify(item))
+                    }, (item: CredentialAbstractVo) => JSON.stringify(item))
                   }
                   .scrollBar(BarState.Off)
                   .divider({
@@ -136,7 +137,7 @@ struct CustomDialogAuthForApp {
               .height(WidthPercent.WH_50_100)
             } else {
               List() {
-                ForEach(this.mAppCredAuthPresenter.credList, (item) => {
+                ForEach(this.mAppCredAuthPresenter.credList, (item: CredentialAbstractVo) => {
                   ListItem() {
                     Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
                       Column() {
@@ -164,7 +165,7 @@ struct CustomDialogAuthForApp {
                     .width(WidthPercent.WH_100_100)
                   }
                   .height($r('app.float.wh_value_64'))
-                }, item => JSON.stringify(item))
+                }, (item: CredentialAbstractVo) => JSON.stringify(item))
                 ListItem() {
                   Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
                     Column() {
@@ -199,11 +200,14 @@ struct CustomDialogAuthForApp {
               .visibility(this.mAppCredAuthPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
             }
 
-            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
+            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
+              justifyContent: FlexAlign.SpaceAround }) {
               Button($r('app.string.requestAuthCancel'))
                 .onClick(() => {
                   this.mAppCredAuthPresenter.cancelProcess();
-                  this.controller.close();
+                  if (this.controller !== undefined) {
+                    this.controller.close();
+                  }
                 })
                 .backgroundColor($r('app.color.request_auth_background_color'))
                 .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
@@ -223,8 +227,10 @@ struct CustomDialogAuthForApp {
                   LogUtil.info('requestAuthorize uri: ' + this.selectUri);
                   if (router.getParams() && router.getParams().appUid) {
                     LogUtil.info('requestAuthorize appUid: ' + router.getParams().appUid);
-                    this.mAppCredAuthPresenter.requestAuthorize(this.selectUri, router.getParams().appUid);
-                    this.controller.close();
+                    this.mAppCredAuthPresenter.requestAuthorize(this.selectUri, router.getParams().appUid as string);
+                    if (this.controller !== undefined) {
+                      this.controller.close();
+                    }
                   } else {
                     LogUtil.info('requestAuthorize fail');
                   }

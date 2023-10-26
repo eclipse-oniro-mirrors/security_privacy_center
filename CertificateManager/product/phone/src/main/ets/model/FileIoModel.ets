@@ -15,9 +15,10 @@
 
 import fileUri from '@ohos.file.fileuri';
 import fs from '@ohos.file.fs';
+import { BusinessError } from '@ohos.base';
 
 export class FileIoModel {
-  getMediaFileData(mediaUri, callback): void {
+  getMediaFileData(mediaUri: string, callback: Function): void {
     console.log('CertManager FA getMediaFile start');
     try {
       let file = fs.openSync(mediaUri, fs.OpenMode.READ_ONLY);
@@ -28,20 +29,21 @@ export class FileIoModel {
       console.log('CertManager FA getMediaFile success');
       callback(new Uint8Array(buf));
     } catch(err) {
-      console.error('CertManager FA getMediaFileData failed');
+      let e: BusinessError = err as BusinessError;
+      console.error('CertManager FA getMediaFileData failed with err, message: ' + e.message + ', code: ' + e.code);
       callback(undefined);
     }
   }
 
-  getMediaFileSuffix(mediaUri, callback): void {
+  getMediaFileSuffix(mediaUri: string, callback: Function): void {
     try {
       console.log('CertManager FA getMediaFileSuffix start  uri: ' + mediaUri);
-      // @ts-ignore
       let uri = new fileUri.FileUri(mediaUri);
       let suffix = uri.name.substring(uri.name.lastIndexOf('.') + 1);
       callback(suffix);
     } catch(err) {
-      console.error('CertManager FA getMediaFileSuffix failed');
+      let e: BusinessError = err as BusinessError;
+      console.error('CertManager FA getMediaFileSuffix failed with err, message: ' + e.message + ', code: ' + e.code);
       callback(undefined);
     }
   }

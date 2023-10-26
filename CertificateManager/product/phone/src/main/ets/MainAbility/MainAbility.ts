@@ -16,31 +16,15 @@
 import Ability from '@ohos.app.ability.UIAbility';
 import type Want from '@ohos.app.ability.Want';
 import type Window from '@ohos.window';
-import type UIAbilityContext from 'application/UIAbilityContext';
-
-class PwdStore {
-  private certPwd: string = '';
-  setCertPwd(pwd: string): void {
-    this.certPwd = pwd;
-  }
-
-  getCertPwd(): string {
-    return this.certPwd;
-  }
-
-  clearCertPwd(): void {
-    this.certPwd = '';
-  }
-}
+import { GlobalContext, PwdStore } from '../common/GlobalContext';
 
 export default class MainAbility extends Ability {
   onCreate(want: Want, launchParam): void {
     console.log('[Demo] MainAbility onCreate');
-    let context: UIAbilityContext = this.context;
-    globalThis.certManagerAbilityContext = context;
-    globalThis.PwdStore = new PwdStore();
-    globalThis.abilityWant = want;
-    globalThis.abilityContext = context;
+    let pwdStore = new PwdStore();
+    GlobalContext.getContext().setCmContext(this.context);
+    GlobalContext.getContext().setPwdStore(pwdStore);
+    GlobalContext.getContext().setAbilityWant(want);
   }
 
   onDestroy(): void {
@@ -75,6 +59,6 @@ export default class MainAbility extends Ability {
 
   onNewWant(want: Want): void {
     console.log('[Demo] MainAbility onNewWant');
-    globalThis.abilityWant = want;
+    GlobalContext.getContext().setAbilityWant(want);
   }
 };
