@@ -19,8 +19,8 @@ import ComponentConfig from './ComponentConfig';
  */
 @Component
 export struct SubEntryComponent {
-  private targetPage: string;
-  private title: string | Resource;
+  private targetPage: string = '';
+  private title: string | Resource = '';
   @State isTouched: boolean = false;
 
   build() {
@@ -55,12 +55,14 @@ export struct SubEntryComponent {
                                              direction: GradientDirection.Right,
                                              colors: [[$r("sys.color.ohos_id_color_foreground_contrary"), 1], [$r("sys.color.ohos_id_color_foreground_contrary"), 1]]
                                            })
-      .onTouch((event: TouchEvent) => {
-        if (event.type === TouchType.Down) {
-          this.isTouched = true;
-        }
-        if (event.type === TouchType.Up) {
-          this.isTouched = false;
+      .onTouch((event?: TouchEvent) => {
+        if (event !== undefined) {
+          if (event.type === TouchType.Down) {
+            this.isTouched = true;
+          }
+          if (event.type === TouchType.Up) {
+            this.isTouched = false;
+          }
         }
       })
     }
@@ -76,9 +78,9 @@ export struct SubEntryComponent {
 @Component
 export struct SubEntryComponentWithEndText {
   @State isTouched: boolean = false;
-  @Prop endText: string;
-  private targetPage: string;
-  private title: string | Resource;
+  @Prop endText: string = '';
+  private targetPage: string = '';
+  private title: string | Resource = '';
 
   build() {
     Navigator({ target: this.targetPage }) {
@@ -121,12 +123,14 @@ export struct SubEntryComponentWithEndText {
                                              direction: GradientDirection.Right,
                                              colors: [[$r("sys.color.ohos_id_color_foreground_contrary"), 1], [$r("sys.color.ohos_id_color_foreground_contrary"), 1]]
                                            })
-      .onTouch((event: TouchEvent) => {
-        if (event.type === TouchType.Down) {
-          this.isTouched = true;
-        }
-        if (event.type === TouchType.Up) {
-          this.isTouched = false;
+      .onTouch((event?: TouchEvent) => {
+        if (event !== undefined) {
+          if (event.type === TouchType.Down) {
+            this.isTouched = true;
+          }
+          if (event.type === TouchType.Up) {
+            this.isTouched = false;
+          }
         }
       });
     }

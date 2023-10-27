@@ -14,6 +14,7 @@
  */
 import ComponentConfig from './ComponentConfig';
 import Router from '@system.router';
+import { GlobalContext } from '../GlobalContext';
 
 const TAG = "CertManager HeadComponent: ";
 
@@ -40,14 +41,16 @@ export default struct HeadComponent {
       .onClick(() => {
         let length = Router.getLength();
         console.log(TAG + "router length: " + Number(length));
-        Number(length) == 1 ? globalThis.certManagerAbilityContext.terminateSelf() : Router.back();
+        Number(length) == 1 ? GlobalContext.getContext().getCmContext().terminateSelf() : Router.back();
       })
-      .onTouch((event: TouchEvent) => {
-        if (event.type === TouchType.Down) {
-          this.isTouch = true;
-        }
-        if (event.type === TouchType.Up) {
-          this.isTouch = false;
+      .onTouch((event?: TouchEvent) => {
+        if (event !== undefined) {
+          if (event.type === TouchType.Down) {
+            this.isTouch = true;
+          }
+          if (event.type === TouchType.Up) {
+            this.isTouch = false;
+          }
         }
       });
 

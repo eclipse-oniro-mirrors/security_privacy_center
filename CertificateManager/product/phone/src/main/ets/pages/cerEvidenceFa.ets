@@ -18,13 +18,16 @@ import HeadComponent from '../common/component/headComponent';
 import CmShowAppCredPresenter from '../presenter/CmShowAppCredPresenter';
 import CMShowPrivateCredPresenter from '../presenter/CmShowPrivateCredPresenter';
 import CMFaPresenter from '../presenter/CmFaPresenter';
+import { GlobalContext } from '../common/GlobalContext';
+import { CredentialAbstractVo } from '../model/CertManagerVo/CredentialAbstractVo';
+import { AppAuthorVo } from '../model/CertManagerVo/AppAuthorVo';
 
 @Component
 export struct DialogComponent {
   @Link uidItem: CmShowAppCredPresenter;
-  private AppName: string;
-  private AppImage: string;
-  private Index: number;
+  private AppName: string = '';
+  private AppImage: string = '';
+  private Index: number = 0;
 
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
@@ -57,7 +60,7 @@ export struct DialogComponent {
 @CustomDialog
 @Component
 struct CustomDialogExampleAuthor {
-  controller: CustomDialogController;
+  controller?: CustomDialogController;
   @Link isShowAuthDialog: boolean;
   @Link AuthorInfo: CmShowAppCredPresenter;
   @State updateStatusList: boolean[] = [];
@@ -95,9 +98,10 @@ struct CustomDialogExampleAuthor {
               Stack({ alignContent: Alignment.End }) {
                 Scroll(this.authorScroller) {
                   List() {
-                    ForEach(this.AuthorInfo.appInfoList, (item, index) => {
+                    ForEach(this.AuthorInfo.appInfoList, (item: AppAuthorVo, index) => {
                       ListItem() {
-                        DialogComponent({ AppImage: item.appImage, AppName: item.appName, Index: index, uidItem: $AuthorInfo })
+                        DialogComponent({ AppImage: item.appImage, AppName: item.appName,
+                          Index: index, uidItem: $AuthorInfo })
                       }
                     })
                   }
@@ -113,7 +117,8 @@ struct CustomDialogExampleAuthor {
                   left: $r('app.float.wh_value_24'),
                   right: $r('app.float.wh_value_24')
                 })
-                ScrollBar({ scroller: this.authorScroller, direction: ScrollBarDirection.Vertical, state: BarState.Auto}) {
+                ScrollBar({ scroller: this.authorScroller, direction: ScrollBarDirection.Vertical,
+                  state: BarState.Auto}) {
                   Text()
                     .width($r("app.float.wh_value_3"))
                     .height($r("app.float.wh_value_50"))
@@ -129,9 +134,10 @@ struct CustomDialogExampleAuthor {
               .height(WidthPercent.WH_50_100)
             } else {
               List() {
-                ForEach(this.AuthorInfo.appInfoList, (item, index) => {
+                ForEach(this.AuthorInfo.appInfoList, (item: AppAuthorVo, index) => {
                   ListItem() {
-                    DialogComponent({ AppImage: item.appImage, AppName: item.appName, Index: index, uidItem: $AuthorInfo })
+                    DialogComponent({ AppImage: item.appImage, AppName: item.appName,
+                      Index: index, uidItem: $AuthorInfo })
                   }
                 })
               }
@@ -147,11 +153,14 @@ struct CustomDialogExampleAuthor {
               .visibility(this.AuthorInfo.appInfoList.length > 0 ? Visibility.Visible : Visibility.None)
             }
 
-            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
+            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
+              justifyContent: FlexAlign.SpaceAround }) {
               Button($r("app.string.cancelAuthApp"))
                 .onClick(() => {
                   this.isShowAuthDialog = false;
-                  this.controller.close()
+                  if (this.controller !== undefined) {
+                    this.controller.close();
+                  }
                 })
                 .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
                 .fontSize($r("sys.float.ohos_id_text_size_button1"))
@@ -168,7 +177,9 @@ struct CustomDialogExampleAuthor {
                 .onClick(() => {
                   this.AuthorInfo.removeGrantedAppList(this.AuthorInfo.credInfo.keyUri).then(() => {
                     this.isShowAuthDialog = false;
-                    this.controller.close()
+                    if (this.controller !== undefined) {
+                      this.controller.close();
+                    }
                   })
                 })
                 .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
@@ -216,7 +227,7 @@ struct CustomDialogExampleAuthor {
 @CustomDialog
 @Component
 struct CustomDialogExamplePrivate {
-  controller: CustomDialogController;
+  controller?: CustomDialogController;
   @State PriCerInfoPresenter: CMShowPrivateCredPresenter = CMShowPrivateCredPresenter.getInstance();
 
   build() {
@@ -291,10 +302,13 @@ struct CustomDialogExamplePrivate {
               .opacity($r('app.float.opacity_100_60'))
               .alignSelf(ItemAlign.Start)
 
-            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
+            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
+              justifyContent: FlexAlign.SpaceAround }) {
               Button($r("app.string.privateDetailsClose"))
                 .onClick(() => {
-                  this.controller.close()
+                  if (this.controller !== undefined) {
+                    this.controller.close();
+                  }
                 })
                 .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
                 .fontSize($r("sys.float.ohos_id_text_size_button1"))
@@ -341,7 +355,7 @@ struct CustomDialogExamplePrivate {
 @CustomDialog
 @Component
 struct CustomDialogDeleteWarning {
-  controller: CustomDialogController;
+  controller?: CustomDialogController;
   @Link deleteWarn: CmShowAppCredPresenter;
   @Link isShowWarnDialog: boolean;
 
@@ -384,11 +398,14 @@ struct CustomDialogDeleteWarning {
               })
               .alignSelf(ItemAlign.Start)
 
-            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
+            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
+              justifyContent: FlexAlign.SpaceAround }) {
               Button($r("app.string.deleteAllCredCancel"))
                 .onClick(() => {
                   this.isShowWarnDialog = false;
-                  this.controller.close()
+                  if (this.controller !== undefined) {
+                    this.controller.close();
+                  }
                 })
                 .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
                 .fontSize($r("sys.float.ohos_id_text_size_button1"))
@@ -405,7 +422,9 @@ struct CustomDialogDeleteWarning {
                 .onClick(() => {
                   this.deleteWarn.deleteAppCred(this.deleteWarn.credInfo.keyUri);
                   this.isShowWarnDialog = false;
-                  this.controller.close()
+                  if (this.controller !== undefined) {
+                    this.controller.close();
+                  }
                 })
                 .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
                 .fontSize($r("sys.float.ohos_id_text_size_button1"))
@@ -452,7 +471,7 @@ struct CustomDialogDeleteWarning {
 @CustomDialog
 @Component
 struct CustomDialogExampleApp {
-  controller: CustomDialogController;
+  controller?: CustomDialogController;
   @Link mShowAppCaPresenter: CmShowAppCredPresenter;
   @Link isShowAuthDialog: boolean;
   @Link isShowWarnDialog: boolean;
@@ -559,12 +578,15 @@ struct CustomDialogExampleApp {
             })
             .height('48vp')
 
-            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceAround }) {
+            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
+              justifyContent: FlexAlign.SpaceAround }) {
               Button($r("app.string.publicDetailsCancel"))
                 .onClick(() => {
                   this.isShowAuthDialog = false;
                   this.isShowWarnDialog = false;
-                  this.controller.close();
+                  if (this.controller !== undefined) {
+                    this.controller.close();
+                  }
                 })
                 .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
                 .fontSize($r("sys.float.ohos_id_text_size_button1"))
@@ -581,7 +603,9 @@ struct CustomDialogExampleApp {
                 .onClick(() => {
                   this.isShowWarnDialog = true;
                   this.isShowAuthDialog = false;
-                  this.controller.close()
+                  if (this.controller !== undefined) {
+                    this.controller.close();
+                  }
                 })
                 .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
                 .fontSize($r("sys.float.ohos_id_text_size_button1"))
@@ -627,8 +651,8 @@ struct CustomDialogExampleApp {
 
 @Component
 export struct componentPublic {
-  private Alias: string;
-  private KeyUri: string;
+  private Alias: string = '';
+  private KeyUri: string = '';
   @Link mShowAppCaPresenter: CmShowAppCredPresenter;
   @State @Watch("onShowAuthMngChange") isShowAuthMng: boolean = false;
   @State @Watch("onShowDeleteWarnDialog") isShowWarning: boolean = false;
@@ -700,8 +724,8 @@ export struct componentPublic {
 
 @Component
 export struct componentPrivate {
-  private Alias: string;
-  private KeyUri: string;
+  private Alias: string = '';
+  private KeyUri: string = '';
   @State PrivateCerPresenter: CMShowPrivateCredPresenter = CMShowPrivateCredPresenter.getInstance();
   privateDetailDialog: CustomDialogController = new CustomDialogController({
     builder: CustomDialogExamplePrivate(),
@@ -777,13 +801,13 @@ struct evidenceList {
   }
 
   onPageShow() {
-    let uri = globalThis.abilityWant.uri;
-    globalThis.abilityWant.uri = "";
+    let uri = GlobalContext.getContext().getAbilityWant().uri;
+    GlobalContext.getContext().clearAbilityWantUri();
 
     if (uri === "certInstall") {
       this.mFaPresenter.startInstall();
     } else if (uri === "requestAuthorize") {
-      this.mFaPresenter.startRequestAuth(globalThis.abilityWant.parameters.appUid);
+      this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
     }
   }
 
@@ -808,7 +832,7 @@ struct evidenceList {
                   Stack({ alignContent: Alignment.End }) {
                     Scroll(this.publicScroller) {
                       List() {
-                        ForEach(this.mShowAppCaPresenter.credList, (item) => {
+                        ForEach(this.mShowAppCaPresenter.credList, (item: CredentialAbstractVo) => {
                           ListItem() {
                             componentPublic({
                               Alias: item.alias,
@@ -816,7 +840,7 @@ struct evidenceList {
                               mShowAppCaPresenter: $mShowAppCaPresenter
                             })
                           }
-                        }, item => JSON.stringify(item))
+                        }, (item: CredentialAbstractVo) => JSON.stringify(item))
                       }
                       .scrollBar(BarState.Off)
                       .padding({
@@ -841,7 +865,8 @@ struct evidenceList {
                     })
                     .borderRadius($r("app.float.Evidence_borderRadius"))
                     .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
-                    ScrollBar({ scroller: this.publicScroller, direction: ScrollBarDirection.Vertical, state: BarState.Auto}) {
+                    ScrollBar({ scroller: this.publicScroller, direction: ScrollBarDirection.Vertical,
+                      state: BarState.Auto}) {
                       Text()
                         .width($r("app.float.wh_value_3"))
                         .height($r("app.float.wh_value_50"))
@@ -857,12 +882,14 @@ struct evidenceList {
                   }
                 }
                 .tabBar(this.TabBuilder(0))
-                .onTouch((event: TouchEvent) => {
-                  if (event.type === TouchType.Down) {
-                    this.isTouched = true;
-                  }
-                  if (event.type === TouchType.Up) {
-                    this.isTouched = false;
+                .onTouch((event?: TouchEvent) => {
+                  if (event !== undefined) {
+                    if (event.type === TouchType.Down) {
+                      this.isTouched = true;
+                    }
+                    if (event.type === TouchType.Up) {
+                      this.isTouched = false;
+                    }
                   }
                 })
 
@@ -870,11 +897,11 @@ struct evidenceList {
                   Stack({ alignContent: Alignment.End }) {
                     Scroll(this.privateScroller) {
                       List() {
-                        ForEach(this.mShowPrivateCaPresenter.credList, (item) => {
+                        ForEach(this.mShowPrivateCaPresenter.credList, (item: CredentialAbstractVo) => {
                           ListItem() {
                             componentPrivate({ Alias: item.alias, KeyUri: item.keyUri })
                           }
-                        }, item => JSON.stringify(item))
+                        }, (item: CredentialAbstractVo) => JSON.stringify(item))
                       }
                       .scrollBar(BarState.Off)
                       .padding({
@@ -890,7 +917,8 @@ struct evidenceList {
                       })
                       .borderRadius($r("app.float.Evidence_borderRadius"))
                       .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
-                      .visibility(this.mShowPrivateCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
+                      .visibility(
+                        this.mShowPrivateCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
                     }
                     .position({ y: 0 })
                     .scrollable(ScrollDirection.Vertical)
@@ -917,16 +945,19 @@ struct evidenceList {
                     .margin({
                       right: $r("app.float.wh_value_3")
                     })
-                    .visibility(this.mShowPrivateCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
+                    .visibility(
+                      this.mShowPrivateCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
                   }
                 }
                 .tabBar(this.TabBuilder(1))
-                .onTouch((event: TouchEvent) => {
-                  if (event.type === TouchType.Down) {
-                    this.isTouched = true;
-                  }
-                  if (event.type === TouchType.Up) {
-                    this.isTouched = false;
+                .onTouch((event?: TouchEvent) => {
+                  if (event !== undefined) {
+                    if (event.type === TouchType.Down) {
+                      this.isTouched = true;
+                    }
+                    if (event.type === TouchType.Up) {
+                      this.isTouched = false;
+                    }
                   }
                 });
               }
