@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import LogUtil from '../common/util/LogUtil';
 import CmAppCredAuthPresenter from '../presenter/CmAppCredAuthPresenter';
 import router from '@system.router';
 import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/ConfigData';
@@ -28,7 +27,7 @@ struct CustomDialogAuthForApp {
   private authScroller: Scroller = new Scroller();
 
   aboutToAppear(): void {
-    LogUtil.info('certPwdInput about to appear');
+    console.info('certPwdInput about to appear');
     this.mAppCredAuthPresenter.updateAppNameFromUid(router.getParams().appUid as string);
     this.mAppCredAuthPresenter.updateAppCredList();
   }
@@ -224,15 +223,15 @@ struct CustomDialogAuthForApp {
 
               Button($r('app.string.requestAuthFinish'))
                 .onClick(() => {
-                  LogUtil.info('requestAuthorize uri: ' + this.selectUri);
+                  console.info('requestAuthorize uri: ' + this.selectUri);
                   if (router.getParams() && router.getParams().appUid) {
-                    LogUtil.info('requestAuthorize appUid: ' + router.getParams().appUid);
+                    console.info('requestAuthorize appUid: ' + router.getParams().appUid);
                     this.mAppCredAuthPresenter.requestAuthorize(this.selectUri, router.getParams().appUid as string);
                     if (this.controller !== undefined) {
                       this.controller.close();
                     }
                   } else {
-                    LogUtil.info('requestAuthorize fail');
+                    console.info('requestAuthorize fail');
                   }
                 })
                 .backgroundColor($r('app.color.request_auth_background_color'))
@@ -287,7 +286,7 @@ struct RadioAuth {
   })
 
   aboutToAppear() {
-    LogUtil.info('RadioAuth aboutToAppear');
+    console.info('RadioAuth aboutToAppear');
 
     if (router.getParams() && router.getParams().appUid) {
       this.dialogController.open();
