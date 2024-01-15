@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import LogUtil from '../common/util/LogUtil';
+
 import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/ConfigData';
 import HeadComponent from '../common/component/headComponent';
 import CmShowSysCaPresenter from '../presenter/CmShowSysCaPresenter';
@@ -859,7 +859,7 @@ struct ComponentUser {
   }
 
   aboutToAppear() {
-    LogUtil.info('in ComponentUser aboutToAppear');
+    console.info('in ComponentUser aboutToAppear');
     if (this.setStatus.certList[this.Index].status == true) {
       this.StatusText = $r("app.string.CustomDialogExampleUser_Status_true");
     } else {
@@ -947,7 +947,7 @@ struct TrustedEvidence {
   }
 
   aboutToAppear() {
-    LogUtil.info('in aboutToAppear');
+    console.info('in aboutToAppear');
     this.mShowSysCaPresenter.updateSystemTrustedCertificateList();
     this.mShowUserCaPresenter.updateUserTrustedCertificateList();
   }

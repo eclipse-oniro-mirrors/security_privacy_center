@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import LogUtil from '../common/util/LogUtil';
+
 import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/ConfigData';
 import HeadComponent from '../common/component/headComponent';
 import CmShowAppCredPresenter from '../presenter/CmShowAppCredPresenter';
@@ -793,7 +793,7 @@ struct evidenceList {
   }
 
   aboutToAppear() {
-    LogUtil.info('in aboutToAppear');
+    console.info('in aboutToAppear');
     this.mShowAppCaPresenter.updateAppCredListCallback(() => {
       console.info('get AppCredList first and then get PrivateCredList')
       this.mShowPrivateCaPresenter.updatePrivateCredList();
