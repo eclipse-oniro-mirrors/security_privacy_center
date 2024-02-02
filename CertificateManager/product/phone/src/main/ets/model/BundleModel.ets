@@ -14,11 +14,10 @@
  */
 
 import bundleManager from '@ohos.bundle.bundleManager';
+import bundleResManager from '@ohos.bundle.bundleResourceManager';
 import { CMModelErrorCode } from '../model/CertMangerModel';
-import { GlobalContext } from '../common/GlobalContext';
 import { AppInfoVo } from './CertManagerVo/AppInfoVo';
 import { BusinessError } from '@ohos.base';
-import Common from '@ohos.app.ability.common'
 
 const TAG = 'certManager BUNDLE:';
 
@@ -34,14 +33,10 @@ export class BundleNameModel {
       let appBundleName = await bundleManager.getBundleNameByUid(appUid);
       console.log(TAG + 'appBundleName: ' + appBundleName);
 
-      let bundleContext: Common.Context = GlobalContext.getContext().getCmContext().createBundleContext(appBundleName);
-      let info = await bundleManager.getBundleInfo(appBundleName,
-        bundleManager.BundleFlag.GET_BUNDLE_INFO_WITH_APPLICATION);
-      console.log(TAG + 'appName: ' + appBundleName + ', iconId: ' + info.appInfo.iconId +
-        ', labelId: ' + info.appInfo.labelId);
-
-      appInfo.appName = await bundleContext.resourceManager.getStringValue(info.appInfo.labelId);
-      appInfo.appImage = await bundleContext.resourceManager.getMediaContentBase64(info.appInfo.iconId);
+      let bundleFlags = bundleResManager.ResourceFlag.GET_RESOURCE_INFO_ALL;
+      let resourceInfo = bundleResManager.getBundleResourceInfo(appBundleName, bundleFlags);
+      appInfo.appName = resourceInfo.label;
+      appInfo.appImage = resourceInfo.icon;
       console.log(TAG + 'get bundle info success');
 
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS, appInfo);

@@ -16,7 +16,7 @@
   "module": {
     "name": "phone",
     "type": "entry",
-    "srcEntrance": "./ets/Application/AbilityStage.ts",
+    "srcEntry": "./ets/Application/AbilityStage.ts",
     "description": "$string:mainability_description",
     "mainElement": "MainAbility",
     "deviceTypes": [
@@ -70,7 +70,7 @@
         "name": "ohos.permission.ACCESS_CERT_MANAGER"
       },
       {
-        "name": "ohos.permission.GET_BUNDLE_INFO_PRIVILEGED"
+        "name": "ohos.permission.GET_BUNDLE_RESOURCES"
       }
     ]
   }
