@@ -15,10 +15,11 @@
 
 import HeadComponent from '../common/component/headComponent';
 import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/ConfigData';
-import router from '@system.router';
+import router from '@ohos.router';
 import CmInstallPresenter from '../presenter/CmInstallPresenter';
 import CmFaPresenter from '../presenter/CmFaPresenter';
 import { GlobalContext } from '../common/GlobalContext';
+import { RouterFileVo } from '../model/CertManagerVo/RouterInfoVo';
 
 @Entry
 @Component
@@ -126,9 +127,8 @@ struct CertInstallAliasInput {
               right: $r('app.float.distance_24'),
             })
             .onClick(() => {
-              this.mAppCredAuthPresenter.installCert(router.getParams().uri as string,
-                this.certAlias,
-                router.getParams().suffix as string);
+              let fileInfo: RouterFileVo = router.getParams() as RouterFileVo;
+              this.mAppCredAuthPresenter.installCert(fileInfo.uri, this.certAlias, fileInfo.suffix);
             })
           } else {
             Button() {

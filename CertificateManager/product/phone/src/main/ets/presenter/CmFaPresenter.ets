@@ -14,11 +14,12 @@
  */
 
 import picker from '@ohos.file.picker';
-import router from '@system.router';
+import router from '@ohos.router';
 import certManagerModel from '../model/CertMangerModel';
 import FileIoModel from '../model/FileIoModel';
 import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
 import { BusinessError } from '@ohos.base';
+import { RouterFileVo, RouterAppUidVo } from '../model/CertManagerVo/RouterInfoVo';
 
 const TAG = 'CMFaPresenter: ';
 const PAGE_URI_PWD_INPUT = 'pages/certPwdInput';
@@ -44,22 +45,18 @@ export default class CmFaPresenter {
   routeToNext(fileUri: string): void {
     console.info(TAG + 'routeToNext fileUri: ' + fileUri);
     FileIoModel.getMediaFileSuffix(fileUri, (suffix: string | undefined) => {
+      console.info(TAG + 'suffix ' + suffix);
       if (suffix !== undefined) {
+        let fileInfo = new RouterFileVo(fileUri, suffix);
         if ((suffix === 'cer') || (suffix === 'pem')) {
-          router.push({
-            uri: PAGE_URI_ALIAS_INPUT,
-            params: {
-              uri: fileUri,
-              suffix: suffix
-            }
+          router.pushUrl({
+            url: PAGE_URI_ALIAS_INPUT,
+            params: fileInfo
           });
         } else {
-          router.push({
-            uri: PAGE_URI_PWD_INPUT,
-            params: {
-              uri: fileUri,
-              suffix: suffix
-            }
+          router.pushUrl({
+            url: PAGE_URI_PWD_INPUT,
+            params: fileInfo
           });
         }
       }
@@ -87,10 +84,10 @@ export default class CmFaPresenter {
   }
 
   startRequestAuth(uri: string): void {
-    router.replace({
-      uri: 'pages/requestAuth', params: {
-        appUid: uri,
-      }
+    let appUidInfo = new RouterAppUidVo(uri);
+    router.replaceUrl({
+      url: 'pages/requestAuth',
+      params: appUidInfo
     });
   }
 
