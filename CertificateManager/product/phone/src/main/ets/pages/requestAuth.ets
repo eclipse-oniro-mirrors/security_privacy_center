@@ -14,9 +14,10 @@
  */
 
 import CmAppCredAuthPresenter from '../presenter/CmAppCredAuthPresenter';
-import router from '@system.router';
+import router from '@ohos.router';
 import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/ConfigData';
 import { CredentialAbstractVo } from '../model/CertManagerVo/CredentialAbstractVo';
+import { RouterAppUidVo } from '../model/CertManagerVo/RouterInfoVo';
 
 @CustomDialog
 @Component
@@ -28,7 +29,8 @@ struct CustomDialogAuthForApp {
 
   aboutToAppear(): void {
     console.info('certPwdInput about to appear');
-    this.mAppCredAuthPresenter.updateAppNameFromUid(router.getParams().appUid as string);
+    let appUidInfo: RouterAppUidVo = router.getParams() as RouterAppUidVo;
+    this.mAppCredAuthPresenter.updateAppNameFromUid(appUidInfo.appUid as string);
     this.mAppCredAuthPresenter.updateAppCredList();
   }
 
@@ -224,9 +226,10 @@ struct CustomDialogAuthForApp {
               Button($r('app.string.requestAuthFinish'))
                 .onClick(() => {
                   console.info('requestAuthorize uri: ' + this.selectUri);
-                  if (router.getParams() && router.getParams().appUid) {
-                    console.info('requestAuthorize appUid: ' + router.getParams().appUid);
-                    this.mAppCredAuthPresenter.requestAuthorize(this.selectUri, router.getParams().appUid as string);
+                  let appUidInfo: RouterAppUidVo = router.getParams() as RouterAppUidVo;
+                  if (appUidInfo !== undefined && appUidInfo.appUid != undefined) {
+                    console.info('requestAuthorize appUid: ' + appUidInfo.appUid);
+                    this.mAppCredAuthPresenter.requestAuthorize(this.selectUri, appUidInfo.appUid);
                     if (this.controller !== undefined) {
                       this.controller.close();
                     }
@@ -287,11 +290,12 @@ struct RadioAuth {
 
   aboutToAppear() {
     console.info('RadioAuth aboutToAppear');
-
-    if (router.getParams() && router.getParams().appUid) {
+    let appUidInfo: RouterAppUidVo = router.getParams() as RouterAppUidVo;
+    if (appUidInfo !== undefined && appUidInfo.appUid != undefined) {
       this.dialogController.open();
     } else {
-      router.replace({ uri: "pages/certManagerFa" });
+      console.error('request auth appear failed');
+      router.replaceUrl({ url: "pages/certManagerFa" });
     }
   }
 

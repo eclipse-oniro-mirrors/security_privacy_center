@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 import ComponentConfig from './ComponentConfig';
-import Router from '@system.router';
+import Router from '@ohos.router';
 import { GlobalContext } from '../GlobalContext';
 
 const TAG = "CertManager HeadComponent: ";
