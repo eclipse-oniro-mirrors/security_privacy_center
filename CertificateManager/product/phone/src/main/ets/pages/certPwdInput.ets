@@ -15,7 +15,7 @@
 
 import HeadComponent from '../common/component/headComponent';
 import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/ConfigData';
-import router from '@system.router';
+import router from '@ohos.router';
 import CmFaPresenter from '../presenter/CmFaPresenter';
 import { GlobalContext } from '../common/GlobalContext';
 
@@ -101,12 +101,9 @@ struct CertPwdInput {
           })
           .onClick(() => {
             GlobalContext.getContext().getPwdStore().setCertPwd(this.certPwd)
-            router.push({
-              uri: 'pages/certInstallAliasInput',
-              params: {
-                uri: router.getParams().uri,
-                suffix: router.getParams().suffix
-              }
+            router.pushUrl({
+              url: 'pages/certInstallAliasInput',
+              params: router.getParams()
             })
           })
         }

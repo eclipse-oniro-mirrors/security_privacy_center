@@ -17,7 +17,7 @@ import certManagerModel from '../model/CertMangerModel';
 import BundleModel from '../model/BundleModel';
 import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
 import { CredentialAbstractVo } from '../model/CertManagerVo/CredentialAbstractVo';
-import router from '@system.router';
+import router from '@ohos.router';
 import { GlobalContext } from '../common/GlobalContext';
 import { AppInfoVo } from '../model/CertManagerVo/AppInfoVo';
 import { BusinessError } from '@ohos.base';
