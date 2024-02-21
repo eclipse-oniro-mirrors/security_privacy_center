@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,19 +14,19 @@
  */
 
 export class CertInfoVo {
-  uri: string;
-  certAlias: string;
-  status: boolean;
-  issuerName: string;
-  subjectName: string;
-  serial: string;
-  notBefore: string;
-  notAfter: string;
-  fingerprintSha256: string;
-  cert: Uint8Array;
-  subjectNameMap :Map<string, string>;
-  issuerNameMap :Map<string, string>;
-  dateMap :Map<string, string>;
+  public uri: string;
+  public certAlias: string;
+  public status: boolean;
+  public issuerName: string;
+  public subjectName: string;
+  public serial: string;
+  public notBefore: string;
+  public notAfter: string;
+  public fingerprintSha256: string;
+  public cert: Uint8Array;
+  public subjectNameMap :Map<string, string>;
+  public issuerNameMap :Map<string, string>;
+  public dateMap :Map<string, string>;
 
   constructor(
     uri: string,
@@ -72,5 +72,4 @@ export class CertInfoVo {
     this.issuerNameMap.clear();
     this.dateMap.clear();
   }
-
 }

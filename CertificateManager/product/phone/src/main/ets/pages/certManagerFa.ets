@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -20,8 +20,8 @@ import CmFaPresenter from '../presenter/CmFaPresenter';
 import { GlobalContext } from '../common/GlobalContext';
 
 class CertListItem {
-  targetPage: string = '';
-  title: Resource = $r("app.string.trustedEvidence");
+  public targetPage: string = '';
+  public title: Resource = $r('app.string.trustedEvidence');
 };
 
 @Entry
@@ -31,8 +31,9 @@ struct CertificateComponent {
   @State columnMargin: string = '12vp';
   @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
   private listItems: Array<CertListItem> = [
-    { targetPage: "pages/trustedCa", title: $r("app.string.trustedEvidence") },
-    { targetPage: "pages/cerEvidenceFa", title: $r("app.string.userEvidence") } ];
+    { targetPage: 'pages/trustedCa', title: $r('app.string.trustedEvidence') },
+    { targetPage: 'pages/cerEvidenceFa', title: $r('app.string.userEvidence') }
+  ];
 
   build() {
     Column() {
@@ -58,19 +59,19 @@ struct CertificateComponent {
               List() {
                 ForEach(this.listItems, (item: CertListItem) => {
                   ListItem() {
-                    SubEntryComponent({ targetPage: item.targetPage, title: item.title})
+                    SubEntryComponent({ targetPage: item.targetPage, title: item.title })
                   }
                 }, (item: CertListItem) => JSON.stringify(item))
               }
               .padding($r('app.float.wh_value_4'))
               .divider({
-                strokeWidth: $r("app.float.sys_list_divider_strokeWidth_value"),
-                color: $r("app.color.sys_list_divider_color_000000"),
+                strokeWidth: $r('app.float.sys_list_divider_strokeWidth_value'),
+                color: $r('app.color.sys_list_divider_color_000000'),
                 startMargin: '8vp',
                 endMargin: '8vp'
               })
-              .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
-              .backgroundColor($r("app.color.user_list_backgroundColor_FFFFFF"))
+              .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+              .backgroundColor($r('app.color.user_list_backgroundColor_FFFFFF'))
 
               CertInstallComponent({ mFaPresenter: $mFaPresenter })
 
@@ -78,7 +79,7 @@ struct CertificateComponent {
             }
             .width(WidthPercent.WH_100_100)
           }
-          .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
+          .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
           .padding({ left: $r('app.float.wh_value_12'), right: $r('app.float.wh_value_12') })
           .width(WidthPercent.WH_100_100)
           .height(WidthPercent.WH_100_100)
@@ -102,7 +103,7 @@ struct CertificateComponent {
       .width(WidthPercent.WH_100_100)
       .height(WidthPercent.WH_100_100);
     }
-    .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
+    .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
     .width(WidthPercent.WH_100_100)
     .height(WidthPercent.WH_100_100);
   }
@@ -111,9 +112,9 @@ struct CertificateComponent {
     let uri = GlobalContext.getContext().getAbilityWant().uri;
     GlobalContext.getContext().clearAbilityWantUri();
 
-    if (uri === "certInstall") {
+    if (uri === 'certInstall') {
       this.mFaPresenter.startInstall();
-    } else if (uri === "requestAuthorize") {
+    } else if (uri === 'requestAuthorize') {
       this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
     }
   }
@@ -143,22 +144,22 @@ struct CustomDialogExampleDeleteAll {
           });
 
           Column() {
-            Text($r("app.string.deleteAllCredDialogTitle"))
-              .height($r("app.float.wh_value_56"))
-              .fontSize($r("sys.float.ohos_id_text_size_dialog_tittle"))
-              .fontColor($r("sys.color.ohos_id_color_text_primary"))
+            Text($r('app.string.deleteAllCredDialogTitle'))
+              .height($r('app.float.wh_value_56'))
+              .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
               .fontWeight(FontWeight.Medium)
               .margin({
                 left: $r('app.float.wh_value_24'),
                 right: $r('app.float.wh_value_24')
               })
               .alignSelf(ItemAlign.Start)
-            Text($r("app.string.deleteAllCredDialogMessage"))
+            Text($r('app.string.deleteAllCredDialogMessage'))
               .fontSize($r('sys.float.ohos_id_text_size_body1'))
               .fontWeight(FontWeight.Regular)
-              .fontColor($r("sys.color.ohos_id_color_text_primary"))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
               .margin({
-                top: $r("app.float.wh_value_16"),
+                top: $r('app.float.wh_value_16'),
                 left: $r('app.float.wh_value_24'),
                 right: $r('app.float.wh_value_24')
               })
@@ -166,33 +167,33 @@ struct CustomDialogExampleDeleteAll {
 
             Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
               justifyContent: FlexAlign.SpaceAround }) {
-              Button($r("app.string.deleteAllCredCancel"))
+              Button($r('app.string.deleteAllCredCancel'))
                 .onClick(() => {
                   if (this.controller !== undefined) {
                     this.controller.close()
                   }
                 })
-                .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
-                .fontSize($r("sys.float.ohos_id_text_size_button1"))
-                .fontColor($r("sys.color.ohos_id_color_text_hyperlink"))
+                .backgroundColor($r('app.color.credentials_app_finish_backgroundColor'))
+                .fontSize($r('sys.float.ohos_id_text_size_button1'))
+                .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
                 .width($r('app.float.wh_value_152'))
                 .height($r('app.float.wh_value_40'))
               Divider()
                 .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
-                .color($r("sys.color.ohos_id_color_list_separator"))
+                .color($r('sys.color.ohos_id_color_list_separator'))
                 .vertical(true)
                 .height($r('app.float.wh_value_40'))
-                .opacity($r("app.float.opacity_0_2"))
-              Button($r("app.string.deleteAllCredDelete"))
+                .opacity($r('app.float.opacity_0_2'))
+              Button($r('app.string.deleteAllCredDelete'))
                 .onClick(() => {
                   this.deleteAll.uninstallAllCert();
                   if (this.controller !== undefined) {
                     this.controller.close()
                   }
                 })
-                .backgroundColor($r("app.color.credentials_app_finish_backgroundColor"))
-                .fontSize($r("sys.float.ohos_id_text_size_button1"))
-                .fontColor($r("sys.color.ohos_id_color_warning"))
+                .backgroundColor($r('app.color.credentials_app_finish_backgroundColor'))
+                .fontSize($r('sys.float.ohos_id_text_size_button1'))
+                .fontColor($r('sys.color.ohos_id_color_warning'))
                 .width($r('app.float.wh_value_152'))
                 .height($r('app.float.wh_value_40'))
             }
@@ -207,8 +208,8 @@ struct CustomDialogExampleDeleteAll {
             })
           }
           .width(WidthPercent.WH_100_100)
-          .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
-          .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
+          .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+          .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
           .useSizeType({
             xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
             md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
@@ -225,9 +226,9 @@ struct CustomDialogExampleDeleteAll {
       }
     }
     .margin({
-      bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
-      left: $r("sys.float.ohos_id_dialog_margin_start"),
-      right: $r("sys.float.ohos_id_dialog_margin_end"),
+      bottom: $r('sys.float.ohos_id_dialog_margin_bottom'),
+      left: $r('sys.float.ohos_id_dialog_margin_start'),
+      right: $r('sys.float.ohos_id_dialog_margin_end'),
     })
   }
 }
@@ -236,32 +237,31 @@ struct CustomDialogExampleDeleteAll {
 struct DeleteAll {
   @State isTouched: boolean = false;
   @Link mFaPresenter: CmFaPresenter;
-
   deleteWarnDialog: CustomDialogController = new CustomDialogController({
     builder: CustomDialogExampleDeleteAll({ deleteAll: $mFaPresenter }),
     autoCancel: true,
     customStyle: true,
-    alignment:DialogAlignment.Bottom,
+    alignment: DialogAlignment.Bottom,
   })
 
   build() {
     Row() {
-      Text($r("app.string.deleteAllCred"))
+      Text($r('app.string.deleteAllCred'))
         .fontSize($r('app.float.font_16'))
         .lineHeight($r('app.float.wh_value_22'))
         .fontWeight(FontWeight.Medium)
         .fontColor($r('app.color.cm_del_all_font_color'))
         .padding({ left: $r('app.float.distance_8') })
         .linearGradient(this.isTouched ? {
-                                           angle: 90,
-                                           direction: GradientDirection.Right,
-                                           colors: [[$r("app.color.DCEAF9"), 0.0], [$r("app.color.FAFAFA"), 1.0]]
-                                         } : {
-                                               angle: 90,
-                                               direction: GradientDirection.Right,
-                                               colors: [[$r("sys.color.ohos_id_color_foreground_contrary"), 1],
-                                                 [$r("sys.color.ohos_id_color_foreground_contrary"), 1]]
-                                             })
+          angle: 90,
+          direction: GradientDirection.Right,
+          colors: [[$r('app.color.DCEAF9'), 0.0], [$r('app.color.FAFAFA'), 1.0]]
+        } : {
+          angle: 90,
+          direction: GradientDirection.Right,
+          colors: [[$r('sys.color.ohos_id_color_foreground_contrary'), 1],
+            [$r('sys.color.ohos_id_color_foreground_contrary'), 1]]
+        })
         .height(WidthPercent.WH_100_100)
         .borderRadius($r('app.float.radius_20'))
         .width(WidthPercent.WH_100_100)
@@ -281,7 +281,7 @@ struct DeleteAll {
         }
       }
     })
-    .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
+    .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
     .onClick(() => {
       this.deleteWarnDialog.open();
     })
@@ -308,23 +308,23 @@ export struct CertInstallComponent {
         Image($r('app.media.ic_settings_arrow'))
           .width($r('app.float.wh_value_12'))
           .height($r('app.float.wh_value_24'))
-          .fillColor($r("sys.color.ohos_id_color_primary"))
-          .opacity($r("app.float.opacity_0_2"))
+          .fillColor($r('sys.color.ohos_id_color_primary'))
+          .opacity($r('app.float.opacity_0_2'))
           .margin({ right: $r('app.float.wh_value_8') });
       }
       .borderRadius($r('app.float.radius_20'))
       .height(WidthPercent.WH_100_100)
       .width(WidthPercent.WH_100_100)
       .linearGradient(this.isTouched ? {
-                                         angle: 90,
-                                         direction: GradientDirection.Right,
-                                         colors: [[$r("app.color.DCEAF9"), 0.0], [$r("app.color.FAFAFA"), 1.0]]
-                                       } : {
-                                             angle: 90,
-                                             direction: GradientDirection.Right,
-                                             colors: [[$r("sys.color.ohos_id_color_foreground_contrary"), 1],
-                                             [$r("sys.color.ohos_id_color_foreground_contrary"), 1]]
-                                           })
+        angle: 90,
+        direction: GradientDirection.Right,
+        colors: [[$r('app.color.DCEAF9'), 0.0], [$r('app.color.FAFAFA'), 1.0]]
+      } : {
+        angle: 90,
+        direction: GradientDirection.Right,
+        colors: [[$r('sys.color.ohos_id_color_foreground_contrary'), 1],
+          [$r('sys.color.ohos_id_color_foreground_contrary'), 1]]
+      })
       .onTouch((event?: TouchEvent) => {
         if (event !== undefined) {
           if (event.type === TouchType.Down) {
@@ -336,7 +336,7 @@ export struct CertInstallComponent {
         }
       })
     }
-    .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
+    .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
     .padding($r('app.float.distance_4'))
     .height($r('app.float.wh_value_56'))
     .borderRadius($r('app.float.radius_24'))

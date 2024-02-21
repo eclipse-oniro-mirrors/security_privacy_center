@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -28,7 +28,7 @@ export class FileIoModel {
       fs.closeSync(file.fd);
       console.log('CertManager FA getMediaFile success');
       callback(new Uint8Array(buf));
-    } catch(err) {
+    } catch (err) {
       let e: BusinessError = err as BusinessError;
       console.error('CertManager FA getMediaFileData failed with err, message: ' + e.message + ', code: ' + e.code);
       callback(undefined);
@@ -41,7 +41,7 @@ export class FileIoModel {
       let uri = new fileUri.FileUri(mediaUri);
       let suffix = uri.name.substring(uri.name.lastIndexOf('.') + 1);
       callback(suffix);
-    } catch(err) {
+    } catch (err) {
       let e: BusinessError = err as BusinessError;
       console.error('CertManager FA getMediaFileSuffix failed with err, message: ' + e.message + ', code: ' + e.code);
       callback(undefined);

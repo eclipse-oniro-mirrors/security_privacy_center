@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -54,8 +54,8 @@ struct CustomDialogAuthForApp {
           Column() {
             Text($r('app.string.pickCredToAuth'))
               .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
-              .height($r("app.float.wh_value_56"))
-              .fontColor($r("sys.color.ohos_id_color_text_primary"))
+              .height($r('app.float.wh_value_56'))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
               .fontWeight(FontWeight.Medium)
               .margin({
                 left: $r('app.float.wh_value_24'),
@@ -65,7 +65,7 @@ struct CustomDialogAuthForApp {
 
             Text($r('app.string.requestAuthMsg', this.mAppCredAuthPresenter.appName))
               .fontSize($r('sys.float.ohos_id_text_size_body1'))
-              .fontColor($r("sys.color.ohos_id_color_text_primary"))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
               .fontWeight(FontWeight.Regular)
               .margin({
                 top: $r('app.float.wh_value_8'),
@@ -111,10 +111,10 @@ struct CustomDialogAuthForApp {
                   }
                   .scrollBar(BarState.Off)
                   .divider({
-                    strokeWidth: $r("app.float.request_auth_strokeWidth"),
-                    color: $r("app.color.request_auth_color"),
-                    endMargin: $r("app.float.request_auth_divider_endMargin") })
-                  .backgroundColor($r("app.color.request_auth_background_color"))
+                    strokeWidth: $r('app.float.request_auth_strokeWidth'),
+                    color: $r('app.color.request_auth_color'),
+                    endMargin: $r('app.float.request_auth_divider_endMargin') })
+                  .backgroundColor($r('app.color.request_auth_background_color'))
                   .visibility(this.mAppCredAuthPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
                 }
                 .scrollBar(BarState.Off)
@@ -122,17 +122,19 @@ struct CustomDialogAuthForApp {
                   left: $r('app.float.wh_value_24'),
                   right: $r('app.float.wh_value_24')
                 })
-                ScrollBar({ scroller: this.authScroller, direction: ScrollBarDirection.Vertical, state: BarState.Auto }) {
+
+                ScrollBar({ scroller: this.authScroller, direction: ScrollBarDirection.Vertical,
+                  state: BarState.Auto }) {
                   Text()
-                    .width($r("app.float.wh_value_3"))
-                    .height($r("app.float.wh_value_50"))
-                    .borderRadius($r("app.float.wh_value_10"))
-                    .backgroundColor($r("sys.color.ohos_id_color_foreground"))
+                    .width($r('app.float.wh_value_3'))
+                    .height($r('app.float.wh_value_50'))
+                    .borderRadius($r('app.float.wh_value_10'))
+                    .backgroundColor($r('sys.color.ohos_id_color_foreground'))
                     .opacity(0.4)
                 }
-                .width($r("app.float.wh_value_3"))
+                .width($r('app.float.wh_value_3'))
                 .margin({
-                  right: $r("app.float.wh_value_3")
+                  right: $r('app.float.wh_value_3')
                 })
               }
               .height(WidthPercent.WH_50_100)
@@ -194,10 +196,10 @@ struct CustomDialogAuthForApp {
               })
               .scrollBar(BarState.Off)
               .divider({
-                strokeWidth: $r("app.float.request_auth_strokeWidth"),
-                color: $r("app.color.request_auth_color"),
-                endMargin: $r("app.float.request_auth_divider_endMargin") })
-              .backgroundColor($r("app.color.request_auth_background_color"))
+                strokeWidth: $r('app.float.request_auth_strokeWidth'),
+                color: $r('app.color.request_auth_color'),
+                endMargin: $r('app.float.request_auth_divider_endMargin') })
+              .backgroundColor($r('app.color.request_auth_background_color'))
               .visibility(this.mAppCredAuthPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
             }
 
@@ -218,10 +220,10 @@ struct CustomDialogAuthForApp {
 
               Divider()
                 .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
-                .color($r("sys.color.ohos_id_color_list_separator"))
+                .color($r('sys.color.ohos_id_color_list_separator'))
                 .vertical(true)
                 .height($r('app.float.wh_value_40'))
-                .opacity($r("app.float.opacity_0_2"))
+                .opacity($r('app.float.opacity_0_2'))
 
               Button($r('app.string.requestAuthFinish'))
                 .onClick(() => {
@@ -253,8 +255,8 @@ struct CustomDialogAuthForApp {
             })
           }
           .width(WidthPercent.WH_100_100)
-          .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
-          .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
+          .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+          .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
           .useSizeType({
             xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
             md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
@@ -271,9 +273,9 @@ struct CustomDialogAuthForApp {
       }
     }
     .margin({
-      bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
-      left: $r("sys.float.ohos_id_dialog_margin_start"),
-      right: $r("sys.float.ohos_id_dialog_margin_end"),
+      bottom: $r('sys.float.ohos_id_dialog_margin_bottom'),
+      left: $r('sys.float.ohos_id_dialog_margin_start'),
+      right: $r('sys.float.ohos_id_dialog_margin_end'),
     })
   }
 }
@@ -295,7 +297,7 @@ struct RadioAuth {
       this.dialogController.open();
     } else {
       console.error('request auth appear failed');
-      router.replaceUrl({ url: "pages/certManagerFa" });
+      router.replaceUrl({ url: 'pages/certManagerFa' });
     }
   }
 

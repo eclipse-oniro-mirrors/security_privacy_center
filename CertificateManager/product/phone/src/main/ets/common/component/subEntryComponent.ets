@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -39,22 +39,23 @@ export struct SubEntryComponent {
         Image($r('app.media.ic_settings_arrow'))
           .width($r('app.float.wh_value_12'))
           .height($r('app.float.wh_value_24'))
-          .fillColor($r("sys.color.ohos_id_color_primary"))
-          .opacity($r("app.float.opacity_0_2"))
+          .fillColor($r('sys.color.ohos_id_color_primary'))
+          .opacity($r('app.float.opacity_0_2'))
           .margin({ right: $r('app.float.wh_value_8') });
       }
       .borderRadius($r('app.float.radius_20'))
       .height(ComponentConfig.WH_100_100)
       .width(ComponentConfig.WH_100_100)
       .linearGradient(this.isTouched ? {
-                                         angle: 90,
-                                         direction: GradientDirection.Right,
-                                         colors: [[$r("app.color.DCEAF9"), 0.0], [$r("app.color.FAFAFA"), 1.0]]
-                                       } : {
-                                             angle: 90,
-                                             direction: GradientDirection.Right,
-                                             colors: [[$r("sys.color.ohos_id_color_foreground_contrary"), 1], [$r("sys.color.ohos_id_color_foreground_contrary"), 1]]
-                                           })
+        angle: 90,
+        direction: GradientDirection.Right,
+        colors: [[$r('app.color.DCEAF9'), 0.0], [$r('app.color.FAFAFA'), 1.0]]
+      } : {
+        angle: 90,
+        direction: GradientDirection.Right,
+        colors: [[$r('sys.color.ohos_id_color_foreground_contrary'), 1],
+          [$r('sys.color.ohos_id_color_foreground_contrary'), 1]]
+      })
       .onTouch((event?: TouchEvent) => {
         if (event !== undefined) {
           if (event.type === TouchType.Down) {
@@ -67,7 +68,7 @@ export struct SubEntryComponent {
       })
     }
     .height($r('app.float.wh_value_48'))
-    .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"));
+    .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'));
   }
 }
 
@@ -107,22 +108,23 @@ export struct SubEntryComponentWithEndText {
             .width($r('app.float.wh_value_12'))
             .height($r('app.float.wh_value_24'))
             .margin({ right: $r('app.float.distance_8') })
-            .fillColor($r("sys.color.ohos_id_color_primary"))
-            .opacity($r("app.float.opacity_0_2"))
+            .fillColor($r('sys.color.ohos_id_color_primary'))
+            .opacity($r('app.float.opacity_0_2'))
         }
       }
       .height(ComponentConfig.WH_100_100)
       .width(ComponentConfig.WH_100_100)
       .borderRadius($r('app.float.radius_20'))
       .linearGradient(this.isTouched ? {
-                                         angle: 90,
-                                         direction: GradientDirection.Right,
-                                         colors: [[$r("app.color.DCEAF9"), 0.0], [$r("app.color.FAFAFA"), 1.0]]
-                                       } : {
-                                             angle: 90,
-                                             direction: GradientDirection.Right,
-                                             colors: [[$r("sys.color.ohos_id_color_foreground_contrary"), 1], [$r("sys.color.ohos_id_color_foreground_contrary"), 1]]
-                                           })
+        angle: 90,
+        direction: GradientDirection.Right,
+        colors: [[$r('app.color.DCEAF9'), 0.0], [$r('app.color.FAFAFA'), 1.0]]
+      } : {
+        angle: 90,
+        direction: GradientDirection.Right,
+        colors: [[$r('sys.color.ohos_id_color_foreground_contrary'), 1],
+          [$r('sys.color.ohos_id_color_foreground_contrary'), 1]]
+      })
       .onTouch((event?: TouchEvent) => {
         if (event !== undefined) {
           if (event.type === TouchType.Down) {
@@ -137,6 +139,6 @@ export struct SubEntryComponentWithEndText {
     .padding($r('app.float.distance_4'))
     .height($r('app.float.wh_value_56'))
     .borderRadius($r('app.float.radius_24'))
-    .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"));
+    .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'));
   }
 }
