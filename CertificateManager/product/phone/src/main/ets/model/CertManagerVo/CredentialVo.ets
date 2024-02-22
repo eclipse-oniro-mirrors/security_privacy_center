@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,12 +14,12 @@
  */
 
 export class CredentialVo {
-  credType: string;
-  alias: string;
-  keyUri: string;
-  certNum: number;
-  keyNum: number;
-  credData: Uint8Array;
+  public credType: string;
+  public alias: string;
+  public keyUri: string;
+  public certNum: number;
+  public keyNum: number;
+  public credData: Uint8Array;
 
   constructor(credType: string, alias: string, keyUri: string, certNum: number, keyNum: number, credData: Uint8Array) {
     this.credType = credType;
@@ -38,5 +38,4 @@ export class CredentialVo {
     this.keyNum = 0;
     this.credData = new Uint8Array();
   }
-
 }

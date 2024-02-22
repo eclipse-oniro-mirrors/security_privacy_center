@@ -14,7 +14,7 @@
  */
 
 export class RouterAppUidVo {
-  appUid: string;
+  public appUid: string;
 
   constructor(appUid: string) {
     this.appUid = appUid;
@@ -22,8 +22,8 @@ export class RouterAppUidVo {
 }
 
 export class RouterFileVo {
-  uri: string;
-  suffix: string;
+  public uri: string;
+  public suffix: string;
 
   constructor(uri: string, suffix: string) {
     this.uri = uri;

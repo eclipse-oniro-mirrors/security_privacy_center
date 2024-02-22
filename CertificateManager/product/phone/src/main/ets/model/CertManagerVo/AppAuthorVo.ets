@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,10 +14,10 @@
  */
 
 export class AppAuthorVo {
-  appImage: string;
-  uid: string;
-  appName: string;
-  status: boolean;
+  public appImage: string;
+  public uid: string;
+  public appName: string;
+  public status: boolean;
 
   constructor(appImage: string, uid: string, appName: string, status: boolean) {
     this.appImage = appImage;
@@ -25,5 +25,4 @@ export class AppAuthorVo {
     this.appName = appName;
     this.status = status;
   }
-
 }

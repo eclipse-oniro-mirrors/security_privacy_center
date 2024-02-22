@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -29,9 +29,8 @@ const FAIL = -1;
 
 export default class CmAppCredAuthPresenter {
   private static sInstance: CmAppCredAuthPresenter;
-  optType: CMModelOptType = CMModelOptType.CM_MODEL_OPT_UNKNOWN;
-  credList: CredentialAbstractVo[] = [];
-  appName: string = '';
+  public credList: CredentialAbstractVo[] = [];
+  public appName: string = '';
 
   public static getInstance(): CmAppCredAuthPresenter {
     if (CmAppCredAuthPresenter.sInstance == null) {
@@ -45,7 +44,6 @@ export default class CmAppCredAuthPresenter {
   }
 
   aboutToDisappear(): void {
-    this.optType = CMModelOptType.CM_MODEL_OPT_UNKNOWN;
     this.credList = [];
   }
 

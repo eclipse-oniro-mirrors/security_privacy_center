@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -22,8 +22,8 @@ const TAG = 'CMShowSysCa Presenter: ';
 
 export default class CmShowSysCaPresenter {
   private static sInstance: CmShowSysCaPresenter;
-  certList: CertAbstractVo[] = [];
-  certInfo: CertInfoVo = new CertInfoVo('', '', false, '', '', '', '', '', '',
+  public certList: CertAbstractVo[] = [];
+  public certInfo: CertInfoVo = new CertInfoVo('', '', false, '', '', '', '', '', '',
     new Uint8Array(), new Map(), new Map(), new Map());
 
   public static getInstance(): CmShowSysCaPresenter {

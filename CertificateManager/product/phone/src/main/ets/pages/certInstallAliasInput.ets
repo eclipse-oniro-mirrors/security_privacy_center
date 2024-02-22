@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -26,15 +26,15 @@ import { RouterFileVo } from '../model/CertManagerVo/RouterInfoVo';
 struct CertInstallAliasInput {
   @State mAppCredAuthPresenter: CmInstallPresenter = CmInstallPresenter.getInstance();
   @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
-  @State certAlias: string = "";
+  @State certAlias: string = '';
 
   onPageShow() {
     let uri = GlobalContext.getContext().getAbilityWant().uri;
     GlobalContext.getContext().clearAbilityWantUri();
 
-    if (uri === "certInstall") {
+    if (uri === 'certInstall') {
       this.mFaPresenter.startInstall();
-    } else if (uri === "requestAuthorize") {
+    } else if (uri === 'requestAuthorize') {
       this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
     }
   }
@@ -44,8 +44,8 @@ struct CertInstallAliasInput {
       Column() {
         HeadComponent({ headName: $r('app.string.certificateAliasTab') });
         Text($r('app.string.certificateAliasInfo'))
-          .fontColor($r("sys.color.ohos_id_color_text_primary"))
-          .fontSize($r("sys.float.ohos_id_text_size_body1"))
+          .fontColor($r('sys.color.ohos_id_color_text_primary'))
+          .fontSize($r('sys.float.ohos_id_text_size_body1'))
           .fontWeight(FontWeight.Medium)
           .margin({
             top: $r('app.float.distance_24'),
@@ -55,11 +55,11 @@ struct CertInstallAliasInput {
 
         TextInput()
           .type(InputType.Normal)
-          .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
+          .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
           .enterKeyType(EnterKeyType.Done)
-          .fontSize($r("sys.float.ohos_id_text_size_body1"))
+          .fontSize($r('sys.float.ohos_id_text_size_body1'))
           .fontWeight(FontWeight.Medium)
-          .fontColor($r("sys.color.ohos_id_color_text_primary"))
+          .fontColor($r('sys.color.ohos_id_color_text_primary'))
           .onChange((value: string) => {
             this.certAlias = value;
           })
@@ -79,9 +79,9 @@ struct CertInstallAliasInput {
         })
 
         Text($r('app.string.installAliasInputInfo'))
-          .fontColor($r("sys.color.ohos_id_color_text_primary"))
+          .fontColor($r('sys.color.ohos_id_color_text_primary'))
           .fontWeight(FontWeight.Regular)
-          .fontSize($r("sys.float.ohos_id_text_size_body2"))
+          .fontSize($r('sys.float.ohos_id_text_size_body2'))
           .margin({
             left: $r('app.float.distance_24'),
             top: $r('app.float.distance_16')
@@ -152,7 +152,7 @@ struct CertInstallAliasInput {
       .justifyContent(FlexAlign.End)
       .height(WidthPercent.WH_25_100);
     }
-    .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
+    .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
     .width(WidthPercent.WH_100_100)
     .height(WidthPercent.WH_100_100);
   }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,16 +16,16 @@ import ComponentConfig from './ComponentConfig';
 import Router from '@ohos.router';
 import { GlobalContext } from '../GlobalContext';
 
-const TAG = "CertManager HeadComponent: ";
+const TAG = 'CertManager HeadComponent: ';
 
 /**
  * head custom component
  */
 @Component
 export default struct HeadComponent {
-  private icBackIsVisibility: boolean= true;
+  private icBackIsVisibility: boolean = true;
   private headName: string | Resource = '';
-  @State isTouch: boolean= false;
+  @State isTouch: boolean = false;
 
   build() {
     Row() {
@@ -33,14 +33,14 @@ export default struct HeadComponent {
         Image($r('app.media.ic_back'))
           .width($r('app.float.wh_value_24'))
           .height($r('app.float.wh_value_24'))
-          .fillColor($r("sys.color.ohos_id_color_primary"))
+          .fillColor($r('sys.color.ohos_id_color_primary'))
       }
       .margin({ right: $r('app.float.wh_value_16') })
       .backgroundColor(this.isTouch ? $r('app.color.color_E3E3E3_grey') : $r('app.color.color_00000000_transparent'))
       .visibility(this.icBackIsVisibility ? Visibility.Visible : Visibility.None)
       .onClick(() => {
         let length = Router.getLength();
-        console.log(TAG + "router length: " + Number(length));
+        console.log(TAG + 'router length: ' + Number(length));
         Number(length) == 1 ? GlobalContext.getContext().getCmContext().terminateSelf() : Router.back();
       })
       .onTouch((event?: TouchEvent) => {

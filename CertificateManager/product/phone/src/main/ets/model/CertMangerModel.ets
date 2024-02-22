@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -274,8 +274,8 @@ export class CertMangerModel {
     try {
       let subjectNameCN: string = '';
       let result = await CertManager.getSystemTrustedCertificateList();
-      let certList: Array<CertAbstractVo> = new Array();
-      let regex: RegExp = new RegExp("(?<=CN=).*?(?=,)", "g");
+      let certList: CertAbstractVo[] = [];
+      let regex: RegExp = new RegExp('(?<=CN=).*?(?=,)', 'g');
       if (result.certList !== undefined) {
         console.log(TAG + 'certManager::getSystemTrustedCertificateList result: ' + JSON.stringify(result));
         for (let i = 0; i < result.certList.length; i++) {
@@ -307,9 +307,9 @@ export class CertMangerModel {
       let subjectNameMap: Map<string, string> = new Map();
       let issuerNameMap: Map<string, string> = new Map();
       let dateMap: Map<string, string> = new Map();
-      let regex1: RegExp = new RegExp("(?<=CN=).*?(?=,)", "g");
-      let regex2: RegExp = new RegExp("(?<=OU=).*?(?=,)", "g");
-      let regex3: RegExp = new RegExp("(?<=O=).*", "g");
+      let regex1: RegExp = new RegExp('(?<=CN=).*?(?=,)', 'g');
+      let regex2: RegExp = new RegExp('(?<=OU=).*?(?=,)', 'g');
+      let regex3: RegExp = new RegExp('(?<=O=).*', 'g');
 
       if (result.certInfo !== undefined) {
         if (result.certInfo.subjectName.length !== 0) {
@@ -362,8 +362,8 @@ export class CertMangerModel {
     try {
       let subjectNameCN: string = '';
       let result = await CertManager.getUserTrustedCertificateList();
-      let certList: Array<CertAbstractVo> = new Array();
-      let regex: RegExp = new RegExp("(?<=CN=).*?(?=,)", "g");
+      let certList: CertAbstractVo[] = [];
+      let regex: RegExp = new RegExp('(?<=CN=).*?(?=,)', 'g');
       if (result.certList !== undefined) {
         console.log(TAG + 'getUserTrustedCertificateList result: ' + JSON.stringify(result));
         for (let i = 0; i < result.certList.length; i++) {
@@ -397,9 +397,9 @@ export class CertMangerModel {
       let subjectNameMap: Map<string, string> = new Map();
       let issuerNameMap: Map<string, string> = new Map();
       let dateMap: Map<string, string> = new Map();
-      let regex1: RegExp = new RegExp("(?<=CN=).*?(?=,)", "g");
-      let regex2: RegExp = new RegExp("(?<=OU=).*?(?=,)", "g");
-      let regex3: RegExp = new RegExp("(?<=O=).*", "g");
+      let regex1: RegExp = new RegExp('(?<=CN=).*?(?=,)', 'g');
+      let regex2: RegExp = new RegExp('(?<=OU=).*?(?=,)', 'g');
+      let regex3: RegExp = new RegExp('(?<=O=).*', 'g');
 
       if (result.certInfo !== undefined) {
         if (result.certInfo.subjectName.length !== 0) {
@@ -478,7 +478,7 @@ export class CertMangerModel {
 
     try {
       let result = await CertManager.getAppCertificateList();
-      let credList: Array<CredentialAbstractVo> = new Array();
+      let credList: CredentialAbstractVo[] = [];
       if (result.credentialList !== undefined) {
         for (let i = 0; i < result.credentialList.length; i++) {
           credList.push(new CredentialAbstractVo(String(result.credentialList[i].type),
@@ -537,7 +537,7 @@ export class CertMangerModel {
 
     try {
       let result = await CertManager.getPrivateCertificateList();
-      let credList: Array<CredentialAbstractVo> = new Array();
+      let credList: CredentialAbstractVo[] = [];
       if (result.credentialList !== undefined) {
         for (let i = 0; i < result.credentialList.length; i++) {
           credList.push(new CredentialAbstractVo(String(result.credentialList[i].type),

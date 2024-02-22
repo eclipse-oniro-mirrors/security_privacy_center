@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -53,49 +53,49 @@ struct DialogSubjectComponent {
   }
   build() {
     Column() {
-      Text($r("app.string.DialogSubjectComponent_firText"))
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+      Text($r('app.string.DialogSubjectComponent_firText'))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r("app.float.DialogSubjectComponent_Text_margin_top_value")
+          top: $r('app.float.DialogSubjectComponent_Text_margin_top_value')
         })
       Text(this.subjectNameCN)
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
-      Text($r("app.string.DialogSubjectComponent_secText"))
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+      Text($r('app.string.DialogSubjectComponent_secText'))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r("app.float.CustomDialogExample_Button_margin_top_value")
+          top: $r('app.float.CustomDialogExample_Button_margin_top_value')
         })
       Text(this.subjectNameO)
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
-      Text($r("app.string.DialogSubjectComponent_thdText"))
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+      Text($r('app.string.DialogSubjectComponent_thdText'))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r("app.float.CustomDialogExample_Button_margin_top_value")
+          top: $r('app.float.CustomDialogExample_Button_margin_top_value')
         })
       Text(this.subjectNameOU)
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
-      Text($r("app.string.DialogSubjectComponent_fouText"))
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+      Text($r('app.string.DialogSubjectComponent_fouText'))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r("app.float.wh_value_12")
+          top: $r('app.float.wh_value_12')
         })
       Text(this.serial)
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
     }.alignItems(HorizontalAlign.Start);
   }
@@ -128,38 +128,38 @@ struct DialogIssuerComponent {
 
   build() {
     Column() {
-      Text($r("app.string.DialogSubjectComponent_firText"))
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+      Text($r('app.string.DialogSubjectComponent_firText'))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r("app.float.wh_value_10")
+          top: $r('app.float.wh_value_10')
         })
       Text(this.issuerNameCN)
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
-      Text($r("app.string.DialogSubjectComponent_secText"))
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+      Text($r('app.string.DialogSubjectComponent_secText'))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r("app.float.CustomDialogExample_Button_margin_top_value")
+          top: $r('app.float.CustomDialogExample_Button_margin_top_value')
         })
       Text(this.issuerNameO)
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
-      Text($r("app.string.DialogSubjectComponent_thdText"))
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+      Text($r('app.string.DialogSubjectComponent_thdText'))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r("app.float.CustomDialogExample_Button_margin_top_value")
+          top: $r('app.float.CustomDialogExample_Button_margin_top_value')
         })
       Text(this.issuerNameOU)
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
     }.alignItems(HorizontalAlign.Start);
   }
@@ -186,27 +186,27 @@ struct DialogDateComponent {
 
   build() {
     Column() {
-      Text($r("app.string.DialogSubjectComponent_fifText"))
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+      Text($r('app.string.DialogSubjectComponent_fifText'))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r("app.float.wh_value_10")
+          top: $r('app.float.wh_value_10')
         })
       Text(this.notBefore)
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
-      Text($r("app.string.DialogSubjectComponent_sixText"))
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+      Text($r('app.string.DialogSubjectComponent_sixText'))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r("app.float.CustomDialogExample_Button_margin_top_value")
+          top: $r('app.float.CustomDialogExample_Button_margin_top_value')
         })
       Text(this.notAfter)
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
     }.alignItems(HorizontalAlign.Start);
   }
@@ -218,19 +218,19 @@ struct DialogFingerPrintComponent {
 
   build() {
     Column() {
-      Text($r("app.string.CustomDialogExample_FingerPrint_text"))
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+      Text($r('app.string.CustomDialogExample_FingerPrint_text'))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r("app.float.wh_value_10")
+          top: $r('app.float.wh_value_10')
         })
       Text(this.fingerprintSha256)
-        .fontSize($r("sys.float.ohos_id_text_size_body2"))
-        .fontColor($r("sys.color.ohos_id_color_text_primary"))
+        .fontSize($r('sys.float.ohos_id_text_size_body2'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          right: $r("app.float.wh_value_24")
+          right: $r('app.float.wh_value_24')
         })
     }.alignItems(HorizontalAlign.Start);
   }
@@ -262,22 +262,22 @@ struct CustomDialogDeleteWarning {
           });
 
           Column() {
-            Text($r("app.string.CustomDialogExampleUser_warning_Button_title_text"))
-              .height($r("app.float.wh_value_56"))
-              .fontSize($r("sys.float.ohos_id_text_size_dialog_tittle"))
-              .fontColor($r("sys.color.ohos_id_color_text_primary"))
+            Text($r('app.string.CustomDialogExampleUser_warning_Button_title_text'))
+              .height($r('app.float.wh_value_56'))
+              .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
               .fontWeight(FontWeight.Medium)
               .margin({
                 left: $r('app.float.wh_value_24'),
                 right: $r('app.float.wh_value_24')
               })
               .alignSelf(ItemAlign.Start)
-            Text($r("app.string.CustomDialogExampleUser_warning_Button_message_text"))
+            Text($r('app.string.CustomDialogExampleUser_warning_Button_message_text'))
               .fontSize($r('sys.float.ohos_id_text_size_body1'))
               .fontWeight(FontWeight.Regular)
-              .fontColor($r("sys.color.ohos_id_color_primary"))
+              .fontColor($r('sys.color.ohos_id_color_primary'))
               .margin({
-                top: $r("app.float.wh_value_16"),
+                top: $r('app.float.wh_value_16'),
                 left: $r('app.float.wh_value_24'),
                 right: $r('app.float.wh_value_24')
               })
@@ -285,25 +285,25 @@ struct CustomDialogDeleteWarning {
 
             Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
               justifyContent: FlexAlign.SpaceAround }) {
-              Button($r("app.string.deleteAllCredCancel"))
+              Button($r('app.string.deleteAllCredCancel'))
                 .onClick(() => {
                   this.isShowWarnDialog = false;
                   if (this.controller !== undefined) {
                     this.controller.close();
                   }
                 })
-                .backgroundColor($r("app.color.CustomDialogExample_Button_backgroundColor_FFFFFF"))
-                .fontSize($r("sys.float.ohos_id_text_size_button1"))
+                .backgroundColor($r('app.color.CustomDialogExample_Button_backgroundColor_FFFFFF'))
+                .fontSize($r('sys.float.ohos_id_text_size_button1'))
                 .width($r('app.float.wh_value_152'))
                 .height($r('app.float.wh_value_40'))
-                .fontColor($r("sys.color.ohos_id_color_text_hyperlink"))
+                .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
               Divider()
                 .strokeWidth(1)
-                .color($r("sys.color.ohos_id_color_list_separator"))
+                .color($r('sys.color.ohos_id_color_list_separator'))
                 .vertical(true)
                 .height($r('app.float.wh_value_40'))
-                .opacity($r("app.float.opacity_0_2"))
-              Button($r("app.string.deleteAllCredDelete"))
+                .opacity($r('app.float.opacity_0_2'))
+              Button($r('app.string.deleteAllCredDelete'))
                 .onClick(() => {
                   this.deleteWarn.deleteUserCertificate(this.deleteWarn.certInfo.uri, () => {
                     this.mShowUserListPresenter.updateUserTrustedCertificateList();
@@ -313,11 +313,11 @@ struct CustomDialogDeleteWarning {
                     }
                   });
                 })
-                .backgroundColor($r("app.color.CustomDialogExample_Button_backgroundColor_FFFFFF"))
-                .fontSize($r("sys.float.ohos_id_text_size_button1"))
+                .backgroundColor($r('app.color.CustomDialogExample_Button_backgroundColor_FFFFFF'))
+                .fontSize($r('sys.float.ohos_id_text_size_button1'))
                 .width($r('app.float.wh_value_152'))
                 .height($r('app.float.wh_value_40'))
-                .fontColor($r("sys.color.ohos_id_color_warning"))
+                .fontColor($r('sys.color.ohos_id_color_warning'))
             }
             .height($r('app.float.wh_value_64'))
             .padding({
@@ -329,8 +329,8 @@ struct CustomDialogDeleteWarning {
             })
           }
           .width(WidthPercent.WH_100_100)
-          .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
-          .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
+          .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+          .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
           .useSizeType({
             xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
             md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
@@ -347,9 +347,9 @@ struct CustomDialogDeleteWarning {
       }
     }
     .margin({
-      bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
-      left: $r("sys.float.ohos_id_dialog_margin_start"),
-      right: $r("sys.float.ohos_id_dialog_margin_end"),
+      bottom: $r('sys.float.ohos_id_dialog_margin_bottom'),
+      left: $r('sys.float.ohos_id_dialog_margin_start'),
+      right: $r('sys.float.ohos_id_dialog_margin_end'),
     })
   }
 }
@@ -361,10 +361,10 @@ struct CustomDialogExampleUser {
   @Link userInfoPresenter: CMShowUserCaPresenter;
   @Link userInfoPresenterForAbstractList: CMShowUserCaPresenter;
   @Link isShowWarnDialog: boolean;
-  @State IsOn: boolean = false;
+  @State isOn: boolean = false;
 
   aboutToAppear() {
-    this.IsOn = this.userInfoPresenter.certInfo.status;
+    this.isOn = this.userInfoPresenter.certInfo.status;
   }
 
   build() {
@@ -385,67 +385,67 @@ struct CustomDialogExampleUser {
           });
 
           Column() {
-            Text($r("app.string.CustomDialogExample_firText"))
-              .fontSize($r("sys.float.ohos_id_text_size_dialog_tittle"))
-              .fontColor($r("sys.color.ohos_id_color_text_primary"))
+            Text($r('app.string.CustomDialogExample_firText'))
+              .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
               .fontWeight(FontWeight.Medium)
               .margin({
-                left: $r("app.float.CustomDialogExample_firText_margin_left_value"),
-                top: $r("app.float.CustomDialogExample_firText_margin_top_value")
+                left: $r('app.float.CustomDialogExample_firText_margin_left_value'),
+                top: $r('app.float.CustomDialogExample_firText_margin_top_value')
               })
               .alignSelf(ItemAlign.Start)
             Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
               Column() {
                 Text(this.userInfoPresenter.certInfo.certAlias)
-                  .fontSize($r("sys.float.ohos_id_text_size_body1"))
-                  .fontColor($r("sys.color.ohos_id_color_text_primary"))
+                  .fontSize($r('sys.float.ohos_id_text_size_body1'))
+                  .fontColor($r('sys.color.ohos_id_color_text_primary'))
                   .fontWeight(FontWeight.Medium)
                   .margin({
-                    left: $r("app.float.wh_value_26")
+                    left: $r('app.float.wh_value_26')
                   })
-                if (this.IsOn) {
-                  Text($r("app.string.CustomDialogExampleUser_Status_true"))
-                    .fontSize($r("sys.float.ohos_id_text_size_body2"))
-                    .fontColor($r("sys.color.ohos_id_color_text_secondary"))
+                if (this.isOn) {
+                  Text($r('app.string.CustomDialogExampleUser_Status_true'))
+                    .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                    .fontColor($r('sys.color.ohos_id_color_text_secondary'))
                     .margin({
-                      left: $r("app.float.wh_value_26")
+                      left: $r('app.float.wh_value_26')
                     })
                 } else {
-                  Text($r("app.string.CustomDialogExampleUser_Status_false"))
-                    .fontSize($r("sys.float.ohos_id_text_size_body2"))
-                    .fontColor($r("sys.color.ohos_id_color_text_secondary"))
+                  Text($r('app.string.CustomDialogExampleUser_Status_false'))
+                    .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                    .fontColor($r('sys.color.ohos_id_color_text_secondary'))
                     .margin({
-                      left: $r("app.float.wh_value_26")
+                      left: $r('app.float.wh_value_26')
                     })
                 }
               }.alignItems(HorizontalAlign.Start);
-              Toggle({ type: ToggleType.Switch, isOn: this.IsOn })
+              Toggle({ type: ToggleType.Switch, isOn: this.isOn })
                 .margin({
-                  right: $r("app.float.CustomDialogExampleUser_Flex_Toggle_margin_right_value")
+                  right: $r('app.float.CustomDialogExampleUser_Flex_Toggle_margin_right_value')
                 })
-                .width($r("app.float.CustomDialogExampleUser_Flex_Toggle_width_value"))
-                .height($r("app.float.CustomDialogExampleUser_Flex_Toggle_height_value"))
-                .selectedColor($r("app.color.CustomDialogExampleUser_Flex_Toggle_selectedColor_007DFF"))
+                .width($r('app.float.CustomDialogExampleUser_Flex_Toggle_width_value'))
+                .height($r('app.float.CustomDialogExampleUser_Flex_Toggle_height_value'))
+                .selectedColor($r('app.color.CustomDialogExampleUser_Flex_Toggle_selectedColor_007DFF'))
                 .onChange((isOn: boolean) => {
                   if (isOn) {
-                    this.IsOn = true;
+                    this.isOn = true;
                     this.userInfoPresenter.setUserCertificateStatus(this.userInfoPresenter.certInfo.uri, true);
                   } else {
-                    this.IsOn = false;
+                    this.isOn = false;
                     this.userInfoPresenter.setUserCertificateStatus(this.userInfoPresenter.certInfo.uri, false);
                   }
                 });
             }
-            .height($r("app.float.CustomDialogExampleUser_Flex_height_value"))
+            .height($r('app.float.CustomDialogExampleUser_Flex_height_value'))
             .margin({});
             List() {
               ListItem() {
-                Text($r("app.string.CustomDialogExample_firListItem_text"))
-                  .fontSize($r("sys.float.ohos_id_text_size_body2"))
-                  .fontColor($r("sys.color.ohos_id_color_text_primary"))
+                Text($r('app.string.CustomDialogExample_firListItem_text'))
+                  .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                  .fontColor($r('sys.color.ohos_id_color_text_primary'))
                   .fontWeight(FontWeight.Regular)
                   .margin({
-                    top: $r("app.float.wh_value_12")
+                    top: $r('app.float.wh_value_12')
                   })
               }.width('100%').align(Alignment.Start)
 
@@ -454,12 +454,12 @@ struct CustomDialogExampleUser {
               }.width('100%').align(Alignment.Start)
 
               ListItem() {
-                Text($r("app.string.CustomDialogExample_secListItem_text"))
-                  .fontSize($r("sys.float.ohos_id_text_size_body2"))
-                  .fontColor($r("sys.color.ohos_id_color_text_primary"))
+                Text($r('app.string.CustomDialogExample_secListItem_text'))
+                  .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                  .fontColor($r('sys.color.ohos_id_color_text_primary'))
                   .fontWeight(FontWeight.Regular)
                   .margin({
-                    top: $r("app.float.wh_value_12")
+                    top: $r('app.float.wh_value_12')
                   })
               }.width('100%').align(Alignment.Start)
 
@@ -468,12 +468,12 @@ struct CustomDialogExampleUser {
               }.width('100%').align(Alignment.Start)
 
               ListItem() {
-                Text($r("app.string.CustomDialogExample_thdListItem_text"))
-                  .fontSize($r("sys.float.ohos_id_text_size_body2"))
-                  .fontColor($r("sys.color.ohos_id_color_text_primary"))
+                Text($r('app.string.CustomDialogExample_thdListItem_text'))
+                  .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                  .fontColor($r('sys.color.ohos_id_color_text_primary'))
                   .fontWeight(FontWeight.Regular)
                   .margin({
-                    top: $r("app.float.wh_value_12")
+                    top: $r('app.float.wh_value_12')
                   })
               }.width('100%').align(Alignment.Start)
 
@@ -482,12 +482,12 @@ struct CustomDialogExampleUser {
               }.width('100%').align(Alignment.Start)
 
               ListItem() {
-                Text($r("app.string.CustomDialogExample_fouListItem_text"))
-                  .fontSize($r("sys.float.ohos_id_text_size_body2"))
-                  .fontColor($r("sys.color.ohos_id_color_text_primary"))
+                Text($r('app.string.CustomDialogExample_fouListItem_text'))
+                  .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                  .fontColor($r('sys.color.ohos_id_color_text_primary'))
                   .fontWeight(FontWeight.Regular)
                   .margin({
-                    top: $r("app.float.wh_value_12")
+                    top: $r('app.float.wh_value_12')
                   })
               }.width('100%').align(Alignment.Start)
 
@@ -495,16 +495,16 @@ struct CustomDialogExampleUser {
                 DialogFingerPrintComponent({ fingerprintSha256: this.userInfoPresenter.certInfo.fingerprintSha256 });
               }.width('100%').align(Alignment.Start)
             }
-            .height($r("app.float.CustomDialogExample_list_height_value"))
+            .height($r('app.float.CustomDialogExample_list_height_value'))
             .margin({
-              left: $r("app.float.wh_value_24"),
-              right: $r("app.float.wh_value_24")
+              left: $r('app.float.wh_value_24'),
+              right: $r('app.float.wh_value_24')
             })
             .scrollBar(BarState.Auto);
 
             Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
               justifyContent: FlexAlign.SpaceAround }) {
-              Button($r("app.string.CustomDialogExampleUser_Flex_firButton_text"))
+              Button($r('app.string.CustomDialogExampleUser_Flex_firButton_text'))
                 .onClick(() => {
                   this.userInfoPresenterForAbstractList.updateUserTrustedCertificateList();
                   this.isShowWarnDialog = false;
@@ -512,29 +512,29 @@ struct CustomDialogExampleUser {
                     this.controller.close();
                   }
                 })
-                .backgroundColor($r("app.color.CustomDialogExample_Button_backgroundColor_FFFFFF"))
-                .fontSize($r("sys.float.ohos_id_text_size_button1"))
+                .backgroundColor($r('app.color.CustomDialogExample_Button_backgroundColor_FFFFFF'))
+                .fontSize($r('sys.float.ohos_id_text_size_button1'))
                 .width($r('app.float.wh_value_152'))
                 .height($r('app.float.wh_value_40'))
-                .fontColor($r("sys.color.ohos_id_color_text_hyperlink"))
+                .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
               Divider()
                 .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
-                .color($r("sys.color.ohos_id_color_list_separator"))
+                .color($r('sys.color.ohos_id_color_list_separator'))
                 .vertical(true)
                 .height($r('app.float.wh_value_40'))
-                .opacity($r("app.float.opacity_0_2"))
-              Button($r("app.string.CustomDialogExampleUser_Flex_secButton_text"))
+                .opacity($r('app.float.opacity_0_2'))
+              Button($r('app.string.CustomDialogExampleUser_Flex_secButton_text'))
                 .onClick(() => {
                   this.isShowWarnDialog = true;
                   if (this.controller !== undefined) {
                     this.controller.close();
                   }
                 })
-                .backgroundColor($r("app.color.CustomDialogExample_Button_backgroundColor_FFFFFF"))
-                .fontSize($r("sys.float.ohos_id_text_size_button1"))
+                .backgroundColor($r('app.color.CustomDialogExample_Button_backgroundColor_FFFFFF'))
+                .fontSize($r('sys.float.ohos_id_text_size_button1'))
                 .width($r('app.float.wh_value_152'))
                 .height($r('app.float.wh_value_40'))
-                .fontColor($r("sys.color.ohos_id_color_warning"))
+                .fontColor($r('sys.color.ohos_id_color_warning'))
             }
             .height($r('app.float.wh_value_64'))
             .padding({
@@ -546,8 +546,8 @@ struct CustomDialogExampleUser {
             })
           }
           .width(WidthPercent.WH_100_100)
-          .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
-          .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
+          .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+          .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
           .useSizeType({
             xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
             md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
@@ -564,9 +564,9 @@ struct CustomDialogExampleUser {
       }
     }
     .margin({
-      bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
-      left: $r("sys.float.ohos_id_dialog_margin_start"),
-      right: $r("sys.float.ohos_id_dialog_margin_end"),
+      bottom: $r('sys.float.ohos_id_dialog_margin_bottom'),
+      left: $r('sys.float.ohos_id_dialog_margin_start'),
+      right: $r('sys.float.ohos_id_dialog_margin_end'),
     })
   }
 }
@@ -596,30 +596,30 @@ struct CustomDialogExampleSystem {
           });
 
           Column() {
-            Text($r("app.string.CustomDialogExample_firText"))
-              .fontSize($r("sys.float.ohos_id_text_size_dialog_tittle"))
-              .fontColor($r("sys.color.ohos_id_color_text_primary"))
+            Text($r('app.string.CustomDialogExample_firText'))
+              .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
               .fontWeight(FontWeight.Medium)
-              .height($r("app.float.wh_value_56"))
+              .height($r('app.float.wh_value_56'))
               .margin({
                 top: 0,
-                bottom: $r("app.float.wh_value_8")
+                bottom: $r('app.float.wh_value_8')
               })
               .alignSelf(ItemAlign.Start)
             Text(this.sysInfoPresenter.certInfo.certAlias)
-              .fontSize($r("sys.float.ohos_id_text_size_body1"))
-              .fontColor($r("sys.color.ohos_id_color_text_primary"))
+              .fontSize($r('sys.float.ohos_id_text_size_body1'))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
               .fontWeight(FontWeight.Medium)
               .margin({
                 top: 0,
-                bottom: $r("app.float.wh_value_24")
+                bottom: $r('app.float.wh_value_24')
               })
               .alignSelf(ItemAlign.Start)
             List() {
               ListItem() {
-                Text($r("app.string.CustomDialogExample_firListItem_text"))
-                  .fontSize($r("sys.float.ohos_id_text_size_body2"))
-                  .fontColor($r("sys.color.ohos_id_color_text_primary"))
+                Text($r('app.string.CustomDialogExample_firListItem_text'))
+                  .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                  .fontColor($r('sys.color.ohos_id_color_text_primary'))
                   .fontWeight(FontWeight.Regular)
               }.width('100%').align(Alignment.Start)
 
@@ -628,13 +628,13 @@ struct CustomDialogExampleSystem {
               }.width('100%').align(Alignment.Start)
 
               ListItem() {
-                Text($r("app.string.CustomDialogExample_secListItem_text"))
-                  .fontSize($r("sys.float.ohos_id_text_size_body2"))
-                  .fontColor($r("sys.color.ohos_id_color_text_primary"))
+                Text($r('app.string.CustomDialogExample_secListItem_text'))
+                  .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                  .fontColor($r('sys.color.ohos_id_color_text_primary'))
                   .fontWeight(FontWeight.Regular)
               }.width('100%').align(Alignment.Start)
               .margin({
-                top: $r("app.float.wh_value_12")
+                top: $r('app.float.wh_value_12')
               })
 
               ListItem() {
@@ -642,13 +642,13 @@ struct CustomDialogExampleSystem {
               }.width('100%').align(Alignment.Start)
 
               ListItem() {
-                Text($r("app.string.CustomDialogExample_thdListItem_text"))
-                  .fontSize($r("sys.float.ohos_id_text_size_body2"))
-                  .fontColor($r("sys.color.ohos_id_color_text_primary"))
+                Text($r('app.string.CustomDialogExample_thdListItem_text'))
+                  .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                  .fontColor($r('sys.color.ohos_id_color_text_primary'))
                   .fontWeight(FontWeight.Regular)
               }.width('100%').align(Alignment.Start)
               .margin({
-                top: $r("app.float.wh_value_12")
+                top: $r('app.float.wh_value_12')
               })
 
               ListItem() {
@@ -656,67 +656,67 @@ struct CustomDialogExampleSystem {
               }.width('100%').align(Alignment.Start)
 
               ListItem() {
-                Text($r("app.string.CustomDialogExample_fouListItem_text"))
-                  .fontSize($r("sys.float.ohos_id_text_size_body2"))
-                  .fontColor($r("sys.color.ohos_id_color_text_primary"))
+                Text($r('app.string.CustomDialogExample_fouListItem_text'))
+                  .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                  .fontColor($r('sys.color.ohos_id_color_text_primary'))
                   .fontWeight(FontWeight.Regular)
               }.width('100%').align(Alignment.Start)
               .margin({
-                top: $r("app.float.wh_value_12")
+                top: $r('app.float.wh_value_12')
               })
 
               ListItem() {
                 DialogFingerPrintComponent({ fingerprintSha256: this.sysInfoPresenter.certInfo.fingerprintSha256 });
               }.width('100%').align(Alignment.Start)
             }
-            .height($r("app.float.CustomDialogExample_list_height_value"))
+            .height($r('app.float.CustomDialogExample_list_height_value'))
             .scrollBar(BarState.Auto);
 
             Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
               justifyContent: FlexAlign.SpaceAround }) {
-              Button($r("app.string.CustomDialogExample_Button_text"))
+              Button($r('app.string.CustomDialogExample_Button_text'))
                 .onClick(() => {
                   if (this.controller !== undefined) {
                     this.controller.close();
                   }
                 })
-                .backgroundColor($r("app.color.CustomDialogExample_Button_backgroundColor_FFFFFF"))
-                .fontSize($r("sys.float.ohos_id_text_size_button1"))
+                .backgroundColor($r('app.color.CustomDialogExample_Button_backgroundColor_FFFFFF'))
+                .fontSize($r('sys.float.ohos_id_text_size_button1'))
                 .width($r('app.float.wh_value_152'))
                 .height($r('app.float.wh_value_40'))
-                .fontColor($r("sys.color.ohos_id_color_text_hyperlink"))
+                .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
               Divider()
                 .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
-                .color($r("sys.color.ohos_id_color_list_separator"))
+                .color($r('sys.color.ohos_id_color_list_separator'))
                 .vertical(true)
                 .height($r('app.float.wh_value_40'))
-                .opacity($r("app.float.opacity_0_2"))
+                .opacity($r('app.float.opacity_0_2'))
               if (this.sysInfoPresenter.certInfo.status) {
-                Button($r("app.string.CustomDialogExample_Button_off"))
+                Button($r('app.string.CustomDialogExample_Button_off'))
                   .onClick(() => {
                     this.sysInfoPresenter.setSystemCertificateStatus(this.sysInfoPresenter.certInfo.uri, false);
                     if (this.controller !== undefined) {
                       this.controller.close();
                     }
                   })
-                  .backgroundColor($r("app.color.CustomDialogExample_Button_backgroundColor_FFFFFF"))
-                  .fontSize($r("sys.float.ohos_id_text_size_button1"))
+                  .backgroundColor($r('app.color.CustomDialogExample_Button_backgroundColor_FFFFFF'))
+                  .fontSize($r('sys.float.ohos_id_text_size_button1'))
                   .width($r('app.float.wh_value_152'))
                   .height($r('app.float.wh_value_40'))
-                  .fontColor($r("sys.color.ohos_id_color_text_hyperlink"))
+                  .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
               } else {
-                Button($r("app.string.CustomDialogExample_Button_on"))
+                Button($r('app.string.CustomDialogExample_Button_on'))
                   .onClick(() => {
                     this.sysInfoPresenter.setSystemCertificateStatus(this.sysInfoPresenter.certInfo.uri, true);
                     if (this.controller !== undefined) {
                       this.controller.close();
                     }
                   })
-                  .backgroundColor($r("app.color.CustomDialogExample_Button_backgroundColor_FFFFFF"))
-                  .fontSize($r("sys.float.ohos_id_text_size_button1"))
+                  .backgroundColor($r('app.color.CustomDialogExample_Button_backgroundColor_FFFFFF'))
+                  .fontSize($r('sys.float.ohos_id_text_size_button1'))
                   .width($r('app.float.wh_value_152'))
                   .height($r('app.float.wh_value_40'))
-                  .fontColor($r("sys.color.ohos_id_color_text_hyperlink"))
+                  .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
               }
             }
             .height($r('app.float.wh_value_64'))
@@ -731,8 +731,8 @@ struct CustomDialogExampleSystem {
             right: $r('app.float.wh_value_24')
           })
           .width(WidthPercent.WH_100_100)
-          .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
-          .backgroundColor($r("sys.color.ohos_id_color_foreground_contrary"))
+          .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+          .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
           .useSizeType({
             xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
             md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
@@ -749,9 +749,9 @@ struct CustomDialogExampleSystem {
       }
     }
     .margin({
-      bottom: $r("sys.float.ohos_id_dialog_margin_bottom"),
-      left: $r("sys.float.ohos_id_dialog_margin_start"),
-      right: $r("sys.float.ohos_id_dialog_margin_end"),
+      bottom: $r('sys.float.ohos_id_dialog_margin_bottom'),
+      left: $r('sys.float.ohos_id_dialog_margin_start'),
+      right: $r('sys.float.ohos_id_dialog_margin_end'),
     })
   }
 }
@@ -760,9 +760,9 @@ struct CustomDialogExampleSystem {
 struct ComponentSystem {
   private certAlias: string = '';
   private subjectName: string = '';
-  private Status: boolean = false;
-  private Index : number = 0;
-  private Uri: string = '';
+  private status: boolean = false;
+  private indexNum : number = 0;
+  private uri: string = '';
   isSwitchTouched : boolean = false;
   @State isTouched: boolean = false;
   @Link setStatus: CmShowSysCaPresenter;
@@ -774,41 +774,41 @@ struct ComponentSystem {
   })
 
   build() {
-    Flex({  justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+    Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
       Column() {
         Text(this.certAlias)
-          .height($r("app.float.ComponentSystem_firText_height_value"))
-          .fontSize($r("sys.float.ohos_id_text_size_body1"))
-          .fontColor($r("sys.color.ohos_id_color_text_primary"))
+          .height($r('app.float.ComponentSystem_firText_height_value'))
+          .fontSize($r('sys.float.ohos_id_text_size_body1'))
+          .fontColor($r('sys.color.ohos_id_color_text_primary'))
           .fontWeight(FontWeight.Medium)
           .textAlign(TextAlign.Start)
-          .margin({top: $r("app.float.wh_value_10") });
+          .margin({top: $r('app.float.wh_value_10') });
         Text(this.subjectName)
-          .height($r("app.float.ComponentSystem_secText_height_value"))
-          .fontSize($r("sys.float.ohos_id_text_size_body2"))
-          .fontColor($r("sys.color.ohos_id_color_text_secondary"))
+          .height($r('app.float.ComponentSystem_secText_height_value'))
+          .fontSize($r('sys.float.ohos_id_text_size_body2'))
+          .fontColor($r('sys.color.ohos_id_color_text_secondary'))
           .fontWeight(FontWeight.Regular)
           .textAlign(TextAlign.Start)
-          .margin({ top: $r("app.float.wh_value_2"), bottom: $r("app.float.wh_value_11") });
+          .margin({ top: $r('app.float.wh_value_2'), bottom: $r('app.float.wh_value_11') });
       }.alignItems(HorizontalAlign.Start);
-      Toggle({ type: ToggleType.Switch, isOn: this.setStatus.certList[this.Index].status })
-        .width($r("app.float.ComponentSystem_Toggle_width_value"))
-        .height($r("app.float.ComponentSystem_Toggle_height_value"))
-        .selectedColor($r("app.color.ComponentSystem_Toggle_selectedColor_007DFF"))
+      Toggle({ type: ToggleType.Switch, isOn: this.setStatus.certList[this.indexNum].status })
+        .width($r('app.float.ComponentSystem_Toggle_width_value'))
+        .height($r('app.float.ComponentSystem_Toggle_height_value'))
+        .selectedColor($r('app.color.ComponentSystem_Toggle_selectedColor_007DFF'))
         .onChange((isOn: boolean) => {
           if (isOn) {
             console.info('Component status:' + isOn);
-            this.setStatus.setSystemCertificateStatus(this.Uri, true);
+            this.setStatus.setSystemCertificateStatus(this.uri, true);
           } else {
             console.info('Component status:' + isOn);
-            this.setStatus.setSystemCertificateStatus(this.Uri, false);
+            this.setStatus.setSystemCertificateStatus(this.uri, false);
           }
         })
         .margin({ right: 0 });
     }
-    .height($r("app.float.ComponentSystem_Flex_height_value"))
+    .height($r('app.float.ComponentSystem_Flex_height_value'))
     .onClick(() => {
-      this.setStatus.getSystemTrustedCertificate(this.Uri, () => {
+      this.setStatus.getSystemTrustedCertificate(this.uri, () => {
         console.info('this.setStatus.certInfo.status is:' + JSON.stringify(this.setStatus.certInfo));
         this.dialogController.open();
       });
@@ -820,16 +820,16 @@ struct ComponentSystem {
 struct ComponentUser {
   private certAlias: string = '';
   private subjectName: string = '';
-  private Index : number = -1;
-  private Uri: string = '';
-  @State StatusText : Resource = $r("app.string.CustomDialogExampleUser_Status_false");
+  private indexNum : number = -1;
+  private uri: string = '';
+  @State statusText : Resource = $r('app.string.CustomDialogExampleUser_Status_false');
   @State isTouched: boolean = false;
   @Link setStatus: CMShowUserCaPresenter;
   @State mUserCaPresenterDetail: CMShowUserCaPresenter = CMShowUserCaPresenter.getInstance();
-  @State @Watch("onShowDeleteWarnDialog") isShowWarning: boolean = false;
+  @State @Watch('onShowDeleteWarnDialog') isShowWarning: boolean = false;
 
   dialogController: CustomDialogController = new CustomDialogController({
-    builder: CustomDialogExampleUser({ isShowWarnDialog: $isShowWarning,userInfoPresenter: $mUserCaPresenterDetail,
+    builder: CustomDialogExampleUser({ isShowWarnDialog: $isShowWarning, userInfoPresenter: $mUserCaPresenterDetail,
       userInfoPresenterForAbstractList: $setStatus }),
     autoCancel: true,
     cancel: () => {
@@ -860,10 +860,10 @@ struct ComponentUser {
 
   aboutToAppear() {
     console.info('in ComponentUser aboutToAppear');
-    if (this.setStatus.certList[this.Index].status == true) {
-      this.StatusText = $r("app.string.CustomDialogExampleUser_Status_true");
+    if (this.setStatus.certList[this.indexNum].status == true) {
+      this.statusText = $r('app.string.CustomDialogExampleUser_Status_true');
     } else {
-      this.StatusText = $r("app.string.CustomDialogExampleUser_Status_false");
+      this.statusText = $r('app.string.CustomDialogExampleUser_Status_false');
     }
   }
 
@@ -871,38 +871,38 @@ struct ComponentUser {
     Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
       Column() {
         Text(this.certAlias)
-          .height($r("app.float.componentUser_firText_height_value"))
-          .fontSize($r("sys.float.ohos_id_text_size_body1"))
-          .fontColor($r("sys.color.ohos_id_color_text_primary"))
+          .height($r('app.float.componentUser_firText_height_value'))
+          .fontSize($r('sys.float.ohos_id_text_size_body1'))
+          .fontColor($r('sys.color.ohos_id_color_text_primary'))
           .fontWeight(FontWeight.Medium)
           .textAlign(TextAlign.Start)
-          .margin({ top: $r("app.float.wh_value_10") });
+          .margin({ top: $r('app.float.wh_value_10') });
         Text(this.subjectName)
-          .height($r("app.float.componentUser_secText_height_value"))
-          .fontSize($r("sys.float.ohos_id_text_size_body2"))
-          .fontColor($r("sys.color.ohos_id_color_text_primary"))
+          .height($r('app.float.componentUser_secText_height_value'))
+          .fontSize($r('sys.float.ohos_id_text_size_body2'))
+          .fontColor($r('sys.color.ohos_id_color_text_primary'))
           .fontWeight(FontWeight.Regular)
           .textAlign(TextAlign.Start)
-          .margin({ top: $r("app.float.wh_value_2"), bottom: $r("app.float.wh_value_11") });
+          .margin({ top: $r('app.float.wh_value_2'), bottom: $r('app.float.wh_value_11') });
       }.alignItems(HorizontalAlign.Start);
       Row() {
-        Text(this.StatusText)
-          .fontSize($r("sys.float.ohos_id_text_size_body2"))
-          .fontColor($r("sys.color.ohos_id_color_text_secondary"))
+        Text(this.statusText)
+          .fontSize($r('sys.float.ohos_id_text_size_body2'))
+          .fontColor($r('sys.color.ohos_id_color_text_secondary'))
           .textAlign(TextAlign.End)
           .margin({
-            right: $r("app.float.componentUser_thdText_margin_value")
+            right: $r('app.float.componentUser_thdText_margin_value')
           })
         Image($r('app.media.ic_settings_arrow'))
-          .width($r("app.float.componentUser_image_width_value"))
-          .height($r("app.float.componentUser_image_height_value"))
-          .fillColor($r("sys.color.ohos_id_color_primary"))
-          .opacity($r("app.float.componentUser_image_opacity_value"));
+          .width($r('app.float.componentUser_image_width_value'))
+          .height($r('app.float.componentUser_image_height_value'))
+          .fillColor($r('sys.color.ohos_id_color_primary'))
+          .opacity($r('app.float.componentUser_image_opacity_value'));
       }
     }
-    .height($r("app.float.componentUser_flex_height_value"))
+    .height($r('app.float.componentUser_flex_height_value'))
     .onClick(() => {
-      this.mUserCaPresenterDetail.getUserTrustedCertificate(this.Uri, () => {
+      this.mUserCaPresenterDetail.getUserTrustedCertificate(this.uri, () => {
         console.info('userCerInfo is:' + JSON.stringify(this.setStatus.certInfo));
         this.dialogController.open();
       });
@@ -918,8 +918,8 @@ struct TrustedEvidence {
   @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
   @State isTouched: boolean = false;
   @State currentIndex: number = 0
-  @State fontColor: Resource = $r("app.color.TrustedEvidence_TabBuilder_fontColor_182431")
-  @State selectedFontColor: Resource = $r("app.color.font_color_007DFF")
+  @State fontColor: Resource = $r('app.color.TrustedEvidence_TabBuilder_fontColor_182431')
+  @State selectedFontColor: Resource = $r('app.color.font_color_007DFF')
   private controller: TabsController = new TabsController();
   private sysCaScroller: Scroller = new Scroller();
   private userCaScroller: Scroller = new Scroller();
@@ -956,9 +956,9 @@ struct TrustedEvidence {
     let uri = GlobalContext.getContext().getAbilityWant().uri;
     GlobalContext.getContext().clearAbilityWantUri();
 
-    if (uri === "certInstall") {
+    if (uri === 'certInstall') {
       this.mFaPresenter.startInstall();
-    } else if (uri === "requestAuthorize") {
+    } else if (uri === 'requestAuthorize') {
       this.mFaPresenter.startRequestAuth( GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
     }
   }
@@ -971,7 +971,7 @@ struct TrustedEvidence {
           Column() {
             HeadComponent({ headName: $r('app.string.trustedEvidence') })
               .margin({
-                left: $r("app.float.wh_value_12")
+                left: $r('app.float.wh_value_12')
               })
 
             Column() {
@@ -983,20 +983,20 @@ struct TrustedEvidence {
                         ForEach(this.mShowSysCaPresenter.certList, (item: CertAbstractVo, index) => {
                           ListItem() {
                             ComponentSystem({ certAlias: item.certAlias, subjectName: item.subjectNameCN,
-                              Status: item.status, Uri: item.uri, setStatus: $mShowSysCaPresenter, Index: index })
+                              status: item.status, uri: item.uri, setStatus: $mShowSysCaPresenter, indexNum: index })
                           }
                         }, (item: CertAbstractVo) => JSON.stringify(item))
                       }
                       .scrollBar(BarState.Off)
                       .padding({
-                        right: $r("app.float.wh_value_12"),
-                        left: $r("app.float.wh_value_12"),
-                        top: $r("app.float.wh_value_4"),
-                        bottom: $r("app.float.wh_value_4")
+                        right: $r('app.float.wh_value_12'),
+                        left: $r('app.float.wh_value_12'),
+                        top: $r('app.float.wh_value_4'),
+                        bottom: $r('app.float.wh_value_4')
                       })
                       .divider({
-                        strokeWidth: $r("app.float.sys_list_divider_strokeWidth_value"),
-                        color: $r("app.color.sys_list_divider_color_000000"),
+                        strokeWidth: $r('app.float.sys_list_divider_strokeWidth_value'),
+                        color: $r('app.color.sys_list_divider_color_000000'),
                         endMargin: '12vp'
                       })
                       .visibility(this.mShowSysCaPresenter.certList.length > 0 ? Visibility.Visible : Visibility.None);
@@ -1005,23 +1005,23 @@ struct TrustedEvidence {
                     .scrollable(ScrollDirection.Vertical)
                     .scrollBar(BarState.Off)
                     .margin({
-                      left: $r("app.float.wh_value_12"),
-                      right: $r("app.float.wh_value_12")
+                      left: $r('app.float.wh_value_12'),
+                      right: $r('app.float.wh_value_12')
                     })
-                    .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
-                    .backgroundColor($r("app.color.user_list_backgroundColor_FFFFFF"))
+                    .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+                    .backgroundColor($r('app.color.user_list_backgroundColor_FFFFFF'))
                     ScrollBar({ scroller: this.sysCaScroller, direction: ScrollBarDirection.Vertical,
                       state: BarState.Auto}) {
                       Text()
-                        .width($r("app.float.wh_value_3"))
-                        .height($r("app.float.wh_value_50"))
-                        .borderRadius($r("app.float.wh_value_10"))
-                        .backgroundColor($r("sys.color.ohos_id_color_foreground"))
+                        .width($r('app.float.wh_value_3'))
+                        .height($r('app.float.wh_value_50'))
+                        .borderRadius($r('app.float.wh_value_10'))
+                        .backgroundColor($r('sys.color.ohos_id_color_foreground'))
                         .opacity(0.4)
                     }
-                    .width($r("app.float.wh_value_3"))
+                    .width($r('app.float.wh_value_3'))
                     .margin({
-                      right: $r("app.float.wh_value_3")
+                      right: $r('app.float.wh_value_3')
                     })
                     .visibility(this.mShowSysCaPresenter.certList.length > 0 ? Visibility.Visible : Visibility.None);
                   }
@@ -1044,21 +1044,21 @@ struct TrustedEvidence {
                       List() {
                         ForEach(this.mShowUserCaPresenter.certList, (item: CertAbstractVo, index) => {
                           ListItem() {
-                            ComponentUser({ certAlias: item.certAlias, subjectName: item.subjectNameCN, Uri: item.uri,
-                              setStatus: $mShowUserCaPresenter, Index: index })
+                            ComponentUser({ certAlias: item.certAlias, subjectName: item.subjectNameCN, uri: item.uri,
+                              setStatus: $mShowUserCaPresenter, indexNum: index })
                           }
                         }, (item: CertAbstractVo) => JSON.stringify(item))
                       }
                       .scrollBar(BarState.Off)
                       .padding({
-                        left: $r("app.float.wh_value_12"),
-                        right: $r("app.float.wh_value_12"),
-                        top: $r("app.float.wh_value_4"),
-                        bottom: $r("app.float.wh_value_4")
+                        left: $r('app.float.wh_value_12'),
+                        right: $r('app.float.wh_value_12'),
+                        top: $r('app.float.wh_value_4'),
+                        bottom: $r('app.float.wh_value_4')
                       })
                       .divider({
-                        strokeWidth: $r("app.float.user_list_divider_strokeWidth_value"),
-                        color: $r("app.color.user_list_divider_color_000000"),
+                        strokeWidth: $r('app.float.user_list_divider_strokeWidth_value'),
+                        color: $r('app.color.user_list_divider_color_000000'),
                         endMargin: '3vp'
                       })
                       .visibility(this.mShowUserCaPresenter.certList.length > 0 ? Visibility.Visible : Visibility.None)
@@ -1067,23 +1067,23 @@ struct TrustedEvidence {
                     .scrollable(ScrollDirection.Vertical)
                     .scrollBar(BarState.Off)
                     .margin({
-                      left: $r("app.float.wh_value_12"),
-                      right: $r("app.float.wh_value_12")
+                      left: $r('app.float.wh_value_12'),
+                      right: $r('app.float.wh_value_12')
                     })
-                    .borderRadius($r("app.float.user_list_divider_borderRadius_value"))
-                    .backgroundColor($r("app.color.user_list_backgroundColor_FFFFFF"))
+                    .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+                    .backgroundColor($r('app.color.user_list_backgroundColor_FFFFFF'))
                     ScrollBar({ scroller: this.userCaScroller, direction: ScrollBarDirection.Vertical,
                       state: BarState.Auto}) {
                       Text()
-                        .width($r("app.float.wh_value_3"))
-                        .height($r("app.float.wh_value_50"))
-                        .borderRadius($r("app.float.wh_value_10"))
-                        .backgroundColor($r("sys.color.ohos_id_color_foreground"))
+                        .width($r('app.float.wh_value_3'))
+                        .height($r('app.float.wh_value_50'))
+                        .borderRadius($r('app.float.wh_value_10'))
+                        .backgroundColor($r('sys.color.ohos_id_color_foreground'))
                         .opacity(0.4)
                     }
-                    .width($r("app.float.wh_value_3"))
+                    .width($r('app.float.wh_value_3'))
                     .margin({
-                      right: $r("app.float.wh_value_3")
+                      right: $r('app.float.wh_value_3')
                     })
                     .visibility(this.mShowUserCaPresenter.certList.length > 0 ? Visibility.Visible : Visibility.None)
                   }
@@ -1103,14 +1103,14 @@ struct TrustedEvidence {
               .vertical(false)
               .scrollable(true)
               .barMode(BarMode.Fixed)
-              .barWidth($r("app.float.tabs_barWidth_value"))
-              .barHeight($r("app.float.tabs_barHeight_value"))
+              .barWidth($r('app.float.tabs_barWidth_value'))
+              .barHeight($r('app.float.tabs_barHeight_value'))
               .animationDuration(400)
               .width(WidthPercent.WH_100_100)
               .margin({
-                bottom: $r("app.float.wh_value_24")
+                bottom: $r('app.float.wh_value_24')
               })
-              .backgroundColor($r("app.color.TrustedEvidence_tabs_backgroundColor_F1F3F5"))
+              .backgroundColor($r('app.color.TrustedEvidence_tabs_backgroundColor_F1F3F5'))
               .onChange((index: number) => {
                 this.currentIndex = index
               });
@@ -1118,7 +1118,7 @@ struct TrustedEvidence {
             .height(WidthPercent.WH_94_100)
             .width(WidthPercent.WH_100_100);
           }
-          .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
+          .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
           .width(WidthPercent.WH_100_100)
           .height(WidthPercent.WH_100_100)
           .useSizeType({
@@ -1141,7 +1141,7 @@ struct TrustedEvidence {
       .width(WidthPercent.WH_100_100)
       .height(WidthPercent.WH_100_100);
     }
-    .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
+    .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
     .width(WidthPercent.WH_100_100)
     .height(WidthPercent.WH_100_100);
   }
