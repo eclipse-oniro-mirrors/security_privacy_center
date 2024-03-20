@@ -16,7 +16,7 @@
 import certManagerModel from '../model/CertMangerModel';
 import FileIoModel from '../model/FileIoModel';
 import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
-import router from '@system.router';
+import router from '@ohos.router';
 import { GlobalContext } from '../common/GlobalContext';
 
 const TAG = 'CMInstallPresenter: ';
@@ -69,7 +69,7 @@ export default class CmInstallPresenter {
           console.error(TAG + 'installCert failed');
         }
         router.clear();
-        router.replace({ uri: 'pages/certManagerFa' });
+        router.replaceUrl({ url: 'pages/certManagerFa' });
       });
     });
   }
