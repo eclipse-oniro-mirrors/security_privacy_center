@@ -1,0 +1,23 @@
+[
+  {
+    "businessId": "lock_screen_password",
+    "bundleName": "com.huawei.hmos.passwordvault",
+    "priority": 9999
+  },
+  {
+    "businessId": "high_safe_mode",
+    "bundleName": "com.huawei.hmos.advsecmode",
+    "priority": 8888
+  },
+  {
+    "businessId": "data_and_privacy",
+    "bundleName": "com.huawei.hmos.security.privacycenter",
+    "priority": 7777
+  },
+  {
+    "businessId": "hw_ads_service",
+    "bundleName": "com.huawei.hmos.adsservice",
+    "priority": 6666
+  }
+
+]

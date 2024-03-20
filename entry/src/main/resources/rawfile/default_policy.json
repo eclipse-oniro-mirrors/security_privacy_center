@@ -1,0 +1,47 @@
+[
+  {
+    "titleNameId": "privacy_protect_proposition",
+    "listType": "1",
+    "jumperType": "uri",
+    "uriResId": "privacy_protect_proposition_uri",
+    "bundleName": "",
+    "abilityName": "",
+    "ueParam": "1"
+  },
+  {
+    "titleNameId": "consumer_business_privacy_statement",
+    "listType": "1",
+    "jumperType": "uri",
+    "uriResId": "consumer_business_privacy_statement_uri",
+    "bundleName": "",
+    "abilityName": "",
+    "ueParam": "2"
+  },
+  {
+    "titleNameId": "cookies_policy",
+    "listType": "1",
+    "jumperType": "uri",
+    "uriResId": "cookies_policy_uri",
+    "bundleName": "",
+    "abilityName": "",
+    "ueParam": "3"
+  },
+  {
+    "titleNameId": "privacy_and_security_certification",
+    "listType": "1",
+    "jumperType": "uri",
+    "uriResId": "privacy_and_security_certification_uri",
+    "bundleName": "",
+    "abilityName": "",
+    "ueParam": "4"
+  },
+  {
+    "titleNameId": "more_privacy_protection_information",
+    "listType": "1",
+    "jumperType": "uri",
+    "uriResId": "more_privacy_protection_information_uri",
+    "bundleName": "",
+    "abilityName": "",
+    "ueParam": "5"
+  }
+]

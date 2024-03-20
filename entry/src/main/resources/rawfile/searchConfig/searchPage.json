@@ -1,0 +1,24 @@
+{
+  "searchPages": [
+    {
+      "pageTitle": "string:privacy_ability_label",
+      "pageDescription": "Privacy and security",
+      "entryKey": "privacy_settings",
+      "params": "",
+      "searchItems": [
+        {
+          "itemName": "Privacy and security",
+          "itemTitle": "$string:privacy_ability_label",
+          "itemDescription": "",
+          "icon": ""
+        },
+        {
+          "itemName": "Permission Management",
+          "itemTitle": "$string:search_item_permission_management",
+          "itemDescription": "",
+          "icon": ""
+        }
+      ]
+    }
+  ]
+}
