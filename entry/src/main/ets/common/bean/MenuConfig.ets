@@ -13,10 +13,6 @@
  * limitations under the License.
  */
 
-/**
- * 接入应用metadata配置的security_privacy.json文件对应属性，详细内容可查询
- * https://wiki.huawei.com/domains/2308/wiki/9312/WIKI202308301913971
- */
 export interface MenuConfig {
   businessId: string,
 

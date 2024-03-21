@@ -39,8 +39,8 @@ export abstract class BaseViewModel<M extends BaseModel, S extends BaseState> {
     return this._viewState;
   }
 
-  public async processIntent(intent: BaseIntent): Promise<ProcessResult> {
-    Logger.info(TAG, 'start processIntent: ' + intent.getIntentTag());
+  public async processIntent(intents: BaseIntent): Promise<ProcessResult> {
+    Logger.info(TAG, 'start processIntent: ' + intents.getIntentTag());
     if (this._model === null || this._model === undefined) {
       this._model = this.initModel();
     }
@@ -49,9 +49,9 @@ export abstract class BaseViewModel<M extends BaseModel, S extends BaseState> {
     }
     if (this._model !== null && this._viewState !== null) {
       try {
-        return await this.processIntentWithModel(intent, this._model, this._viewState);
+        return await this.processIntentWithModel(intents, this._model, this._viewState);
       } catch (err) {
-        Logger.error(TAG, 'error when process intent.' + intent.getIntentTag());
+        Logger.error(TAG, 'error when process intents.' + intents.getIntentTag());
       }
     }
     return ProcessResult.FAIL;
@@ -61,5 +61,5 @@ export abstract class BaseViewModel<M extends BaseModel, S extends BaseState> {
 
   protected abstract initViewState(): S;
 
-  protected abstract processIntentWithModel(intent: BaseIntent, model: M, viewState: S): Promise<ProcessResult>;
+  protected abstract processIntentWithModel(intents: BaseIntent, model: M, viewState: S): Promise<ProcessResult>;
 }

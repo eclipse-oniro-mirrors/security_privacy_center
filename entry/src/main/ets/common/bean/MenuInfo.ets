@@ -15,7 +15,7 @@
 
 export default interface MenuInfo {
   businessId: string;
-  intent: string;
+  intents: string;
 
   // 用户id
   userId: number;

@@ -74,7 +74,7 @@ export default function BundleInfoBeanTest() {
         .getAppContext(), $r('app.media.ic_back'))
       ResourceUtil.getBundleResourceManager('', abilityDelegatorRegistry.getAbilityDelegator().getAppContext())
       expect(ResourceUtil.getBundleResourceManager('', null)).assertNull()
-      ResourceUtil.getBundleResourceManager('com.huawei.hmos.security.privacycenter', abilityDelegatorRegistry.getAbilityDelegator()
+      ResourceUtil.getBundleResourceManager('com.example.test', abilityDelegatorRegistry.getAbilityDelegator()
         .getAppContext())
     })
     it('StringUtilTest', 0, () => {

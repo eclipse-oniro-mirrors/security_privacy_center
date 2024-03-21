@@ -35,17 +35,17 @@ export class AutoMenuViewModel extends BaseViewModel<AutoMenuModel, AutoMenuView
     return new AutoMenuViewState();
   }
 
-  protected async processIntentWithModel(intent: BaseIntent, model: AutoMenuModel, viewStat: AutoMenuViewState): Promise<ProcessResult> {
-    Logger.info(TAG, 'start processIntentWithModel: ' + intent.getIntentTag());
-    if (intent instanceof AutoMenuInitIntent) {
-      let menuInfoList: MenuInfo[] = await model.getMenuInfoListFromRdb(intent.context);
+  protected async processIntentWithModel(intents: BaseIntent, model: AutoMenuModel, viewStat: AutoMenuViewState): Promise<ProcessResult> {
+    Logger.info(TAG, 'start processIntentWithModel: ' + intents.getIntentTag());
+    if (intents instanceof AutoMenuInitIntent) {
+      let menuInfoList: MenuInfo[] = await model.getMenuInfoListFromRdb(intents.context);
       viewStat.listMenuList = menuInfoList.filter((item) => {
         return (DISPLAY_MODEL_LIST === item.displayedMode || DISPLAY_MODEL_CARD === item.displayedMode)
       })
       return ProcessResult.SUCCESS;
     }
-    if (intent instanceof AutoMenuRefreshIntent) {
-      let menuInfoList: MenuInfo[] = await model.getMenuInfoListFromBms(intent.context);
+    if (intents instanceof AutoMenuRefreshIntent) {
+      let menuInfoList: MenuInfo[] = await model.getMenuInfoListFromBms(intents.context);
       viewStat.listMenuList = menuInfoList.filter((item) => {
         return (DISPLAY_MODEL_LIST === item.displayedMode || DISPLAY_MODEL_CARD === item.displayedMode)
       })
@@ -53,11 +53,11 @@ export class AutoMenuViewModel extends BaseViewModel<AutoMenuModel, AutoMenuView
       Logger.info(TAG, 'viewState: ' + JSON.stringify(viewStat));
       return ProcessResult.SUCCESS;
     }
-    if (intent instanceof AutoMenuClickIntent) {
-      model.handleMenuClick(intent.menuInfo);
+    if (intents instanceof AutoMenuClickIntent) {
+      model.handleMenuClick(intents.menuInfo);
       return ProcessResult.SUCCESS;
     }
-    Logger.error(TAG, 'undefined intent: ' + intent.getIntentTag());
+    Logger.error(TAG, 'undefined intent: ' + intents.getIntentTag());
     return ProcessResult.FAIL;
   }
 }

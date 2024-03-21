@@ -29,7 +29,7 @@ export default class DataShareConstants {
    */
   public static readonly ACCESS_TABLE: AccessTableTypedef = {
     tableName: 'functionAccessTable',
-    sqlCreate: `CREATE TABLE IF NOT EXISTS functionAccessTable(intent TEXT PRIMARY KEY,
+    sqlCreate: `CREATE TABLE IF NOT EXISTS functionAccessTable(intents TEXT PRIMARY KEY,
       userId INTEGER,
       iconBackgroundColorResource TEXT,
       priority INTEGER,
@@ -44,7 +44,7 @@ export default class DataShareConstants {
       dstBundleName TEXT,
       bundleName TEXT
     )`,
-    columns: ['intent', 'userId', 'iconBackgroundColorResource',
+    columns: ['intents', 'userId', 'iconBackgroundColorResource',
       'priority', 'isSupport', 'isClickable', 'displayedMode', 'iconResource',
       'mainTitleResource', 'subTitleResource', 'showControlAbility',
       'dstAbilityMode', 'dstAbilityName', 'dstBundleName', 'bundleName'
@@ -57,7 +57,7 @@ export default class DataShareConstants {
     tableName: 'auto_menu_table',
     sqlCreate: `CREATE TABLE IF NOT EXISTS auto_menu_table(
     businessId TEXT PRIMARY KEY,
-    intent TEXT,
+    intents TEXT,
     userId INTEGER,
     iconBackgroundColorResource TEXT,
     priority INTEGER,
@@ -73,7 +73,7 @@ export default class DataShareConstants {
     dstBundleName TEXT,
     bundleName TEXT
     )`,
-    columns: ['businessId', 'intent', 'userId', 'iconBackgroundColorResource',
+    columns: ['businessId', 'intents', 'userId', 'iconBackgroundColorResource',
       'priority', 'isSupport', 'isClickable', 'displayedMode', 'iconResource',
       'mainTitleResource', 'subTitleResource', 'showControlAbilityUri',
       'dstAbilityMode', 'dstAbilityName', 'dstBundleName', 'bundleName'

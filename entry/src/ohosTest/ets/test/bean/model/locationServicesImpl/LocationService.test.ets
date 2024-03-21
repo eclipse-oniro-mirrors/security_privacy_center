@@ -52,10 +52,8 @@ export default function LocationServiceTest() {
       expect(0).assertEqual(0)
     })
     it('LocationServiceTest_registerListener', 0, () => {
-      let listener: ListenerBean = {
-        'updateServiceState': () => {
-        }
-      }
+      let listener: ListenerBean = new ListenerBean(() => {
+      })
       LocationService.registerListener(listener)
       expect(0).assertEqual(0)
     })

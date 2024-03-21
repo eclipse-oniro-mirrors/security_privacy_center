@@ -1,7 +1,7 @@
 {
   "name": "@ohos/hiview",
   "description": "Hiview is the module of OpenHarmony that provides toolkits for device maintenance across different platforms.",
-  "version": "3.1",
+  "version": "3.0",
   "license": "Apache License 2.0",
   "publishAs": "code-segment",
   "segment": {

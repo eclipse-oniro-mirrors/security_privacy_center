@@ -59,7 +59,7 @@ export class AutoMenuModel extends BaseModel {
       const subTitleResource: string = resultSet.getString(resultSet.getColumnIndex('subTitleResource'));
       const templeData: MenuInfo = {
         businessId: resultSet.getString(resultSet.getColumnIndex('businessId')),
-        intent: resultSet.getString(resultSet.getColumnIndex('intent')),
+        intents: resultSet.getString(resultSet.getColumnIndex('intents')),
         userId: resultSet.getDouble(resultSet.getColumnIndex('userId')),
         iconBackgroundColorResource: resultSet.getString(resultSet.getColumnIndex('iconBackgroundColorResource')),
         priority: resultSet.getDouble(resultSet.getColumnIndex('priority')),
@@ -164,7 +164,7 @@ export class AutoMenuModel extends BaseModel {
       const menuConfig: MenuConfig = menuConfigList[i];
       let menuInfo: MenuInfo = {
         businessId: menuConfig.businessId,
-        intent: menuConfig.dstBundleName + '-' + menuConfig.dstAbilityName,
+        intents: menuConfig.dstBundleName + '-' + menuConfig.dstAbilityName,
         userId: userId,
         iconBackgroundColorResource: '',
         isClickable: 1,
@@ -213,8 +213,8 @@ export class AutoMenuModel extends BaseModel {
 
   private _generateBucket(menuInfo: MenuInfo): relationalStore.ValuesBucket {
     let obj: relationalStore.ValuesBucket = {};
-    obj.businessId = menuInfo.intent;
-    obj.intent = menuInfo.intent;
+    obj.businessId = menuInfo.intents;
+    obj.intents = menuInfo.intents;
     obj.userId = menuInfo.userId;
     obj.iconBackgroundColorResource = menuInfo.iconBackgroundColorResource;
     obj.priority = menuInfo.priority;
