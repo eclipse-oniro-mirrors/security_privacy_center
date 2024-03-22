@@ -35,12 +35,4 @@ export default class HiSysEventConstant {
   static PERMISSION_PAGE_APP_LIST_EVENT_NAME = 'PERMISSION_PAGE_APP_LIST'; //设置-隐私与安全-权限管理-应用列表打点事件  //最近访问记录
   static RECORD_PAGE_APP_LIST_EVENT_NAME = 'RECORD_PAGE_APP_LIST';//设置-隐私与安全-权限维度访问记录打点事件
   static PORTRAIT_PERMISSION_EVENT_NAME = 'PORTRAIT_PERMISSION';//设置-隐私与安全-应用画像-应用权限管理打点事件
-  static BUNDLE_NAME_MAP = new Map([
-    ['com.huawei.hmos.passwordvault','pass_vault'],
-    ['com.huawei.hmos.advsecmode','advsecmode'],
-    ['com.huawei.hmos.adsservice','hwads'],
-    ['com.ohos.certmanager','data_privacy'],
-    ['com.ohos.permissionmanager','data_privacy'],
-    ['com.ohos.security_privacy_center','data_privacy']
-  ]);
 }

@@ -31,9 +31,6 @@ import dataSharePredicates from '@ohos.data.dataSharePredicates';
 
 const TAG = "AutoMenu";
 const DST_ABILITY_MODE = 1;
-//this mode is jump page
-const DST_PAGE_MODE = 2;
-const BUNDLE_NAME = 'com.huawei.hmos.security.privacycenter';
 //UIAbility access method
 const DST_UIABILITY_MODE = 0;
 
@@ -361,8 +358,7 @@ export class AutoMenuManager {
 
   //   Whether the access mode is valid
   private _isValidAccessMode(dstAbilityMode: number, dstBundleName: string): boolean {
-    return!(dstAbilityMode === DST_PAGE_MODE && dstBundleName === BUNDLE_NAME) &&
-      dstAbilityMode !== DST_ABILITY_MODE && dstAbilityMode !== DST_UIABILITY_MODE
+    return dstAbilityMode !== DST_ABILITY_MODE && dstAbilityMode !== DST_UIABILITY_MODE
   }
 
   //   校验子用户
