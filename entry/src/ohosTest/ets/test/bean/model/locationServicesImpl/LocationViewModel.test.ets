@@ -16,7 +16,6 @@
 import { describe, beforeAll, beforeEach, afterEach, afterAll, it, expect } from '@ohos/hypium'
 import LocationService from '../../../../../../main/ets/model/locationServicesImpl/LocationService';
 import LocationViewModel from '../../../../../../main/ets/model/locationServicesImpl/LocationViewModel';
-import ConfigData from '../../../../../../main/ets/common/baseUtile/ConfigData';
 
 export default function LocationViewModelTest() {
   describe('LocationViewModelTest', () => {

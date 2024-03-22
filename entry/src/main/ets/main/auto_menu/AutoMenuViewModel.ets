@@ -57,7 +57,7 @@ export class AutoMenuViewModel extends BaseViewModel<AutoMenuModel, AutoMenuView
       model.handleMenuClick(intents.menuInfo);
       return ProcessResult.SUCCESS;
     }
-    Logger.error(TAG, 'undefined intent: ' + intents.getIntentTag());
+    Logger.error(TAG, 'undefined intents: ' + intents.getIntentTag());
     return ProcessResult.FAIL;
   }
 }

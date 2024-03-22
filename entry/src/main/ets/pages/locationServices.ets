@@ -15,10 +15,11 @@
 
 import ViewModel from '../model/locationServicesImpl/LocationViewModel';
 import Logger from '../common/utils/Logger';
-import ConfigData from '../common/baseUtile/ConfigData';
 import HeadComponent from '../common/components/headComponent';
 import HiSysEventUtil from '../common/utils/HiSysEventUtil';
 import HiSysEventConstant from '../common/constants/HiSysEventConstant';
+
+const TAG:string = 'LocationServicesPage'
 
 /**
  * LocationServices
@@ -30,7 +31,7 @@ struct LocationServices {
 
   build() {
     Column() {
-      GridContainer({ gutter: ConfigData.GRID_CONTAINER_GUTTER_24, margin: ConfigData.GRID_CONTAINER_MARGIN_24 }) {
+      GridContainer({ gutter: 24, margin: 24}) {
         Column() {
           HeadComponent({ headName: $r('app.string.locationServicesTab'), isActive: true });
 
@@ -47,7 +48,7 @@ struct LocationServices {
               .height('20vp')
               .selectedColor('#007DFF')
               .onChange((isOn: boolean) => {
-                Logger.info(ConfigData.TAG, 'location service status is :' + this.locationServiceStatus);
+                Logger.info(TAG, 'location service status is :' + this.locationServiceStatus);
                 if (isOn) {
                   ViewModel.enableLocation();
                   HiSysEventUtil.reportLocationClick(HiSysEventConstant.BUNDLE_NAME, 1)
@@ -70,20 +71,20 @@ struct LocationServices {
           lg: { span: 8, offset: 2 }
         })
       }
-      .width(ConfigData.WH_100_100)
-      .height(ConfigData.WH_100_100)
+      .width('100%')
+      .height('100%')
     }
     .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
-    .width(ConfigData.WH_100_100)
-    .height(ConfigData.WH_100_100)
+    .width('100%')
+    .height('100%')
   }
 
   aboutToAppear(): void {
-    Logger.info(ConfigData.TAG, 'location service about to appear');
+    Logger.info(TAG, 'location service about to appear');
     ViewModel.initViewModel();
   }
 
   aboutToDisappear(): void {
-    Logger.info(ConfigData.TAG, 'location service about to disappear');
+    Logger.info(TAG, 'location service about to disappear');
   }
 }

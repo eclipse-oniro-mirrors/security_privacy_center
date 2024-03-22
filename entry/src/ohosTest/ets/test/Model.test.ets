@@ -50,7 +50,7 @@ export default function ModelTest() {
     })
 
     it('BundleInfoModelTest_01', 0, async () => {
-      let bundleName: string = 'com.ohos.security_privacy_center'
+      let bundleName: string = 'com.ohos.certmanager'
       await bundleManager.getApplicationInfo(bundleName, bundleManager.ApplicationFlag.GET_APPLICATION_INFO_DEFAULT)
         .then((data) => {
           BundleInfoModel.getAllBundleLabelAndIcon([data]).then((value) => {
@@ -65,7 +65,7 @@ export default function ModelTest() {
       })
     })
     it('BundleInfoModelTest_03', 0, async () => {
-      let bundleName: string = 'com.ohos.security_privacy_center'
+      let bundleName: string = 'com.ohos.certmanager'
       await bundleManager.getApplicationInfo(bundleName, bundleManager.ApplicationFlag.GET_APPLICATION_INFO_DEFAULT)
         .then((info) => {
           let bundleInfo: BundleInfoBean = {
@@ -95,7 +95,7 @@ export default function ModelTest() {
       })
     })
     it('BundleInfoModelTest_05', 0, async () => {
-      let bundleName: string = 'com.ohos.security_privacy_center'
+      let bundleName: string = 'com.ohos.certmanager'
       await bundleManager.getApplicationInfo(bundleName, bundleManager.ApplicationFlag.GET_APPLICATION_INFO_DEFAULT)
         .then((info) => {
           let bundleInfo: BundleInfoBean = {

@@ -15,9 +15,10 @@
 
 import geolocation from '@ohos.geoLocationManager';
 import Logger from '../../common/utils/Logger';
-import ConfigData from '../../common/baseUtile/ConfigData';
 import { BusinessError } from '@ohos.base';
 import { ListenerBean } from './ListenerBean';
+
+const TAG:string = 'LocationService'
 
 export class LocationService {
   mIsStart: boolean = false;
@@ -28,49 +29,49 @@ export class LocationService {
     if (this.mIsStart) {
       return;
     }
-    Logger.info(ConfigData.TAG, 'start location service')
+    Logger.info(TAG, 'start location service')
     this.mIsStart = true;
     geolocation.on('locationEnabledChange', (isChanged: boolean) => {
-      Logger.info(ConfigData.TAG, `start location service isChanged: ${JSON.stringify(isChanged)}`)
+      Logger.info(TAG, `start location service isChanged: ${JSON.stringify(isChanged)}`)
       this.getServiceState();
     });
   }
 
   registerListener(listener: ListenerBean) {
-    Logger.info(ConfigData.TAG, `register locations listener : ${listener}`)
+    Logger.info(TAG, `register locations listener : ${listener}`)
     this.mListener = listener;
   }
 
   async getServiceState(): Promise<void> {
-    Logger.info(ConfigData.TAG, 'get location state');
+    Logger.info(TAG, 'get location state');
     try {
       let state: boolean = await geolocation.isLocationEnabled();
-      Logger.info(ConfigData.TAG, `get location state, data: ${JSON.stringify(state)}`);
+      Logger.info(TAG, `get location state, data: ${JSON.stringify(state)}`);
       this.mListener?.updateServiceState(state);
     } catch (error) {
-      Logger.info(ConfigData.TAG, `get location state, data: ${error}`);
+      Logger.info(TAG, `get location state, data: ${error}`);
     }
 
   }
 
   enableLocation() {
-    Logger.info(ConfigData.TAG, 'enable location');
+    Logger.info(TAG, 'enable location');
     try {
       geolocation.enableLocation()
-        .then((res): void => Logger.info(ConfigData.TAG, `enable location, result: ${JSON.stringify(res)}`))
-        .catch((error: BusinessError): void => Logger.info(ConfigData.TAG, `enable location, result: ${error}`));
+        .then((res): void => Logger.info(TAG, `enable location, result: ${JSON.stringify(res)}`))
+        .catch((error: BusinessError): void => Logger.info(TAG, `enable location, result: ${error}`));
     } catch (err) {
-      Logger.info(ConfigData.TAG, `enable location, result: ${err}`);
+      Logger.info(TAG, `enable location, result: ${err}`);
     }
 
   }
 
   disableLocation() {
-    Logger.info(ConfigData.TAG, 'disable location');
+    Logger.info(TAG, 'disable location');
     try {
       geolocation.disableLocation();
     } catch (err) {
-      Logger.info(ConfigData.TAG, `disenable location, result: ${err}`);
+      Logger.info(TAG, `disenable location, result: ${err}`);
     }
   }
 }

@@ -15,7 +15,8 @@
 
 import LocationService from './LocationService';
 import Logger from '../../common/utils/Logger';
-import ConfigData from '../../common/baseUtile/ConfigData';
+
+const TAG:string = 'LocationViewModel'
 
 export const LocationServiceOpenStatusKey = "LocationServiceStatus";
 
@@ -26,7 +27,7 @@ export class LocationVM {
     if (this.mIsStart) {
       return;
     }
-    Logger.info(ConfigData.TAG, 'init location view model')
+    Logger.info(TAG, 'init location view model')
     this.mIsStart = true;
     LocationService.registerListener(this);
     LocationService.startService();
@@ -34,17 +35,17 @@ export class LocationVM {
   }
 
   updateServiceState(state: boolean) {
-    Logger.info(ConfigData.TAG, `update location service state, state: ${state} `)
+    Logger.info(TAG, `update location service state, state: ${state} `)
     AppStorage.setOrCreate(LocationServiceOpenStatusKey, state);
   }
 
   enableLocation() {
-    Logger.info(ConfigData.TAG, 'enable location')
+    Logger.info(TAG, 'enable location')
     LocationService.enableLocation();
   }
 
   disableLocation() {
-    Logger.info(ConfigData.TAG, 'disable location')
+    Logger.info(TAG, 'disable location')
     LocationService.disableLocation();
   }
 }

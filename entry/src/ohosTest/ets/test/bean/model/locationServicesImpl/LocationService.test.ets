@@ -15,8 +15,6 @@
 
 import { describe, beforeAll, beforeEach, afterEach, afterAll, it, expect } from '@ohos/hypium'
 import LocationService from '../../../../../../main/ets/model/locationServicesImpl/LocationService';
-import geolocation from '@ohos.geoLocationManager';
-import ConfigData from '../../../../../../main/ets/common/baseUtile/ConfigData';
 import { ListenerBean } from '../../../../../../main/ets/model/locationServicesImpl/ListenerBean';
 
 export default function LocationServiceTest() {
