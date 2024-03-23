@@ -138,7 +138,7 @@ struct Index {
             .borderRadius(ResourceUtil.getFloatNumber($r('sys.float.ohos_id_corner_radius_default_l')) - 4)
             .onClick(async () => {
               // 定位服务打点
-              HiSysEventUtil.reportAccessClick(HiSysEventConstant.BUNDLE_NAME)
+              HiSysEventUtil.reportLocationClick('LOCATION')
 
               router.pushUrl({
                 url: 'pages/locationServices'

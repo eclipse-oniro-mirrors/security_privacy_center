@@ -27,68 +27,6 @@ export default class HiSysEventUtil {
   }
 
   /**
-   * 湖内应用跳转更多权限页面时的点击事件
-   *
-   * @params bundleName 湖内应用包名
-   * @params appVersion 湖内应用版本号
-   * @returns Promise<void>
-   */
-  static async reportAppPermJumpMorePerm(bundleName: string, appVersion: string): Promise<void> {
-    let versionName: string = await GetSelfBundleInfoUtils.getVersionName();
-    let eventParams: Record<string, string | number> = {
-      'PNAMEID': HiSysEventConstant.BUNDLE_NAME,
-      'PVERSIONID': versionName,
-      'BUNDLE_NAME': bundleName,
-      'APP_VERSION': appVersion,
-    };
-
-    HiSysEventUtil.report(HiSysEventConstant.EVENT_DOMAIN, HiSysEventConstant.APP_PAGE_MORE_EVENT_NAME,
-      hiSysEvent.EventType.BEHAVIOR, eventParams);
-  }
-
-  /**
-   * 复杂权限组[位置信息-精确位置]跳转到二级页面操作权限状态时的点击事件
-   *
-   * @params bundleName 应用包名
-   * @params appVersion 应用版本号
-   * @returns Promise<void>
-   */
-  static async reportAppPermissionJumpPage(bundleName: string, appVersion: string, operationPermissionGroup: string): Promise<void> {
-    let versionName: string = await GetSelfBundleInfoUtils.getVersionName();
-    let eventParams: Record<string, string | number> = {
-      'PNAMEID': HiSysEventConstant.BUNDLE_NAME,
-      'PVERSIONID': versionName,
-      'BUNDLE_NAME': bundleName,
-      'APP_VERSION': appVersion,
-      'OPERATION': operationPermissionGroup
-    };
-    HiSysEventUtil.report(HiSysEventConstant.EVENT_DOMAIN, HiSysEventConstant.APP_PAGE_EVENT_NAME, hiSysEvent.EventType.BEHAVIOR, eventParams)
-  }
-
-  static reportUpdateAppPermissionGroupState(bundleName: string, appVersion: string, permissionGroup: string,
-                                             newCheckedState: string, newFlagMask: number, newFlagValue: number): Promise<void> {
-    return HiSysEventUtil.reportUpdatePermissionGroupState(HiSysEventConstant.APP_PAGE_PERMISSION_EVENT_NAME, bundleName,
-      appVersion, permissionGroup, newCheckedState, newFlagMask, newFlagValue);
-  }
-
-  private static async reportUpdatePermissionGroupState(eventName: string, bundleName: string, appVersion: string,
-                                                        permissionGroup: string, newCheckedState: string,
-                                                        newFlagMask: number, newFlagValue: number): Promise<void> {
-    let versionName: string = await GetSelfBundleInfoUtils.getVersionName();
-    let eventParams: Record<string, string | number> = {
-      'PNAMEID': HiSysEventConstant.BUNDLE_NAME,
-      'PVERSIONID': versionName,
-      'BUNDLE_NAME': bundleName,
-      'APP_VERSION': appVersion,
-      'PERMISSION_GROUP': permissionGroup,
-      'NEW_CHECKED_STATE': newCheckedState,
-      'NEW_FLAG_MASK': newFlagMask,
-      'NEW_FLAG_VALUE': newFlagValue,
-    };
-    HiSysEventUtil.report(HiSysEventConstant.EVENT_DOMAIN, eventName, hiSysEvent.EventType.BEHAVIOR, eventParams);
-  }
-
-  /**
    * 接入框架接入应用点击事件打点
    *
    * @params { clickedBundleName } 所点击的应用包名
@@ -105,39 +43,30 @@ export default class HiSysEventUtil {
   }
 
   /**
-   *  访问我的位置信息点击打点事件
+   * 访问我的位置信息点击打点事件
    */
-  static async reportLocationClick(clickedBundleName: string, checkedState: number) {
-    if (StringUtil.isEmpty(clickedBundleName)) {
-      Logger.info(TAG, 'clickedBundleName is empty');
-      return
-    }
+  static async reportLocationClick(operation: string): Promise<void> {
+    Logger.info(TAG,"reportLocationClick start.")
     let versionName: string = await GetSelfBundleInfoUtils.getVersionName();
     let eventParams: Record<string, string | number> = {
       'PNAMEID': HiSysEventConstant.BUNDLE_NAME,
       'PVERSIONID': versionName,
-      'CLICK_ITEM': checkedState,
+      'OPERATION': operation,
     };
-    HiSysEventUtil.report(HiSysEventConstant.EVENT_DOMAIN, HiSysEventConstant.ACCESS_CLICK_EVENT_NAME, hiSysEvent.EventType.BEHAVIOR, eventParams);
+    HiSysEventUtil.report(HiSysEventConstant.EVENT_DOMAIN, HiSysEventConstant.MAIN_PERMISSION_LIST_EVENT_NAME, hiSysEvent.EventType.BEHAVIOR, eventParams);
   }
 
   /**
-   * Report data privacy center user click event
-   *
-   * @param clickItem click item info
+   *  访问我的位置信息开关点击打点事件
    */
-  static async reportDataPrivacyClick(clickItem: string): Promise<void> {
-    if (StringUtil.isEmpty(clickItem)) {
-      Logger.info(TAG, 'clickItem is empty');
-      return;
-    }
+  static async reportLocationFlagClick(checkedState: number) {
     let versionName: string = await GetSelfBundleInfoUtils.getVersionName();
     let eventParams: Record<string, string | number> = {
       'PNAMEID': HiSysEventConstant.BUNDLE_NAME,
       'PVERSIONID': versionName,
-      'CLICK_ITEM': clickItem,
+      'NEW_CHECKED_STATE': checkedState,
     };
-    HiSysEventUtil.report(HiSysEventConstant.EVENT_DOMAIN, HiSysEventConstant.DATA_PRIVACY_CLICK_EVENT_NAME, hiSysEvent.EventType.BEHAVIOR, eventParams)
+    HiSysEventUtil.report(HiSysEventConstant.EVENT_DOMAIN, HiSysEventConstant.PERMISSION_PAGE_LOCATION_EVENT_NAME, hiSysEvent.EventType.BEHAVIOR, eventParams);
   }
 
   /**

@@ -51,12 +51,12 @@ struct LocationServices {
                 Logger.info(TAG, 'location service status is :' + this.locationServiceStatus);
                 if (isOn) {
                   ViewModel.enableLocation();
-                  HiSysEventUtil.reportLocationClick(HiSysEventConstant.BUNDLE_NAME, 1)
+                  HiSysEventUtil.reportLocationFlagClick(1)
 
                 } else {
                   ViewModel.disableLocation();
 
-                  HiSysEventUtil.reportLocationClick(HiSysEventConstant.BUNDLE_NAME, 0)
+                  HiSysEventUtil.reportLocationFlagClick(0)
                 }
               });
           }
