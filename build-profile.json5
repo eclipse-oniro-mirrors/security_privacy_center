@@ -21,7 +21,7 @@
         "material": {
           "certpath": "signature/auto_ohos_default_security_privacy_center_com.ohos.certmanager.cer",
           "storePassword": "0000001A37024DC31259D322DB3DC82683D3CE6A1D567E83D9804E52C018E93152C260E218E096D39D12",
-          "keyAlias": "debugKey",
+          "keyAlias": "openharmony application release",
           "keyPassword": "0000001A8D895754537EB5A2A9EDA581CAE2388163DF1FEA2486DFFCADD1BE9D3CC359D1279C62ED86A9",
           "profile": "signature/auto_ohos_default_security_privacy_center_com.ohos.certmanager.p7b",
           "signAlg": "SHA256withECDSA",
