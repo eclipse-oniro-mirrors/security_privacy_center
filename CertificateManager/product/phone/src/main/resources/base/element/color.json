@@ -267,6 +267,10 @@
     {
       "name": "TrustedEvidence_tabs_backgroundColor_F1F3F5",
       "value": "#F1F3F5"
+    },
+    {
+      "name": "color_1",
+      "value": "#FFFFFF"
     }
   ]
 }

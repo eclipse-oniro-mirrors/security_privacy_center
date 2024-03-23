@@ -38,7 +38,6 @@
     "abilities": [
       {
         "name": "MainAbility",
-//        "srcEntrance": "./ets/MainAbility/MainAbility.ts",
         "srcEntry": "./ets/Application/AbilityStage.ts",
         "description": "$string:mainability_description",
         "icon": "$media:icon",
@@ -46,7 +45,7 @@
         "visible": true,
         "launchType": "singleton",
         "startWindowIcon": "$media:icon",
-        "startWindowBackground": "$color:color_333333_grey",
+        "startWindowBackground": "$color:color_1",
         "orientation": "auto_rotation_restricted",
         "skills": [
           {
