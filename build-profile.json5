@@ -20,9 +20,9 @@
         "name": "default",
         "material": {
           "certpath": "signature/auto_ohos_default_security_privacy_center_com.ohos.certmanager.cer",
-          "storePassword": "0000001AD032A07C9E96CAB4D922D2E2ABA383CE182B3CA9EA76037DED466A848B54B1926AD4FB056AAE",
-          "keyAlias": "openharmony application release ",
-          "keyPassword": "0000001A104D7FCF6C8D249926959071AA456211EB98C6A04C1727367A8211798BE22C1022879218E49E",
+          "storePassword": "0000001A37024DC31259D322DB3DC82683D3CE6A1D567E83D9804E52C018E93152C260E218E096D39D12",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001A8D895754537EB5A2A9EDA581CAE2388163DF1FEA2486DFFCADD1BE9D3CC359D1279C62ED86A9",
           "profile": "signature/auto_ohos_default_security_privacy_center_com.ohos.certmanager.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "signature/auto_ohos_default_security_privacy_center_com.ohos.certmanager.p12"
@@ -56,6 +56,18 @@
     {
       "name": "entry",
       "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "phone",
+      "srcPath": "./CertificateManager/product/phone",
       "targets": [
         {
           "name": "default",

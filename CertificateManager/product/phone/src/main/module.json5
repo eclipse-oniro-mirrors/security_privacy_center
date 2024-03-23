@@ -15,7 +15,7 @@
 {
   "module": {
     "name": "phone",
-    "type": "entry",
+    "type": "feature",
     "srcEntry": "./ets/Application/AbilityStage.ts",
     "description": "$string:mainability_description",
     "mainElement": "MainAbility",
@@ -38,14 +38,15 @@
     "abilities": [
       {
         "name": "MainAbility",
-        "srcEntrance": "./ets/MainAbility/MainAbility.ts",
+//        "srcEntrance": "./ets/MainAbility/MainAbility.ts",
+        "srcEntry": "./ets/Application/AbilityStage.ts",
         "description": "$string:mainability_description",
         "icon": "$media:icon",
         "label": "$string:entry_MainAbility",
         "visible": true,
         "launchType": "singleton",
         "startWindowIcon": "$media:icon",
-        "startWindowBackground": "$color:color_1",
+        "startWindowBackground": "$color:color_333333_grey",
         "orientation": "auto_rotation_restricted",
         "skills": [
           {
