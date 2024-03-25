@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -123,7 +123,7 @@ class BundleInfoModel {
     return result;
   }
 
-  //   获取所有应用信息关于功能接入
+  //   Get all application information about feature access
   getAllBundleInfoByFunctionAccess() {
     let modelFlags = bundleManager.BundleFlag.GET_BUNDLE_INFO_WITH_METADATA |
     bundleManager.BundleFlag.GET_BUNDLE_INFO_WITH_APPLICATION |

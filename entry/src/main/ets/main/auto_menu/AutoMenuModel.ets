@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -30,7 +30,7 @@ import Logger from '../../common/utils/Logger';
 import common from '@ohos.app.ability.common';
 
 const TAG = 'AutoMenu';
-// 该ability模式需继承自UIExtensionAbility
+// This ability pattern needs to inherit from UIExtensionAbility
 const DST_ABILITY_MODE = 1;
 // this mode is jump page
 const DST_PAGE_MODE = 2;
@@ -86,13 +86,13 @@ export class AutoMenuModel extends BaseModel {
 
   async getMenuInfoListFromBms(context: Context): Promise<MenuInfo[]> {
     let userId: number = await this._getUserId();
-    //   步骤一，获取配置数据
+    //   Obtain configuration data
     let menuConfigs: MenuConfig[] = await AutoMenuManager.getInstance().getMenuConfigFromBms(context, userId);
     Logger.info(TAG, 'getMenuInfoList menuConfigList: ' + JSON.stringify(menuConfigs));
-    //   步骤二，转换为实际需要展示的数据
+    //   Convert to actual data that needs to be displayed
     let menuInfoList: MenuInfo[] = await this._convertMenuConfigToMenuInfo(context, menuConfigs, userId);
     Logger.info(TAG, 'getMenuInfoList menuInfoList: ' + JSON.stringify(menuInfoList));
-    //   步骤三，排序
+    //   sort
     menuInfoList.sort((left: MenuInfo, right: MenuInfo) => {
       if (left.priority !== right.priority) {
         return right.priority - left.priority;
@@ -100,13 +100,13 @@ export class AutoMenuModel extends BaseModel {
         return left.bundleName.localeCompare(right.bundleName);
       }
     })
-    //   步骤四，写入数据库缓存
+    //   Write to database cache
     this._refreshDb(context, menuInfoList);
     return menuInfoList;
   }
 
   handleMenuClick(menuInfo: MenuInfo) {
-    // 通过UIAbility方式接入框架
+    // Accessing the framework through UIAbility
     if (menuInfo.dstAbilityMode === DST_UIABILITY_MODE) {
       let context = getContext() as common.UIAbilityContext;
       context.startAbility({
@@ -128,7 +128,7 @@ export class AutoMenuModel extends BaseModel {
         Logger.error(TAG, `Failed to jump to the second page.Code is ${err.code},message is ${err.message}`);
       })
     }
-    //   跳转UIExtensionAbility
+    //   Jump UIExtensionAbility
     HiSysEventUtil.reportAccessClick(menuInfo.dstBundleName)
     if (menuInfo.dstAbilityMode === DST_ABILITY_MODE) {
       router.pushUrl({
@@ -194,7 +194,7 @@ export class AutoMenuModel extends BaseModel {
     return userId;
   }
 
-  //   获取配置的标题字符串资源
+  //   Get the configured title string resource
   private async _getConfigResString(context: Context, bundleName: string, res: string): Promise<string> {
     if (res === null || res === undefined) {
       return '';

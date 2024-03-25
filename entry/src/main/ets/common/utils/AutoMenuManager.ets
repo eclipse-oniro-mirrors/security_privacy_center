@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -34,7 +34,7 @@ const DST_ABILITY_MODE = 1;
 //UIAbility access method
 const DST_UIABILITY_MODE = 0;
 
-//数据库唯一标识符
+//Database unique identifier
 const DISPLAY_ONLY_PRIMARY_USER = 'ONLY_PRIMARY_USER';
 const DISPLAY_ONLY_SUB_USER = 'ONLY_SUB_USER';
 const MAIN_USER_ID = 100;
@@ -46,7 +46,7 @@ const DISPLAY_MODEL_CARD = 'card';
 const DISPLAY_MODEL_LIST = 'list';
 
 export class AutoMenuManager {
-  //   默认的配置信息，key is bundle name, value is config
+  //   Default configuration information，key is bundle name, value is config
   private _defaultMenuConfigMap: HashMap<string, DefaultMenuConfig> = new HashMap();
   //   key is bundle name, value is id.
   private _defaultBusinessIdMap: HashMap<string, string> = new HashMap();
@@ -72,9 +72,9 @@ export class AutoMenuManager {
    * @returns The all menu config
    */
   async getMenuConfigFromBms(context: Context, userId: number): Promise<MenuConfig[]> {
-    //   获取所有配置信息，内部会检查权限
+    //   Obtain all configuration information and internally check permissions
     let allPkgConfigList: MenuConfig[] = await this._readConfigFromBms(context);
-    //   适配businessId
+    //   Adapt to businessId
     for (let index = 0; index < allPkgConfigList.length; index++) {
       const item = allPkgConfigList[index];
       if (item.businessId === null || item.businessId === undefined || item.businessId.length === 0) {
@@ -82,7 +82,7 @@ export class AutoMenuManager {
       }
     }
     Logger.info(TAG, 'getMenuConfigFromBms allPkgConfigList: ' + JSON.stringify(allPkgConfigList));
-    //   过滤不合法的配置信息
+    //   Filter illegal configuration information
     let verifiedPkgConfigList: MenuConfig[] = [];
     for (let index = 0; index < allPkgConfigList.length; index++) {
       const menuConfig = allPkgConfigList[index];
@@ -167,7 +167,7 @@ export class AutoMenuManager {
     }
   }
 
-  //   查询有功能接入的Ability信息
+  //   Query Ability information with functional access
   private async _readConfigFromBms(context: Context): Promise<MenuConfig[]> {
     let abilityInfoList: bundleManager.ExtensionAbilityInfo[] = [];
     let uiAbilityInfoList: bundleManager.AbilityInfo[] = [];
@@ -176,7 +176,7 @@ export class AutoMenuManager {
     } catch (err) {
       Logger.error(TAG, 'queryExtensionAbilityInfoOther error.')
     }
-    // 查询通过uiAbility方式接入的信息
+    // Query information accessed through uiAbility
     try {
       uiAbilityInfoList = await BundleInfoModel.queryAbilityInfoOther()
     } catch (err) {
@@ -185,7 +185,7 @@ export class AutoMenuManager {
     if (abilityInfoList.length === 0 && uiAbilityInfoList.length === 0) {
       return [];
     }
-    //   检查功能接入的Ability权限
+    //   Check the Ability permissions for feature access
     let atManage: abilityAccessCtrl.AtManager = abilityAccessCtrl.createAtManager();
     let pkgConfigList: MenuConfig[] = [];
     for (let index = 0; index < abilityInfoList.length; index++) {
@@ -202,7 +202,7 @@ export class AutoMenuManager {
         Logger.info(TAG, 'checkAccessToken error: ' + abilityInfo.bundleName);
       }
     }
-    // 检查功能通过uiAbility方式接入的Ability权限
+    // Check the Ability permissions of the function accessed through uiAbility method
     for (let index = 0; index < uiAbilityInfoList.length; index++) {
       const uiAbilityInfo = uiAbilityInfoList[index];
       try {
@@ -220,10 +220,10 @@ export class AutoMenuManager {
     return pkgConfigList;
   }
 
-  //   读取接入方式配置信息转换为对应的数据类
+  //   Read access method configuration information and convert it to the corresponding data class
   private async _readConfigFromSingleAbilityInfo(context: Context,
                                                  abilityInfo: bundleManager.ExtensionAbilityInfo | bundleManager.AbilityInfo): Promise<MenuConfig[]> {
-    //   获取metaData数据
+    //   Get MetaData data
     let singleAbilityMenuConfigList: MenuConfig[] = [];
     for (let index = 0; index < abilityInfo.metadata.length; index++) {
       const metaData = abilityInfo.metadata[index];
@@ -232,7 +232,7 @@ export class AutoMenuManager {
       }
       let bundleName = abilityInfo.bundleName;
       let fileName = metaData.value;
-      //   根据metaData获取json文件
+      //   Retrieve JSON files based on metaData
       let content: string = await this._getFileByMetaData(context, bundleName, fileName);
       if (StringUtil.isEmpty(content)) {
         continue;
@@ -245,14 +245,14 @@ export class AutoMenuManager {
     return singleAbilityMenuConfigList;
   }
 
-  //   根据包名查询metaData的json数据
+  //   Query the JSON data of metaData based on the package name
   private async _getFileByMetaData(context: Context, bundleName: string, fileName: string): Promise<string> {
     let resourceManager = resourceUtil.getBundleResourceManager(bundleName, context) as resourceManager.ResourceManager;
     return await RawFileUtil.getStringByFile(resourceManager, fileName);
   }
 
   private async _verifyMenuConfig(context: Context, menuConfig: MenuConfig, userId: number): Promise<boolean> {
-    //   根据卡片或列表模式进行分类验证,目前暂只支持列表方式
+    //   Classification verification based on card or list mode, currently only list mode is supported
     try {
       if (menuConfig.displayedMode === DISPLAY_MODEL_CARD
         || menuConfig.displayedMode === DISPLAY_MODEL_LIST) {
@@ -264,7 +264,7 @@ export class AutoMenuManager {
     return false;
   }
 
-  //   校验showControlAbilityUri
+  //   Verify showControlAbilityUri
   private async _verificationUri(context: Context, uri: string): Promise<string> {
     try {
       let data: dataShare.DataShareHelper = await dataShare.createDataShareHelper(context, uri, { isProxy: false });
@@ -309,7 +309,7 @@ export class AutoMenuManager {
     if (!_isValidResourceWithList) {
       return false;
     }
-    //   校验主子用户配置，可选字段
+    //   Verify the configuration of primary and secondary users, optional fields
     if (menuConfig.displayUserConfig !== undefined) {
       let displayUserConfigRes = this._verificationPrimaryUser(menuConfig.displayUserConfig, userId);
       Logger.info(TAG, `displayUserConfigRes value is: ${displayUserConfigRes}`);
@@ -317,7 +317,7 @@ export class AutoMenuManager {
         return displayUserConfigRes;
       }
     }
-    //   校验uri,可选字段
+    //  Verify uri, optional fields
     let showControlAbilityUri = menuConfig.showControlAbilityUri;
     if (showControlAbilityUri !== undefined) {
       let _verificationUriResult: string = await this._verificationUri(context, showControlAbilityUri);
@@ -341,13 +341,13 @@ export class AutoMenuManager {
     if (StringUtil.isEmpty(menuConfig.mainTitleResource)) {
       return false;
     }
-    //   标题
+    //   title
     let titleResList = menuConfig.mainTitleResource.split(':');
     if (titleResList.length < 2) {
       Logger.error(TAG, 'titleResList length is error.')
       return false;
     }
-    //   校验title
+    //   Verify title
     let value: string = await resourceManager?.getStringByName(titleResList[1]);
     if (value === '') {
       Logger.error(TAG, 'titlePromise is error.')
@@ -361,7 +361,7 @@ export class AutoMenuManager {
     return dstAbilityMode !== DST_ABILITY_MODE && dstAbilityMode !== DST_UIABILITY_MODE
   }
 
-  //   校验子用户
+  //   Verify sub users
   private _verificationPrimaryUser(displayUserConfig: string, userId: number): boolean {
     let isPrimaryUser: boolean = userId === MAIN_USER_ID;
     Logger.info(TAG, `verificationSubUser, displayUser: ${displayUserConfig}, isPrimaryUser: ${isPrimaryUser}`);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,20 +14,20 @@
  */
 
 /**
- * 字符串工具类
+ * String Tool Class
  */
 export class StringUtil {
   /**
-   * 判断字符是否是空字符串
-   * @Param stringValue 字符串
+   * Determine whether a character is an empty string
+   * @Param stringValue character string
    */
   public static isEmpty(stringValue: string | null | undefined): boolean {
     return stringValue === undefined || stringValue === null || stringValue.length === 0;
   }
 
   /**
-   * 判断字符转是否是非空字符串
-   * @params stringValue 字符串
+   * Determine whether character conversion is a non empty string
+   * @params stringValue character string
    */
   public static isNotEmpty(stringValue: string | null | undefined): boolean {
     return stringValue !== undefined && stringValue !== null && stringValue.length !== 0;

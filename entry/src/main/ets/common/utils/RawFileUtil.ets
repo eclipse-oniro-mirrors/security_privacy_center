@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -21,15 +21,15 @@ const TAG: string = 'RawFileUtil';
 const UNICODE: string = 'utf-8';
 
 /**
- * RawFile工具类
+ * RawFile utility class
  */
 export class RawFileUtil {
   /**
-   * 获取指定的JSON文件的对象
+   * Get the object of the specified JSON file
    *
-   * @param resourceManager 资源管理器
-   * @param fileName 文件名
-   * @returns string格式的文件内容
+   * @param resourceManager Resource Manager
+   * @param fileName file name
+   * @returns The file content in string format
    */
   public static async getStringByFile(resourceManager: resmgr.ResourceManager, fileName: string): Promise<string> {
     Logger.info(TAG, `getFileContent. fileName: ${fileName}`);
@@ -48,11 +48,11 @@ export class RawFileUtil {
   }
 
   /**
-   * 获取指定的JSON文件的对象
+   * Get the object of the specified JSON file
    *
-   * @param context 上下文
-   * @param fileName 文件名
-   * @return string格式的文件内容
+   * @param context context
+   * @param fileName file name
+   * @return The file content in string format
    */
   public static async getRawFileByContext(context: Context, fileName: string): Promise<string> {
     Logger.info(TAG, `getFileContent. fileName: ${fileName}`);

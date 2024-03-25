@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -23,7 +23,6 @@ const TAG = 'ResourceUtil'
 class ResourceUtil {
   /**
    * Obtains the resource name
-   * 获取资源文件
    * @param resource Resource file
    * @returns Resource File Name
    */
@@ -43,9 +42,9 @@ class ResourceUtil {
   }
 
   /**
-   * 获取指定包名资源管理器
-   * @params bundleName 应用包名
-   * @params context 上下文
+   * Get the specified package name resource manager
+   * @params bundleName Application package name
+   * @params context context
    */
 
   getBundleResourceManager(bundleName: string, context: common.Context | null): resourceManager.ResourceManager | null {

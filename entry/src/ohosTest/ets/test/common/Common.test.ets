@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -51,16 +51,14 @@ export default function BundleInfoBeanTest() {
       getSelfBundleInfoUtils.getVersionName()
     })
     it('HiSysEventUtilTest', 0, () => {
-      HiSysEventUtil.reportAppPermJumpMorePerm('com.example.test', '1.0.0');
-      HiSysEventUtil.reportAppPermissionJumpPage('com.example.test', '1.0.0', 'ohos.permission.Location');
-      HiSysEventUtil.reportUpdateAppPermissionGroupState('com.example.test', '1.0.0', 'ohos.permission.Location', 'ALLOW', 1, 1)
       HiSysEventUtil.reportAccessClick('com.example.test');
-      HiSysEventUtil.reportDataPrivacyClick('test');
-
+      HiSysEventUtil.reportLocationClick('LOCATION');
+      HiSysEventUtil.reportLocationFlagClick(1);
+      HiSysEventUtil.reportLocationFlagClick(0);
       let eventParams: Record<string, string> = {
         "PERMISSION_GROUP": 'ohos.permission.Location'
       }
-      HiSysEventUtil.reportClick(HiSysEventConstant.PERMISSION_PAGE_SEARCH_EVENT_NAME, eventParams)
+      HiSysEventUtil.reportClick(HiSysEventConstant.PERMISSION_PAGE_LOCATION_EVENT_NAME, eventParams)
 
     })
     it('RawfileUtilTest', 0, () => {

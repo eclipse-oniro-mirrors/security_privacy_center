@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,7 +15,6 @@
 
 import hiSysEvent from '@ohos.hiSysEvent';
 import { BusinessError } from '@ohos.base';
-import { StringUtil } from './StringUtil';
 import Logger from './Logger';
 import HiSysEventConstant from '../constants/HiSysEventConstant';
 import GetSelfBundleInfoUtils from './GetSelfBundleInfoUtils';
@@ -27,9 +26,9 @@ export default class HiSysEventUtil {
   }
 
   /**
-   * 接入框架接入应用点击事件打点
+   * Access framework access application click event management
    *
-   * @params { clickedBundleName } 所点击的应用包名
+   * @params { clickedBundleName } Click on the application package name
    */
   static async reportAccessClick(clickedBundleName: string): Promise<void> {
     Logger.info(TAG,"reportAccessClick start.")
@@ -43,7 +42,8 @@ export default class HiSysEventUtil {
   }
 
   /**
-   * 访问我的位置信息点击打点事件
+   * Access my location information and click on the management event
+   * @params { operation } LOCATION
    */
   static async reportLocationClick(operation: string): Promise<void> {
     Logger.info(TAG,"reportLocationClick start.")
@@ -57,7 +57,8 @@ export default class HiSysEventUtil {
   }
 
   /**
-   *  访问我的位置信息开关点击打点事件
+   *  Access My Location Information Switch Click on Dotting Event
+   * @params { checkedState } Position information switch status; 1: On 0: Off
    */
   static async reportLocationFlagClick(checkedState: number) {
     let versionName: string = await GetSelfBundleInfoUtils.getVersionName();
@@ -70,10 +71,10 @@ export default class HiSysEventUtil {
   }
 
   /**
-   * 界面点击操作打点
+   * Click on the interface to operate the dots
    *
-   * @param eventName 事件名
-   * @param params 参数
+   * @param eventName Event Name
+   * @param params parameter
    */
   static async reportClick(eventName: string, params: Record<string, string | number>): Promise<void> {
     let versionName: string = await GetSelfBundleInfoUtils.getVersionName();

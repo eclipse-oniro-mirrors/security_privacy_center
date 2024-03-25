@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -59,7 +59,7 @@ struct Index {
     this.getBundleInfo();
   }
 
-  //   获取所有包信息
+  //  Get all package information
   getBundleInfo() {
     BundleInfoModel.getAllBundleInfoByFunctionAccess()
       .then(async (data: bundleManager.BundleInfo[]) => {
@@ -89,14 +89,14 @@ struct Index {
 
       Scroll(this.scroller) {
         Column() {
-          //   组件1 功能接入‘列表’
+          //   Function access' list 'component
           PrivacyProtectionListView({
             menuViewState: autoMenuViewModel.getViewState(),
             itemClickEvent: ((menuInfo: MenuInfo) => {
               autoMenuViewModel.processIntent(new AutoMenuClickIntent(menuInfo));
             })
           })
-          //  组件2 位置信息
+          //  Location information component
           Row() {
             Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
               Text($r('app.string.locationServicesTab'))
@@ -137,7 +137,7 @@ struct Index {
             .hoverEffect(HoverEffect.Highlight)
             .borderRadius(ResourceUtil.getFloatNumber($r('sys.float.ohos_id_corner_radius_default_l')) - 4)
             .onClick(async () => {
-              // 定位服务打点
+              // Positioning service management
               HiSysEventUtil.reportLocationClick('LOCATION')
 
               router.pushUrl({
@@ -156,7 +156,7 @@ struct Index {
         }
       }
       .height(Constants.WIDTH_HEIGHT_FULL_SCREEN)
-      .scrollable(ScrollDirection.Vertical) //滚动方向纵向
+      .scrollable(ScrollDirection.Vertical)
       .edgeEffect(EdgeEffect.Spring)
       .margin({
         bottom: $r('app.float.index_margin_bottom')

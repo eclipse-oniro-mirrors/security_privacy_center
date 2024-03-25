@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -20,14 +20,13 @@ import MenuInfo from '../../common/bean/MenuInfo';
 
 @Component
 export default struct PrivacyProtectionListView {
-  // 功能接入卡片的数据
+  // Function access list data
   @Prop menuViewState: AutoMenuViewState;
   private itemClickEvent = (menuInfo: MenuInfo) => {
   };
 
   build() {
     Column() {
-      //循环遍历渲染
       List({ space: Constants.DEFAULT_SPACE }) {
         ForEach(this.menuViewState.listMenuList, (item: MenuInfo) => {
           ListItem() {

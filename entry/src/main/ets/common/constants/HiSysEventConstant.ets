@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -17,6 +17,8 @@ export default class HiSysEventConstant {
   static BUNDLE_NAME = 'com.ohos.security_privacy_center';
   static EVENT_DOMAIN = 'PRIVACY_UE';
   static ACCESS_CLICK_EVENT_NAME = 'SECU_PRIV_ENTRANCE';
-  static MAIN_PERMISSION_LIST_EVENT_NAME = 'MAIN_PERMISSION_LIST'; // 设置-隐私与安全-隐私权限列表打点事件
-  static PERMISSION_PAGE_LOCATION_EVENT_NAME = 'PERMISSION_PAGE_LOCATION'; //设置-隐私与安全-权限-访问我的位置信息开关
+  // Settings - Privacy and Security - Privacy Permission List Management Event
+  static MAIN_PERMISSION_LIST_EVENT_NAME = 'MAIN_PERMISSION_LIST';
+  //Settings Privacy and Security Permissions Access My Location Information Switch
+  static PERMISSION_PAGE_LOCATION_EVENT_NAME = 'PERMISSION_PAGE_LOCATION';
 }

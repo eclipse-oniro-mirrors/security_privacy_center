@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022-2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,16 +13,16 @@
  * limitations under the License.
  */
 
-//检查的状态参数。用于设置应用权限组检查状态
-// 这是应用权限组的状态部分，仅包含选中的状态和权限组标志
+// Check the status parameters. Used to set application permission group check status
+// This is the status section of the application permission group, which only includes the selected status and permission group flag
 export class CheckedStateParameter {
-  //   权限组检查状态
-  //   有效的权限状态：ALLOW,ALLOW_ALL_THE_TIME,ALLOW_ONLY_WHILE_IN_USE,ASK_EACH_TIME,DENY,
+  //   Permission group check status
+  //   Valid permission status：ALLOW,ALLOW_ALL_THE_TIME,ALLOW_ONLY_WHILE_IN_USE,ASK_EACH_TIME,DENY,
   //                MEDIA_ONLY,ALLOW_MANAGEMENT_OF_ALL_FILES
   checkedState: string;
-  //   附加标志
+  //   Additional signs
   flagMask: number;
-  //   附加标志
+  //   Additional signs
   flagValue: number;
 
   constructor(checkedState: string, flagMask: number, flagValue: number) {
