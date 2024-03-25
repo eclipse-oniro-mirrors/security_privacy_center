@@ -12,16 +12,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-{
-  "apiType": 'stageMode',
-  "buildOption": {
-  },
-  "entryModules": [
-    "entry"
-  ],
-  "targets": [
-    {
-      "name": "default",
-    }
-  ]
+
+export class AppInfoVo {
+  public appImage: string = '';
+  public appName: string = '';
 }

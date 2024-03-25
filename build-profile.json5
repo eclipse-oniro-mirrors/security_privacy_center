@@ -19,13 +19,13 @@
       {
         "name": "default",
         "material": {
-          "certpath": "signature/auto_ohos_default_security_privacy_center_com.ohos.certmanager.cer",
-          "storePassword": "0000001AF4A5205DCC15B288A620B441F195D5C432826E337CD4E6FB53D6F3941F3ACAB2A58B39F2DD1A",
+          "storePassword": "000000161B64D26AFDA336B9D4E45469670FC05C21ACB86E817B3A0EBBEF557AEC2E73906C73",
+          "certpath": "signature/OpenHarmonyApplication.cer",
           "keyAlias": "openharmony application release",
-          "keyPassword": "0000001A2617019B05D0B0A0E1770DD7079AA6849043AAE47F6E178A3E6D4F1C742726DE1992F25EA89D",
-          "profile": "signature/auto_ohos_default_security_privacy_center_com.ohos.certmanager.p7b",
+          "keyPassword": "0000001669F0585B86DCE64A21563F2E7BA5320E86297F85E75F6EA4844BFB920AD864794581",
+          "profile": "signature/privacyCenter.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "signature/auto_ohos_default_security_privacy_center_com.ohos.certmanager.p12"
+          "storeFile": "signature/OpenHarmony.p12"
         }
       }
     ],
@@ -62,8 +62,8 @@
       ]
     },
     {
-      "name": "application",
-      "srcPath": "./application",
+      "name": "CertificateManager",
+      "srcPath": "./CertificateManager",
       "targets": [
         {
           "name": "default",

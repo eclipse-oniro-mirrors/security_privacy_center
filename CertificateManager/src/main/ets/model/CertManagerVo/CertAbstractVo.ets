@@ -12,16 +12,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-{
-  "apiType": 'stageMode',
-  "buildOption": {
-  },
-  "entryModules": [
-    "entry"
-  ],
-  "targets": [
-    {
-      "name": "default",
-    }
-  ]
+
+export class CertAbstractVo {
+  public uri: string;
+  public certAlias: string;
+  public status: boolean;
+  public subjectName: string;
+  public subjectNameCN : string;
+
+  constructor(uri: string, certAlias: string, status: boolean, subjectName: string, subjectNameCN: string) {
+    this.uri = uri;
+    this.certAlias = certAlias;
+    this.status = status;
+    this.subjectName = subjectName;
+    this.subjectNameCN = subjectNameCN;
+  }
 }

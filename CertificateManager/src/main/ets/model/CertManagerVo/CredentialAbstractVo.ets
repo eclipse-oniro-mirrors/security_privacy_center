@@ -12,16 +12,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-{
-  "apiType": 'stageMode',
-  "buildOption": {
-  },
-  "entryModules": [
-    "entry"
-  ],
-  "targets": [
-    {
-      "name": "default",
-    }
-  ]
+
+export class CredentialAbstractVo {
+  public credType: string;
+  public alias: string;
+  public keyUri: string;
+
+  constructor(credType: string, alias: string, keyUri: string) {
+    this.credType = credType;
+    this.alias = alias;
+    this.keyUri = keyUri;
+  }
 }

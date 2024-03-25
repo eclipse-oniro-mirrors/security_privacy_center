@@ -12,16 +12,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-{
-  "apiType": 'stageMode',
-  "buildOption": {
-  },
-  "entryModules": [
-    "entry"
-  ],
-  "targets": [
-    {
-      "name": "default",
-    }
-  ]
+
+export class AppAuthorVo {
+  public appImage: string;
+  public uid: string;
+  public appName: string;
+  public status: boolean;
+
+  constructor(appImage: string, uid: string, appName: string, status: boolean) {
+    this.appImage = appImage;
+    this.uid = uid;
+    this.appName = appName;
+    this.status = status;
+  }
 }
