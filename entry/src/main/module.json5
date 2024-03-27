@@ -34,6 +34,7 @@
         "startWindowIcon": "$media:icon",
         "startWindowBackground": "$color:start_window_background",
         "exported": true,
+        "permissions": ['ohos.permission.ACCESS_SECURITY_PRIVACY_CENTER'],
         'orientation': "auto_rotation",
         "skills": [
           {

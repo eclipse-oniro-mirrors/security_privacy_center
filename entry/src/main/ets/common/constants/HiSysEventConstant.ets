@@ -14,7 +14,7 @@
  */
 
 export default class HiSysEventConstant {
-  static BUNDLE_NAME = 'com.ohos.security_privacy_center';
+  static BUNDLE_NAME = 'com.ohos.certmanager';
   static EVENT_DOMAIN = 'PRIVACY_UE';
   static ACCESS_CLICK_EVENT_NAME = 'SECU_PRIV_ENTRANCE';
   // Settings - Privacy and Security - Privacy Permission List Management Event

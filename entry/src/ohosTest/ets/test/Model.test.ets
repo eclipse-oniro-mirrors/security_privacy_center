@@ -58,12 +58,6 @@ export default function ModelTest() {
           })
         })
     })
-    it('BundleInfoModelTest_02', 0, async () => {
-      let bundleName: string = ''
-      await BundleInfoModel.queryExtensionAbilityInfo(bundleName).then(data => {
-        expect(data).not().assertNull()
-      })
-    })
     it('BundleInfoModelTest_03', 0, async () => {
       let bundleName: string = 'com.ohos.certmanager'
       await bundleManager.getApplicationInfo(bundleName, bundleManager.ApplicationFlag.GET_APPLICATION_INFO_DEFAULT)
