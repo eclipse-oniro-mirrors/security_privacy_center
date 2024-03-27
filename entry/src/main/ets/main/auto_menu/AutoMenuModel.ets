@@ -25,7 +25,6 @@ import MenuInfo from '../../common/bean/MenuInfo';
 import router from '@ohos.router';
 import { BusinessError } from '@ohos.base';
 import HiSysEventUtil from '../../common/utils/HiSysEventUtil';
-import { Context } from '@kit.AbilityKit';
 import Logger from '../../common/utils/Logger';
 import common from '@ohos.app.ability.common';
 

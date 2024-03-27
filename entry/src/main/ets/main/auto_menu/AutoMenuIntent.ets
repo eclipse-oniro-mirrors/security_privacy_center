@@ -15,7 +15,6 @@
 
 import { BaseIntent } from '../../common/base/BaseIntent';
 import MenuInfo from '../../common/bean/MenuInfo';
-import { Context } from '@kit.AbilityKit';
 
 export class AutoMenuInitIntent extends BaseIntent {
   public context: Context;

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,15 +13,18 @@
  * limitations under the License.
  */
 
-{
-  "license": "",
-  "devDependencies": {
-    "@ohos/hypium": "1.0.6"
-  },
-  "author": "",
-  "name": "certificate manager application",
-  "description": "certificate manager application",
-  "main": "",
-  "version": "1.0.0",
-  "dependencies": {}
+export class CertAbstractVo {
+  public uri: string;
+  public certAlias: string;
+  public status: boolean;
+  public subjectName: string;
+  public subjectNameCN : string;
+
+  constructor(uri: string, certAlias: string, status: boolean, subjectName: string, subjectNameCN: string) {
+    this.uri = uri;
+    this.certAlias = certAlias;
+    this.status = status;
+    this.subjectName = subjectName;
+    this.subjectNameCN = subjectNameCN;
+  }
 }

@@ -21,11 +21,11 @@ import { StringUtil } from './StringUtil';
 import resourceUtil from './ResourceUtil';
 import { RawFileUtil } from './RawFileUtil';
 import DefaultMenuConfig from '../bean/DefaultMenuConfig';
-import { HashMap } from '@kit.ArkTS';
+import HashMap from '@ohos.util.HashMap';
 import common from '@ohos.app.ability.common';
 import bundleManager from '@ohos.bundle.bundleManager';
 import BundleInfoModel from '../../model/bundleInfo/BundleInfoModel';
-import abilityAccessCtrl from '@ohos.abilityAccessCtrl';
+import abilityAccessCtrl, { Permissions } from '@ohos.abilityAccessCtrl';
 import resourceManager from '@ohos.resourceManager';
 import dataSharePredicates from '@ohos.data.dataSharePredicates';
 
@@ -39,7 +39,7 @@ const DISPLAY_ONLY_PRIMARY_USER = 'ONLY_PRIMARY_USER';
 const DISPLAY_ONLY_SUB_USER = 'ONLY_SUB_USER';
 const MAIN_USER_ID = 100;
 
-const CHECK_ACCESS_TOKEN_PERMISSION = 'ohos.permission.ACCESS_SECURITY_PRIVACY_CENTER';
+const CHECK_ACCESS_TOKEN_PERMISSION: Permissions = 'ohos.permission.ACCESS_SECURITY_PRIVACY_CENTER';
 const PRIVACY_CENTER = 'metadata.access.privacy.center';
 const ORDERING_RULE_FILE = 'menu_list_rule.json';
 const DISPLAY_MODEL_CARD = 'card';

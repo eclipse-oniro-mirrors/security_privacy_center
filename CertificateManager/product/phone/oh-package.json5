@@ -15,9 +15,7 @@
 
 {
   "license": "",
-  "devDependencies": {
-    "@ohos/hypium": "1.0.6"
-  },
+  "devDependencies": {},
   "author": "",
   "name": "certificate manager application",
   "description": "certificate manager application",
