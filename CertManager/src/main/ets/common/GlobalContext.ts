@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
+ * Copyright (c) 2023-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -35,10 +35,11 @@ export class PwdStore {
 export class GlobalContext {
   private constructor() {};
   private static instance: GlobalContext;
-  private session: UIExtensionContentSession;
+  private context: UIAbilityContext;
   private want: Want;
   private pwdStore: PwdStore;
-  private context: UIAbilityContext;
+  private session: UIExtensionContentSession;
+  private flag: Boolean;
 
   public static getContext(): GlobalContext {
     if (!GlobalContext.instance) {
@@ -51,14 +52,6 @@ export class GlobalContext {
     return this.context;
   }
 
-  setCmContext(context: UIAbilityContext): void {
-    this.context = context;
-  }
-
-  getSession(): UIExtensionContentSession {
-    return this.session;
-  }
-
   getPwdStore(): PwdStore {
     return this.pwdStore;
   }
@@ -67,8 +60,16 @@ export class GlobalContext {
     return this.want;
   }
 
-  setSession(session: UIExtensionContentSession): void {
-    this.session = session;
+  getSession(): UIExtensionContentSession {
+    return this.session;
+  }
+
+  getFlag(): Boolean{
+    return this.flag;
+  }
+
+  setCmContext(context: UIAbilityContext): void {
+    this.context = context;
   }
 
   setPwdStore(pwdStore: PwdStore): void {
@@ -77,6 +78,14 @@ export class GlobalContext {
 
   setAbilityWant(want: Want): void {
     this.want = want;
+  }
+
+  setSession(session: UIExtensionContentSession): void {
+    this.session = session;
+  }
+
+  setFlag(flag: Boolean): void{
+    this.flag = flag;
   }
 
   clearAbilityWantUri(): void {

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2024-2024 Huawei Device Co., Ltd.
+* Copyright (c) 2022 Huawei Device Co., Ltd.
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
 * You may obtain a copy of the License at
@@ -41,14 +41,14 @@ declare namespace CertManagerFunc {
     function uninstallUserTrustedCertificate(certUri: string, callback: AsyncCallback<boolean>) : void;
     function uninstallUserTrustedCertificate(certUri: string) : Promise<boolean>;
 
-    function getUserTrustedCertificateList(callback: AsyncCallback<CMResult>) : void;
-    function getUserTrustedCertificateList() : Promise<CMResult>;
+    function getAllUserTrustedCertificates(callback: AsyncCallback<CMResult>) : void;
+    function getAllUserTrustedCertificates() : Promise<CMResult>;
 
     function getUserTrustedCertificate(certUri: string, callback: AsyncCallback<CMResult>) : void;
     function getUserTrustedCertificate(certUri: string) : Promise<CMResult>;
 
-    function installAppCertificate(keystore: Uint8Array, keystorePwd: string, certAlias: string, callback: AsyncCallback<CMResult>) : void;
-    function installAppCertificate(keystore: Uint8Array, keystorePwd: string, certAlias: string) : Promise<CMResult>;
+    function installPublicCertificate(keystore: Uint8Array, keystorePwd: string, certAlias: string, callback: AsyncCallback<CMResult>) : void;
+    function installPublicCertificate(keystore: Uint8Array, keystorePwd: string, certAlias: string) : Promise<CMResult>;
 
     function installPrivateCertificate(keystore: Uint8Array, keystorePwd: string, certAlias: string, callback: AsyncCallback<CMResult>) : void;
     function installPrivateCertificate(keystore: Uint8Array, keystorePwd: string, certAlias: string) : Promise<CMResult>;
@@ -62,26 +62,26 @@ declare namespace CertManagerFunc {
     function uninstallAllAppCertificate(callback: AsyncCallback<boolean>) : void;
     function uninstallAllAppCertificate() : Promise<boolean>;
 
-    function uninstallAppCertificate(keyUri: string, callback: AsyncCallback<boolean>) : void;
-    function uninstallAppCertificate(keyUri: string) : Promise<boolean>;
+    function uninstallPublicCertificate(keyUri: string, callback: AsyncCallback<boolean>) : void;
+    function uninstallPublicCertificate(keyUri: string) : Promise<boolean>;
 
     function uninstallPrivateCertificate(keyUri: string, callback: AsyncCallback<boolean>) : void;
     function uninstallPrivateCertificate(keyUri: string) : Promise<boolean>;
 
-    function getAppCertificateList(callback: AsyncCallback<CMResult>) : void;
-    function getAppCertificateList() : Promise<CMResult>;
+    function getAllPublicCertificates(callback: AsyncCallback<CMResult>) : void;
+    function getAllPublicCertificates() : Promise<CMResult>;
 
     function getPrivateCertificateList(callback: AsyncCallback<CMResult>) : void;
     function getPrivateCertificateList() : Promise<CMResult>;
 
-    function getAppCertificate(keyUri: string, callback: AsyncCallback<CMResult>) : void;
-    function getAppCertificate(keyUri: string, ) : Promise<CMResult>;
+    function getPublicCertificate(keyUri: string, callback: AsyncCallback<CMResult>) : void;
+    function getPublicCertificate(keyUri: string, ) : Promise<CMResult>;
 
     function getPrivateCertificate(keyUri: string, callback: AsyncCallback<CMResult>) : void;
     function getPrivateCertificate(keyUri: string) : Promise<CMResult>;
 
-    function grantAppCertificate(keyUri: string, clientAppUid: string, callback: AsyncCallback<CMResult>) : void;
-    function grantAppCertificate(keyUri: string, clientAppUid: string) : Promise<CMResult>;
+    function grantPublicCertificate(keyUri: string, clientAppUid: string, callback: AsyncCallback<CMResult>) : void;
+    function grantPublicCertificate(keyUri: string, clientAppUid: string) : Promise<CMResult>;
 
     function isAuthorizedApp(keyUri: string, callback: AsyncCallback<boolean>) : void;
     function isAuthorizedApp(keyUri: string) : Promise<boolean>;
@@ -89,8 +89,8 @@ declare namespace CertManagerFunc {
     function getAuthorizedAppList(keyUri: string, callback: AsyncCallback<CMResult>) : void;
     function getAuthorizedAppList(keyUri: string) : Promise<CMResult>;
 
-    function removeGrantedAppCertificate(keyUri: string, clientAppUid: string, callback: AsyncCallback<boolean>) : void;
-    function removeGrantedAppCertificate(keyUri: string, clientAppUid: string) : Promise<boolean>;
+    function removeGrantedPublicCertificate(keyUri: string, clientAppUid: string, callback: AsyncCallback<boolean>) : void;
+    function removeGrantedPublicCertificate(keyUri: string, clientAppUid: string) : Promise<boolean>;
 
     function init(authUri: string, spec: CMSignatureSpec, callback: AsyncCallback<CMHandle>) : void;
     function init(authUri: string, spec: CMSignatureSpec) : Promise<CMHandle>;
@@ -182,10 +182,12 @@ declare namespace CertManagerFunc {
 
     export enum CMErrorCode {
         CM_SUCCESS = 0,
-        CM_ERROR_INNER_ERROR = 17500001,
-        CM_ERROR_NO_PERMISSION = 17500002,
-        CM_ERROR_NO_FOUND = 17500003,
-        CM_ERROR_X509_FORMATE = 17500004,
+        CM_ERROR_GENERIC = 17500001,
+        CM_ERROR_NO_FOUND = 17500002,
+        CM_ERROR_INCORRECT_FORMAT = 17500003,
+        CM_ERROR_CERT_NUM_REACHED_LIMIT = 17500004,
+        CM_ERROR_NO_AUTHORIZATION = 17500005,
+        CM_ERROR_ALIAS_LENGTH_REACHED_LIMIT = 17500006
     }
 }
 

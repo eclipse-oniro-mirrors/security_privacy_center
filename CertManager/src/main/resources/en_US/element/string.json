@@ -281,6 +281,134 @@
     {
       "name": "CustomDialogExample_FingerPrint_text",
       "value": "SHA-256 fingerprints:"
+    },
+    {
+      "name": "root_certificate",
+      "value": "root certificate"
+    },
+    {
+      "name": "root_certificate_message",
+      "value": "Warning: Enabling this certificate for a website will allow third parties to view any private data sent to the website"
+    },
+    {
+      "name": "root_certificate_cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "root_certificate_continue",
+      "value": "Continue"
+    },
+    {
+      "name": "CA_cert",
+      "value": "CA certificate"
+    },
+    {
+      "name": "user_certificate_credentials",
+      "value": "User certificate credentials"
+    },
+    {
+      "name": "delete_success",
+      "value": "delete success"
+    },
+    {
+      "name": "importCertDialogTitle",
+      "value": "importCertDialogTitle"
+    },
+    {
+      "name": "importCertDialogMessage",
+      "value": "User trusted certificate is about to be installed. Whether or not to install?"
+    },
+    {
+      "name": "importCredDialogTitle",
+      "value": "Install Public Credential"
+    },
+    {
+      "name": "importCredDialogMessage",
+      "value": "Public credential is about to be installed. Whether or not to install?"
+    },
+    {
+      "name": "invalidCertAndCredDialogTitle",
+      "value": "Cannot use This File "
+    },
+    {
+      "name": "invalidCertAndCredDialogMessage",
+      "value": "Cannot use this file as a certificate and credential"
+    },
+    {
+      "name": "importCancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "importConfirm",
+      "value": "Confirm"
+    },
+    {
+      "name": "invalidCertAndCredConfirm",
+      "value": "Close"
+    },
+    {
+      "name": "authenticationTitle",
+      "value": "Please authenticate"
+    },
+    {
+      "name": "certInputPassword",
+      "value": "Enter the certificate password."
+    },
+    {
+      "name": "inputConfirm",
+      "value": "Confirm"
+    },
+    {
+      "name": "setCertName",
+      "value": "Set certificate name"
+    },
+    {
+      "name": "setCertMessage",
+      "value": "The certificate issuer may check all traffic to and from the device, including: CA certificate"
+    },
+    {
+      "name": "Install_Cert_Success",
+      "value": "The certificate is successfully installed."
+    },
+    {
+      "name": "Install_Cred_Success",
+      "value": "Certificate installation failure"
+    },
+    {
+      "name": "Install_Cert_Failed",
+      "value": "Install credentials successfully"
+    },
+    {
+      "name": "Install_Cred_Failed",
+      "value": "Install credentials failure"
+    },
+    {
+      "name": "Install_Error_NOT_FOUND",
+      "value": "This file is not recognized"
+    },
+    {
+      "name": "Install_ERROR_INCORRECT_FORMAT",
+      "value": "Certificate corrupted"
+    },
+    {
+      "name": "Install_Error_MAX_QUANTITY_REACHED",
+      "value": "The number of certificates has reached the upper limit. Please clear the certificates"
+    },
+    {
+      "name": "OK",
+      "value": "OK"
+    },
+    {
+      "name": "Password_Message",
+      "value": "Password error"
+    },
+    {
+      "name": "Identity_Authentication",
+      "value": "Please authenticate"
+    },
+    {
+      "name": "inputAliasWarn",
+      "value": "Maximum length reached"
     }
   ]
 }

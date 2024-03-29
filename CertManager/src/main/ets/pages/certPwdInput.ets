@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,6 +18,7 @@ import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/Config
 import router from '@ohos.router';
 import CmFaPresenter from '../presenter/CmFaPresenter';
 import { GlobalContext } from '../common/GlobalContext';
+import { RouterFileVo } from '../model/CertManagerVo/RouterInfoVo';
 
 @Entry
 @Component
@@ -30,7 +31,9 @@ struct CertPwdInput {
     GlobalContext.getContext().clearAbilityWantUri();
 
     if (uri === 'certInstall') {
-      this.mFaPresenter.startInstall();
+      router.pushUrl({
+        url: 'pages/certInstallFromStorage'
+      })
     } else if (uri === 'requestAuthorize') {
       this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
     }
@@ -101,9 +104,10 @@ struct CertPwdInput {
           })
           .onClick(() => {
             GlobalContext.getContext().getPwdStore().setCertPwd(this.certPwd)
+            let fileInfo: RouterFileVo = router.getParams() as RouterFileVo;
             router.pushUrl({
               url: 'pages/certInstallAliasInput',
-              params: router.getParams()
+              params: fileInfo
             })
           })
         }

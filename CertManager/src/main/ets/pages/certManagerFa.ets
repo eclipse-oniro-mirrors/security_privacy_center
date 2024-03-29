@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,11 +13,15 @@
  * limitations under the License.
  */
 
-import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/ConfigData';
+import { WidthPercent,  ConfigValue } from '../common/util/ConfigData';
 import HeadComponent from '../common/component/headComponent';
 import { SubEntryComponent } from '../common/component/subEntryComponent';
 import CmFaPresenter from '../presenter/CmFaPresenter';
 import { GlobalContext } from '../common/GlobalContext';
+import router from '@ohos.router';
+import promptAction from '@ohos.promptAction';
+
+const DISPLAY_DURATION: number = 2000;
 
 class CertListItem {
   public targetPage: string = '';
@@ -37,22 +41,8 @@ struct CertificateComponent {
 
   build() {
     Column() {
-      GridContainer({
-        columns: 12,
-        sizeType: SizeType.Auto,
-        gutter: vp2px(1) === 2 ? '12vp' : '0vp',
-        margin: vp2px(1) === 2 ? '24vp' : '0vp'
-      }) {
-        Row({}) {
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .height(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 0 }, sm: { span: 0, offset: 0 },
-            md: { span: 0, offset: 0 }, lg: { span: 2, offset: 0 }
-          });
-
+      GridRow({ columns: 12, gutter: vp2px(1) === 2 ? '12vp' : '0vp' }) {
+        GridCol({ span: { xs: 12, sm: 12, md: 12, lg: 8 }, offset: { xs: 0, sm: 0, md: 0, lg: 2 } }) {
           Column({ space: this.columnMargin }) {
             HeadComponent({ headName: $r('app.string.certificateTab') })
             Column({ space: this.columnMargin }) {
@@ -67,8 +57,8 @@ struct CertificateComponent {
               .divider({
                 strokeWidth: $r('app.float.sys_list_divider_strokeWidth_value'),
                 color: $r('app.color.sys_list_divider_color_000000'),
-                startMargin: '8vp',
-                endMargin: '8vp'
+                startMargin: $r('app.float.wh_value_8'),
+                endMargin: $r('app.float.wh_value_8')
               })
               .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
               .backgroundColor($r('app.color.user_list_backgroundColor_FFFFFF'))
@@ -83,23 +73,9 @@ struct CertificateComponent {
           .padding({ left: $r('app.float.wh_value_12'), right: $r('app.float.wh_value_12') })
           .width(WidthPercent.WH_100_100)
           .height(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
-            md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
-          });
-
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .height(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 12 }, sm: { span: 0, offset: 12 },
-            md: { span: 0, offset: 12 }, lg: { span: 2, offset: 10 }
-          })
         }
-        .width(WidthPercent.WH_100_100)
-        .height(WidthPercent.WH_100_100);
       }
+      .margin(vp2px(1) === 2 ? '24vp' : '0vp')
       .width(WidthPercent.WH_100_100)
       .height(WidthPercent.WH_100_100);
     }
@@ -113,7 +89,9 @@ struct CertificateComponent {
     GlobalContext.getContext().clearAbilityWantUri();
 
     if (uri === 'certInstall') {
-      this.mFaPresenter.startInstall();
+      router.pushUrl({
+        url: 'pages/certInstallFromStorage'
+      })
     } else if (uri === 'requestAuthorize') {
       this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
     }
@@ -128,21 +106,8 @@ struct CustomDialogExampleDeleteAll {
 
   build() {
     Column() {
-      GridContainer({
-        columns: 12,
-        sizeType: SizeType.Auto,
-        gutter: vp2px(1) === 2 ? '12vp' : '0vp',
-        margin: vp2px(1) === 2 ? '24vp' : '0vp'
-      }) {
-        Row({}) {
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 0 }, sm: { span: 0, offset: 0 },
-            md: { span: 0, offset: 0 }, lg: { span: 2, offset: 0 }
-          });
-
+      GridRow({ columns: 12, gutter: vp2px(1) === 2 ? '12vp' : '0vp', }) {
+        GridCol({ span: { xs: 12, sm: 12, md: 12, lg: 8 }, offset: { xs: 0, sm: 0, md: 0, lg: 2 } }) {
           Column() {
             Text($r('app.string.deleteAllCredDialogTitle'))
               .height($r('app.float.wh_value_56'))
@@ -189,6 +154,10 @@ struct CustomDialogExampleDeleteAll {
                   this.deleteAll.uninstallAllCert();
                   if (this.controller !== undefined) {
                     this.controller.close()
+                    promptAction.showToast({
+                      message: $r('app.string.delete_success'),
+                      duration: DISPLAY_DURATION,
+                    })
                   }
                 })
                 .backgroundColor($r('app.color.credentials_app_finish_backgroundColor'))
@@ -210,18 +179,6 @@ struct CustomDialogExampleDeleteAll {
           .width(WidthPercent.WH_100_100)
           .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
           .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
-          .useSizeType({
-            xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
-            md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
-          });
-
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 12 }, sm: { span: 0, offset: 12 },
-            md: { span: 0, offset: 12 }, lg: { span: 2, offset: 10 }
-          });
         }
       }
     }
@@ -341,7 +298,9 @@ export struct CertInstallComponent {
     .height($r('app.float.wh_value_56'))
     .borderRadius($r('app.float.radius_24'))
     .onClick(() => {
-      this.mFaPresenter.startInstall()
+      router.pushUrl({
+        url: 'pages/certInstallFromStorage'
+      }, router.RouterMode.Standard)
     });
   }
 }
