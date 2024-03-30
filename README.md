@@ -1,21 +1,36 @@
-# 安全隐私中心
+## 简介
 
-## 简介<a name="section11660541593"></a>
+OpenHarmony上“设置”应用中的“隐私安全”菜单中，需要按需展示其它领域的相关菜单入口，并且用户点击之后需提供跳转拉起对应的业务功能处理页面的能力，因此需提供接入机制，其它领域适配之后，可以实现正常的菜单展示功能。
 
-安全隐私中心模块包括多个提供安全和隐私保护能力的系统应用，如：证书管理。
+​	安全隐私接入框架架构图如下所示：
 
+![image-20240315200205500](doc/image/20240318-193751.png)
 
-## 目录<a name="section161941989596"></a>
+## 目录
+
 ```
-applications/standard/security_privacy_center/
-├── CertificateManager                            # 证书管理应用
+/security_privacy_center/
+├── AppScope									# 应用配置
+├── CertManager							        # 证书管理应用
+└── entry
+        └── src
+            └── main
+                ├── ets							# 代码目录
+                │   ├── common					# 子组件及工具类实现
+                │   ├── entryability			# Ability类实现
+                │   ├── main					# 功能类实现
+                │   ├── model					# model类及位置信息类功能实现 
+                │   ├── pages				    # 接入菜单页面及位置信息页面展示实现
+                │   └── view					# 具体应用接入页面展示实现
+                └── resources					# 资源文件目录
 ```
 
-## 说明<a name="section1312121216216"></a>
+## 使用说明  
 
-### 应用说明<a name="section1551164914237"></a>
-证书管理应用：[证书管理](CertificateManager/README.md)
+如果需要编译安全隐私接入框架的代码，需要使用新版本的[full SDK](https://gitee.com/openharmony/docs/blob/master/zh-cn/application-dev/faqs/full-sdk-compile-guide.md)。
 
-## 相关仓<a name="section1371113476307"></a>
+如果仅需接入安全隐私中心，则使用发布版本的public SDK即可。应用接入指导参考：[应用接入指导说明](https://gitee.com/openharmony/docs/blob/master/zh-cn/application-dev/security/SecurityPrivacyCenter/auto-menu-guidelines.md)。
 
-**security_certificate_manager**
+## 相关仓
+
+**security_privacy_center**
