@@ -1,8 +1,6 @@
 {
   "displayedMode": "list",
-  "iconResource": "$media:icon",
   "mainTitleResource": "$string:certificateTab",
-  "subTitleResource": "sub_title",
   "dstAbilityMode": 1,
   "dstAbilityName": "MainExtensionAbility",
   "dstBundleName": "com.ohos.certmanager"

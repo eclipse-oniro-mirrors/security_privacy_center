@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,11 +16,11 @@
 import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/ConfigData';
 import HeadComponent from '../common/component/headComponent';
 import CmShowAppCredPresenter from '../presenter/CmShowAppCredPresenter';
-import CMShowPrivateCredPresenter from '../presenter/CmShowPrivateCredPresenter';
 import CMFaPresenter from '../presenter/CmFaPresenter';
 import { GlobalContext } from '../common/GlobalContext';
 import { CredentialAbstractVo } from '../model/CertManagerVo/CredentialAbstractVo';
 import { AppAuthorVo } from '../model/CertManagerVo/AppAuthorVo';
+import router from '@ohos.router';
 
 @Component
 export struct DialogComponent {
@@ -68,21 +68,8 @@ struct CustomDialogExampleAuthor {
 
   build() {
     Column() {
-      GridContainer({
-        columns: 12,
-        sizeType: SizeType.Auto,
-        gutter: vp2px(1) === 2 ? '12vp' : '0vp',
-        margin: vp2px(1) === 2 ? '24vp' : '0vp'
-      }) {
-        Row({}) {
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 0 }, sm: { span: 0, offset: 0 },
-            md: { span: 0, offset: 0 }, lg: { span: 2, offset: 0 }
-          });
-
+      GridRow({ columns: 12, gutter: vp2px(1) === 2 ? '12vp' : '0vp', }) {
+        GridCol({ span: { xs: 12, sm: 12, md: 12, lg: 8 }, offset: { xs: 0, sm: 0, md: 0, lg: 2 } }) {
           Column() {
             Text($r('app.string.managerAuthApp'))
               .height($r('app.float.wh_value_56'))
@@ -202,148 +189,8 @@ struct CustomDialogExampleAuthor {
           .width(WidthPercent.WH_100_100)
           .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
           .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
-          .useSizeType({
-            xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
-            md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
-          });
-
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 12 }, sm: { span: 0, offset: 12 },
-            md: { span: 0, offset: 12 }, lg: { span: 2, offset: 10 }
-          });
         }
-      }
-    }
-    .margin({
-      bottom: $r('sys.float.ohos_id_dialog_margin_bottom'),
-      left: $r('sys.float.ohos_id_dialog_margin_start'),
-      right: $r('sys.float.ohos_id_dialog_margin_end'),
-    })
-  }
-}
-
-@CustomDialog
-@Component
-struct CustomDialogExamplePrivate {
-  controller?: CustomDialogController;
-  @State priCerInfoPresenter: CMShowPrivateCredPresenter = CMShowPrivateCredPresenter.getInstance();
-
-  build() {
-    Column() {
-      GridContainer({
-        columns: 12,
-        sizeType: SizeType.Auto,
-        gutter: vp2px(1) === 2 ? '12vp' : '0vp',
-        margin: vp2px(1) === 2 ? '24vp' : '0vp'
-      }) {
-        Row({}) {
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 0 }, sm: { span: 0, offset: 0 },
-            md: { span: 0, offset: 0 }, lg: { span: 2, offset: 0 }
-          });
-
-          Column() {
-            Text($r('app.string.evidenceDetails'))
-              .height($r('app.float.wh_value_56'))
-              .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
-              .fontColor($r('sys.color.ohos_id_color_text_primary'))
-              .fontWeight(FontWeight.Medium)
-              .margin({
-                left: $r('app.float.wh_value_24'),
-                right: $r('app.float.wh_value_24')
-              })
-              .alignSelf(ItemAlign.Start)
-
-            Text(this.priCerInfoPresenter.credInfo.alias)
-              .fontSize($r('sys.float.ohos_id_text_size_body1'))
-              .fontColor($r('sys.color.ohos_id_color_text_primary'))
-              .fontWeight(FontWeight.Medium)
-              .margin({
-                left: $r('app.float.wh_value_24'),
-                right: $r('app.float.wh_value_24')
-              })
-              .alignSelf(ItemAlign.Start)
-
-            Text($r('app.string.entryContains'))
-              .fontSize($r('sys.float.ohos_id_text_size_body2'))
-              .fontColor($r('sys.color.ohos_id_color_text_primary'))
-              .fontWeight(FontWeight.Regular)
-              .margin({
-                top: $r('app.float.wh_value_24'),
-                left: $r('app.float.wh_value_24'),
-                right: $r('app.float.wh_value_24')
-              })
-              .alignSelf(ItemAlign.Start)
-
-            Text($r('app.string.keyNum', String(this.priCerInfoPresenter.credInfo.keyNum)))
-              .fontSize($r('sys.float.ohos_id_text_size_body2'))
-              .fontColor($r('sys.color.ohos_id_color_text_primary'))
-              .fontWeight(FontWeight.Regular)
-              .margin({
-                left: $r('app.float.wh_value_24'),
-                right: $r('app.float.wh_value_24')
-              })
-              .opacity($r('app.float.opacity_100_60'))
-              .alignSelf(ItemAlign.Start)
-
-            Text($r('app.string.userCerNum', String(this.priCerInfoPresenter.credInfo.certNum)))
-              .fontSize($r('sys.float.ohos_id_text_size_body2'))
-              .fontColor($r('sys.color.ohos_id_color_text_primary'))
-              .fontWeight(FontWeight.Regular)
-              .margin({
-                left: $r('app.float.wh_value_24'),
-                right: $r('app.float.wh_value_24')
-              })
-              .opacity($r('app.float.opacity_100_60'))
-              .alignSelf(ItemAlign.Start)
-
-            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
-              justifyContent: FlexAlign.SpaceAround }) {
-              Button($r('app.string.privateDetailsClose'))
-                .onClick(() => {
-                  if (this.controller !== undefined) {
-                    this.controller.close();
-                  }
-                })
-                .backgroundColor($r('app.color.credentials_app_finish_backgroundColor'))
-                .fontSize($r('sys.float.ohos_id_text_size_button1'))
-                .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
-                .width($r('app.float.wh_value_152'))
-                .height($r('app.float.wh_value_40'))
-            }
-            .height($r('app.float.wh_value_64'))
-            .padding({
-              bottom: $r('app.float.wh_value_16')
-            })
-            .margin({
-              top: $r('app.float.wh_value_16'),
-              left: $r('app.float.wh_value_24'),
-              right: $r('app.float.wh_value_24')
-            })
-          }
-          .width(WidthPercent.WH_100_100)
-          .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
-          .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
-          .useSizeType({
-            xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
-            md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
-          });
-
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 12 }, sm: { span: 0, offset: 12 },
-            md: { span: 0, offset: 12 }, lg: { span: 2, offset: 10 }
-          });
-        }
-      }
+      }.margin(vp2px(1) === 2 ? '24vp' : '0vp')
     }
     .margin({
       bottom: $r('sys.float.ohos_id_dialog_margin_bottom'),
@@ -362,21 +209,8 @@ struct CustomDialogDeleteWarning {
 
   build() {
     Column() {
-      GridContainer({
-        columns: 12,
-        sizeType: SizeType.Auto,
-        gutter: vp2px(1) === 2 ? '12vp' : '0vp',
-        margin: vp2px(1) === 2 ? '24vp' : '0vp'
-      }) {
-        Row({}) {
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 0 }, sm: { span: 0, offset: 0 },
-            md: { span: 0, offset: 0 }, lg: { span: 2, offset: 0 }
-          });
-
+      GridRow({ columns: 12, gutter: vp2px(1) === 2 ? '12vp' : '0vp', }) {
+        GridCol({ span: { xs: 12, sm: 12, md: 12, lg: 8 }, offset: { xs: 0, sm: 0, md: 0, lg: 2 } }) {
           Column() {
             Text($r('app.string.warning_title'))
               .height($r('app.float.wh_value_56'))
@@ -446,20 +280,8 @@ struct CustomDialogDeleteWarning {
           .width(WidthPercent.WH_100_100)
           .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
           .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
-          .useSizeType({
-            xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
-            md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
-          });
-
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 12 }, sm: { span: 0, offset: 12 },
-            md: { span: 0, offset: 12 }, lg: { span: 2, offset: 10 }
-          });
         }
-      }
+      }.margin(vp2px(1) === 2 ? '24vp' : '0vp')
     }
     .margin({
       bottom: $r('sys.float.ohos_id_dialog_margin_bottom'),
@@ -483,21 +305,8 @@ struct CustomDialogExampleApp {
 
   build() {
     Column() {
-      GridContainer({
-        columns: 12,
-        sizeType: SizeType.Auto,
-        gutter: vp2px(1) === 2 ? '12vp' : '0vp',
-        margin: vp2px(1) === 2 ? '24vp' : '0vp'
-      }) {
-        Row({}) {
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 0 }, sm: { span: 0, offset: 0 },
-            md: { span: 0, offset: 0 }, lg: { span: 2, offset: 0 }
-          });
-
+      GridRow({ columns: 12, gutter: vp2px(1) === 2 ? '12vp' : '0vp' }) {
+        GridCol({ span: { xs: 12, sm: 12, md: 12, lg: 8 }, offset: { xs: 0, sm: 0, md: 0, lg: 2 } }) {
           Column() {
             Text($r('app.string.evidenceDetails'))
               .height($r('app.float.wh_value_56'))
@@ -627,20 +436,8 @@ struct CustomDialogExampleApp {
           .width(WidthPercent.WH_100_100)
           .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
           .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
-          .useSizeType({
-            xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
-            md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
-          });
-
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 12 }, sm: { span: 0, offset: 12 },
-            md: { span: 0, offset: 12 }, lg: { span: 2, offset: 10 }
-          });
         }
-      }
+      }.margin(vp2px(1) === 2 ? '24vp' : '0vp')
     }
     .margin({
       bottom: $r('sys.float.ohos_id_dialog_margin_bottom'),
@@ -657,6 +454,7 @@ export struct componentPublic {
   @Link mShowAppCaPresenter: CmShowAppCredPresenter;
   @State @Watch('onShowAuthMngChange') isShowAuthMng: boolean = false;
   @State @Watch('onShowDeleteWarnDialog') isShowWarning: boolean = false;
+
   detailsDialogController: CustomDialogController = new CustomDialogController({
     builder: CustomDialogExampleApp({
       isShowAuthDialog: $isShowAuthMng,
@@ -664,19 +462,18 @@ export struct componentPublic {
       mShowAppCaPresenter: $mShowAppCaPresenter
     }),
     autoCancel: true,
-    alignment: DialogAlignment.Bottom,
     customStyle: true,
   })
+
   appDialogController: CustomDialogController = new CustomDialogController({
     builder: CustomDialogExampleAuthor({ isShowAuthDialog: $isShowAuthMng, authorInfo: $mShowAppCaPresenter }),
     autoCancel: false,
-    alignment: DialogAlignment.Bottom,
     customStyle: true,
   })
+
   deleteWarnDialog: CustomDialogController = new CustomDialogController({
     builder: CustomDialogDeleteWarning({ isShowWarnDialog: $isShowWarning, deleteWarn: $mShowAppCaPresenter }),
     autoCancel: false,
-    alignment: DialogAlignment.Bottom,
     customStyle: true,
   })
 
@@ -723,82 +520,20 @@ export struct componentPublic {
   }
 }
 
-@Component
-export struct componentPrivate {
-  private alias: string = '';
-  private keyUri: string = '';
-  @State privateCerPresenter: CMShowPrivateCredPresenter = CMShowPrivateCredPresenter.getInstance();
-  privateDetailDialog: CustomDialogController = new CustomDialogController({
-    builder: CustomDialogExamplePrivate(),
-    autoCancel: true,
-    alignment: DialogAlignment.Bottom,
-    customStyle: true,
-  })
-
-  build() {
-    Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-      Column() {
-        Text(this.alias)
-          .fontSize($r('sys.float.ohos_id_text_size_body1'))
-          .fontColor($r('sys.color.ohos_id_color_text_primary'))
-          .fontWeight(FontWeight.Medium)
-      }
-
-      Row() {
-        Image($r('app.media.ic_settings_arrow'))
-          .width($r('app.float.publicList_image_wh'))
-          .height($r('app.float.publicList_image_hg'))
-      }
-    }
-    .height($r('app.float.wh_value_48'))
-    .onClick(() => {
-      this.privateCerPresenter.getPrivateCred(this.keyUri, () => {
-        this.privateDetailDialog.open();
-      });
-    })
-  }
-}
-
 @Entry
 @Component
 struct evidenceList {
   @State mShowAppCaPresenter: CmShowAppCredPresenter = CmShowAppCredPresenter.getInstance();
-  @State mShowPrivateCaPresenter: CMShowPrivateCredPresenter = CMShowPrivateCredPresenter.getInstance();
   @State mFaPresenter: CMFaPresenter = CMFaPresenter.getInstance();
   @State isTouched: boolean = false;
   @State currentIndex: number = 0
   @State fontColor: Resource = $r('app.color.evidenceList_TabBuilder_fontColor_182431')
-  private controller: TabsController = new TabsController();
   private publicScroller: Scroller = new Scroller();
-  private privateScroller: Scroller = new Scroller();
-
-  @Builder
-  TabBuilder(index: number) {
-    Column() {
-      Text(index == 0 ? $r('app.string.tabName_public') : $r('app.string.tabName_private'))
-        .fontColor(this.currentIndex === index ? $r('sys.color.ohos_id_color_bottom_tab_icon') : this.fontColor)
-        .fontSize($r('app.float.font_16'))
-        .fontWeight(this.currentIndex === index ? FontWeight.Medium : FontWeight.Regular)
-        .alignSelf(ItemAlign.Center)
-        .margin({
-          top: $r('app.float.TrustedEvidence_TabBuilder_Text_padding_top_value') })
-      if (this.currentIndex === index) {
-        Divider()
-          .width($r('app.float.TrustedEvidence_TabBuilder_Divider_width_value'))
-          .margin({ top: $r('app.float.TrustedEvidence_TabBuilder_Divider_padding_top_value') })
-          .strokeWidth(2)
-          .color($r('sys.color.ohos_id_color_bottom_tab_icon'))
-          .alignSelf(ItemAlign.Center)
-      }
-    }
-    .width(WidthPercent.WH_100_100)
-  }
 
   aboutToAppear() {
     console.info('in aboutToAppear');
     this.mShowAppCaPresenter.updateAppCredListCallback(() => {
-      console.info('get AppCredList first and then get PrivateCredList')
-      this.mShowPrivateCaPresenter.updatePrivateCredList();
+      console.info('get AppCredList first');
     })
   }
 
@@ -807,7 +542,9 @@ struct evidenceList {
     GlobalContext.getContext().clearAbilityWantUri();
 
     if (uri === 'certInstall') {
-      this.mFaPresenter.startInstall();
+      router.pushUrl({
+        url: 'pages/certInstallFromStorage'
+      })
     } else if (uri === 'requestAuthorize') {
       this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
     }
@@ -815,193 +552,85 @@ struct evidenceList {
 
   build() {
     Column() {
-      GridContainer({
-        columns: 12,
-        sizeType: SizeType.Auto,
-        gutter: vp2px(1) === 2 ? '12vp' : '0vp',
-        margin: vp2px(1) === 2 ? '24vp' : '0vp'
-      }) {
-        Row() {
-          Column() {
-            HeadComponent({ headName: $r('app.string.userEvidence') })
-              .margin({
-                left: $r('app.float.wh_value_12')
-              })
-
+      GridRow({ columns: 12, gutter: vp2px(1) === 2 ? '12vp' : '0vp' }) {
+        GridCol({ span: { xs: 12, sm: 12, md: 12, lg: 8 }, offset: { xs: 0, sm: 0, md: 0, lg: 2 } }) {
+          Row() {
             Column() {
-              Tabs({ barPosition: BarPosition.Start, index: 0, controller: this.controller }) {
-                TabContent() {
-                  Stack({ alignContent: Alignment.End }) {
-                    Scroll(this.publicScroller) {
-                      List() {
-                        ForEach(this.mShowAppCaPresenter.credList, (item: CredentialAbstractVo) => {
-                          ListItem() {
-                            componentPublic({
-                              alias: item.alias,
-                              keyUri: item.keyUri,
-                              mShowAppCaPresenter: $mShowAppCaPresenter
-                            })
-                          }
-                        }, (item: CredentialAbstractVo) => JSON.stringify(item))
-                      }
-                      .scrollBar(BarState.Off)
-                      .padding({
-                        right: $r('app.float.wh_value_12'),
-                        left: $r('app.float.wh_value_12'),
-                        top: $r('app.float.wh_value_4'),
-                        bottom: $r('app.float.wh_value_4')
-                      })
-                      .divider({
-                        strokeWidth: $r('app.float.user_list_divider_strokeWidth_value'),
-                        color: $r('app.color.user_list_divider_color_000000'),
-                        endMargin: '3vp'
-                      })
-                      .visibility(this.mShowAppCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
-                    }
-                    .position({ y: 0 })
-                    .scrollable(ScrollDirection.Vertical)
-                    .scrollBar(BarState.Off)
-                    .margin({
-                      left: $r('app.float.wh_value_12'),
-                      right: $r('app.float.wh_value_12')
-                    })
-                    .borderRadius($r('app.float.Evidence_borderRadius'))
-                    .backgroundColor($r('app.color.credentials_app_finish_backgroundColor'))
+              HeadComponent({ headName: $r('app.string.userEvidence') })
+                .margin({
+                  left: $r('app.float.wh_value_16')
+                })
 
-                    ScrollBar({ scroller: this.publicScroller, direction: ScrollBarDirection.Vertical,
-                      state: BarState.Auto }) {
-                      Text()
-                        .width($r('app.float.wh_value_3'))
-                        .height($r('app.float.wh_value_50'))
-                        .borderRadius($r('app.float.wh_value_10'))
-                        .backgroundColor($r('sys.color.ohos_id_color_foreground'))
-                        .opacity(0.4)
+              Column() {
+                Stack({ alignContent: Alignment.End }) {
+                  Scroll(this.publicScroller) {
+                    List() {
+                      ForEach(this.mShowAppCaPresenter.credList, (item: CredentialAbstractVo) => {
+                        ListItem() {
+                          componentPublic({
+                            alias: item.alias,
+                            keyUri: item.keyUri,
+                            mShowAppCaPresenter: $mShowAppCaPresenter
+                          })
+                        }
+                      }, (item: CredentialAbstractVo) => JSON.stringify(item))
                     }
-                    .width($r('app.float.wh_value_3'))
-                    .margin({
-                      right: $r('app.float.wh_value_3')
+                    .scrollBar(BarState.Off)
+                    .padding({
+                      right: $r('app.float.wh_value_12'),
+                      left: $r('app.float.wh_value_12'),
+                      top: $r('app.float.wh_value_4'),
+                      bottom: $r('app.float.wh_value_4')
+                    })
+                    .divider({
+                      strokeWidth: $r('app.float.user_list_divider_strokeWidth_value'),
+                      color: $r('app.color.user_list_divider_color_000000'),
+                      endMargin: '3vp'
                     })
                     .visibility(this.mShowAppCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
                   }
-                }
-                .tabBar(this.TabBuilder(0))
-                .onTouch((event?: TouchEvent) => {
-                  if (event !== undefined) {
-                    if (event.type === TouchType.Down) {
-                      this.isTouched = true;
-                    }
-                    if (event.type === TouchType.Up) {
-                      this.isTouched = false;
-                    }
+                  .position({ y: 0 })
+                  .scrollable(ScrollDirection.Vertical)
+                  .scrollBar(BarState.Off)
+                  .margin({
+                    left: $r('app.float.wh_value_12'),
+                    right: $r('app.float.wh_value_12')
+                  })
+                  .borderRadius($r('app.float.Evidence_borderRadius'))
+                  .backgroundColor($r('app.color.credentials_app_finish_backgroundColor'))
+
+                  ScrollBar({ scroller: this.publicScroller, direction: ScrollBarDirection.Vertical,
+                    state: BarState.Auto }) {
+                    Text()
+                      .width($r('app.float.wh_value_3'))
+                      .height($r('app.float.wh_value_50'))
+                      .borderRadius($r('app.float.wh_value_10'))
+                      .backgroundColor($r('sys.color.ohos_id_color_foreground'))
+                      .opacity(0.4)
                   }
+                  .width($r('app.float.wh_value_3'))
+                  .margin({
+                    right: $r('app.float.wh_value_3')
+                  })
+                  .visibility(this.mShowAppCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
+                }
+                .width(WidthPercent.WH_100_100)
+                .margin({
+                  bottom: $r('app.float.wh_value_24')
                 })
-
-                TabContent() {
-                  Stack({ alignContent: Alignment.End }) {
-                    Scroll(this.privateScroller) {
-                      List() {
-                        ForEach(this.mShowPrivateCaPresenter.credList, (item: CredentialAbstractVo) => {
-                          ListItem() {
-                            componentPrivate({ alias: item.alias, keyUri: item.keyUri })
-                          }
-                        }, (item: CredentialAbstractVo) => JSON.stringify(item))
-                      }
-                      .scrollBar(BarState.Off)
-                      .padding({
-                        right: $r('app.float.wh_value_12'),
-                        left: $r('app.float.wh_value_12'),
-                        top: $r('app.float.wh_value_4'),
-                        bottom: $r('app.float.wh_value_4')
-                      })
-                      .divider({
-                        strokeWidth: $r('app.float.user_list_divider_strokeWidth_value'),
-                        color: $r('app.color.user_list_divider_color_000000'),
-                        endMargin: '3vp'
-                      })
-                      .borderRadius($r('app.float.Evidence_borderRadius'))
-                      .backgroundColor($r('app.color.credentials_app_finish_backgroundColor'))
-                      .visibility(
-                        this.mShowPrivateCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
-                    }
-                    .position({ y: 0 })
-                    .scrollable(ScrollDirection.Vertical)
-                    .scrollBar(BarState.Off)
-                    .margin({
-                      left: $r('app.float.wh_value_12'),
-                      right: $r('app.float.wh_value_12')
-                    })
-                    .borderRadius($r('app.float.Evidence_borderRadius'))
-                    .backgroundColor($r('app.color.credentials_app_finish_backgroundColor'))
-
-                    ScrollBar({
-                      scroller: this.privateScroller,
-                      direction: ScrollBarDirection.Vertical,
-                      state: BarState.Auto
-                    }) {
-                      Text()
-                        .width($r('app.float.wh_value_3'))
-                        .height($r('app.float.wh_value_50'))
-                        .borderRadius($r('app.float.wh_value_10'))
-                        .backgroundColor($r('sys.color.ohos_id_color_foreground'))
-                        .opacity(0.4)
-                    }
-                    .width($r('app.float.wh_value_3'))
-                    .margin({
-                      right: $r('app.float.wh_value_3')
-                    })
-                    .visibility(
-                      this.mShowPrivateCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
-                  }
-                }
-                .tabBar(this.TabBuilder(1))
-                .onTouch((event?: TouchEvent) => {
-                  if (event !== undefined) {
-                    if (event.type === TouchType.Down) {
-                      this.isTouched = true;
-                    }
-                    if (event.type === TouchType.Up) {
-                      this.isTouched = false;
-                    }
-                  }
-                });
+                .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
               }
-              .vertical(false)
-              .scrollable(true)
-              .barMode(BarMode.Fixed)
-              .barWidth('192vp')
-              .barHeight($r('app.float.Evidence_barHeight'))
-              .animationDuration(400)
+              .height(WidthPercent.WH_94_100)
               .width(WidthPercent.WH_100_100)
-              .margin({
-                bottom: $r('app.float.wh_value_24')
-              })
-              .backgroundColor($r('app.color.TrustedEvidence_tabs_backgroundColor_F1F3F5'))
-              .onChange((index: number) => {
-                this.currentIndex = index
-              });
             }
-            .height(WidthPercent.WH_94_100)
+            .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
             .width(WidthPercent.WH_100_100)
-          }
-          .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
-          .width(WidthPercent.WH_100_100)
-          .height(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
-            md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
-          });
-
-          Column() {
+            .height(WidthPercent.WH_100_100)
           }
           .width(WidthPercent.WH_100_100)
-          .height(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 12 }, sm: { span: 0, offset: 12 },
-            md: { span: 0, offset: 12 }, lg: { span: 2, offset: 10 }
-          })
+          .height(WidthPercent.WH_100_100);
         }
-        .width(WidthPercent.WH_100_100)
-        .height(WidthPercent.WH_100_100);
+        .margin(vp2px(1) === 2 ? '24vp' : '0vp')
       }
       .width(WidthPercent.WH_100_100)
       .height(WidthPercent.WH_100_100);

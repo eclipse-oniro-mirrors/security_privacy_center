@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -42,35 +42,96 @@ export default class CmFaPresenter {
   aboutToDisappear(): void {
   }
 
-  routeToNext(fileUri: string): void {
-    console.info(TAG + 'routeToNext fileUri: ' + fileUri);
+  routeToNextInstallCert(fileUri: string): void {
+    console.log(TAG, 'routeToNext fileUri ' + fileUri);
     FileIoModel.getMediaFileSuffix(fileUri, (suffix: string | undefined) => {
-      console.info(TAG + 'suffix ' + suffix);
       if (suffix !== undefined) {
+        console.log(TAG, 'suffix = ', suffix);
         let fileInfo = new RouterFileVo(fileUri, suffix);
         if ((suffix === 'cer') || (suffix === 'pem')) {
-          router.pushUrl({
-            url: PAGE_URI_ALIAS_INPUT,
+          router.replaceUrl({
+            url: 'pages/certInstallAliasInput',
             params: fileInfo
-          });
+          })
         } else {
-          router.pushUrl({
-            url: PAGE_URI_PWD_INPUT,
-            params: fileInfo
-          });
+          AlertDialog.show({
+            message: $r('app.string.Install_Error_NOT_FOUND'),
+            autoCancel: true,
+            alignment: DialogAlignment.Bottom,
+            offset: {
+              dx: 0, dy: 0
+            },
+            gridCount: 4,
+            primaryButton: {
+              value: $r('app.string.OK'),
+              action: () => {
+              }
+            },
+          })
         }
       }
-    });
+    })
   }
 
-  startInstall(): void {
+  routeToNextInstallEvidence(fileUri: string): void {
+    console.log(TAG, 'routeToNext fileUri ' + fileUri);
+    FileIoModel.getMediaFileSuffix(fileUri, (suffix: string | undefined) => {
+      if (suffix !== undefined) {
+        console.log(TAG, 'suffix = ', suffix);
+        if ((suffix === 'p12') || (suffix === 'pfx')) {
+          let fileInfo = new RouterFileVo(fileUri, suffix);
+          router.replaceUrl({
+            url: 'pages/certPwdInput',
+            params: fileInfo
+          })
+        } else {
+          AlertDialog.show({
+            message: $r('app.string.Install_Error_NOT_FOUND'),
+            autoCancel: true,
+            alignment: DialogAlignment.Bottom,
+            offset: {
+              dx: 0, dy: -20
+            },
+            gridCount: 4,
+            primaryButton: {
+              value: $r('app.string.OK'),
+              action: () => {
+              }
+            },
+          })
+        }
+      }
+    })
+  }
+
+  startInstallCert(): void {
     try {
       let documentSelectOptions = new picker.DocumentSelectOptions();
       let documentPicker = new picker.DocumentViewPicker();
       console.info(TAG + 'start documentPicker.select');
       documentPicker.select(documentSelectOptions).then((documentSelectResult) => {
         if (documentSelectResult.length >= 1) {
-          this.routeToNext(String(documentSelectResult[0]));
+          this.routeToNextInstallCert(String(documentSelectResult[0]))
+        } else {
+          console.error(TAG + 'documentPicker.select length invalid:' + documentSelectResult.length);
+        }
+      }).catch((err: BusinessError) => {
+        console.error(TAG + 'documentPicker.select failed with err, message: ' + err.message + ', code: ' + err.code);
+      });
+    } catch (err) {
+      let e: BusinessError = err as BusinessError;
+      console.error(TAG + 'DocumentViewPicker failed with err, message: ' + e.message + ', code: ' + e.code);
+    }
+  }
+
+  startInstallEvidence(): void {
+    try {
+      let documentSelectOptions = new picker.DocumentSelectOptions();
+      let documentPicker = new picker.DocumentViewPicker();
+      console.info(TAG + 'start documentPicker.select');
+      documentPicker.select(documentSelectOptions).then((documentSelectResult) => {
+        if (documentSelectResult.length >= 1) {
+          this.routeToNextInstallEvidence(String(documentSelectResult[0]))
         } else {
           console.error(TAG + 'documentPicker.select length invalid:' + documentSelectResult.length);
         }

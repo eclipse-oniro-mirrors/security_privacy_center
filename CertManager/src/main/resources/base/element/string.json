@@ -281,6 +281,134 @@
     {
       "name": "CustomDialogExample_FingerPrint_text",
       "value": "SHA-256 指纹:"
+    },
+    {
+      "name": "root_certificate",
+      "value": "根证书"
+    },
+    {
+      "name": "root_certificate_message",
+      "value": "警告：为网站启用此证书将允许第三方查看发送给网站的任何私人数据"
+    },
+    {
+      "name": "root_certificate_cancel",
+      "value": "取消"
+    },
+    {
+      "name": "root_certificate_continue",
+      "value": "继续"
+    },
+    {
+      "name": "CA_cert",
+      "value": "CA证书"
+    },
+    {
+      "name": "user_certificate_credentials",
+      "value": "用户证书凭据"
+    },
+    {
+      "name": "delete_success",
+      "value": "删除成功"
+    },
+    {
+      "name": "importCertDialogTitle",
+      "value": "安装用户受信任的证书"
+    },
+    {
+      "name": "importCertDialogMessage",
+      "value": "即将安装用户受信任的证书。是否安装？"
+    },
+    {
+      "name": "importCredDialogTitle",
+      "value": "安装公共凭据"
+    },
+    {
+      "name": "importCredDialogMessage",
+      "value": "即将安装公共凭据。是否安装？"
+    },
+    {
+      "name": "invalidCertAndCredDialogTitle",
+      "value": "无法使用此文件"
+    },
+    {
+      "name": "invalidCertAndCredDialogMessage",
+      "value": "无法将此文件用作证书和凭据"
+    },
+    {
+      "name": "importCancel",
+      "value": "取消"
+    },
+    {
+      "name": "importConfirm",
+      "value": "确认"
+    },
+    {
+      "name": "invalidCertAndCredConfirm",
+      "value": "关闭"
+    },
+    {
+      "name": "authenticationTitle",
+      "value": "请进行身份认证"
+    },
+    {
+      "name": "certInputPassword",
+      "value": "输入证书密码"
+    },
+    {
+      "name": "inputConfirm",
+      "value": "确认"
+    },
+    {
+      "name": "setCertName",
+      "value": "设置证书名称"
+    },
+    {
+      "name": "setCertMessage",
+      "value": "此证书颁布者可能会检查进出设备的所有流量，该数据包含：CA证书"
+    },
+    {
+      "name": "Install_Cert_Success",
+      "value": "安装证书成功"
+    },
+    {
+      "name": "Install_Cred_Success",
+      "value": "安装凭据成功"
+    },
+    {
+      "name": "Install_Cert_Failed",
+      "value": "安装证书失败"
+    },
+    {
+      "name": "Install_Cred_Failed",
+      "value": "安装凭据失败"
+    },
+    {
+      "name": "Install_Error_NOT_FOUND",
+      "value": "无法识别此文件"
+    },
+    {
+      "name": "Install_ERROR_INCORRECT_FORMAT",
+      "value": "证书已损坏"
+    },
+    {
+      "name": "Install_Error_MAX_QUANTITY_REACHED",
+      "value": "证书数量已达上限，请清理证书"
+    },
+    {
+      "name": "OK",
+      "value": "知道了"
+    },
+    {
+      "name": "Password_Message",
+      "value": "密码错误"
+    },
+    {
+      "name": "Identity_Authentication",
+      "value": "请进行身份验证"
+    },
+    {
+      "name": "inputAliasWarn",
+      "value": "已达到长度上限"
     }
   ]
 }

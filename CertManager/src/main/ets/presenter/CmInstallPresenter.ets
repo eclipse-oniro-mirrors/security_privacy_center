@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
+ * Copyright (c) 2022-2024 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,6 +18,8 @@ import FileIoModel from '../model/FileIoModel';
 import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
 import router from '@ohos.router';
 import { GlobalContext } from '../common/GlobalContext';
+import promptAction from '@ohos.promptAction';
+import { BusinessError } from '@ohos.base';
 
 const TAG = 'CMInstallPresenter: ';
 
@@ -53,7 +55,6 @@ export default class CmInstallPresenter {
     FileIoModel.getMediaFileData(uri, (data: Uint8Array) => {
       callback(data);
     });
-
   }
 
   installCert(uri: string, alias: string, suffix: string): void {
@@ -61,16 +62,70 @@ export default class CmInstallPresenter {
     this.getFileDataFromUri(uri, (data: Uint8Array) => {
       certManagerModel.installCertOrCred(this.optType, alias, data,
         GlobalContext.getContext().getPwdStore().getCertPwd(), (errCode: CMModelErrorCode) => {
-        console.info(TAG + 'installCertOrCred result: ' + JSON.stringify(errCode));
-        GlobalContext.getContext().getPwdStore().clearCertPwd();
-        if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
-          console.info(TAG + 'installCert success');
-        } else {
-          console.error(TAG + 'installCert failed');
-        }
-        router.clear();
-        router.replaceUrl({ url: 'pages/certManagerFa' });
-      });
+          console.info(TAG + 'installCertOrCred result: ' + JSON.stringify(errCode));
+          GlobalContext.getContext().getPwdStore().clearCertPwd();
+          if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
+            try {
+              promptAction.showToast({
+                message: this.optType === CMModelOptType.CM_MODEL_OPT_USER_CA ?
+                $r('app.string.Install_Cert_Success') : $r('app.string.Install_Cred_Success'),
+                duration: 2000,
+                bottom: 100
+              })
+            } catch (err) {
+              let e: BusinessError = err as BusinessError;
+              console.error(TAG, 'show result failed, message: ' + e.message + ', code: ' + e.code)
+            }
+          } else if (errCode === CMModelErrorCode.CM_MODEL_ERROR_INCORRECT_FORMAT) {
+            AlertDialog.show({
+              message: $r('app.string.Install_ERROR_INCORRECT_FORMAT'),
+              autoCancel: true,
+              alignment: DialogAlignment.Bottom,
+              offset: {
+                dx: 0, dy: 0
+              },
+              gridCount: 4,
+              primaryButton: {
+                value: $r('app.string.OK'),
+                action: () => {
+                  router.back()
+                }
+              },
+            })
+          } else if (errCode === CMModelErrorCode.CM_MODEL_ERROR_MAX_QUANTITY_REACHED) {
+            AlertDialog.show({
+              message: $r('app.string.Install_Error_MAX_QUANTITY_REACHED'),
+              autoCancel: true,
+              alignment: DialogAlignment.Bottom,
+              offset: {
+                dx: 0, dy: 0
+              },
+              gridCount: 4,
+              primaryButton: {
+                value: $r('app.string.OK'),
+                action: () => {
+                  router.back()
+                }
+              },
+            })
+          } else {
+            try {
+              promptAction.showToast({
+                message: this.optType === CMModelOptType.CM_MODEL_OPT_USER_CA ?
+                $r('app.string.Install_Cert_Failed') : $r('app.string.Install_Cred_Failed'),
+                duration: 2000,
+                bottom: 100
+              })
+            } catch (err) {
+              let e: BusinessError = err as BusinessError;
+              console.error(TAG, 'show result failed, message: ' + e.message + ', code: ' + e.code)
+            }
+          }
+          router.clear();
+          router.replaceUrl({
+            url: 'pages/certManagerFa'
+          });
+        });
     });
   }
 }
