@@ -57,7 +57,6 @@
       "value": "Delete All Credentials and Certificates"
     },
 
-
     {
       "name": "deleteAllCredDialogTitle",
       "value": "Delete All Credentials and Certificates"
@@ -288,7 +287,7 @@
     },
     {
       "name": "root_certificate_message",
-      "value": "Warning: Enabling this certificate for a website will allow third parties to view any private data sent to the website"
+      "value": "Warning: Enabling this certificate for a website will allow third parties to view any private data sent to the website."
     },
     {
       "name": "root_certificate_cancel",
@@ -372,11 +371,11 @@
     },
     {
       "name": "Install_Cred_Success",
-      "value": "Certificate installation failure"
+      "value": "Install credentials successfully"
     },
     {
       "name": "Install_Cert_Failed",
-      "value": "Install credentials successfully"
+      "value": "Install certificate failure"
     },
     {
       "name": "Install_Cred_Failed",
@@ -384,15 +383,15 @@
     },
     {
       "name": "Install_Error_NOT_FOUND",
-      "value": "This file is not recognized"
+      "value": "This file is not recognized."
     },
     {
       "name": "Install_ERROR_INCORRECT_FORMAT",
-      "value": "Certificate corrupted"
+      "value": "Certificate corrupted."
     },
     {
       "name": "Install_Error_MAX_QUANTITY_REACHED",
-      "value": "The number of certificates has reached the upper limit. Please clear the certificates"
+      "value": "The number of certificates has reached the upper limit, Please clear the certificates."
     },
     {
       "name": "OK",
