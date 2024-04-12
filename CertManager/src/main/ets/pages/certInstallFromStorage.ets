@@ -18,9 +18,8 @@ import HeadComponent from '../common/component/headComponent';
 import CmFaPresenter from '../presenter/CmFaPresenter';
 import { GlobalContext } from '../common/GlobalContext';
 import ComponentConfig from '../common/component/ComponentConfig';
-import userAuth from '@ohos.userIAM.userAuth';
-import { BusinessError } from '@ohos.base';
 import router from '@ohos.router';
+import checkUserAuthModel from '../model/CheckUserAuthModel';
 
 
 @Entry
@@ -33,64 +32,18 @@ struct CertificateComponent {
   @State installCertFlag: boolean = false;
   @State pageKey: string = '';
 
-  getIdentity() {
-    const authParam: userAuth.AuthParam = {
-      challenge: new Uint8Array([49, 49, 49, 49, 49, 49]),
-      authType: [userAuth.UserAuthType.FINGERPRINT, userAuth.UserAuthType.PIN],
-      authTrustLevel: userAuth.AuthTrustLevel.ATL3
-    }
-    const widgetParam: userAuth.WidgetParam = {
-      title: '请进行身份验证'
-    };
-    let that = this;
-    try {
-      let userAuthInstance = userAuth.getUserAuthInstance(authParam, widgetParam);
-      console.log('get userAuth instance success: ' + userAuthInstance);
-      userAuthInstance.on('result', {
-        onResult(result) {
-          userAuthInstance.off('result');
-          if (result.result === userAuth.UserAuthResultCode.SUCCESS) {
-            if (that.installCertFlag) {
-              that.mFaPresenter.startInstallCert();
-            } else {
-              that.mFaPresenter.startInstallEvidence();
-            }
-          }
-        }
-      })
-      userAuthInstance.start();
-    } catch (error) {
-      const err: BusinessError = error as BusinessError;
-      console.log(`auth catch error.code is ${err?.code},message is ${err?.message}`);
-    }
-  }
-
   checkUserAuth() {
-    try {
-      userAuth.getAvailableStatus(userAuth.UserAuthType.FINGERPRINT, userAuth.AuthTrustLevel.ATL3)
-      this.getIdentity()
-    } catch (error) {
-      const err: BusinessError = error as BusinessError;
-      console.log(`not support.code is ${err.code}, mesage is ${err.message}`);
-      if (err.code === userAuth.UserAuthResultCode.TYPE_NOT_SUPPORT ||
-        err.code === userAuth.UserAuthResultCode.NOT_ENROLLED) {
-        try {
-          userAuth.getAvailableStatus(userAuth.UserAuthType.PIN, userAuth.AuthTrustLevel.ATL3);
-          this.getIdentity();
-        } catch (error) {
-          const err: BusinessError = error as BusinessError;
-          console.log(`not support.code is ${err.code}, mesage is ${err.message}`);
-          if (err.code === userAuth.UserAuthResultCode.NOT_ENROLLED ||
-            err.code === userAuth.UserAuthResultCode.TYPE_NOT_SUPPORT) {
-            if (this.installCertFlag) {
-              this.mFaPresenter.startInstallCert();
-            } else {
-              this.mFaPresenter.startInstallEvidence();
-            }
-          }
+    let titleStr = getContext().resourceManager.getStringSync($r('app.string.Identity_Authentication'));
+    checkUserAuthModel.auth(titleStr, (authResult: boolean) => {
+      if (authResult) {
+        console.log('checkUserAuth success');
+        if (this.installCertFlag) {
+          this.mFaPresenter.startInstallCert();
+        } else {
+          this.mFaPresenter.startInstallEvidence();
         }
       }
-    }
+    })
   }
 
   build() {
