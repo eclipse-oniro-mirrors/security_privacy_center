@@ -19,6 +19,7 @@ import { CredentialAbstractVo } from './CertManagerVo/CredentialAbstractVo';
 import { CredentialVo } from './CertManagerVo/CredentialVo';
 import { BusinessError } from '@ohos.base';
 import CertManager from '@ohos.security.certManager';
+import cert from '@ohos.security.cert';
 
 const TAG = 'CertManager Model: ';
 
@@ -59,7 +60,7 @@ export class CertMangerModel {
 
     switch (optType) {
       case CMModelOptType.CM_MODEL_OPT_SYSTEM_CA:
-        this.getSystemTrustedCertificateList((errCode:CMModelErrorCode, certList: Array<CertAbstractVo>) => {
+        this.getSystemTrustedCertificateList((errCode: CMModelErrorCode, certList: Array<CertAbstractVo>) => {
           callback(errCode, certList);
         });
         break;
@@ -72,6 +73,9 @@ export class CertMangerModel {
         this.getAppCredList((errCode: CMModelErrorCode, credList: Array<CredentialAbstractVo>) => {
           callback(errCode, credList);
         });
+        break;
+      case CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED:
+        callback(CMModelErrorCode.CM_MODEL_ERROR_NOT_SUPPORT);
         break;
       default:
         callback(CMModelErrorCode.CM_MODEL_ERROR_UNKNOWN_OPT, undefined);
@@ -99,6 +103,9 @@ export class CertMangerModel {
           callback(errCode, credInfo);
         });
         break;
+      case CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED:
+        callback(CMModelErrorCode.CM_MODEL_ERROR_NOT_SUPPORT);
+        break;
       default:
         callback(CMModelErrorCode.CM_MODEL_ERROR_UNKNOWN_OPT, undefined);
         break;
@@ -110,11 +117,13 @@ export class CertMangerModel {
 
     switch (optType) {
       case CMModelOptType.CM_MODEL_OPT_USER_CA:
+        console.log(TAG + 'deleteUserTrustedCertificate start');
         this.deleteUserTrustedCertificate(uri, (errCode: CMModelErrorCode) => {
           callback(errCode);
         });
         break;
       case CMModelOptType.CM_MODEL_OPT_APP_CRED:
+        console.log(TAG + 'deleteAppCredential start');
         this.deleteAppCredential(uri, (errCode: CMModelErrorCode) => {
           callback(errCode);
         });
@@ -203,7 +212,7 @@ export class CertMangerModel {
     console.log(TAG + 'setAppAuth start');
     switch (optType) {
       case CMModelOptType.CM_MODEL_OPT_APP_CRED:
-        return new Promise((resolve, reject)=>{
+        return new Promise((resolve, reject) => {
           this.setAuthorizedAppStatus(uri, appUid, status, (errCode: CMModelErrorCode, data: string) => {
             if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
               resolve(void(data));
@@ -261,6 +270,17 @@ export class CertMangerModel {
         callback(CMModelErrorCode.CM_MODEL_ERROR_UNKNOWN_OPT);
         break;
     }
+  }
+
+  checkPassword(data: Uint8Array, pwd: string, callback: Function): void {
+    console.info(TAG + 'checkPassword start');
+    cert.createTrustAnchorsWithKeyStore(data, pwd).then((data) => {
+      console.info(TAG + 'checkPassword success');
+      callback(0)
+    }).catch((err: BusinessError) => {
+      console.info(TAG + 'checkPassword failed:' + JSON.stringify(err));
+      callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION)
+    })
   }
 
   private async getSystemTrustedCertificateList(callback: Function): Promise<void> {
@@ -421,7 +441,7 @@ export class CertMangerModel {
         }
         dateMap.set('颁发时间:', String(result.certInfo.notBefore));
         dateMap.set('有效期至:', String(result.certInfo.notAfter));
-        let certData:Uint8Array = result.certInfo.cert;
+        let certData: Uint8Array = result.certInfo.cert;
         let certInfo = new CertInfoVo(String(result.certInfo.uri), String(result.certInfo.certAlias),
           Boolean(result.certInfo.status), String(result.certInfo.issuerName), String(result.certInfo.subjectName),
           String(result.certInfo.serial), String(result.certInfo.notBefore),
@@ -496,7 +516,7 @@ export class CertMangerModel {
     try {
       let result = await CertManager.getPublicCertificate(certUri);
       if (result.credential !== undefined) {
-        let certData:Uint8Array = result.credential.credData;
+        let certData: Uint8Array = result.credential.credData;
         let credInfo = new CredentialVo(String(result.credential.type), String(result.credential.alias),
           String(result.credential.keyUri), Number(result.credential.certNum),
           Number(result.credential.keyNum), certData);
@@ -565,8 +585,12 @@ export class CertMangerModel {
     }
   }
 
-  private async setAuthorizedAppStatus(uri: string, appUid: string,
-                                       status: boolean, callback: Function): Promise<void> {
+  private async setAuthorizedAppStatus(
+    uri: string,
+    appUid: string,
+    status: boolean,
+    callback: Function
+  ): Promise<void> {
     console.log(TAG + 'setAuthorizedAppStatus start');
     try {
       if (status) {
@@ -605,12 +629,17 @@ export class CertMangerModel {
         callback(CMModelErrorCode.CM_MODEL_ERROR_ALIAS_LENGTH_REACHED_LIMIT)
       } else {
         console.error(TAG + 'installUserCertificate failed with err, message: ' + e.message + ', code: ' + e.code);
+        callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION);
       }
     }
   }
 
-  private async installPublicCertificate(data: Uint8Array, alias: string,
-                                      pwd: string, callback: Function): Promise<void> {
+  private async installPublicCertificate(
+    data: Uint8Array,
+    alias: string,
+    pwd: string,
+    callback: Function
+  ): Promise<void> {
     console.info(TAG + 'installPublicCertificate start');
     try {
       await CertManager.installPublicCertificate(data, pwd, alias);
@@ -618,11 +647,18 @@ export class CertMangerModel {
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS);
     } catch (err) {
       let e: BusinessError = err as BusinessError;
-      console.error(TAG + 'installPublicCertificate failed with err, message: ' + e.message + ', code: ' + e.code);
-      callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION);
+      if (e.code === CertManager.CMErrorCode.CM_ERROR_INCORRECT_FORMAT) {
+        callback(CMModelErrorCode.CM_MODEL_ERROR_INCORRECT_FORMAT)
+      } else if (e.code === CertManager.CMErrorCode.CM_ERROR_CERT_NUM_REACHED_LIMIT) {
+        callback(CMModelErrorCode.CM_MODEL_ERROR_MAX_QUANTITY_REACHED)
+      } else if (e.code === CertManager.CMErrorCode.CM_ERROR_ALIAS_LENGTH_REACHED_LIMIT) {
+        callback(CMModelErrorCode.CM_MODEL_ERROR_ALIAS_LENGTH_REACHED_LIMIT)
+      } else {
+        console.error(TAG + 'installPublicCertificate failed with err, message: ' + e.message + ', code: ' + e.code);
+        callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION);
+      }
     }
   }
-
 }
 
 let certMangerModel = new CertMangerModel();

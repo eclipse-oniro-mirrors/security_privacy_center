@@ -19,18 +19,81 @@ import CmFaPresenter from '../presenter/CmFaPresenter';
 import { GlobalContext } from '../common/GlobalContext';
 import ComponentConfig from '../common/component/ComponentConfig';
 import router from '@ohos.router';
+import { CustomContentDialog } from '@ohos.arkui.advanced.Dialog';
 import checkUserAuthModel from '../model/CheckUserAuthModel';
 
+const COPIES_NUM: number = 12;
 
 @Entry
 @Component
 struct CertificateComponent {
-  @State touchedItem: boolean = false;
   @State columnMargin: string = '12vp';
   @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
-  @State isTouched: boolean = false;
   @State installCertFlag: boolean = false;
-  @State pageKey: string = '';
+
+  @Styles normalStyle() {
+    .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
+    .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+  };
+  @Styles pressedStyle() {
+    .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
+    .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+  };
+
+  rootCertificateDialog: CustomDialogController = new CustomDialogController({
+    alignment: DialogAlignment.Center,
+    builder: CustomContentDialog({
+      contentBuilder: () => {
+        this.rootCertificateContent();
+      },
+      contentAreaPadding: { right: $r('app.float.wh_value_0') },
+      buttons: [
+        {
+          value: $r('app.string.root_certificate_cancel'),
+          buttonStyle: ButtonStyleMode.TEXTUAL,
+          action: () => {
+          }
+        },
+        {
+          value: $r('app.string.root_certificate_continue'),
+          buttonStyle: ButtonStyleMode.TEXTUAL,
+          action: () => {
+            this.installCertFlag = true;
+            this.checkUserAuth();
+          }
+        }
+      ]
+    })
+  })
+
+  @Builder
+  rootCertificateContent(): void {
+    Column() {
+      Text($r('app.string.root_certificate'))
+        .height($r('app.float.wh_value_56'))
+        .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
+        .fontWeight(FontWeight.Medium)
+        .margin({
+          left: $r('app.float.wh_value_24'),
+          right: $r('app.float.wh_value_24')
+        })
+        .alignSelf(ItemAlign.Start)
+
+      Text($r('app.string.root_certificate_message'))
+        .fontSize($r('sys.float.ohos_id_text_size_body1'))
+        .fontWeight(FontWeight.Regular)
+        .fontColor($r('sys.color.ohos_id_color_primary'))
+        .margin({
+          left: $r('app.float.wh_value_24'),
+          right: $r('app.float.wh_value_24')
+        })
+        .alignSelf(ItemAlign.Start)
+    }
+    .width(WidthPercent.WH_100_100)
+    .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+    .backgroundColor($r('sys.color.ohos_id_color_dialog_bg'))
+  }
 
   checkUserAuth() {
     let titleStr = getContext().resourceManager.getStringSync($r('app.string.Identity_Authentication'));
@@ -48,8 +111,11 @@ struct CertificateComponent {
 
   build() {
     Column() {
-      GridRow({ columns: 12, gutter: vp2px(1) === 2 ? '12vp' : '0vp' }) {
-        GridCol({ span: 12 }) {
+      GridRow({
+        columns: COPIES_NUM,
+        gutter: vp2px(1) === 2 ? $r('app.float.wh_value_12') : $r('app.float.wh_value_0')
+      }) {
+        GridCol({ span: COPIES_NUM }) {
           Row({}) {
             Column({ space: this.columnMargin }) {
               HeadComponent({ headName: $r('app.string.installInStorageDevice') })
@@ -66,34 +132,18 @@ struct CertificateComponent {
                           .textAlign(TextAlign.Start)
                       }
                     }
+                    .stateStyles({
+                      normal: this.normalStyle,
+                      pressed: this.pressedStyle
+                    })
                     .margin({ top: $r('app.float.wh_value_4') })
                     .height($r('app.float.wh_value_48'))
                     .onClick(() => {
-                      AlertDialog.show({
-                        title: $r('app.string.root_certificate'),
-                        message: $r('app.string.root_certificate_message'),
-                        autoCancel: true,
-                        alignment:DialogAlignment.Center,
-                        offset: { dx: 0, dy: 0},
-                        gridCount: 4,
-                        primaryButton: {
-                          value: $r('app.string.root_certificate_cancel'),
-                          action: () => {
-                          }
-                        },
-                        secondaryButton: {
-                          value: $r('app.string.root_certificate_continue'),
-                          action: () => {
-                            this.installCertFlag = true
-                            this.checkUserAuth()
-                          }
-                        }
-                      })
+                      this.rootCertificateDialog.open();
                     })
 
                     Divider()
-                      .strokeWidth(1)
-                      .color($r("app.color.sys_list_divider_color_000000"))
+                      .color($r("sys.color.ohos_id_color_list_separator"))
                       .margin({
                         left: $r('app.float.wh_value_12'),
                         right: $r('app.float.wh_value_12')
@@ -109,28 +159,20 @@ struct CertificateComponent {
                           .textAlign(TextAlign.Start)
                       }
                       .onClick(() => {
-                        this.installCertFlag = false
-                        this.checkUserAuth()
+                        this.installCertFlag = false;
+                        this.checkUserAuth();
                       })
                     }
+                    .stateStyles({
+                      normal: this.normalStyle,
+                      pressed: this.pressedStyle
+                    })
                     .height($r('app.float.wh_value_48'))
                   }
                   .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
                   .borderRadius($r('app.float.radius_20'))
                   .height(ComponentConfig.WH_100_100)
                   .width(ComponentConfig.WH_100_100)
-                  .linearGradient(this.isTouched ? {
-                    angle: 90,
-                    direction: GradientDirection.Right,
-                    colors: [[$r("app.color.DCEAF9"), 0.0], [$r("app.color.FAFAFA"), 1.0]]
-                  } : {
-                    angle: 90,
-                    direction: GradientDirection.Right,
-                    colors: [
-                      [$r("sys.color.ohos_id_color_foreground_contrary"), 1],
-                      [$r("sys.color.ohos_id_color_foreground_contrary"), 1]
-                    ]
-                  })
                 }
                 .height($r('app.float.wh_value_104'))
               }
@@ -146,7 +188,7 @@ struct CertificateComponent {
           .height(WidthPercent.WH_100_100);
         }
       }
-      .margin(vp2px(1) === 2 ? '24vp' : '0vp')
+      .margin(vp2px(1) === 2 ? $r('app.float.item_common_horizontal_margin') : $r('app.float.wh_value_0'))
       .width(WidthPercent.WH_100_100)
       .height(WidthPercent.WH_100_100);
     }
@@ -165,6 +207,8 @@ struct CertificateComponent {
       })
     } else if (uri === 'requestAuthorize') {
       this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
+    } else {
+      console.info('The want type is not supported');
     }
   }
 }

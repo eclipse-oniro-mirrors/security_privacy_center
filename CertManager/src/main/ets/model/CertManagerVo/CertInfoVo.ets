@@ -24,9 +24,9 @@ export class CertInfoVo {
   public notAfter: string;
   public fingerprintSha256: string;
   public cert: Uint8Array;
-  public subjectNameMap :Map<string, string>;
-  public issuerNameMap :Map<string, string>;
-  public dateMap :Map<string, string>;
+  public subjectNameMap: Map<string, string>;
+  public issuerNameMap: Map<string, string>;
+  public dateMap: Map<string, string>;
 
   constructor(
     uri: string,
@@ -40,8 +40,8 @@ export class CertInfoVo {
     fingerprintSha256: string,
     cert: Uint8Array,
     subjectNameMap: Map<string, string>,
-    issuerNameMap :Map<string, string>,
-    dateMap :Map<string, string>) {
+    issuerNameMap: Map<string, string>,
+    dateMap: Map<string, string>) {
     this.uri = uri;
     this.certAlias = certAlias;
     this.status = status;

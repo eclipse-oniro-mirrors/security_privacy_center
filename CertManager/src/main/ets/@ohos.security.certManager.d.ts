@@ -71,8 +71,8 @@ declare namespace CertManagerFunc {
     function getAllPublicCertificates(callback: AsyncCallback<CMResult>) : void;
     function getAllPublicCertificates() : Promise<CMResult>;
 
-    function getPrivateCertificateList(callback: AsyncCallback<CMResult>) : void;
-    function getPrivateCertificateList() : Promise<CMResult>;
+    function getAllAppPrivateCertificates(callback: AsyncCallback<CMResult>) : void;
+    function getAllAppPrivateCertificates() : Promise<CMResult>;
 
     function getPublicCertificate(keyUri: string, callback: AsyncCallback<CMResult>) : void;
     function getPublicCertificate(keyUri: string, ) : Promise<CMResult>;

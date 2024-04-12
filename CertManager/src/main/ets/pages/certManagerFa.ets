@@ -13,15 +13,17 @@
  * limitations under the License.
  */
 
-import { WidthPercent,  ConfigValue } from '../common/util/ConfigData';
+import { WidthPercent } from '../common/util/ConfigData';
 import HeadComponent from '../common/component/headComponent';
 import { SubEntryComponent } from '../common/component/subEntryComponent';
 import CmFaPresenter from '../presenter/CmFaPresenter';
 import { GlobalContext } from '../common/GlobalContext';
 import router from '@ohos.router';
 import promptAction from '@ohos.promptAction';
+import { CustomContentDialog } from '@ohos.arkui.advanced.Dialog';
 
 const DISPLAY_DURATION: number = 2000;
+const COPIES_NUM: number = 12;
 
 class CertListItem {
   public targetPage: string = '';
@@ -31,18 +33,26 @@ class CertListItem {
 @Entry
 @Component
 struct CertificateComponent {
-  @State touchedItem: boolean = false;
   @State columnMargin: string = '12vp';
   @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
   private listItems: Array<CertListItem> = [
     { targetPage: 'pages/trustedCa', title: $r('app.string.trustedEvidence') },
     { targetPage: 'pages/cerEvidenceFa', title: $r('app.string.userEvidence') }
   ];
+  @Styles normalStyle() {
+    .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
+  };
+  @Styles pressedStyle() {
+    .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
+  };
 
   build() {
     Column() {
-      GridRow({ columns: 12, gutter: vp2px(1) === 2 ? '12vp' : '0vp' }) {
-        GridCol({ span: { xs: 12, sm: 12, md: 12, lg: 8 }, offset: { xs: 0, sm: 0, md: 0, lg: 2 } }) {
+      GridRow({
+        columns: COPIES_NUM,
+        gutter: vp2px(1) === 2 ? $r('app.float.wh_value_12') : $r('app.float.wh_value_0')
+      }) {
+        GridCol({ span: COPIES_NUM }) {
           Column({ space: this.columnMargin }) {
             HeadComponent({ headName: $r('app.string.certificateTab') })
             Column({ space: this.columnMargin }) {
@@ -51,17 +61,21 @@ struct CertificateComponent {
                   ListItem() {
                     SubEntryComponent({ targetPage: item.targetPage, title: item.title })
                   }
+                  .stateStyles({
+                    normal: this.normalStyle,
+                    pressed: this.pressedStyle
+                  });
                 }, (item: CertListItem) => JSON.stringify(item))
               }
               .padding($r('app.float.wh_value_4'))
               .divider({
                 strokeWidth: $r('app.float.sys_list_divider_strokeWidth_value'),
-                color: $r('app.color.sys_list_divider_color_000000'),
+                color: $r('sys.color.ohos_id_color_list_separator'),
                 startMargin: $r('app.float.wh_value_8'),
                 endMargin: $r('app.float.wh_value_8')
               })
               .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
-              .backgroundColor($r('app.color.user_list_backgroundColor_FFFFFF'))
+              .backgroundColor($r('sys.color.ohos_id_color_list_card_bg'))
 
               CertInstallComponent({ mFaPresenter: $mFaPresenter })
 
@@ -75,7 +89,7 @@ struct CertificateComponent {
           .height(WidthPercent.WH_100_100)
         }
       }
-      .margin(vp2px(1) === 2 ? '24vp' : '0vp')
+      .margin(vp2px(1) === 2 ? $r('app.float.item_common_horizontal_margin') : $r('app.float.wh_value_0'))
       .width(WidthPercent.WH_100_100)
       .height(WidthPercent.WH_100_100);
     }
@@ -94,112 +108,83 @@ struct CertificateComponent {
       })
     } else if (uri === 'requestAuthorize') {
       this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
+    } else {
+      console.info('The want type is not supported');
     }
-  }
-}
-
-@CustomDialog
-@Component
-struct CustomDialogExampleDeleteAll {
-  controller?: CustomDialogController;
-  @Link deleteAll: CmFaPresenter;
-
-  build() {
-    Column() {
-      GridRow({ columns: 12, gutter: vp2px(1) === 2 ? '12vp' : '0vp', }) {
-        GridCol({ span: { xs: 12, sm: 12, md: 12, lg: 8 }, offset: { xs: 0, sm: 0, md: 0, lg: 2 } }) {
-          Column() {
-            Text($r('app.string.deleteAllCredDialogTitle'))
-              .height($r('app.float.wh_value_56'))
-              .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
-              .fontColor($r('sys.color.ohos_id_color_text_primary'))
-              .fontWeight(FontWeight.Medium)
-              .margin({
-                left: $r('app.float.wh_value_24'),
-                right: $r('app.float.wh_value_24')
-              })
-              .alignSelf(ItemAlign.Start)
-            Text($r('app.string.deleteAllCredDialogMessage'))
-              .fontSize($r('sys.float.ohos_id_text_size_body1'))
-              .fontWeight(FontWeight.Regular)
-              .fontColor($r('sys.color.ohos_id_color_text_primary'))
-              .margin({
-                top: $r('app.float.wh_value_16'),
-                left: $r('app.float.wh_value_24'),
-                right: $r('app.float.wh_value_24')
-              })
-              .alignSelf(ItemAlign.Start)
-
-            Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
-              justifyContent: FlexAlign.SpaceAround }) {
-              Button($r('app.string.deleteAllCredCancel'))
-                .onClick(() => {
-                  if (this.controller !== undefined) {
-                    this.controller.close()
-                  }
-                })
-                .backgroundColor($r('app.color.credentials_app_finish_backgroundColor'))
-                .fontSize($r('sys.float.ohos_id_text_size_button1'))
-                .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
-                .width($r('app.float.wh_value_152'))
-                .height($r('app.float.wh_value_40'))
-              Divider()
-                .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
-                .color($r('sys.color.ohos_id_color_list_separator'))
-                .vertical(true)
-                .height($r('app.float.wh_value_40'))
-                .opacity($r('app.float.opacity_0_2'))
-              Button($r('app.string.deleteAllCredDelete'))
-                .onClick(() => {
-                  this.deleteAll.uninstallAllCert();
-                  if (this.controller !== undefined) {
-                    this.controller.close()
-                    promptAction.showToast({
-                      message: $r('app.string.delete_success'),
-                      duration: DISPLAY_DURATION,
-                    })
-                  }
-                })
-                .backgroundColor($r('app.color.credentials_app_finish_backgroundColor'))
-                .fontSize($r('sys.float.ohos_id_text_size_button1'))
-                .fontColor($r('sys.color.ohos_id_color_warning'))
-                .width($r('app.float.wh_value_152'))
-                .height($r('app.float.wh_value_40'))
-            }
-            .height($r('app.float.wh_value_64'))
-            .padding({
-              bottom: $r('app.float.wh_value_16')
-            })
-            .margin({
-              top: $r('app.float.wh_value_16'),
-              left: $r('app.float.wh_value_24'),
-              right: $r('app.float.wh_value_24')
-            })
-          }
-          .width(WidthPercent.WH_100_100)
-          .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
-          .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
-        }
-      }
-    }
-    .margin({
-      bottom: $r('sys.float.ohos_id_dialog_margin_bottom'),
-      left: $r('sys.float.ohos_id_dialog_margin_start'),
-      right: $r('sys.float.ohos_id_dialog_margin_end'),
-    })
   }
 }
 
 @Component
 struct DeleteAll {
-  @State isTouched: boolean = false;
   @Link mFaPresenter: CmFaPresenter;
+  @Styles normalStyle() {
+    .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
+    .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+  };
+  @Styles pressedStyle() {
+    .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
+    .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+  };
+
   deleteWarnDialog: CustomDialogController = new CustomDialogController({
-    builder: CustomDialogExampleDeleteAll({ deleteAll: $mFaPresenter }),
-    autoCancel: true,
-    customStyle: true,
-    alignment: DialogAlignment.Bottom,
+    builder: CustomContentDialog({
+      contentBuilder: () => {
+        this.deleteWarnContent();
+      },
+      contentAreaPadding: {right: $r('app.float.wh_value_0')},
+      buttons: [
+        {
+          value: $r('app.string.deleteAllCredCancel'),
+          buttonStyle: ButtonStyleMode.TEXTUAL,
+          action: () => {
+            this.deleteWarnDialog?.close();
+          }
+        },
+        {
+          value: $r('app.string.deleteAllCredDelete'),
+          buttonStyle: ButtonStyleMode.TEXTUAL,
+          action: () => {
+            this.mFaPresenter.uninstallAllCert();
+            this.deleteWarnDialog?.close();
+            promptAction.showToast({
+              message: $r('app.string.delete_success'),
+              duration: DISPLAY_DURATION,
+            })
+          },
+          role: ButtonRole.ERROR
+        }
+      ]
+    }),
   })
+
+  @Builder
+  deleteWarnContent(): void {
+    Column() {
+      Text($r('app.string.deleteAllCredDialogTitle'))
+        .height($r('app.float.wh_value_56'))
+        .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
+        .fontWeight(FontWeight.Medium)
+        .margin({
+          left: $r('app.float.wh_value_24'),
+          right: $r('app.float.wh_value_24')
+        })
+        .alignSelf(ItemAlign.Start)
+
+      Text($r('app.string.deleteAllCredDialogMessage'))
+        .fontSize($r('sys.float.ohos_id_text_size_body1'))
+        .fontWeight(FontWeight.Regular)
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
+        .margin({
+          top: $r('app.float.wh_value_16'),
+          left: $r('app.float.wh_value_24'),
+          right: $r('app.float.wh_value_24')
+        })
+        .alignSelf(ItemAlign.Start)
+    }
+    .width(WidthPercent.WH_100_100)
+    .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+  }
 
   build() {
     Row() {
@@ -207,17 +192,11 @@ struct DeleteAll {
         .fontSize($r('app.float.font_16'))
         .lineHeight($r('app.float.wh_value_22'))
         .fontWeight(FontWeight.Medium)
-        .fontColor($r('app.color.cm_del_all_font_color'))
+        .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
         .padding({ left: $r('app.float.distance_8') })
-        .linearGradient(this.isTouched ? {
-          angle: 90,
-          direction: GradientDirection.Right,
-          colors: [[$r('app.color.DCEAF9'), 0.0], [$r('app.color.FAFAFA'), 1.0]]
-        } : {
-          angle: 90,
-          direction: GradientDirection.Right,
-          colors: [[$r('sys.color.ohos_id_color_foreground_contrary'), 1],
-            [$r('sys.color.ohos_id_color_foreground_contrary'), 1]]
+        .stateStyles({
+          normal: this.normalStyle,
+          pressed: this.pressedStyle
         })
         .height(WidthPercent.WH_100_100)
         .borderRadius($r('app.float.radius_20'))
@@ -228,16 +207,6 @@ struct DeleteAll {
     .height($r('app.float.wh_value_56'))
     .width(WidthPercent.WH_100_100)
     .borderRadius($r('app.float.radius_24'))
-    .onTouch((event?: TouchEvent) => {
-      if (event !== undefined) {
-        if (event.type === TouchType.Down) {
-          this.isTouched = true;
-        }
-        if (event.type === TouchType.Up) {
-          this.isTouched = false;
-        }
-      }
-    })
     .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
     .onClick(() => {
       this.deleteWarnDialog.open();
@@ -247,8 +216,15 @@ struct DeleteAll {
 
 @Component
 export struct CertInstallComponent {
-  @State isTouched: boolean = false;
   @Link mFaPresenter: CmFaPresenter;
+  @Styles normalStyle() {
+    .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
+    .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+  };
+  @Styles pressedStyle() {
+    .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
+    .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+  };
 
   build() {
     Column() {
@@ -257,7 +233,7 @@ export struct CertInstallComponent {
           Text($r('app.string.installInStorageDevice'))
             .fontSize($r('app.float.font_16'))
             .lineHeight($r('app.float.wh_value_22'))
-            .fontColor($r('app.color.font_color_182431'))
+            .fontColor($r('sys.color.ohos_id_color_text_primary'))
             .fontWeight(FontWeight.Medium)
             .margin({ left: $r('app.float.wh_value_8') });
         }
@@ -272,25 +248,9 @@ export struct CertInstallComponent {
       .borderRadius($r('app.float.radius_20'))
       .height(WidthPercent.WH_100_100)
       .width(WidthPercent.WH_100_100)
-      .linearGradient(this.isTouched ? {
-        angle: 90,
-        direction: GradientDirection.Right,
-        colors: [[$r('app.color.DCEAF9'), 0.0], [$r('app.color.FAFAFA'), 1.0]]
-      } : {
-        angle: 90,
-        direction: GradientDirection.Right,
-        colors: [[$r('sys.color.ohos_id_color_foreground_contrary'), 1],
-          [$r('sys.color.ohos_id_color_foreground_contrary'), 1]]
-      })
-      .onTouch((event?: TouchEvent) => {
-        if (event !== undefined) {
-          if (event.type === TouchType.Down) {
-            this.isTouched = true;
-          }
-          if (event.type === TouchType.Up) {
-            this.isTouched = false;
-          }
-        }
+      .stateStyles({
+        normal: this.normalStyle,
+        pressed: this.pressedStyle
       })
     }
     .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))

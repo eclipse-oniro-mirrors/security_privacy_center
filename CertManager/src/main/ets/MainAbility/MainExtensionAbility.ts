@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import hilog from '@ohos.hilog';
 import Want from '@ohos.app.ability.Want';
 import UIExtensionContentSession from '@ohos.app.ability.UIExtensionContentSession';
 import { GlobalContext, PwdStore } from '../common/GlobalContext';
@@ -21,15 +20,15 @@ import UIExtensionAbility from '@ohos.app.ability.UIExtensionAbility';
 
 export default class MainExtensionAbility extends UIExtensionAbility {
   onCreate(): void {
-    hilog.info(0x0000, 'testTag', '%{public}s', 'MainExtensionAbility onCreate');
+    console.log('[CertManager] MainExtensionAbility onCreate');
   }
 
   onDestroy(): void {
-    hilog.info(0x0000, 'testTag', '%{public}s', 'UIExtensionAbility onDestroy');
+    console.log('[CertManager] MainExtensionAbility onDestroy');
   }
 
   onSessionCreate(want: Want, session: UIExtensionContentSession): void {
-    hilog.info(0x0000, 'testTag', '%{public}s', 'MainExtensionAbility onSessionCreate');
+    console.log('[CertManager] MainExtensionAbility onSessionCreate');
     let param: Record<string, Object> = {
       'session': session
     }
@@ -44,16 +43,16 @@ export default class MainExtensionAbility extends UIExtensionAbility {
 
   onSessionDestroy(): void {
     // Main window is destroyed, release UI related resources
-    hilog.info(0x0000, 'testTag', '%{public}s', 'MainExtensionAbility onSessionDestroy');
+    console.log('[CertManager] MainExtensionAbility onSessionDestroy');
   }
 
   onForeground(): void {
     // Ability has brought to foreground
-    hilog.info(0x0000, 'testTag', '%{public}s', 'MainExtensionAbility onForeground');
+    console.log('[CertManager] MainExtensionAbility onForeground');
   }
 
   onBackground(): void {
     // Ability has back to background
-    hilog.info(0x0000, 'testTag', '%{public}s', 'MainExtensionAbility onBackground');
+    console.log('[CertManager] MainExtensionAbility onBackground');
   }
 }

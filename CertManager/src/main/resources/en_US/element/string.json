@@ -56,7 +56,6 @@
       "name": "deleteAllCred",
       "value": "Delete All Credentials and Certificates"
     },
-
     {
       "name": "deleteAllCredDialogTitle",
       "value": "Delete All Credentials and Certificates"
@@ -111,7 +110,7 @@
     },
     {
       "name": "installAliasInputInfo",
-      "value": "Attention: This certificate issuer may check all traffic entering and leaving the device\nThe packets contain：CA certificate"
+      "value": "Attention: certificate names only support English and numbers"
     },
     {
       "name": "managerAuthApp",

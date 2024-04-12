@@ -14,12 +14,13 @@
  */
 
 import HeadComponent from '../common/component/headComponent';
-import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/ConfigData';
+import { WidthPercent, ConfigValue } from '../common/util/ConfigData';
 import router from '@ohos.router';
 import CmInstallPresenter from '../presenter/CmInstallPresenter';
 import CmFaPresenter from '../presenter/CmFaPresenter';
 import { GlobalContext } from '../common/GlobalContext';
-import { RouterFileVo } from '../model/CertManagerVo/RouterInfoVo';
+import { RouterFileVo, RouterParams } from '../model/CertManagerVo/RouterInfoVo';
+import { CMModelErrorCode } from '../model/CertMangerModel';
 
 @Entry
 @Component
@@ -27,6 +28,7 @@ struct CertInstallAliasInput {
   @State mAppCredAuthPresenter: CmInstallPresenter = CmInstallPresenter.getInstance();
   @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
   @State certAlias: string = '';
+  @State isCertLong: boolean = false;
 
   onPageShow() {
     let uri = GlobalContext.getContext().getAbilityWant().uri;
@@ -38,6 +40,8 @@ struct CertInstallAliasInput {
       })
     } else if (uri === 'requestAuthorize') {
       this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
+    } else {
+      console.info('The want type is not supported');
     }
   }
 
@@ -55,15 +59,19 @@ struct CertInstallAliasInput {
           })
           .alignSelf(ItemAlign.Start)
 
-        TextInput()
+        TextInput({ text: this.certAlias })
           .type(InputType.Normal)
           .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
           .enterKeyType(EnterKeyType.Done)
           .fontSize($r('sys.float.ohos_id_text_size_body1'))
           .fontWeight(FontWeight.Medium)
-          .fontColor($r('sys.color.ohos_id_color_text_primary'))
+          .defaultFocus(true)
+          .fontColor($r('sys.color.ohos_id_color_text_hint'))
           .onChange((value: string) => {
             this.certAlias = value;
+            if (value.length === 0) {
+              this.isCertLong = false;
+            }
           })
           .maxLength(ConfigValue.ALIAS_MAX_LENGTH)
           .margin({
@@ -73,15 +81,16 @@ struct CertInstallAliasInput {
           .height($r('app.float.distance_48'))
 
         Row() {
-          Divider().color($r('app.color.CertManager_Divider_Color_182431'))
+          Divider().color($r('sys.color.ohos_id_color_list_separator'))
         }
         .margin({
           left: $r('app.float.distance_24'),
           right: $r('app.float.distance_24'),
         })
 
-        Text($r('app.string.installAliasInputInfo'))
-          .fontColor($r('sys.color.ohos_id_color_text_primary'))
+        Text(this.isCertLong ? $r('app.string.inputAliasWarn') : $r('app.string.installAliasInputInfo'))
+          .fontColor(this.isCertLong ? $r('sys.color.ohos_id_color_warning')
+            : $r('sys.color.ohos_id_color_text_primary'))
           .fontWeight(FontWeight.Regular)
           .fontSize($r('sys.float.ohos_id_text_size_body2'))
           .margin({
@@ -103,7 +112,7 @@ struct CertInstallAliasInput {
               .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
           }
           .type(ButtonType.Capsule)
-          .backgroundColor($r('app.color.install_cancel_bt_bg_color'))
+          .backgroundColor($r('sys.color.ohos_id_color_dialog_bg'))
           .width($r('app.float.component_button_width_phone'))
           .height($r('app.float.application_button_height'))
           .margin({
@@ -129,8 +138,20 @@ struct CertInstallAliasInput {
               right: $r('app.float.distance_24'),
             })
             .onClick(() => {
-              let fileInfo: RouterFileVo = router.getParams() as RouterFileVo;
-              this.mAppCredAuthPresenter.installCert(fileInfo.uri, this.certAlias, fileInfo.suffix);
+              let routerParams: RouterParams = router.getParams() as RouterParams;
+              let fileInfo: RouterFileVo = routerParams.fileInfo as RouterFileVo;
+              let pwd: string = routerParams.pwd || '';
+              this.mAppCredAuthPresenter.checkCertNameLength(fileInfo.uri, this.certAlias, fileInfo.suffix, pwd)
+                .then((result: number) => {
+                  if (result !== CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
+                    console.info("CertNameLength reached limit!");
+                    this.isCertLong = true;
+                  } else {
+                    console.info("CertNameLength is within the limit !");
+                    this.isCertLong = false;
+                    this.mAppCredAuthPresenter.installCert(fileInfo.uri, this.certAlias, fileInfo.suffix);
+                  }
+                })
             })
           } else {
             Button() {
@@ -140,7 +161,7 @@ struct CertInstallAliasInput {
                 .fontColor($r('app.color.install_confirm_bt_font_color'))
             }
             .type(ButtonType.Capsule)
-            .backgroundColor($r('app.color.install_confirm_bt_bg_disable_color'))
+            .backgroundColor($r('app.color.install_confirm_bt_bg_color'))
             .width($r('app.float.component_button_width_phone'))
             .height($r('app.float.application_button_height'))
             .margin({

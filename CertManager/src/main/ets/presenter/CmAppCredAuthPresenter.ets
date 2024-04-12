@@ -49,7 +49,6 @@ export default class CmAppCredAuthPresenter {
 
   updateAppNameFromUid(uid: string): void {
     try {
-      console.log('getAppNameFromUid start uid = ' + uid);
       BundleModel.getAppInfoList(Number(uid), (errCode: CMModelErrorCode, appInfo: AppInfoVo) => {
         if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
           this.appName = appInfo.appName;
@@ -69,46 +68,44 @@ export default class CmAppCredAuthPresenter {
       (errCode: CMModelErrorCode, credList: Array<CredentialAbstractVo>) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         this.credList = credList;
-        console.log('updateSystemTrustedCertificateList success, list: ' + JSON.stringify(credList));
+        console.log('updateAppCredList success.');
       } else {
-        console.error('updateSystemTrustedCertificateList failed');
+        console.error('updateAppCredList failed');
       }
     });
   }
 
   requestAuthorize(uri: string, appUid: string): void {
-    console.log(TAG + 'requestAuthorize start uri :' + uri + 'appUid: ' + appUid);
     let want = GlobalContext.getContext().getAbilityWant();
-
     certManagerModel.setAppAuth(CMModelOptType.CM_MODEL_OPT_APP_CRED, uri, appUid,
-      true, (errCode: CMModelErrorCode, data: string) => {
-        router.clear();
-        if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
-          console.log('requestAuthorize success data: ' + data);
-          if (want.parameters != undefined) {
-            want.parameters.authUri = data;
-            let ret1: Common.AbilityResult = {
-              resultCode: SUCCESS,
-              want: want
-            };
-            GlobalContext.getContext().getCmContext().terminateSelfWithResult(ret1);
-          } else {
-            let ret2: Common.AbilityResult = {
-              resultCode: FAIL,
-              want: want
-            };
-            console.error(TAG + 'requestAuthorize failed, undefined');
-            GlobalContext.getContext().getCmContext().terminateSelfWithResult(ret2);
-          }
+      true, (errCode: CMModelErrorCode, result: string) => {
+      router.clear();
+      if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
+        console.log('requestAuthorize success result: ' + result);
+        if (want.parameters != undefined) {
+          want.parameters.authUri = result;
+          let ret1: Common.AbilityResult = {
+            resultCode: SUCCESS,
+            want: want
+          };
+          GlobalContext.getContext().getCmContext().terminateSelfWithResult(ret1);
         } else {
-          console.error('requestAuthorize fail');
-          let ret3: Common.AbilityResult = {
+          let ret2: Common.AbilityResult = {
             resultCode: FAIL,
             want: want
           };
-          GlobalContext.getContext().getCmContext().terminateSelfWithResult(ret3);
+          console.error(TAG + 'requestAuthorize failed, undefined');
+          GlobalContext.getContext().getCmContext().terminateSelfWithResult(ret2);
         }
-      });
+      } else {
+        console.error('requestAuthorize fail');
+        let ret3: Common.AbilityResult = {
+          resultCode: FAIL,
+          want: want
+        };
+        GlobalContext.getContext().getCmContext().terminateSelfWithResult(ret3);
+      }
+    });
   }
 
   cancelProcess(): void {

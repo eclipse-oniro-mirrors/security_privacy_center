@@ -36,7 +36,8 @@ export default struct HeadComponent {
           .fillColor($r('sys.color.ohos_id_color_primary'))
       }
       .margin({ right: $r('app.float.wh_value_16') })
-      .backgroundColor(this.isTouch ? $r('app.color.color_E3E3E3_grey') : $r('app.color.color_00000000_transparent'))
+      .backgroundColor(this.isTouch ? $r('sys.color.ohos_id_color_click_effect')
+        : $r('sys.color.ohos_id_color_sub_background'))
       .visibility(this.icBackIsVisibility ? Visibility.Visible : Visibility.None)
       .onClick(() => {
         let length = Router.getLength();
@@ -48,13 +49,11 @@ export default struct HeadComponent {
         }
       })
       .onTouch((event?: TouchEvent) => {
-        if (event !== undefined) {
-          if (event.type === TouchType.Down) {
-            this.isTouch = true;
-          }
-          if (event.type === TouchType.Up) {
-            this.isTouch = false;
-          }
+        if (event?.type === TouchType.Down) {
+          this.isTouch = true;
+        }
+        if (event?.type === TouchType.Up) {
+          this.isTouch = false;
         }
       });
 
@@ -63,7 +62,7 @@ export default struct HeadComponent {
         .lineHeight($r('app.float.wh_value_33'))
         .fontFamily('HarmonyHeiTi-Bold')
         .fontWeight(FontWeight.Regular)
-        .fontColor($r('app.color.font_color_182431'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .maxLines(ComponentConfig.MAX_LINES_1)
         .textOverflow({ overflow: TextOverflow.Ellipsis })
         .textAlign(TextAlign.Start)

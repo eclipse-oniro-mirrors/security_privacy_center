@@ -18,7 +18,7 @@ export class CertAbstractVo {
   public certAlias: string;
   public status: boolean;
   public subjectName: string;
-  public subjectNameCN : string;
+  public subjectNameCN: string;
 
   constructor(uri: string, certAlias: string, status: boolean, subjectName: string, subjectNameCN: string) {
     this.uri = uri;
