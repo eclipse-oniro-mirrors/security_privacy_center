@@ -118,7 +118,6 @@ export default class CmShowAppCredPresenter {
             if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
               this.appInfoList.push(
                 new AppAuthorVo(String(appInfo.appImage), String(appUidList[i]), String(appInfo.appName), true));
-              console.log('appInfoList: ' + JSON.stringify(this.appInfoList));
             }
           });
         }

@@ -1062,7 +1062,7 @@
     },
     {
       "name": "request_auth_strokeWidth",
-      "value": "1"
+      "value": "1px"
     },
     {
       "name": "credentials_app_image_wh",
@@ -1258,7 +1258,7 @@
     },
     {
       "name": "Evidence_strokeWidth",
-      "value": "1"
+      "value": "1px"
     },
     {
       "name": "Evidence_startMargin",
@@ -1338,7 +1338,7 @@
     },
     {
       "name": "sys_list_divider_strokeWidth_value",
-      "value": "1"
+      "value": "1px"
     },
     {
       "name": "sys_list_divider_startMargin_value",
@@ -1354,7 +1354,7 @@
     },
     {
       "name": "user_list_divider_strokeWidth_value",
-      "value": "1"
+      "value": "1px"
     },
     {
       "name": "user_list_divider_startMargin_value",
@@ -1679,6 +1679,22 @@
     {
       "name": "deleteAllDialog_size",
       "value": "160vp"
+    },
+    {
+      "name": "text_opacity_0_4",
+      "value": "0.4"
+    },
+    {
+      "name": "offset_dy",
+      "value": "-20vp"
+    },
+    {
+      "name": "offset_dy_30",
+      "value": "-30vp"
+    },
+    {
+      "name": "scroll_bar_width",
+      "value": "3vp"
     }
   ]
 }

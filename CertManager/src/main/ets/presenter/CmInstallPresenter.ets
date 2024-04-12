@@ -22,6 +22,9 @@ import promptAction from '@ohos.promptAction';
 import { BusinessError } from '@ohos.base';
 
 const TAG = 'CMInstallPresenter: ';
+const DURATION = 2000;
+const gridCountNum: number = 4;
+const bottomNum: number = 100;
 
 export default class CmInstallPresenter {
   private static sInstance: CmInstallPresenter;
@@ -43,11 +46,13 @@ export default class CmInstallPresenter {
   }
 
   updateCertFileType(suffix: string): void {
-    console.info(TAG + 'updateCertFileType suffix: ' + suffix);
+    console.debug(TAG + 'updateCertFileType suffix: ' + suffix);
     if ((suffix === 'cer') || (suffix === 'pem')) {
       this.optType = CMModelOptType.CM_MODEL_OPT_USER_CA;
     } else if ((suffix === 'p12') || (suffix === 'jks') || (suffix === 'pfx')) {
       this.optType = CMModelOptType.CM_MODEL_OPT_APP_CRED;
+    } else {
+      console.debug(TAG, 'The file type is not supported. suffix: ' + suffix);
     }
   }
 
@@ -57,75 +62,130 @@ export default class CmInstallPresenter {
     });
   }
 
+  AuthenticationPassword(uri: string, suffix: string, pwd: string): Promise<number> {
+    return new Promise((resolve) => {
+      this.updateCertFileType(suffix);
+      this.getFileDataFromUri(uri, (data: Uint8Array) => {
+        certManagerModel.checkPassword(data, pwd, (err: CMModelErrorCode) => {
+          if (err === CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION) {
+            resolve(err)
+          } else {
+            resolve(0)
+          }
+        })
+      })
+    })
+  }
+
+  checkCertNameLength(uri: string, alias: string, suffix: string, pwd: string): Promise<number> {
+    return new Promise((resolve) => {
+      this.updateCertFileType(suffix);
+      this.getFileDataFromUri(uri, (data: Uint8Array) => {
+        certManagerModel.installCertOrCred(this.optType, alias, data, pwd, (errCode: CMModelErrorCode) => {
+          if (errCode === CMModelErrorCode.CM_MODEL_ERROR_ALIAS_LENGTH_REACHED_LIMIT) {
+            resolve(errCode)
+          } else {
+            resolve(0)
+          }
+        })
+      })
+    })
+  }
+
+  installSuccessTips(): void {
+    try {
+      promptAction.showToast({
+        message: this.optType === CMModelOptType.CM_MODEL_OPT_USER_CA ?
+        $r('app.string.Install_Cert_Success') : $r('app.string.Install_Cred_Success'),
+        duration: DURATION,
+        bottom: bottomNum
+      })
+    } catch (err) {
+      let e: BusinessError = err as BusinessError;
+      console.error(TAG, 'show result failed, message: ' + e.message + ', code: ' + e.code)
+    }
+  }
+
+  errorFormatTips(): void {
+    AlertDialog.show({
+      message: $r('app.string.Install_ERROR_INCORRECT_FORMAT'),
+      autoCancel: true,
+      alignment: DialogAlignment.Bottom,
+      offset: {
+        dx: $r('app.float.wh_value_0'), dy: $r('app.float.wh_value_0')
+      },
+      gridCount: gridCountNum,
+      primaryButton: {
+        value: $r('app.string.OK'),
+        action: () => {
+        }
+      },
+    })
+  }
+
+  maxQuantityReachedTips(): void {
+    AlertDialog.show({
+      message: $r('app.string.Install_Error_MAX_QUANTITY_REACHED'),
+      autoCancel: true,
+      alignment: DialogAlignment.Bottom,
+      offset: {
+        dx: $r('app.float.wh_value_0'), dy: $r('app.float.wh_value_0')
+      },
+      gridCount: gridCountNum,
+      primaryButton: {
+        value: $r('app.string.OK'),
+        action: () => {
+          router.back({
+            url: 'pages/certManagerFa'
+          })
+        }
+      },
+    })
+  }
+
+  installFailedTips(): void {
+    try {
+      promptAction.showToast({
+        message: this.optType === CMModelOptType.CM_MODEL_OPT_USER_CA ?
+        $r('app.string.Install_Cert_Failed') : $r('app.string.Install_Cred_Failed'),
+        duration: DURATION,
+        bottom: bottomNum
+      })
+    } catch (err) {
+      let e: BusinessError = err as BusinessError;
+      console.error(TAG, 'show result failed, message: ' + e.message + ', code: ' + e.code)
+    }
+  }
+
   installCert(uri: string, alias: string, suffix: string): void {
     this.updateCertFileType(suffix);
     this.getFileDataFromUri(uri, (data: Uint8Array) => {
       certManagerModel.installCertOrCred(this.optType, alias, data,
         GlobalContext.getContext().getPwdStore().getCertPwd(), (errCode: CMModelErrorCode) => {
-          console.info(TAG + 'installCertOrCred result: ' + JSON.stringify(errCode));
-          GlobalContext.getContext().getPwdStore().clearCertPwd();
-          if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
-            try {
-              promptAction.showToast({
-                message: this.optType === CMModelOptType.CM_MODEL_OPT_USER_CA ?
-                $r('app.string.Install_Cert_Success') : $r('app.string.Install_Cred_Success'),
-                duration: 2000,
-                bottom: 100
-              })
-            } catch (err) {
-              let e: BusinessError = err as BusinessError;
-              console.error(TAG, 'show result failed, message: ' + e.message + ', code: ' + e.code)
-            }
-          } else if (errCode === CMModelErrorCode.CM_MODEL_ERROR_INCORRECT_FORMAT) {
-            AlertDialog.show({
-              message: $r('app.string.Install_ERROR_INCORRECT_FORMAT'),
-              autoCancel: true,
-              alignment: DialogAlignment.Bottom,
-              offset: {
-                dx: 0, dy: 0
-              },
-              gridCount: 4,
-              primaryButton: {
-                value: $r('app.string.OK'),
-                action: () => {
-                  router.back()
-                }
-              },
-            })
-          } else if (errCode === CMModelErrorCode.CM_MODEL_ERROR_MAX_QUANTITY_REACHED) {
-            AlertDialog.show({
-              message: $r('app.string.Install_Error_MAX_QUANTITY_REACHED'),
-              autoCancel: true,
-              alignment: DialogAlignment.Bottom,
-              offset: {
-                dx: 0, dy: 0
-              },
-              gridCount: 4,
-              primaryButton: {
-                value: $r('app.string.OK'),
-                action: () => {
-                  router.back()
-                }
-              },
-            })
-          } else {
-            try {
-              promptAction.showToast({
-                message: this.optType === CMModelOptType.CM_MODEL_OPT_USER_CA ?
-                $r('app.string.Install_Cert_Failed') : $r('app.string.Install_Cred_Failed'),
-                duration: 2000,
-                bottom: 100
-              })
-            } catch (err) {
-              let e: BusinessError = err as BusinessError;
-              console.error(TAG, 'show result failed, message: ' + e.message + ', code: ' + e.code)
-            }
-          }
-          router.clear();
-          router.replaceUrl({
-            url: 'pages/certManagerFa'
-          });
+        console.info(TAG + 'installCertOrCred result: ' + JSON.stringify(errCode));
+        GlobalContext.getContext().getPwdStore().clearCertPwd();
+        switch (errCode) {
+          case CMModelErrorCode.CM_MODEL_ERROR_SUCCESS:
+            this.installSuccessTips();
+            break;
+
+          case CMModelErrorCode.CM_MODEL_ERROR_INCORRECT_FORMAT:
+            this.errorFormatTips();
+            break;
+
+          case CMModelErrorCode.CM_MODEL_ERROR_MAX_QUANTITY_REACHED:
+            this.maxQuantityReachedTips();
+            break;
+
+          default:
+            this.installFailedTips();
+            break;
+        }
+        router.clear();
+        router.pushUrl({
+          url: 'pages/certManagerFa'
         });
+      });
     });
   }
 }

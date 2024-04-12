@@ -57,7 +57,6 @@ export default class CmShowUserCaPresenter {
           }
         });
         this.certList = certList;
-        console.log('updateUserTrustedCertificateList success, list: ' + JSON.stringify(certList));
       } else {
         console.error(TAG + 'updateUserTrustedCertificateList fail,errCode is ' + errCode);
         this.certList = [];
@@ -69,8 +68,7 @@ export default class CmShowUserCaPresenter {
     certManagerModel.getCertOrCred(CMModelOptType.CM_MODEL_OPT_USER_CA, uri,
       (errCode: CMModelErrorCode, certInfo: CertInfoVo) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
-        console.info(TAG + 'getUserTrustedCertificate success, errCode is ' + errCode + ' certInfo is' +
-        JSON.stringify(certInfo));
+        console.info(TAG + 'getUserTrustedCertificate success, errCode is ' + errCode);
         this.certInfo = certInfo;
         callback();
       } else {
@@ -87,6 +85,7 @@ export default class CmShowUserCaPresenter {
         this.getUserTrustedCertificate(uri, () => {
           console.info(TAG + 'setCerStatus then getUserTrustedCertificate,errCode is' + errCode);
         });
+        this.updateUserTrustedCertificateList();
       } else {
         console.error(TAG + 'setUserCertificateStatus fail,errCode is ' + errCode);
       }

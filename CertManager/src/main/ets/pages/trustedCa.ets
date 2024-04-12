@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/ConfigData';
+import { WidthPercent } from '../common/util/ConfigData';
 import HeadComponent from '../common/component/headComponent';
 import CmShowSysCaPresenter from '../presenter/CmShowSysCaPresenter';
 import CMShowUserCaPresenter from '../presenter/CmShowUserCaPresenter';
@@ -22,6 +22,9 @@ import { GlobalContext } from '../common/GlobalContext';
 import { CertAbstractVo } from '../model/CertManagerVo/CertAbstractVo';
 import ComponentConfig from '../common/component/ComponentConfig';
 import router from '@ohos.router';
+import { CustomContentDialog } from '@ohos.arkui.advanced.Dialog';
+
+const COPIES_NUM: number = 12;
 
 @Component
 struct DialogSubjectComponent {
@@ -242,446 +245,126 @@ struct DialogFingerPrintComponent {
   }
 }
 
-@CustomDialog
-@Component
-struct CustomDialogDeleteWarning {
-  controller?: CustomDialogController;
-  @Link deleteWarn: CMShowUserCaPresenter;
-  @Link mShowUserListPresenter: CMShowUserCaPresenter;
-  @Link isShowWarnDialog: boolean;
-
-  build() {
-    Column() {
-      GridRow({ columns: { xs: 12, sm: 12, md: 12 }, gutter: '12px' }) {
-        GridCol({ span: { xs: 12, sm: 12, md: 12 } }) {
-          Row({}) {
-            Column() {
-              Text($r('app.string.CustomDialogExampleUser_warning_Button_title_text'))
-                .height($r('app.float.wh_value_56'))
-                .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
-                .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                .fontWeight(FontWeight.Medium)
-                .margin({
-                  left: $r('app.float.wh_value_24'),
-                  right: $r('app.float.wh_value_24')
-                })
-                .alignSelf(ItemAlign.Start)
-              Text($r('app.string.CustomDialogExampleUser_warning_Button_message_text'))
-                .fontSize($r('sys.float.ohos_id_text_size_body1'))
-                .fontWeight(FontWeight.Regular)
-                .fontColor($r('sys.color.ohos_id_color_primary'))
-                .margin({
-                  left: $r('app.float.wh_value_24'),
-                  right: $r('app.float.wh_value_24')
-                })
-                .alignSelf(ItemAlign.Start)
-
-              Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
-                justifyContent: FlexAlign.SpaceAround }) {
-                Button($r('app.string.deleteAllCredCancel'))
-                  .onClick(() => {
-                    this.isShowWarnDialog = false;
-                    if (this.controller !== undefined) {
-                      this.controller.close();
-                    }
-                  })
-                  .backgroundColor($r('app.color.CustomDialogExample_Button_backgroundColor_FFFFFF'))
-                  .fontSize($r('sys.float.ohos_id_text_size_button1'))
-                  .width($r('app.float.wh_value_152'))
-                  .height($r('app.float.wh_value_40'))
-                  .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
-                Divider()
-                  .strokeWidth(1)
-                  .color($r('sys.color.ohos_id_color_list_separator'))
-                  .vertical(true)
-                  .height($r('app.float.wh_value_40'))
-                  .opacity($r('app.float.opacity_0_2'))
-                Button($r('app.string.deleteAllCredDelete'))
-                  .onClick(() => {
-                    this.deleteWarn.deleteUserCertificate(this.deleteWarn.certInfo.uri, () => {
-                      this.mShowUserListPresenter.updateUserTrustedCertificateList();
-                      this.isShowWarnDialog = false;
-                      if (this.controller !== undefined) {
-                        this.controller.close();
-                      }
-                    });
-                  })
-                  .backgroundColor($r('app.color.CustomDialogExample_Button_backgroundColor_FFFFFF'))
-                  .fontSize($r('sys.float.ohos_id_text_size_button1'))
-                  .width($r('app.float.wh_value_152'))
-                  .height($r('app.float.wh_value_40'))
-                  .fontColor($r('sys.color.ohos_id_color_warning'))
-              }
-              .height($r('app.float.wh_value_64'))
-              .padding({
-                bottom: $r('app.float.wh_value_16')
-              })
-              .margin({
-                left: $r('app.float.wh_value_24'),
-                right: $r('app.float.wh_value_24')
-              })
-            }
-            .width(WidthPercent.WH_100_100)
-            .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
-            .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
-          }
-        }
-      }
-    }
-    .margin({
-      bottom: $r('sys.float.ohos_id_dialog_margin_bottom'),
-      left: $r('sys.float.ohos_id_dialog_margin_start'),
-      right: $r('sys.float.ohos_id_dialog_margin_end'),
-    })
-  }
-}
-
-@CustomDialog
-@Component
-struct CustomDialogExampleUser {
-  controller?: CustomDialogController;
-  @Link userInfoPresenter: CMShowUserCaPresenter;
-  @Link userInfoPresenterForAbstractList: CMShowUserCaPresenter;
-  @Link isShowWarnDialog: boolean;
-  @State isOn: boolean = false;
-
-  aboutToAppear() {
-    this.isOn = this.userInfoPresenter.certInfo.status;
-  }
-
-  build() {
-    Column() {
-      GridRow({ columns: { xs: 12, sm: 12, md: 12 }, gutter: '12px' }) {
-        GridCol({ span: { xs: 12, sm: 12, md: 12 } }) {
-          Row({}) {
-            Column() {
-              Text($r('app.string.CustomDialogExample_firText'))
-                .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
-                .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                .fontWeight(FontWeight.Medium)
-                .margin({
-                  left: $r('app.float.CustomDialogExample_firText_margin_left_value'),
-                  top: $r('app.float.CustomDialogExample_firText_margin_top_value')
-                })
-                .alignSelf(ItemAlign.Start)
-              Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-                Column() {
-                  Text(this.userInfoPresenter.certInfo.certAlias)
-                    .fontSize($r('sys.float.ohos_id_text_size_body1'))
-                    .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                    .fontWeight(FontWeight.Medium)
-                    .margin({
-                      left: $r('app.float.wh_value_24')
-                    })
-                }.alignItems(HorizontalAlign.Start);
-                Toggle({ type: ToggleType.Switch, isOn: this.isOn })
-                  .margin({
-                    right: $r('app.float.CustomDialogExampleUser_Flex_Toggle_margin_right_value')
-                  })
-                  .width($r('app.float.CustomDialogExampleUser_Flex_Toggle_width_value'))
-                  .height($r('app.float.CustomDialogExampleUser_Flex_Toggle_height_value'))
-                  .selectedColor($r('app.color.CustomDialogExampleUser_Flex_Toggle_selectedColor_007DFF'))
-                  .onChange((isOn: boolean) => {
-                    if (isOn) {
-                      this.isOn = true;
-                      AlertDialog.show({
-                        title: $r('app.string.root_certificate'),
-                        message: $r('app.string.root_certificate_message'),
-                        autoCancel: true,
-                        offset: { dx: 0, dy: -20 },
-                        gridCount: 4,
-                        primaryButton: {
-                          value: $r('app.string.root_certificate_cancel'),
-                          action: () => {
-                            this.isOn = false;
-                          }
-                        },
-                        secondaryButton: {
-                          value: $r('app.string.root_certificate_continue'),
-                          action: () => {
-                            this.userInfoPresenter.setUserCertificateStatus(this.userInfoPresenter.certInfo.uri, true);
-                          }
-                        },
-                        cancel: () => {
-                          this.isOn = false
-                        }
-                      })
-                    } else {
-                      this.isOn = false;
-                      this.userInfoPresenter.setUserCertificateStatus(this.userInfoPresenter.certInfo.uri, false);
-                    }
-                  });
-              }
-              .height($r('app.float.CustomDialogExampleUser_Flex_height_value'))
-              .margin({
-                bottom: $r('app.float.wh_value_12')
-              });
-              List() {
-                ListItem() {
-                  Text($r('app.string.CustomDialogExample_firListItem_text'))
-                    .fontSize($r('sys.float.ohos_id_text_size_body2'))
-                    .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                    .fontWeight(FontWeight.Regular)
-                    .margin({
-                      top: $r('app.float.wh_value_12')
-                    })
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-
-                ListItem() {
-                  DialogSubjectComponent({ map: this.userInfoPresenter.certInfo.subjectNameMap });
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-
-                ListItem() {
-                  Text($r('app.string.CustomDialogExample_secListItem_text'))
-                    .fontSize($r('sys.float.ohos_id_text_size_body2'))
-                    .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                    .fontWeight(FontWeight.Regular)
-                    .margin({
-                      top: $r('app.float.wh_value_12')
-                    })
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-
-                ListItem() {
-                  DialogIssuerComponent({ map: this.userInfoPresenter.certInfo.issuerNameMap });
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-
-                ListItem() {
-                  Text($r('app.string.CustomDialogExample_thdListItem_text'))
-                    .fontSize($r('sys.float.ohos_id_text_size_body2'))
-                    .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                    .fontWeight(FontWeight.Regular)
-                    .margin({
-                      top: $r('app.float.wh_value_12')
-                    })
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-
-                ListItem() {
-                  DialogDateComponent({ map: this.userInfoPresenter.certInfo.dateMap });
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-
-                ListItem() {
-                  Text($r('app.string.CustomDialogExample_fouListItem_text'))
-                    .fontSize($r('sys.float.ohos_id_text_size_body2'))
-                    .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                    .fontWeight(FontWeight.Regular)
-                    .margin({
-                      top: $r('app.float.wh_value_12')
-                    })
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-
-                ListItem() {
-                  DialogFingerPrintComponent({ fingerprintSha256: this.userInfoPresenter.certInfo.fingerprintSha256 });
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-              }
-              .height($r('app.float.CustomDialogExample_list_height_value'))
-              .margin({
-                left: $r('app.float.wh_value_24'),
-                right: $r('app.float.wh_value_24')
-              })
-              .scrollBar(BarState.Auto);
-
-              Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
-                justifyContent: FlexAlign.SpaceAround }) {
-                Button($r('app.string.CustomDialogExampleUser_Flex_firButton_text'))
-                  .onClick(() => {
-                    this.userInfoPresenterForAbstractList.updateUserTrustedCertificateList();
-                    this.isShowWarnDialog = false;
-                    if (this.controller !== undefined) {
-                      this.controller.close();
-                    }
-                  })
-                  .backgroundColor($r('app.color.CustomDialogExample_Button_backgroundColor_FFFFFF'))
-                  .fontSize($r('sys.float.ohos_id_text_size_button1'))
-                  .width($r('app.float.wh_value_152'))
-                  .height($r('app.float.wh_value_40'))
-                  .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
-                Divider()
-                  .strokeWidth(ConfigValue.VERTICAL_DIVIDER_WIDTH)
-                  .color($r('sys.color.ohos_id_color_list_separator'))
-                  .vertical(true)
-                  .height($r('app.float.wh_value_40'))
-                  .opacity($r('app.float.opacity_0_2'))
-                Button($r('app.string.CustomDialogExampleUser_Flex_secButton_text'))
-                  .onClick(() => {
-                    this.isShowWarnDialog = true;
-                    if (this.controller !== undefined) {
-                      this.controller.close();
-                    }
-                  })
-                  .backgroundColor($r('app.color.CustomDialogExample_Button_backgroundColor_FFFFFF'))
-                  .fontSize($r('sys.float.ohos_id_text_size_button1'))
-                  .width($r('app.float.wh_value_152'))
-                  .height($r('app.float.wh_value_40'))
-                  .fontColor($r('sys.color.ohos_id_color_warning'))
-              }
-              .height($r('app.float.wh_value_64'))
-              .padding({
-                bottom: $r('app.float.wh_value_16')
-              })
-              .margin({
-                left: $r('app.float.wh_value_24'),
-                right: $r('app.float.wh_value_24')
-              })
-            }
-            .width(WidthPercent.WH_100_100)
-            .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
-            .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
-          }
-        }
-      }
-    }
-    .margin({
-      bottom: $r('sys.float.ohos_id_dialog_margin_bottom'),
-      left: $r('sys.float.ohos_id_dialog_margin_start'),
-      right: $r('sys.float.ohos_id_dialog_margin_end'),
-    })
-  }
-}
-
-@CustomDialog
-@Component
-struct CustomDialogExampleSystem {
-  controller?: CustomDialogController;
-  @Link sysInfoPresenter: CmShowSysCaPresenter;
-
-  build() {
-    Column() {
-      GridRow({ columns: { xs: 12, sm: 12, md: 12 }, gutter: '12px' }) {
-        GridCol({ span: { xs: 12, sm: 12, md: 12 } }) {
-          Row({}) {
-            Column() {
-              Text($r('app.string.CustomDialogExample_firText'))
-                .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
-                .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                .fontWeight(FontWeight.Medium)
-                .height($r('app.float.wh_value_56'))
-                .margin({
-                  top: 0,
-                  bottom: $r('app.float.wh_value_8')
-                })
-                .alignSelf(ItemAlign.Start)
-              Text(this.sysInfoPresenter.certInfo.certAlias)
-                .fontSize($r('sys.float.ohos_id_text_size_body1'))
-                .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                .fontWeight(FontWeight.Medium)
-                .margin({
-                  top: 0,
-                  bottom: $r('app.float.wh_value_24')
-                })
-                .alignSelf(ItemAlign.Start)
-              List() {
-                ListItem() {
-                  Text($r('app.string.CustomDialogExample_firListItem_text'))
-                    .fontSize($r('sys.float.ohos_id_text_size_body2'))
-                    .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                    .fontWeight(FontWeight.Regular)
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-
-                ListItem() {
-                  DialogSubjectComponent({ map: this.sysInfoPresenter.certInfo.subjectNameMap });
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-
-                ListItem() {
-                  Text($r('app.string.CustomDialogExample_secListItem_text'))
-                    .fontSize($r('sys.float.ohos_id_text_size_body2'))
-                    .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                    .fontWeight(FontWeight.Regular)
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-                .margin({
-                  top: $r('app.float.wh_value_12')
-                })
-
-                ListItem() {
-                  DialogIssuerComponent({ map: this.sysInfoPresenter.certInfo.issuerNameMap });
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-
-                ListItem() {
-                  Text($r('app.string.CustomDialogExample_thdListItem_text'))
-                    .fontSize($r('sys.float.ohos_id_text_size_body2'))
-                    .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                    .fontWeight(FontWeight.Regular)
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-                .margin({
-                  top: $r('app.float.wh_value_12')
-                })
-
-                ListItem() {
-                  DialogDateComponent({ map: this.sysInfoPresenter.certInfo.dateMap });
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-
-                ListItem() {
-                  Text($r('app.string.CustomDialogExample_fouListItem_text'))
-                    .fontSize($r('sys.float.ohos_id_text_size_body2'))
-                    .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                    .fontWeight(FontWeight.Regular)
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-                .margin({
-                  top: $r('app.float.wh_value_12')
-                })
-
-                ListItem() {
-                  DialogFingerPrintComponent({ fingerprintSha256: this.sysInfoPresenter.certInfo.fingerprintSha256 });
-                }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
-              }
-              .height($r('app.float.CustomDialogExample_list_height_value'))
-              .scrollBar(BarState.Auto);
-
-              Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,
-                justifyContent: FlexAlign.SpaceAround }) {
-                Button($r('app.string.CustomDialogExample_Button_text'))
-                  .onClick(() => {
-                    if (this.controller !== undefined) {
-                      this.controller.close();
-                    }
-                  })
-                  .backgroundColor($r('app.color.CustomDialogExample_Button_backgroundColor_FFFFFF'))
-                  .fontSize($r('sys.float.ohos_id_text_size_button1'))
-                  .width($r('app.float.wh_value_152'))
-                  .height($r('app.float.wh_value_40'))
-                  .fontColor($r('sys.color.ohos_id_color_text_hyperlink'))
-              }
-              .height($r('app.float.wh_value_64'))
-              .padding({
-                bottom: $r('app.float.wh_value_16')
-              })
-            }
-            .padding({
-              top: 0,
-              bottom: 0,
-              left: $r('app.float.wh_value_24'),
-              right: $r('app.float.wh_value_24')
-            })
-            .width(WidthPercent.WH_100_100)
-            .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
-            .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'))
-          }
-        }
-      }
-    }
-    .margin({
-      bottom: $r('sys.float.ohos_id_dialog_margin_bottom'),
-      left: $r('sys.float.ohos_id_dialog_margin_start'),
-      right: $r('sys.float.ohos_id_dialog_margin_end'),
-    })
-  }
-}
-
 @Component
 struct ComponentSystem {
   private certAlias: string = '';
   private subjectName: string = '';
-  private status: boolean = false;
-  private indexNum: number = 0;
   private uri: string = '';
-  isSwitchTouched: boolean = false;
-  @State isTouched: boolean = false;
   @Link setStatus: CmShowSysCaPresenter;
-  dialogController: CustomDialogController = new CustomDialogController({
-    builder: CustomDialogExampleSystem({ sysInfoPresenter: $setStatus }),
-    autoCancel: true,
+  private sysCaScroller: Scroller = new Scroller();
+
+  systemDetailsDialog: CustomDialogController = new CustomDialogController({
     alignment: DialogAlignment.Center,
-    customStyle: true,
+    builder: CustomContentDialog({
+      contentBuilder: () => {
+        this.systemDetailContent();
+      },
+      contentAreaPadding: { right: $r('app.float.wh_value_0') },
+      buttons: [{
+        value: $r('app.string.CustomDialogExample_Button_text'),
+        buttonStyle: ButtonStyleMode.TEXTUAL,
+        action: () => {
+          this.systemDetailsDialog?.close();
+        }
+      }]
+    })
   })
+
+  @Builder
+  systemDetailContent(): void {
+    Column() {
+      Text($r('app.string.CustomDialogExample_firText'))
+        .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
+        .fontWeight(FontWeight.Medium)
+        .height($r('app.float.wh_value_56'))
+        .margin({
+          top: $r('app.float.wh_value_0'),
+          bottom: $r('app.float.wh_value_8'),
+          right: $r('app.float.wh_value_24')
+        })
+        .alignSelf(ItemAlign.Start)
+
+      Text(this.setStatus.certInfo.certAlias)
+        .fontSize($r('sys.float.ohos_id_text_size_body1'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
+        .fontWeight(FontWeight.Medium)
+        .margin({
+          top: $r('app.float.wh_value_0'),
+          bottom: $r('app.float.wh_value_24'),
+          right: $r('app.float.wh_value_24')
+        })
+        .alignSelf(ItemAlign.Start)
+
+      Scroll(this.sysCaScroller) {
+        List() {
+          ListItem() {
+            Text($r('app.string.CustomDialogExample_firListItem_text'))
+              .fontSize($r('sys.float.ohos_id_text_size_body1'))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
+              .fontWeight(FontWeight.Medium)
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+
+          ListItem() {
+            DialogSubjectComponent({ map: this.setStatus.certInfo.subjectNameMap });
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+
+          ListItem() {
+            Text($r('app.string.CustomDialogExample_secListItem_text'))
+              .fontSize($r('sys.float.ohos_id_text_size_body1'))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
+              .fontWeight(FontWeight.Medium)
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+          .margin({
+            top: $r('app.float.wh_value_12')
+          })
+
+          ListItem() {
+            DialogIssuerComponent({ map: this.setStatus.certInfo.issuerNameMap });
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+
+          ListItem() {
+            Text($r('app.string.CustomDialogExample_thdListItem_text'))
+              .fontSize($r('sys.float.ohos_id_text_size_body1'))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
+              .fontWeight(FontWeight.Medium)
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+          .margin({
+            top: $r('app.float.wh_value_12')
+          })
+
+          ListItem() {
+            DialogDateComponent({ map: this.setStatus.certInfo.dateMap });
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+
+          ListItem() {
+            Text($r('app.string.CustomDialogExample_fouListItem_text'))
+              .fontSize($r('sys.float.ohos_id_text_size_body1'))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
+              .fontWeight(FontWeight.Medium)
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+          .margin({
+            top: $r('app.float.wh_value_12')
+          })
+
+          ListItem() {
+            DialogFingerPrintComponent({ fingerprintSha256: this.setStatus.certInfo.fingerprintSha256 });
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+        }
+        .margin({ right: $r('app.float.wh_value_24') })
+        .scrollBar(BarState.Off)
+      }
+      .scrollable(ScrollDirection.Vertical)
+      .scrollBarWidth('3vp')
+      .height($r('app.float.CustomDialogExample_list_height_value'))
+    }
+    .padding({
+      left: $r('app.float.wh_value_24'),
+    })
+    .width(WidthPercent.WH_100_100)
+    .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+    .backgroundColor($r('sys.color.ohos_id_color_dialog_bg'))
+  }
 
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
@@ -703,7 +386,7 @@ struct ComponentSystem {
     .onClick(() => {
       this.setStatus.getSystemTrustedCertificate(this.uri, () => {
         console.info('this.setStatus.certInfo.status is:' + JSON.stringify(this.setStatus.certInfo));
-        this.dialogController.open();
+        this.systemDetailsDialog.open();
       });
     })
   }
@@ -713,43 +396,283 @@ struct ComponentSystem {
 struct ComponentUser {
   private certAlias: string = '';
   private subjectName: string = '';
-  private indexNum : number = -1;
+  private indexNum: number = -1;
   private uri: string = '';
-  @State statusText : Resource = $r('app.string.CustomDialogExampleUser_Status_false');
-  @State isTouched: boolean = false;
+  @State statusText: Resource = $r('app.string.CustomDialogExampleUser_Status_false');
   @Link setStatus: CMShowUserCaPresenter;
   @State mUserCaPresenterDetail: CMShowUserCaPresenter = CMShowUserCaPresenter.getInstance();
-  @State @Watch('onShowDeleteWarnDialog') isShowWarning: boolean = false;
+  private userCaScroller: Scroller = new Scroller();
 
-  dialogController: CustomDialogController = new CustomDialogController({
-    builder: CustomDialogExampleUser({ isShowWarnDialog: $isShowWarning, userInfoPresenter: $mUserCaPresenterDetail,
-      userInfoPresenterForAbstractList: $setStatus }),
-    autoCancel: true,
-    cancel: () => {
-      this.setStatus.updateUserTrustedCertificateList();
-    },
+  rootCertificateDialog: CustomDialogController = new CustomDialogController({
     alignment: DialogAlignment.Center,
-    customStyle: true,
+    builder: CustomContentDialog({
+      contentBuilder: () => {
+        this.rootCertificateContent();
+      },
+      contentAreaPadding: { right: $r('app.float.wh_value_0') },
+      buttons: [
+        {
+          value: $r('app.string.root_certificate_cancel'),
+          buttonStyle: ButtonStyleMode.TEXTUAL,
+          action: () => {
+            this.setStatus.updateUserTrustedCertificateList();
+          }
+        },
+        {
+          value: $r('app.string.root_certificate_continue'),
+          buttonStyle: ButtonStyleMode.TEXTUAL,
+          action: () => {
+            this.setStatus.setUserCertificateStatus(this.mUserCaPresenterDetail.certInfo.uri, true);
+            this.setStatus.updateUserTrustedCertificateList();
+          }
+        }
+      ]
+    })
   })
 
-  deleteWarnDialog: CustomDialogController = new CustomDialogController({
-    builder: CustomDialogDeleteWarning({
-      isShowWarnDialog: $isShowWarning,
-      deleteWarn: $mUserCaPresenterDetail,
-      mShowUserListPresenter: $setStatus
-    }),
-    autoCancel: false,
-    alignment:DialogAlignment.Center,
-    customStyle: true,
+  userDetailsDialog: CustomDialogController = new CustomDialogController({
+    alignment: DialogAlignment.Center,
+    builder: CustomContentDialog({
+      contentBuilder: () => {
+        this.userDetailContent(this.setStatus.certList[this.indexNum].status);
+      },
+      contentAreaPadding: { right: $r('app.float.wh_value_0') },
+      buttons: [
+        {
+          value: $r('app.string.CustomDialogExampleUser_Flex_firButton_text'),
+          buttonStyle: ButtonStyleMode.TEXTUAL,
+          action: () => {
+            this.setStatus.updateUserTrustedCertificateList();
+            this.userDetailsDialog?.close();
+          }
+        },
+        {
+          value: $r('app.string.CustomDialogExampleUser_Flex_secButton_text'),
+          buttonStyle: ButtonStyleMode.TEXTUAL,
+          action: () => {
+            this.setStatus.updateUserTrustedCertificateList();
+            this.onShowDeleteWarnDialog();
+          },
+          role: ButtonRole.ERROR
+        }
+      ]
+    })
   })
+
+  deleteCertWarnDialog: CustomDialogController = new CustomDialogController({
+    builder: CustomContentDialog({
+      contentBuilder: () => {
+        this.deleteWarnContent();
+      },
+      contentAreaPadding: { right: $r('app.float.wh_value_0') },
+      buttons: [
+        {
+          value: $r('app.string.deleteAllCredCancel'),
+          buttonStyle: ButtonStyleMode.TEXTUAL,
+          action: () => {
+            this.setStatus.updateUserTrustedCertificateList();
+            this.deleteCertWarnDialog?.close();
+          }
+        },
+        {
+          value: $r('app.string.deleteAllCredDelete'),
+          buttonStyle: ButtonStyleMode.TEXTUAL,
+          action: () => {
+            this.setStatus.deleteUserCertificate(this.mUserCaPresenterDetail.certInfo.uri, () => {
+              this.setStatus.updateUserTrustedCertificateList();
+              this.deleteCertWarnDialog?.close();
+            })
+          },
+          role: ButtonRole.ERROR
+        }
+      ]
+    })
+  })
+
+  @Builder
+  rootCertificateContent(): void {
+    Column() {
+      Text($r('app.string.root_certificate'))
+        .height($r('app.float.wh_value_56'))
+        .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
+        .fontWeight(FontWeight.Medium)
+        .margin({
+          left: $r('app.float.wh_value_24'),
+          right: $r('app.float.wh_value_24')
+        })
+        .alignSelf(ItemAlign.Start)
+
+      Text($r('app.string.root_certificate_message'))
+        .fontSize($r('sys.float.ohos_id_text_size_body1'))
+        .fontWeight(FontWeight.Regular)
+        .fontColor($r('sys.color.ohos_id_color_primary'))
+        .margin({
+          left: $r('app.float.wh_value_24'),
+          right: $r('app.float.wh_value_24')
+        })
+        .alignSelf(ItemAlign.Start)
+    }
+    .width(WidthPercent.WH_100_100)
+    .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+    .backgroundColor($r('sys.color.ohos_id_color_dialog_bg'))
+  }
+
+  @Builder
+  deleteWarnContent(): void {
+    Column() {
+      Text($r('app.string.CustomDialogExampleUser_warning_Button_title_text'))
+        .height($r('app.float.wh_value_56'))
+        .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
+        .fontWeight(FontWeight.Medium)
+        .margin({
+          left: $r('app.float.wh_value_24'),
+          right: $r('app.float.wh_value_24')
+        })
+        .alignSelf(ItemAlign.Start)
+
+      Text($r('app.string.CustomDialogExampleUser_warning_Button_message_text'))
+        .fontSize($r('sys.float.ohos_id_text_size_body1'))
+        .fontWeight(FontWeight.Regular)
+        .fontColor($r('sys.color.ohos_id_color_primary'))
+        .margin({
+          left: $r('app.float.wh_value_24'),
+          right: $r('app.float.wh_value_24')
+        })
+        .alignSelf(ItemAlign.Start)
+    }
+    .width(WidthPercent.WH_100_100)
+    .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+    .backgroundColor($r('sys.color.ohos_id_color_dialog_bg'))
+  }
+
+  @Builder
+  userDetailContent($$: boolean): void {
+    Column() {
+      Text($r('app.string.CustomDialogExample_firText'))
+        .fontSize($r('sys.float.ohos_id_text_size_dialog_tittle'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
+        .fontWeight(FontWeight.Medium)
+        .height($r('app.float.wh_value_56'))
+        .margin({
+          top: $r('app.float.wh_value_0'),
+          bottom: $r('app.float.wh_value_8'),
+          right: $r('app.float.wh_value_24')
+        })
+        .alignSelf(ItemAlign.Start)
+
+      Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+        Column() {
+          Text(this.mUserCaPresenterDetail.certInfo.certAlias)
+            .fontSize($r('sys.float.ohos_id_text_size_body1'))
+            .fontColor($r('sys.color.ohos_id_color_text_primary'))
+            .fontWeight(FontWeight.Medium)
+        }.alignItems(HorizontalAlign.Start);
+
+        Toggle({ type: ToggleType.Switch, isOn: $$ })
+          .margin({
+            left: $r('app.float.wh_value_16'),
+            right: $r('app.float.wh_value_24')
+          })
+          .flexShrink(0)
+          .width($r('app.float.CustomDialogExampleUser_Flex_Toggle_width_value'))
+          .height($r('app.float.CustomDialogExampleUser_Flex_Toggle_height_value'))
+          .selectedColor($r('app.color.CustomDialogExampleUser_Flex_Toggle_selectedColor_007DFF'))
+          .onChange((isOn: boolean) => {
+            if (isOn) {
+              this.onShowRootCertificateDialog();
+            } else {
+              this.setStatus.setUserCertificateStatus(this.mUserCaPresenterDetail.certInfo.uri, false);
+            }
+          });
+      }
+
+      Scroll(this.userCaScroller) {
+        List() {
+          ListItem() {
+            Text($r('app.string.CustomDialogExample_firListItem_text'))
+              .fontSize($r('sys.float.ohos_id_text_size_body1'))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
+              .fontWeight(FontWeight.Medium)
+              .margin({
+                top: $r('app.float.wh_value_12')
+              })
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+
+          ListItem() {
+            DialogSubjectComponent({ map: this.mUserCaPresenterDetail.certInfo.subjectNameMap });
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+
+          ListItem() {
+            Text($r('app.string.CustomDialogExample_secListItem_text'))
+              .fontSize($r('sys.float.ohos_id_text_size_body1'))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
+              .fontWeight(FontWeight.Medium)
+              .margin({
+                top: $r('app.float.wh_value_12')
+              })
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+
+          ListItem() {
+            DialogIssuerComponent({ map: this.mUserCaPresenterDetail.certInfo.issuerNameMap });
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+
+          ListItem() {
+            Text($r('app.string.CustomDialogExample_thdListItem_text'))
+              .fontSize($r('sys.float.ohos_id_text_size_body1'))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
+              .fontWeight(FontWeight.Medium)
+              .margin({
+                top: $r('app.float.wh_value_12')
+              })
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+
+          ListItem() {
+            DialogDateComponent({ map: this.mUserCaPresenterDetail.certInfo.dateMap });
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+
+          ListItem() {
+            Text($r('app.string.CustomDialogExample_fouListItem_text'))
+              .fontSize($r('sys.float.ohos_id_text_size_body1'))
+              .fontColor($r('sys.color.ohos_id_color_text_primary'))
+              .fontWeight(FontWeight.Medium)
+              .margin({
+                top: $r('app.float.wh_value_12')
+              })
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+
+          ListItem() {
+            DialogFingerPrintComponent({
+              fingerprintSha256: this.mUserCaPresenterDetail.certInfo.fingerprintSha256
+            });
+          }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
+        }
+        .margin({
+          right: $r('app.float.wh_value_24')
+        })
+        .scrollBar(BarState.Off)
+      }
+      .height($r('app.float.CustomDialogExample_list_height_value'))
+      .scrollable(ScrollDirection.Vertical)
+      .scrollBarWidth('3vp')
+    }
+    .padding({
+      left: $r('app.float.wh_value_24')
+    })
+    .width(WidthPercent.WH_100_100)
+    .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+    .backgroundColor($r('sys.color.ohos_id_color_dialog_bg'))
+  }
+
+  onShowRootCertificateDialog() {
+    this.userDetailsDialog?.close();
+    this.rootCertificateDialog.open();
+  }
 
   onShowDeleteWarnDialog() {
-    if (this.isShowWarning == true) {
-      this.deleteWarnDialog.open();
-    } else {
-      this.dialogController.close();
-      this.deleteWarnDialog.close();
-    }
+    this.deleteCertWarnDialog.open();
+    this.userDetailsDialog?.close();
   }
 
   aboutToAppear() {
@@ -792,12 +715,13 @@ struct ComponentUser {
           .fillColor($r('sys.color.ohos_id_color_primary'))
           .opacity($r('app.float.componentUser_image_opacity_value'));
       }
+      .flexShrink(0)
       .margin($r('app.float.wh_value_12'))
     }
     .onClick(() => {
       this.mUserCaPresenterDetail.getUserTrustedCertificate(this.uri, () => {
         console.info('userCerInfo is:' + JSON.stringify(this.setStatus.certInfo));
-        this.dialogController.open();
+        this.userDetailsDialog.open();
       });
     });
   }
@@ -809,15 +733,25 @@ struct TrustedEvidence {
   @State mShowSysCaPresenter: CmShowSysCaPresenter = CmShowSysCaPresenter.getInstance();
   @State mShowUserCaPresenter: CMShowUserCaPresenter = CMShowUserCaPresenter.getInstance();
   @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
-  @State isTouched: boolean = false;
   @State currentIndex: number = 0;
   @State fontColor: Resource = $r('app.color.TrustedEvidence_TabBuilder_fontColor_182431');
   @State selectedFontColor: Resource = $r('app.color.font_color_007DFF');
   private controller: TabsController = new TabsController();
   private sysCaScroller: Scroller = new Scroller();
   private userCaScroller: Scroller = new Scroller();
+  @State animationDurationNum: number = 400;
 
-  @Builder TabBuilder(index: number) {
+  @Styles normalStyle() {
+    .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
+    .borderRadius($r('app.float.wh_value_10'))
+  };
+  @Styles pressedStyle() {
+    .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
+    .borderRadius($r('app.float.wh_value_10'))
+  };
+
+  @Builder
+  TabBuilder(index: number) {
     Column() {
       Text(index == 0 ? $r('app.string.system') : $r('app.string.user'))
         .fontColor(this.currentIndex === index ? this.selectedFontColor : this.fontColor)
@@ -831,7 +765,6 @@ struct TrustedEvidence {
         Divider()
           .width($r('app.float.TrustedEvidence_TabBuilder_Divider_width_value'))
           .margin({ top: $r('app.float.TrustedEvidence_TabBuilder_Divider_padding_top_value') })
-          .strokeWidth(2)
           .color(this.selectedFontColor)
           .alignSelf(ItemAlign.Center)
       }
@@ -840,7 +773,6 @@ struct TrustedEvidence {
   }
 
   aboutToAppear() {
-    console.info('in aboutToAppear');
     this.mShowSysCaPresenter.updateSystemTrustedCertificateList();
     this.mShowUserCaPresenter.updateUserTrustedCertificateList();
   }
@@ -855,13 +787,15 @@ struct TrustedEvidence {
       })
     } else if (uri === 'requestAuthorize') {
       this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
+    } else {
+      console.info('The want type is not supported');
     }
   }
 
   build() {
     Column() {
-      GridRow({ columns: 12, gutter: vp2px(1) === 2 ? '12vp' : '0vp' }) {
-        GridCol({ span: { xs: 12, sm: 12, md: 12, lg: 8 }, offset: { xs: 0, sm: 0, md: 0, lg: 2 } }) {
+      GridRow({ columns: COPIES_NUM, gutter: vp2px(1) === 2 ? $r('app.float.wh_value_12') : $r('app.float.wh_value_0') }) {
+        GridCol({ span: COPIES_NUM }) {
           Row() {
             Column() {
               HeadComponent({ headName: $r('app.string.trustedEvidence') })
@@ -875,13 +809,24 @@ struct TrustedEvidence {
                     Stack({ alignContent: Alignment.End }) {
                       Scroll(this.sysCaScroller) {
                         List() {
-                          ForEach(this.mShowSysCaPresenter.certList, (item: CertAbstractVo, index) => {
+                          ForEach(this.mShowSysCaPresenter.certList, (item: CertAbstractVo) => {
                             ListItem() {
-                              ComponentSystem({ certAlias: item.certAlias, subjectName: item.subjectNameCN,
-                                status: item.status, uri: item.uri, setStatus: $mShowSysCaPresenter, indexNum: index })
+                              ComponentSystem({
+                                certAlias: item.certAlias,
+                                subjectName: item.subjectNameCN,
+                                uri: item.uri,
+                                setStatus: $mShowSysCaPresenter,
+                              })
                             }
+                            .borderRadius($r('app.float.radius_20'))
+                            .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
+                            .stateStyles({
+                              normal: this.normalStyle,
+                              pressed: this.pressedStyle
+                            });
                           }, (item: CertAbstractVo) => JSON.stringify(item))
                         }
+                        .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
                         .scrollBar(BarState.Off)
                         .padding({
                           right: $r('app.float.wh_value_12'),
@@ -891,12 +836,13 @@ struct TrustedEvidence {
                         })
                         .divider({
                           strokeWidth: $r('app.float.sys_list_divider_strokeWidth_value'),
-                          color: $r('app.color.sys_list_divider_color_000000'),
-                          endMargin: '12vp'
+                          color: $r('sys.color.ohos_id_color_list_separator'),
+                          endMargin: $r('app.float.wh_value_12')
                         })
-                        .visibility(this.mShowSysCaPresenter.certList.length > 0 ? Visibility.Visible : Visibility.None);
+                        .visibility(this.mShowSysCaPresenter.certList.length > 0
+                          ? Visibility.Visible : Visibility.None)
                       }
-                      .position({ y: 0 })
+                      .position({ y: $r('app.float.wh_value_0') })
                       .scrollable(ScrollDirection.Vertical)
                       .scrollBar(BarState.Off)
                       .margin({
@@ -904,7 +850,8 @@ struct TrustedEvidence {
                         right: $r('app.float.wh_value_12')
                       })
                       .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
-                      .backgroundColor($r('app.color.user_list_backgroundColor_FFFFFF'))
+                      .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
+
                       ScrollBar({ scroller: this.sysCaScroller, direction: ScrollBarDirection.Vertical,
                         state: BarState.Auto }) {
                         Text()
@@ -912,26 +859,17 @@ struct TrustedEvidence {
                           .height($r('app.float.wh_value_50'))
                           .borderRadius($r('app.float.wh_value_10'))
                           .backgroundColor($r('sys.color.ohos_id_color_foreground'))
-                          .opacity(0.4)
+                          .opacity($r('app.float.text_opacity_0_4'))
                       }
                       .width($r('app.float.wh_value_3'))
                       .margin({
                         right: $r('app.float.wh_value_3')
                       })
-                      .visibility(this.mShowSysCaPresenter.certList.length > 0 ? Visibility.Visible : Visibility.None);
+                      .visibility(this.mShowSysCaPresenter.certList.length > 0 ? Visibility.Visible : Visibility.None)
                     }
+                    .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
                   }
                   .tabBar(this.TabBuilder(0))
-                  .onTouch((event?: TouchEvent) => {
-                    if (event !== undefined) {
-                      if (event.type === TouchType.Down) {
-                        this.isTouched = true;
-                      }
-                      if (event.type === TouchType.Up) {
-                        this.isTouched = false;
-                      }
-                    }
-                  });
 
                   TabContent() {
                     Stack({ alignContent: Alignment.End }) {
@@ -939,9 +877,18 @@ struct TrustedEvidence {
                         List() {
                           ForEach(this.mShowUserCaPresenter.certList, (item: CertAbstractVo, index) => {
                             ListItem() {
-                              ComponentUser({ certAlias: item.certAlias, subjectName: item.subjectNameCN, uri: item.uri,
-                                setStatus: $mShowUserCaPresenter, indexNum: index })
+                              ComponentUser({
+                                certAlias: item.certAlias,
+                                subjectName: item.subjectNameCN,
+                                uri: item.uri,
+                                setStatus: $mShowUserCaPresenter,
+                                indexNum: index
+                              })
                             }
+                            .stateStyles({
+                              normal: this.normalStyle,
+                              pressed: this.pressedStyle
+                            });
                           }, (item: CertAbstractVo) => JSON.stringify(item))
                         }
                         .scrollBar(BarState.Off)
@@ -953,12 +900,13 @@ struct TrustedEvidence {
                         })
                         .divider({
                           strokeWidth: $r('app.float.user_list_divider_strokeWidth_value'),
-                          color: $r('app.color.user_list_divider_color_000000'),
-                          endMargin: '3vp'
+                          color: $r('sys.color.ohos_id_color_list_separator'),
+                          endMargin: $r('app.float.wh_value_3')
                         })
-                        .visibility(this.mShowUserCaPresenter.certList.length > 0 ? Visibility.Visible : Visibility.None)
+                        .visibility(this.mShowUserCaPresenter.certList.length > 0
+                          ? Visibility.Visible : Visibility.None)
                       }
-                      .position({ y: 0 })
+                      .position({ y: $r('app.float.wh_value_0') })
                       .scrollable(ScrollDirection.Vertical)
                       .scrollBar(BarState.Off)
                       .margin({
@@ -966,7 +914,8 @@ struct TrustedEvidence {
                         right: $r('app.float.wh_value_12')
                       })
                       .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
-                      .backgroundColor($r('app.color.user_list_backgroundColor_FFFFFF'))
+                      .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
+
                       ScrollBar({ scroller: this.userCaScroller, direction: ScrollBarDirection.Vertical,
                         state: BarState.Auto }) {
                         Text()
@@ -974,7 +923,7 @@ struct TrustedEvidence {
                           .height($r('app.float.wh_value_50'))
                           .borderRadius($r('app.float.wh_value_10'))
                           .backgroundColor($r('sys.color.ohos_id_color_foreground'))
-                          .opacity(0.4)
+                          .opacity($r('app.float.text_opacity_0_4'))
                       }
                       .width($r('app.float.wh_value_3'))
                       .margin({
@@ -982,36 +931,27 @@ struct TrustedEvidence {
                       })
                       .visibility(this.mShowUserCaPresenter.certList.length > 0 ? Visibility.Visible : Visibility.None)
                     }
+                    .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
                   }
                   .tabBar(this.TabBuilder(1))
-                  .onTouch((event?: TouchEvent) => {
-                    if (event !== undefined) {
-                      if (event.type === TouchType.Down) {
-                        this.isTouched = true;
-                      }
-                      if (event.type === TouchType.Up) {
-                        this.isTouched = false;
-                      }
-                    }
-                  });
                 }
                 .vertical(false)
                 .scrollable(true)
                 .barMode(BarMode.Fixed)
                 .barWidth($r('app.float.tabs_barWidth_value'))
                 .barHeight($r('app.float.tabs_barHeight_value'))
-                .animationDuration(400)
+                .animationDuration(this.animationDurationNum)
                 .width(WidthPercent.WH_100_100)
                 .margin({
                   bottom: $r('app.float.wh_value_24')
                 })
-                .backgroundColor($r('app.color.TrustedEvidence_tabs_backgroundColor_F1F3F5'))
+                .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
                 .onChange((index: number) => {
-                  this.currentIndex = index
+                  this.currentIndex = index;
                 });
               }
               .height(WidthPercent.WH_94_100)
-              .width(WidthPercent.WH_100_100);
+              .width(WidthPercent.WH_100_100)
             }
             .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
             .width(WidthPercent.WH_100_100)
@@ -1021,7 +961,7 @@ struct TrustedEvidence {
           .height(WidthPercent.WH_100_100);
         }
       }
-      .margin(vp2px(1) === 2 ? '24vp' : '0vp')
+      .margin(vp2px(1) === 2 ? $r('app.float.item_common_horizontal_margin') : $r('app.float.wh_value_0'))
       .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
       .width(WidthPercent.WH_100_100)
       .height(WidthPercent.WH_100_100);

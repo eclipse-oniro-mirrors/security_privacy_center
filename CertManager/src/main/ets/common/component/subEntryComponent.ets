@@ -21,7 +21,14 @@ import ComponentConfig from './ComponentConfig';
 export struct SubEntryComponent {
   private targetPage: string = '';
   private title: string | Resource = '';
-  @State isTouched: boolean = false;
+
+  @Styles normalStyle() {
+    .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
+  };
+
+  @Styles pressedStyle() {
+    .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
+  };
 
   build() {
     Navigator({ target: this.targetPage }) {
@@ -30,7 +37,7 @@ export struct SubEntryComponent {
           Text(this.title)
             .fontSize($r('app.float.font_16'))
             .lineHeight($r('app.float.wh_value_22'))
-            .fontColor($r('app.color.font_color_182431'))
+            .fontColor($r('sys.color.ohos_id_color_text_primary'))
             .fontWeight(FontWeight.Medium)
             .margin({ left: $r('app.float.wh_value_8') })
             .textAlign(TextAlign.Start);
@@ -46,25 +53,9 @@ export struct SubEntryComponent {
       .borderRadius($r('app.float.radius_20'))
       .height(ComponentConfig.WH_100_100)
       .width(ComponentConfig.WH_100_100)
-      .linearGradient(this.isTouched ? {
-        angle: 90,
-        direction: GradientDirection.Right,
-        colors: [[$r('app.color.DCEAF9'), 0.0], [$r('app.color.FAFAFA'), 1.0]]
-      } : {
-        angle: 90,
-        direction: GradientDirection.Right,
-        colors: [[$r('sys.color.ohos_id_color_foreground_contrary'), 1],
-          [$r('sys.color.ohos_id_color_foreground_contrary'), 1]]
-      })
-      .onTouch((event?: TouchEvent) => {
-        if (event !== undefined) {
-          if (event.type === TouchType.Down) {
-            this.isTouched = true;
-          }
-          if (event.type === TouchType.Up) {
-            this.isTouched = false;
-          }
-        }
+      .stateStyles({
+        normal: this.normalStyle,
+        pressed: this.pressedStyle
       })
     }
     .height($r('app.float.wh_value_48'))
@@ -78,10 +69,17 @@ export struct SubEntryComponent {
  */
 @Component
 export struct SubEntryComponentWithEndText {
-  @State isTouched: boolean = false;
   @Prop endText: string = '';
   private targetPage: string = '';
   private title: string | Resource = '';
+
+  @Styles normalStyle() {
+    .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
+  };
+
+  @Styles pressedStyle() {
+    .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
+  };
 
   build() {
     Navigator({ target: this.targetPage }) {
@@ -91,7 +89,7 @@ export struct SubEntryComponentWithEndText {
             .fontSize($r('app.float.font_16'))
             .lineHeight($r('app.float.wh_value_22'))
             .fontWeight(FontWeight.Medium)
-            .fontColor($r('app.color.font_color_182431'))
+            .fontColor($r('sys.color.ohos_id_color_text_primary'))
             .margin({ left: $r('app.float.distance_8') })
             .textAlign(TextAlign.Start);
         }
@@ -115,26 +113,10 @@ export struct SubEntryComponentWithEndText {
       .height(ComponentConfig.WH_100_100)
       .width(ComponentConfig.WH_100_100)
       .borderRadius($r('app.float.radius_20'))
-      .linearGradient(this.isTouched ? {
-        angle: 90,
-        direction: GradientDirection.Right,
-        colors: [[$r('app.color.DCEAF9'), 0.0], [$r('app.color.FAFAFA'), 1.0]]
-      } : {
-        angle: 90,
-        direction: GradientDirection.Right,
-        colors: [[$r('sys.color.ohos_id_color_foreground_contrary'), 1],
-          [$r('sys.color.ohos_id_color_foreground_contrary'), 1]]
+      .stateStyles({
+        normal: this.normalStyle,
+        pressed: this.pressedStyle
       })
-      .onTouch((event?: TouchEvent) => {
-        if (event !== undefined) {
-          if (event.type === TouchType.Down) {
-            this.isTouched = true;
-          }
-          if (event.type === TouchType.Up) {
-            this.isTouched = false;
-          }
-        }
-      });
     }
     .padding($r('app.float.distance_4'))
     .height($r('app.float.wh_value_56'))

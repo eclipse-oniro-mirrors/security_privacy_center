@@ -48,8 +48,7 @@ export enum LocationChoice {
 
 export enum ConfigValue {
   PWD_MAX_LENGTH = 64,
-  ALIAS_MAX_LENGTH = 64,
+  ALIAS_MAX_LENGTH = 16,
   APP_AUTH_MAX_LENGTH = 4,
-  REQUEST_AUTH_MAX_LENGTH = 5,
-  VERTICAL_DIVIDER_WIDTH = 1
+  REQUEST_AUTH_MAX_LENGTH = 5
 };

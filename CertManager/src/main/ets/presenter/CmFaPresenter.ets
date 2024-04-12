@@ -22,8 +22,7 @@ import { BusinessError } from '@ohos.base';
 import { RouterFileVo, RouterAppUidVo } from '../model/CertManagerVo/RouterInfoVo';
 
 const TAG = 'CMFaPresenter: ';
-const PAGE_URI_PWD_INPUT = 'pages/certPwdInput';
-const PAGE_URI_ALIAS_INPUT = 'pages/certInstallAliasInput';
+const gridCountNum: number = 4;
 
 export default class CmFaPresenter {
   private static sInstance: CmFaPresenter;
@@ -42,63 +41,56 @@ export default class CmFaPresenter {
   aboutToDisappear(): void {
   }
 
+  unrecognizedFileTips(): void {
+    AlertDialog.show({
+      message: $r('app.string.Install_Error_NOT_FOUND'),
+      autoCancel: true,
+      alignment: DialogAlignment.Bottom,
+      offset: {
+        dx: $r('app.float.wh_value_0'), dy: $r('app.float.wh_value_0')
+      },
+      gridCount: gridCountNum,
+      primaryButton: {
+        value: $r('app.string.OK'),
+        action: () => {
+        }
+      },
+    })
+  }
+
   routeToNextInstallCert(fileUri: string): void {
-    console.log(TAG, 'routeToNext fileUri ' + fileUri);
+    console.debug(TAG, 'routeToNext fileUri ' + fileUri);
     FileIoModel.getMediaFileSuffix(fileUri, (suffix: string | undefined) => {
       if (suffix !== undefined) {
-        console.log(TAG, 'suffix = ', suffix);
+        console.debug(TAG, 'suffix = ', suffix);
         let fileInfo = new RouterFileVo(fileUri, suffix);
         if ((suffix === 'cer') || (suffix === 'pem')) {
-          router.replaceUrl({
+          router.pushUrl({
             url: 'pages/certInstallAliasInput',
-            params: fileInfo
+            params: {
+              fileInfo: fileInfo
+            }
           })
         } else {
-          AlertDialog.show({
-            message: $r('app.string.Install_Error_NOT_FOUND'),
-            autoCancel: true,
-            alignment: DialogAlignment.Bottom,
-            offset: {
-              dx: 0, dy: 0
-            },
-            gridCount: 4,
-            primaryButton: {
-              value: $r('app.string.OK'),
-              action: () => {
-              }
-            },
-          })
+          this.unrecognizedFileTips();
         }
       }
     })
   }
 
   routeToNextInstallEvidence(fileUri: string): void {
-    console.log(TAG, 'routeToNext fileUri ' + fileUri);
+    console.debug(TAG, 'routeToNext fileUri ' + fileUri);
     FileIoModel.getMediaFileSuffix(fileUri, (suffix: string | undefined) => {
       if (suffix !== undefined) {
-        console.log(TAG, 'suffix = ', suffix);
+        console.debug(TAG, 'suffix = ', suffix);
         if ((suffix === 'p12') || (suffix === 'pfx')) {
           let fileInfo = new RouterFileVo(fileUri, suffix);
-          router.replaceUrl({
+          router.pushUrl({
             url: 'pages/certPwdInput',
             params: fileInfo
           })
         } else {
-          AlertDialog.show({
-            message: $r('app.string.Install_Error_NOT_FOUND'),
-            autoCancel: true,
-            alignment: DialogAlignment.Bottom,
-            offset: {
-              dx: 0, dy: -20
-            },
-            gridCount: 4,
-            primaryButton: {
-              value: $r('app.string.OK'),
-              action: () => {
-              }
-            },
-          })
+          this.unrecognizedFileTips();
         }
       }
     })
@@ -146,7 +138,7 @@ export default class CmFaPresenter {
 
   startRequestAuth(uri: string): void {
     let appUidInfo = new RouterAppUidVo(uri);
-    router.replaceUrl({
+    router.pushUrl({
       url: 'pages/requestAuth',
       params: appUidInfo
     });

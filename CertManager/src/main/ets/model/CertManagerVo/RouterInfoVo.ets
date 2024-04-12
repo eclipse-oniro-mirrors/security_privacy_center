@@ -30,3 +30,13 @@ export class RouterFileVo {
     this.suffix = suffix;
   }
 }
+
+export class RouterParams {
+  public fileInfo: RouterFileVo;
+  public pwd: string
+
+  constructor(fileInfo: RouterFileVo, pwd: string) {
+    this.fileInfo = fileInfo;
+    this.pwd = pwd
+  }
+}

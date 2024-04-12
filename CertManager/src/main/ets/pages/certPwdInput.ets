@@ -14,19 +14,28 @@
  */
 
 import HeadComponent from '../common/component/headComponent';
-import { WidthPercent, LocationChoice, ConfigValue } from '../common/util/ConfigData';
+import { WidthPercent, ConfigValue } from '../common/util/ConfigData';
 import router from '@ohos.router';
 import CmFaPresenter from '../presenter/CmFaPresenter';
 import { GlobalContext } from '../common/GlobalContext';
 import { RouterFileVo } from '../model/CertManagerVo/RouterInfoVo';
+import CmInstallPresenter from '../presenter/CmInstallPresenter';
+import { CMModelErrorCode } from '../model/CertMangerModel';
+import ComponentConfig from '../common/component/ComponentConfig';
+import PreventScreenshotsPresenter from '../model/PreventScreenshotsModel';
 
 @Entry
 @Component
 struct CertPwdInput {
   certPwd: string = '';
   @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
+  @State isPasswordError: boolean = false;
+  @State passWordWarn: number = 0;
+  @State mAppCredAuthPresenter: CmInstallPresenter = CmInstallPresenter.getInstance();
+  @State mPreventScreenshotsPresenter: PreventScreenshotsPresenter = PreventScreenshotsPresenter.getInstance();
 
   onPageShow() {
+    this.mPreventScreenshotsPresenter.PreventScreenshots(true);
     let uri = GlobalContext.getContext().getAbilityWant().uri;
     GlobalContext.getContext().clearAbilityWantUri();
 
@@ -36,7 +45,13 @@ struct CertPwdInput {
       })
     } else if (uri === 'requestAuthorize') {
       this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
+    } else {
+      console.info('The want type is not supported');
     }
+  }
+
+  onPageHide() {
+    this.mPreventScreenshotsPresenter.PreventScreenshots(false);
   }
 
   build() {
@@ -53,18 +68,36 @@ struct CertPwdInput {
           })
           .alignSelf(ItemAlign.Start);
 
-        TextInput()
+        TextInput({ text: this.certPwd })
           .type(InputType.Password)
-          .onChange((value: string) => {
-            this.certPwd = value;
-          })
+          .focusable(true)
+          .border(this.isPasswordError ? {
+            width: $r('app.float.wh_value_1'),
+            color: $r('sys.color.ohos_id_color_warning')
+          } : { width: $r('app.float.wh_value_0') })
           .maxLength(ConfigValue.PWD_MAX_LENGTH)
           .margin({
             top: $r('app.float.distance_16'),
             left: $r('app.float.distance_24'),
             right: $r('app.float.distance_24')
           })
-          .height('40vp')
+          .height($r('app.float.wh_value_40'))
+          .onChange((value: string) => {
+            this.certPwd = value;
+          })
+
+        Row() {
+          Text($r('app.string.Password_Message'))
+            .fontFamily('HarmonyHeiTi')
+            .fontSize($r('app.float.distance_14'))
+            .fontWeight(FontWeight.Regular)
+            .lineHeight($r('app.float.distance_19'))
+            .width(ComponentConfig.WH_100_100)
+            .textAlign(TextAlign.Center)
+            .fontColor($r('sys.color.ohos_id_color_warning'))
+            .visibility(this.passWordWarn === CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION
+              ? Visibility.Visible : Visibility.None)
+        }
       }
       .width(WidthPercent.WH_100_100)
       .height(WidthPercent.WH_75_100);
@@ -103,12 +136,25 @@ struct CertPwdInput {
             right: $r('app.float.distance_24'),
           })
           .onClick(() => {
-            GlobalContext.getContext().getPwdStore().setCertPwd(this.certPwd)
             let fileInfo: RouterFileVo = router.getParams() as RouterFileVo;
-            router.pushUrl({
-              url: 'pages/certInstallAliasInput',
-              params: fileInfo
-            })
+            this.isPasswordError = false;
+            this.mAppCredAuthPresenter.AuthenticationPassword(fileInfo.uri, fileInfo.suffix, this.certPwd)
+              .then((result: number) => {
+                this.passWordWarn = result;
+                if (this.passWordWarn !== CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION) {
+                  GlobalContext.getContext().getPwdStore().setCertPwd(this.certPwd);
+                  let fileInfo: RouterFileVo = router.getParams() as RouterFileVo;
+                  router.pushUrl({
+                    url: 'pages/certInstallAliasInput',
+                    params: {
+                      fileInfo: fileInfo,
+                      pwd: this.certPwd
+                    }
+                  })
+                } else {
+                  this.isPasswordError = true;
+                }
+              })
           })
         }
         .margin({ bottom: $r('app.float.wh_value_24') })

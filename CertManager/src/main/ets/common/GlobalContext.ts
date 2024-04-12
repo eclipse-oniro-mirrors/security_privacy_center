@@ -19,6 +19,7 @@ import UIExtensionContentSession from '@ohos.app.ability.UIExtensionContentSessi
 
 export class PwdStore {
   private certPwd: string = '';
+
   setCertPwd(pwd: string): void {
     this.certPwd = pwd;
   }
@@ -33,7 +34,9 @@ export class PwdStore {
 }
 
 export class GlobalContext {
-  private constructor() {};
+  private constructor() {
+  };
+
   private static instance: GlobalContext;
   private context: UIAbilityContext;
   private want: Want;
@@ -64,7 +67,7 @@ export class GlobalContext {
     return this.session;
   }
 
-  getFlag(): Boolean{
+  getFlag(): Boolean {
     return this.flag;
   }
 
@@ -84,7 +87,7 @@ export class GlobalContext {
     this.session = session;
   }
 
-  setFlag(flag: Boolean): void{
+  setFlag(flag: Boolean): void {
     this.flag = flag;
   }
 

@@ -56,7 +56,6 @@
       "name": "deleteAllCred",
       "value": "删除所有证书与凭据"
     },
-
     {
       "name": "deleteAllCredDialogTitle",
       "value": "删除所有证书与凭据"
@@ -111,7 +110,7 @@
     },
     {
       "name": "installAliasInputInfo",
-      "value": "注：此证书颁发者可能会检查进出设备的所有流量\n该数据包包含：CA证书"
+      "value": "注：证书名称仅支持英文和数字"
     },
     {
       "name": "managerAuthApp",

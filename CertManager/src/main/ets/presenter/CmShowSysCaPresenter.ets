@@ -57,7 +57,7 @@ export default class CmShowSysCaPresenter {
           }
         });
         this.certList = certList;
-        console.log('updateSystemTrustedCertificateList success, list: ' + JSON.stringify(certList));
+        console.debug('updateSystemTrustedCertificateList success, list: ' + JSON.stringify(certList));
       } else {
         console.error(TAG + 'updateSystemTrustedCertificateList fail,errCode is' + errCode);
         this.certList = [];
@@ -69,8 +69,7 @@ export default class CmShowSysCaPresenter {
     certManagerModel.getCertOrCred(CMModelOptType.CM_MODEL_OPT_SYSTEM_CA, uri,
       (errCode: CMModelErrorCode, certInfo: CertInfoVo) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
-        console.info(TAG + 'getSystemTrustedCertificate success,errCode is ' + errCode + ' certInfo is' +
-        JSON.stringify(certInfo));
+        console.info(TAG + 'getSystemTrustedCertificate success,errCode is ' + errCode);
         this.certInfo = certInfo;
         callback();
       } else {
