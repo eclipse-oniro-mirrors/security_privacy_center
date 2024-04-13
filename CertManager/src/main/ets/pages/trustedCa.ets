@@ -253,6 +253,14 @@ struct ComponentSystem {
   @Link setStatus: CmShowSysCaPresenter;
   private sysCaScroller: Scroller = new Scroller();
 
+  @State isHoverBackgroundColor: ResourceColor = '';
+  @Styles pressedStyles(): void {
+    .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
+  }
+  @Styles normalStyles(): void {
+    .backgroundColor(this.isHoverBackgroundColor)
+  }
+
   systemDetailsDialog: CustomDialogController = new CustomDialogController({
     alignment: DialogAlignment.Center,
     builder: CustomContentDialog({
@@ -383,6 +391,19 @@ struct ComponentSystem {
           .margin({ top: $r('app.float.wh_value_2'), bottom: $r('app.float.wh_value_11') });
       }.alignItems(HorizontalAlign.Start);
     }
+    .onHover((isHover?: boolean) => {
+      this.isHoverBackgroundColor = isHover ? $r('sys.color.ohos_id_color_hover') : ''
+    })
+    .backgroundColor(this.isHoverBackgroundColor)
+    .stateStyles({
+      pressed: this.pressedStyles,
+      normal: this.normalStyles
+    })
+    .padding({
+      left: $r('app.float.wh_value_8'),
+      right: $r('app.float.wh_value_8')
+    })
+    .borderRadius($r('app.float.wh_value_20'))
     .onClick(() => {
       this.setStatus.getSystemTrustedCertificate(this.uri, () => {
         console.info('this.setStatus.certInfo.status is:' + JSON.stringify(this.setStatus.certInfo));
@@ -402,6 +423,14 @@ struct ComponentUser {
   @Link setStatus: CMShowUserCaPresenter;
   @State mUserCaPresenterDetail: CMShowUserCaPresenter = CMShowUserCaPresenter.getInstance();
   private userCaScroller: Scroller = new Scroller();
+
+  @State isHoverBackgroundColor: ResourceColor = '';
+  @Styles pressedStyles(): void {
+    .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
+  }
+  @Styles normalStyles(): void {
+    .backgroundColor(this.isHoverBackgroundColor)
+  }
 
   rootCertificateDialog: CustomDialogController = new CustomDialogController({
     alignment: DialogAlignment.Center,
@@ -718,6 +747,19 @@ struct ComponentUser {
       .flexShrink(0)
       .margin($r('app.float.wh_value_12'))
     }
+    .onHover((isHover?: boolean) => {
+      this.isHoverBackgroundColor = isHover ? $r('sys.color.ohos_id_color_hover') : ''
+    })
+    .backgroundColor(this.isHoverBackgroundColor)
+    .stateStyles({
+      pressed: this.pressedStyles,
+      normal: this.normalStyles
+    })
+    .padding({
+      left: $r('app.float.wh_value_8'),
+      right: $r('app.float.wh_value_8')
+    })
+    .borderRadius($r('app.float.wh_value_20'))
     .onClick(() => {
       this.mUserCaPresenterDetail.getUserTrustedCertificate(this.uri, () => {
         console.info('userCerInfo is:' + JSON.stringify(this.setStatus.certInfo));
@@ -740,15 +782,6 @@ struct TrustedEvidence {
   private sysCaScroller: Scroller = new Scroller();
   private userCaScroller: Scroller = new Scroller();
   @State animationDurationNum: number = 400;
-
-  @Styles normalStyle() {
-    .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
-    .borderRadius($r('app.float.wh_value_10'))
-  };
-  @Styles pressedStyle() {
-    .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
-    .borderRadius($r('app.float.wh_value_10'))
-  };
 
   @Builder
   TabBuilder(index: number) {
@@ -818,26 +851,22 @@ struct TrustedEvidence {
                                 setStatus: $mShowSysCaPresenter,
                               })
                             }
-                            .borderRadius($r('app.float.radius_20'))
-                            .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
-                            .stateStyles({
-                              normal: this.normalStyle,
-                              pressed: this.pressedStyle
-                            });
                           }, (item: CertAbstractVo) => JSON.stringify(item))
                         }
+                        .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
                         .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
                         .scrollBar(BarState.Off)
                         .padding({
-                          right: $r('app.float.wh_value_12'),
-                          left: $r('app.float.wh_value_12'),
+                          right: $r('app.float.wh_value_4'),
+                          left: $r('app.float.wh_value_4'),
                           top: $r('app.float.wh_value_4'),
                           bottom: $r('app.float.wh_value_4')
                         })
                         .divider({
                           strokeWidth: $r('app.float.sys_list_divider_strokeWidth_value'),
                           color: $r('sys.color.ohos_id_color_list_separator'),
-                          endMargin: $r('app.float.wh_value_12')
+                          startMargin: $r('app.float.wh_value_8'),
+                          endMargin: $r('app.float.wh_value_8')
                         })
                         .visibility(this.mShowSysCaPresenter.certList.length > 0
                           ? Visibility.Visible : Visibility.None)
@@ -849,7 +878,6 @@ struct TrustedEvidence {
                         left: $r('app.float.wh_value_12'),
                         right: $r('app.float.wh_value_12')
                       })
-                      .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
                       .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
 
                       ScrollBar({ scroller: this.sysCaScroller, direction: ScrollBarDirection.Vertical,
@@ -885,23 +913,22 @@ struct TrustedEvidence {
                                 indexNum: index
                               })
                             }
-                            .stateStyles({
-                              normal: this.normalStyle,
-                              pressed: this.pressedStyle
-                            });
                           }, (item: CertAbstractVo) => JSON.stringify(item))
                         }
+                        .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+                        .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
+                        .divider({
+                          strokeWidth: $r('app.float.sys_list_divider_strokeWidth_value'),
+                          color: $r('sys.color.ohos_id_color_list_separator'),
+                          startMargin: $r('app.float.wh_value_8'),
+                          endMargin: $r('app.float.wh_value_8')
+                        })
                         .scrollBar(BarState.Off)
                         .padding({
-                          left: $r('app.float.wh_value_12'),
-                          right: $r('app.float.wh_value_12'),
+                          left: $r('app.float.wh_value_4'),
+                          right: $r('app.float.wh_value_4'),
                           top: $r('app.float.wh_value_4'),
                           bottom: $r('app.float.wh_value_4')
-                        })
-                        .divider({
-                          strokeWidth: $r('app.float.user_list_divider_strokeWidth_value'),
-                          color: $r('sys.color.ohos_id_color_list_separator'),
-                          endMargin: $r('app.float.wh_value_3')
                         })
                         .visibility(this.mShowUserCaPresenter.certList.length > 0
                           ? Visibility.Visible : Visibility.None)
@@ -913,8 +940,6 @@ struct TrustedEvidence {
                         left: $r('app.float.wh_value_12'),
                         right: $r('app.float.wh_value_12')
                       })
-                      .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
-                      .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
 
                       ScrollBar({ scroller: this.userCaScroller, direction: ScrollBarDirection.Vertical,
                         state: BarState.Auto }) {
