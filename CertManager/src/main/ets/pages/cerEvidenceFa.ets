@@ -67,6 +67,13 @@ export struct componentPublic {
   @Link mShowAppCaPresenter: CmShowAppCredPresenter;
   @State authorInfo: CmShowAppCredPresenter = CmShowAppCredPresenter.getInstance();
   private authorScroller: Scroller = new Scroller();
+  @State isHoverBackgroundColor: ResourceColor = '';
+  @Styles pressedStyles(): void {
+    .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
+  }
+  @Styles normalStyles(): void {
+    .backgroundColor(this.isHoverBackgroundColor)
+  }
 
   aboutToAppear() {
     this.mShowAppCaPresenter.updateAppCredList();
@@ -379,6 +386,15 @@ export struct componentPublic {
       }
     }
     .height($r('app.float.wh_value_48'))
+    .hoverEffect(HoverEffect.Highlight)
+    .onHover((isHover?: boolean) => {
+      this.isHoverBackgroundColor = isHover ? $r('sys.color.ohos_id_color_hover') : ''
+    })
+    .backgroundColor(this.isHoverBackgroundColor)
+    .stateStyles({
+      pressed: this.pressedStyles,
+      normal: this.normalStyles
+    })
     .onClick(() => {
       this.mShowAppCaPresenter.getAppCred(this.keyUri, () => {
         this.getAuthorizedAppList();
