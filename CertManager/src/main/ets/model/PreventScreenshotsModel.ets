@@ -16,6 +16,8 @@
 import window from '@ohos.window';
 import { BusinessError } from '@ohos.base';
 import { GlobalContext } from '../common/GlobalContext';
+import type UIAbilityContext from 'application/UIAbilityContext';
+import UIExtensionContentSession from '@ohos.app.ability.UIExtensionContentSession';
 
 const TAG: string = 'PreventScreenshotsModel';
 
@@ -30,32 +32,28 @@ export default class PreventScreenshotsModel {
   }
 
   PreventScreenshots(flag: boolean) {
-    let windowClass: window.Window | undefined = undefined;
     let isPrivacyMode: boolean = flag;
-    try {
-      window.getLastWindow(GlobalContext.getContext().getCmContext(), (err: BusinessError, data) => {
-        const errCode: number = err.code;
-        if (errCode) {
-          console.error(TAG, 'Failed to obtain the top window.Cause: ' + JSON.stringify(err));
-          return;
-        }
-        windowClass = data;
-        console.info(TAG, 'Success in obtaining the top window.Data');
-        try {
-          windowClass.setWindowPrivacyMode(isPrivacyMode, (err: BusinessError) => {
-            const errCode: number = err.code;
-            if (errCode) {
-              console.error(TAG, 'Failed to set window to privacy mode.Cause: ' + JSON.stringify(err));
-              return;
-            }
-            console.info(TAG, 'Success in setting the window to privacy mode');
-          });
-        } catch (exception) {
-          console.error(TAG, 'Failed to set the window to privacy mode.Cause: ' + JSON.stringify(exception));
-        }
-      })
-    } catch (exception) {
-      console.error(TAG, 'Failed to obtain the top window.Cause' + JSON.stringify(exception));
+    let session: UIExtensionContentSession = GlobalContext.getContext().getSession();
+    if (session !== undefined) {
+      session.setWindowPrivacyMode(isPrivacyMode);
+      return;
     }
+
+    let windowClass: window.Window | undefined = undefined;
+    let context: UIAbilityContext = GlobalContext.getContext().getCmContext();
+    if (context === undefined) {
+      console.error(TAG, 'context is undefined!');
+      return;
+    }
+
+    window.getLastWindow(context).then((window) => {
+      windowClass = window;
+      console.info(TAG,'Success in obtaining the top window data');
+      windowClass.setWindowPrivacyMode(isPrivacyMode).catch((err: BusinessError) => {
+        console.error(TAG, 'setWindowPrivacyMode failed: ' + JSON.stringify(err));
+      })
+    }).catch((err: BusinessError) => {
+      console.info(TAG + 'getLastWindow failed: ' + JSON.stringify(err));
+    })
   }
 }

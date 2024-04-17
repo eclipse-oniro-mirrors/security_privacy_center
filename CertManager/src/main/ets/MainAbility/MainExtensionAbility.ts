@@ -29,6 +29,11 @@ export default class MainExtensionAbility extends UIExtensionAbility {
 
   onSessionCreate(want: Want, session: UIExtensionContentSession): void {
     console.log('[CertManager] MainExtensionAbility onSessionCreate');
+
+    if (want === null || want === undefined) {
+      console.error('[CertManager] invalid want param');
+      return;
+    }
     let param: Record<string, Object> = {
       'session': session
     }
@@ -43,6 +48,7 @@ export default class MainExtensionAbility extends UIExtensionAbility {
 
   onSessionDestroy(): void {
     // Main window is destroyed, release UI related resources
+    GlobalContext.getContext().clearSession();
     console.log('[CertManager] MainExtensionAbility onSessionDestroy');
   }
 
