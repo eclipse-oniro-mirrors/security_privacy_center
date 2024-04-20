@@ -55,8 +55,7 @@ struct RadioAuth {
             } else {
               console.info('requestAuthorize fail');
             }
-          },
-          role: ButtonRole.ERROR
+          }
         }
       ]
     }),
@@ -178,25 +177,6 @@ struct RadioAuth {
             }
             .height($r('app.float.wh_value_64'))
           }, (item: CredentialAbstractVo) => JSON.stringify(item))
-          ListItem() {
-            Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-              Column() {
-                Text()
-              }
-              .alignItems(HorizontalAlign.Start)
-
-              Column() {
-                Radio({ value: 'null', group: 'appCredGroup' })
-                  .checked(false)
-                  .onChange((value: boolean) => {
-                    if (value) {
-                      this.selectUri = 'null';
-                    }
-                  })
-              }
-            }
-            .visibility(Visibility.None)
-          }
         }
         .margin({
           left: $r('app.float.wh_value_24'),

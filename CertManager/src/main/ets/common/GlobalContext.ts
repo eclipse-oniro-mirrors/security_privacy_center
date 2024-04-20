@@ -94,4 +94,8 @@ export class GlobalContext {
   clearAbilityWantUri(): void {
     this.want.uri = '';
   }
+
+  clearSession(): void {
+    this.session = undefined;
+  }
 }

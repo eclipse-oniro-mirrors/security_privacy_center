@@ -21,6 +21,11 @@ import { GlobalContext, PwdStore } from '../common/GlobalContext';
 export default class MainAbility extends Ability {
   onCreate(want: Want, launchParam): void {
     console.log('[CertManager] MainAbility onCreate');
+
+    if (want === null || want === undefined) {
+      console.error('[CertManager] invalid want param');
+      return;
+    }
     let pwdStore = new PwdStore();
     GlobalContext.getContext().setCmContext(this.context);
     GlobalContext.getContext().setPwdStore(pwdStore);
@@ -60,6 +65,11 @@ export default class MainAbility extends Ability {
 
   onNewWant(want: Want): void {
     console.log('[CertManager] MainAbility onNewWant');
+
+    if (want === null || want === undefined) {
+      console.error('[CertManager] invalid want param');
+      return;
+    }
     GlobalContext.getContext().setAbilityWant(want);
   }
 };
