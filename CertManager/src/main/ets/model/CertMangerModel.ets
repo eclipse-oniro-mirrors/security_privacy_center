@@ -41,6 +41,7 @@ export enum CMModelOptType {
   CM_MODEL_OPT_USER_CA = 2,
   CM_MODEL_OPT_APP_CRED = 3,
   CM_MODEL_OPT_PRIVATE_CRED = 4,
+  CM_MODEL_OPT_SYSTEM_CRED = 5,
 }
 
 export enum CertManagerStore {
@@ -74,9 +75,11 @@ export class CertMangerModel {
           callback(errCode, credList);
         });
         break;
-      case CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED:
-        callback(CMModelErrorCode.CM_MODEL_ERROR_NOT_SUPPORT);
-        break;
+      case CMModelOptType.CM_MODEL_OPT_SYSTEM_CRED:
+        this.getSystemCredList((errCode: CMModelErrorCode, credList: Array<CredentialAbstractVo>) => {
+          callback(errCode, credList)
+        })
+	break;
       default:
         callback(CMModelErrorCode.CM_MODEL_ERROR_UNKNOWN_OPT, undefined);
         break;
@@ -103,8 +106,10 @@ export class CertMangerModel {
           callback(errCode, credInfo);
         });
         break;
-      case CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED:
-        callback(CMModelErrorCode.CM_MODEL_ERROR_NOT_SUPPORT);
+      case CMModelOptType.CM_MODEL_OPT_SYSTEM_CRED:
+        this.getSystemCredential(uri, (errCode: CMModelErrorCode, credInfo: CredentialVo) => {
+          callback(errCode, credInfo)
+        })
         break;
       default:
         callback(CMModelErrorCode.CM_MODEL_ERROR_UNKNOWN_OPT, undefined);
@@ -129,8 +134,11 @@ export class CertMangerModel {
         });
         break;
       case CMModelOptType.CM_MODEL_OPT_SYSTEM_CA:
-      case CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED:
-        callback(CMModelErrorCode.CM_MODEL_ERROR_NOT_SUPPORT);
+      case CMModelOptType.CM_MODEL_OPT_SYSTEM_CRED:
+        console.log(TAG + 'deleteSystemCredential start');
+        this.deleteSystemCredential(uri, (errCode: CMModelErrorCode) => {
+          callback(errCode)
+        })
         break;
       default:
         callback(CMModelErrorCode.CM_MODEL_ERROR_UNKNOWN_OPT);
@@ -155,7 +163,7 @@ export class CertMangerModel {
         });
         break;
       case CMModelOptType.CM_MODEL_OPT_APP_CRED:
-      case CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED:
+      case CMModelOptType.CM_MODEL_OPT_SYSTEM_CRED:
         callback(CMModelErrorCode.CM_MODEL_ERROR_NOT_SUPPORT);
         break;
       default:
@@ -179,7 +187,7 @@ export class CertMangerModel {
         });
         break;
       case CMModelOptType.CM_MODEL_OPT_SYSTEM_CA:
-      case CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED:
+      case CMModelOptType.CM_MODEL_OPT_SYSTEM_CRED:
         callback(CMModelErrorCode.CM_MODEL_ERROR_NOT_SUPPORT);
         break;
       default:
@@ -199,7 +207,7 @@ export class CertMangerModel {
         break;
       case CMModelOptType.CM_MODEL_OPT_USER_CA:
       case CMModelOptType.CM_MODEL_OPT_SYSTEM_CA:
-      case CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED:
+      case CMModelOptType.CM_MODEL_OPT_SYSTEM_CRED:
         callback(CMModelErrorCode.CM_MODEL_ERROR_NOT_SUPPORT);
         break;
       default:
@@ -239,7 +247,7 @@ export class CertMangerModel {
         break;
       case CMModelOptType.CM_MODEL_OPT_USER_CA:
       case CMModelOptType.CM_MODEL_OPT_SYSTEM_CA:
-      case CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED:
+      case CMModelOptType.CM_MODEL_OPT_SYSTEM_CRED:
         callback(CMModelErrorCode.CM_MODEL_ERROR_NOT_SUPPORT);
         break;
       default:
@@ -262,7 +270,11 @@ export class CertMangerModel {
           callback(errCode);
         });
         break;
-      case CMModelOptType.CM_MODEL_OPT_PRIVATE_CRED:
+      case CMModelOptType.CM_MODEL_OPT_SYSTEM_CRED:
+        this.installSystemAppCertificate(data, alias, pwd, (errCode: CMModelErrorCode) => {
+          callback(errCode);
+        });
+        break;
       case CMModelOptType.CM_MODEL_OPT_SYSTEM_CA:
         callback(CMModelErrorCode.CM_MODEL_ERROR_NOT_SUPPORT);
         break;
@@ -511,6 +523,28 @@ export class CertMangerModel {
     }
   }
 
+  private async getSystemCredList(callback: Function): Promise<void> {
+    console.log(TAG + 'getSystemList start');
+    try {
+      let result = await CertManager.getAllSystemAPPCertificates();
+      let credList: CredentialAbstractVo[] = [];
+      if (result.credentialList !== undefined) {
+        for (let i = 0; i < result.credentialList.length; i++) {
+          credList.push(new CredentialAbstractVo(String(result.credentialList[i].type),
+            String(result.credentialList[i].alias), String(result.credentialList[i].keyUri)));
+        }
+        callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS, credList);
+      } else {
+        console.error(TAG + 'getSystemCredList failed, undefined.');
+        callback(CMModelErrorCode.CM_MODEL_ERROR_FAILED, undefined)
+      }
+    } catch (err) {
+      let e: BusinessError = err as BusinessError;
+      console.error(TAG, 'getSystemCredList failed with err, message: ' + e.message + ', code: ' + e.code)
+      callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION)
+    }
+  }
+
   private async getAppCredential(certUri: string, callback: Function): Promise<void> {
     console.log(TAG + 'getAppCredential start');
     try {
@@ -533,6 +567,28 @@ export class CertMangerModel {
     }
   }
 
+  private async getSystemCredential(certUri: string, callback: Function): Promise<void> {
+    console.log(TAG + 'getSystemCredential start');
+    try {
+      let result = await CertManager.getSystemAPPCertificate(certUri);
+      if (result.credential !== undefined) {
+        let certData: Uint8Array = result.credential.credData;
+        let credInfo = new CredentialVo(String(result.credential.type), String(result.credential.alias),
+        String(result.credential.keyUri), Number(result.credential.certNum),
+        Number(result.credential.keyNum), certData);
+        console.log(TAG + 'getSystemCredential end');
+        callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS, credInfo);
+      } else {
+        console.error(TAG + 'getSystemCredential failed, undefined');
+        callback(CMModelErrorCode.CM_MODEL_ERROR_FAILED, undefined);
+      }
+    } catch (err) {
+      let e: BusinessError = err as BusinessError;
+      console.error(TAG + 'getSystemCredential failed with err, message: ' + e.message + ', code: ' + e.code);
+      callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION, undefined);
+    }
+  }
+
   private async deleteAppCredential(certUri: string, callback: Function): Promise<void> {
     console.log(TAG + 'deleteAppCredential start');
     try {
@@ -542,6 +598,19 @@ export class CertMangerModel {
     } catch (err) {
       let e: BusinessError = err as BusinessError;
       console.error(TAG + 'deleteAppCredential failed with err, message: ' + e.message + ', code: ' + e.code);
+      callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION);
+    }
+  }
+
+  private async deleteSystemCredential(certUri: string, callback: Function): Promise<void> {
+    console.log(TAG, 'deleteSystemCredential start');
+    try {
+      await CertManager.uninstallSystemAPPCertificate(certUri);
+      console.log(TAG, 'deleteSystemCredential end');
+      callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS);
+    } catch (err) {
+      let e: BusinessError = err as BusinessError;
+      console.error(TAG + 'deleteSystemCredential failed with err, message: ' + e.message + ', code: ' + e.code);
       callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION);
     }
   }
@@ -655,6 +724,32 @@ export class CertMangerModel {
         callback(CMModelErrorCode.CM_MODEL_ERROR_ALIAS_LENGTH_REACHED_LIMIT)
       } else {
         console.error(TAG + 'installPublicCertificate failed with err, message: ' + e.message + ', code: ' + e.code);
+        callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION);
+      }
+    }
+  }
+
+  private async installSystemAppCertificate(
+    data: Uint8Array,
+    alias: string,
+    pwd: string,
+    callback: Function
+  ): Promise<void> {
+    console.info(TAG, 'installSystemAPPCertificate start');
+    try {
+      await CertManager.installSystemAPPCertificate(data, pwd, alias);
+      console.info(TAG + 'installSystemAPPCertificate end');
+      callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS);
+    } catch (err) {
+      let e: BusinessError = err as BusinessError;
+      if (e.code === CertManager.CMErrorCode.CM_ERROR_INCORRECT_FORMAT) {
+        callback(CMModelErrorCode.CM_MODEL_ERROR_INCORRECT_FORMAT);
+      } else if (e.code === CertManager.CMErrorCode.CM_ERROR_CERT_NUM_REACHED_LIMIT) {
+        callback(CMModelErrorCode.CM_MODEL_ERROR_MAX_QUANTITY_REACHED);
+      } else if (e.code === CertManager.CMErrorCode.CM_ERROR_ALIAS_LENGTH_REACHED_LIMIT) {
+        callback(CMModelErrorCode.CM_MODEL_ERROR_ALIAS_LENGTH_REACHED_LIMIT);
+      } else {
+        console.error(TAG + 'installSystemAppCertificate failed with err, message: ' + e.message + ', code: ' + e.code);
         callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION);
       }
     }

@@ -302,7 +302,7 @@
     },
     {
       "name": "user_certificate_credentials",
-      "value": "User certificate credentials"
+      "value": "User credentials"
     },
     {
       "name": "delete_success",
@@ -407,6 +407,10 @@
     {
       "name": "inputAliasWarn",
       "value": "Maximum length reached"
+    },
+    {
+      "name": "system_credentials",
+      "value": "System credentials"
     }
   ]
 }

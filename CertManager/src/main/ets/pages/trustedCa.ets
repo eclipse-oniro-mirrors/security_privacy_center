@@ -65,7 +65,7 @@ struct DialogSubjectComponent {
         .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r('app.float.DialogSubjectComponent_Text_margin_top_value')
+          top: $r('app.float.sys_elements_margin_vertical_l')
         })
       Text(this.subjectNameCN)
         .fontSize($r('sys.float.ohos_id_text_size_body2'))
@@ -76,7 +76,7 @@ struct DialogSubjectComponent {
         .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r('app.float.CustomDialogExample_Button_margin_top_value')
+          top: $r('app.float.sys_elements_margin_vertical_m')
         })
       Text(this.subjectNameO)
         .fontSize($r('sys.float.ohos_id_text_size_body2'))
@@ -87,7 +87,7 @@ struct DialogSubjectComponent {
         .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r('app.float.CustomDialogExample_Button_margin_top_value')
+          top: $r('app.float.sys_elements_margin_vertical_m')
         })
       Text(this.subjectNameOU)
         .fontSize($r('sys.float.ohos_id_text_size_body2'))
@@ -98,7 +98,7 @@ struct DialogSubjectComponent {
         .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r('app.float.wh_value_12')
+          top: $r('app.float.sys_elements_margin_vertical_m')
         })
       Text(this.serial)
         .fontSize($r('sys.float.ohos_id_text_size_body2'))
@@ -141,7 +141,7 @@ struct DialogIssuerComponent {
         .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r('app.float.wh_value_10')
+          top: $r('app.float.sys_elements_margin_vertical_l')
         })
       Text(this.issuerNameCN)
         .fontSize($r('sys.float.ohos_id_text_size_body2'))
@@ -152,7 +152,7 @@ struct DialogIssuerComponent {
         .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r('app.float.CustomDialogExample_Button_margin_top_value')
+          top: $r('app.float.sys_elements_margin_vertical_m')
         })
       Text(this.issuerNameO)
         .fontSize($r('sys.float.ohos_id_text_size_body2'))
@@ -163,7 +163,7 @@ struct DialogIssuerComponent {
         .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r('app.float.CustomDialogExample_Button_margin_top_value')
+          top: $r('app.float.sys_elements_margin_vertical_m')
         })
       Text(this.issuerNameOU)
         .fontSize($r('sys.float.ohos_id_text_size_body2'))
@@ -200,7 +200,7 @@ struct DialogDateComponent {
         .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r('app.float.wh_value_10')
+          top: $r('app.float.sys_elements_margin_vertical_l')
         })
       Text(this.notBefore)
         .fontSize($r('sys.float.ohos_id_text_size_body2'))
@@ -211,7 +211,7 @@ struct DialogDateComponent {
         .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r('app.float.CustomDialogExample_Button_margin_top_value')
+          top: $r('app.float.sys_elements_margin_vertical_m')
         })
       Text(this.notAfter)
         .fontSize($r('sys.float.ohos_id_text_size_body2'))
@@ -232,7 +232,7 @@ struct DialogFingerPrintComponent {
         .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Regular)
         .margin({
-          top: $r('app.float.wh_value_10')
+          top: $r('app.float.sys_elements_margin_vertical_l')
         })
       Text(this.fingerprintSha256)
         .fontSize($r('sys.float.ohos_id_text_size_body2'))
@@ -287,7 +287,6 @@ struct ComponentSystem {
         .fontWeight(FontWeight.Medium)
         .height($r('app.float.wh_value_56'))
         .margin({
-          top: $r('app.float.wh_value_0'),
           bottom: $r('app.float.wh_value_8'),
           right: $r('app.float.wh_value_24')
         })
@@ -298,7 +297,6 @@ struct ComponentSystem {
         .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontWeight(FontWeight.Medium)
         .margin({
-          top: $r('app.float.wh_value_0'),
           bottom: $r('app.float.wh_value_24'),
           right: $r('app.float.wh_value_24')
         })
@@ -324,7 +322,7 @@ struct ComponentSystem {
               .fontWeight(FontWeight.Medium)
           }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
           .margin({
-            top: $r('app.float.wh_value_12')
+            top: $r('app.float.wh_value_24')
           })
 
           ListItem() {
@@ -338,7 +336,7 @@ struct ComponentSystem {
               .fontWeight(FontWeight.Medium)
           }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
           .margin({
-            top: $r('app.float.wh_value_12')
+            top: $r('app.float.wh_value_24')
           })
 
           ListItem() {
@@ -352,7 +350,7 @@ struct ComponentSystem {
               .fontWeight(FontWeight.Medium)
           }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
           .margin({
-            top: $r('app.float.wh_value_12')
+            top: $r('app.float.wh_value_24')
           })
 
           ListItem() {
@@ -585,7 +583,6 @@ struct ComponentUser {
         .fontWeight(FontWeight.Medium)
         .height($r('app.float.wh_value_56'))
         .margin({
-          top: $r('app.float.wh_value_0'),
           bottom: $r('app.float.wh_value_8'),
           right: $r('app.float.wh_value_24')
         })
@@ -625,7 +622,7 @@ struct ComponentUser {
               .fontColor($r('sys.color.ohos_id_color_text_primary'))
               .fontWeight(FontWeight.Medium)
               .margin({
-                top: $r('app.float.wh_value_12')
+                top: $r('app.float.wh_value_24')
               })
           }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
 
@@ -639,7 +636,7 @@ struct ComponentUser {
               .fontColor($r('sys.color.ohos_id_color_text_primary'))
               .fontWeight(FontWeight.Medium)
               .margin({
-                top: $r('app.float.wh_value_12')
+                top: $r('app.float.wh_value_24')
               })
           }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
 
@@ -653,7 +650,7 @@ struct ComponentUser {
               .fontColor($r('sys.color.ohos_id_color_text_primary'))
               .fontWeight(FontWeight.Medium)
               .margin({
-                top: $r('app.float.wh_value_12')
+                top: $r('app.float.wh_value_24')
               })
           }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
 
@@ -667,7 +664,7 @@ struct ComponentUser {
               .fontColor($r('sys.color.ohos_id_color_text_primary'))
               .fontWeight(FontWeight.Medium)
               .margin({
-                top: $r('app.float.wh_value_12')
+                top: $r('app.float.wh_value_24')
               })
           }.width(ComponentConfig.WH_100_100).align(Alignment.Start)
 
@@ -831,7 +828,7 @@ struct TrustedEvidence {
         GridCol({ span: COPIES_NUM }) {
           Row() {
             Column() {
-              HeadComponent({ headName: $r('app.string.trustedEvidence') })
+              HeadComponent({ headName: $r('app.string.CA_cert') })
                 .margin({
                   left: $r('app.float.wh_value_12')
                 })

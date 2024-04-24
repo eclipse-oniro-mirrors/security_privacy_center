@@ -43,14 +43,20 @@ export default class CmInstallPresenter {
 
   aboutToDisappear(): void {
     this.optType = CMModelOptType.CM_MODEL_OPT_UNKNOWN;
+    AppStorage.setOrCreate('installUserCred',false);
+    AppStorage.setOrCreate('installSystemCred',false);
   }
 
   updateCertFileType(suffix: string): void {
     console.debug(TAG + 'updateCertFileType suffix: ' + suffix);
     if ((suffix === 'cer') || (suffix === 'pem')) {
       this.optType = CMModelOptType.CM_MODEL_OPT_USER_CA;
-    } else if ((suffix === 'p12') || (suffix === 'jks') || (suffix === 'pfx')) {
+    } else if (((suffix === 'p12') || (suffix === 'jks') || (suffix === 'pfx'))
+      && AppStorage.get('installUserCred') === true) {
       this.optType = CMModelOptType.CM_MODEL_OPT_APP_CRED;
+    } else if (((suffix === 'p12') || (suffix === 'jks') || (suffix === 'pfx'))
+      && AppStorage.get('installSystemCred') === true) {
+      this.optType = CMModelOptType.CM_MODEL_OPT_SYSTEM_CRED;
     } else {
       console.debug(TAG, 'The file type is not supported. suffix: ' + suffix);
     }

@@ -1,6 +1,18 @@
 {
   "string": [
     {
+      "name": "module_test_desc",
+      "value": "test ability description"
+    },
+    {
+      "name": "TestAbility_desc",
+      "value": "the test ability"
+    },
+    {
+      "name": "TestAbility_label",
+      "value": "test label"
+    },
+    {
       "name": "entry_MainAbility",
       "value": "证书管理"
     },
@@ -110,7 +122,7 @@
     },
     {
       "name": "installAliasInputInfo",
-      "value": "注：证书名称仅支持英文和数字"
+      "value": "注：此证书颁发者可能会检查进出设备的所有流量\n该数据包包含：CA证书"
     },
     {
       "name": "managerAuthApp",
@@ -286,7 +298,7 @@
     },
     {
       "name": "root_certificate_message",
-      "value": "警告：为网站启用此证书将允许第三方查看发送给网站的任何私人数据。"
+      "value": "警告：为网站启用此证书将允许第三方查看发送给网站的任何私人数据"
     },
     {
       "name": "root_certificate_cancel",
@@ -302,7 +314,7 @@
     },
     {
       "name": "user_certificate_credentials",
-      "value": "用户凭据"
+      "value": "用户证书凭据"
     },
     {
       "name": "delete_success",
@@ -382,15 +394,15 @@
     },
     {
       "name": "Install_Error_NOT_FOUND",
-      "value": "无法识别此文件。"
+      "value": "无法识别此文件"
     },
     {
       "name": "Install_ERROR_INCORRECT_FORMAT",
-      "value": "证书已损坏。"
+      "value": "证书已损坏"
     },
     {
       "name": "Install_Error_MAX_QUANTITY_REACHED",
-      "value": "证书数量已达上限，请清理证书。"
+      "value": "证书数量已达上限，请清理证书"
     },
     {
       "name": "OK",
@@ -406,11 +418,7 @@
     },
     {
       "name": "inputAliasWarn",
-      "value": "已达到长度上限"
-    },
-    {
-      "name": "system_credentials",
-      "value": "系统凭据"
+      "value": "证书名称过长，请重新输入"
     }
   ]
 }

@@ -1062,7 +1062,7 @@
     },
     {
       "name": "request_auth_strokeWidth",
-      "value": "1px"
+      "value": "1vp"
     },
     {
       "name": "credentials_app_image_wh",
@@ -1258,7 +1258,7 @@
     },
     {
       "name": "Evidence_strokeWidth",
-      "value": "1px"
+      "value": "1vp"
     },
     {
       "name": "Evidence_startMargin",
@@ -1338,7 +1338,7 @@
     },
     {
       "name": "sys_list_divider_strokeWidth_value",
-      "value": "1px"
+      "value": "1vp"
     },
     {
       "name": "sys_list_divider_startMargin_value",
@@ -1354,7 +1354,7 @@
     },
     {
       "name": "user_list_divider_strokeWidth_value",
-      "value": "1px"
+      "value": "1vp"
     },
     {
       "name": "user_list_divider_startMargin_value",
@@ -1695,10 +1695,6 @@
     {
       "name": "scroll_bar_width",
       "value": "3vp"
-    },
-    {
-      "name": "margin_top_value_12",
-      "value": "-12vp"
     }
   ]
 }

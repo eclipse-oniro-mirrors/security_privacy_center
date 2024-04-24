@@ -20,6 +20,8 @@ import FileIoModel from '../model/FileIoModel';
 import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
 import { BusinessError } from '@ohos.base';
 import { RouterFileVo, RouterAppUidVo } from '../model/CertManagerVo/RouterInfoVo';
+import { GlobalContext } from '../common/GlobalContext';
+import checkUserAuthModel from '../model/CheckUserAuthModel';
 
 const TAG = 'CMFaPresenter: ';
 const gridCountNum: number = 4;
@@ -42,6 +44,7 @@ export default class CmFaPresenter {
   }
 
   unrecognizedFileTips(): void {
+    GlobalContext.getContext().setAbilityWant({});
     AlertDialog.show({
       message: $r('app.string.Install_Error_NOT_FOUND'),
       autoCancel: true,
@@ -160,5 +163,27 @@ export default class CmFaPresenter {
         console.error(TAG + 'uninstallAllCert CM_MODEL_OPT_APP_CRED failed');
       }
     });
+  }
+
+  startInstall(installType: string, fileUri: string) {
+    if (installType === 'CACert') {
+      let titleStr = getContext().resourceManager.getStringSync($r('app.string.Identity_Authentication'));
+      checkUserAuthModel.auth(titleStr, (authResult: boolean) => {
+        if (authResult) {
+          console.log('checkUserAuth success');
+          this.routeToNextInstallCert(fileUri);
+        }
+      })
+    } else if (installType === 'userCred') {
+      AppStorage.setOrCreate('installSystemCred', false);
+      AppStorage.setOrCreate('installUserCred', true);
+      this.routeToNextInstallEvidence(fileUri);
+    } else if (installType === 'systemCred') {
+      AppStorage.setOrCreate('installSystemCred', true);
+      AppStorage.setOrCreate('installUserCred', false);
+      this.routeToNextInstallEvidence(fileUri);
+    } else {
+      console.info(TAG, 'The installType is not supported');
+    }
   }
 }

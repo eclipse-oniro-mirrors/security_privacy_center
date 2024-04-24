@@ -89,40 +89,49 @@ struct RadioAuth {
         Stack({ alignContent: Alignment.End }) {
           Scroll(this.authScroller) {
             List() {
-              ForEach(this.mAppCredAuthPresenter.credList, (item: CredentialAbstractVo) => {
+              ForEach(this.mAppCredAuthPresenter.credList, (item: CredentialAbstractVo, index: number) => {
                 ListItem() {
-                  Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-                    Column() {
-                      Text(item.alias)
-                        .fontSize($r('app.float.font_18'))
-                        .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                        .fontWeight(FontWeight.Medium)
-                        .textAlign(TextAlign.Start);
-                    }
-                    .alignItems(HorizontalAlign.Start)
+                  Column() {
+                    Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+                      Column() {
+                        Text(item.alias)
+                          .fontSize($r('app.float.font_18'))
+                          .fontColor($r('sys.color.ohos_id_color_text_primary'))
+                          .fontWeight(FontWeight.Medium)
+                          .textAlign(TextAlign.Start);
+                      }
+                      .alignItems(HorizontalAlign.Start)
 
-                    Column() {
-                      Radio({ value: item.alias, group: 'appCredGroup' })
-                        .checked(false)
-                        .onChange((value: boolean) => {
-                          console.log(item.alias + ' status is ' + value);
-                          if (value) {
-                            this.selectUri = item.keyUri;
-                          }
-                        })
+                      Column() {
+                        Radio({ value: item.alias, group: 'appCredGroup' })
+                          .checked(false)
+                          .onChange((value: boolean) => {
+                            console.log(item.alias + ' status is ' + value);
+                            if (value) {
+                              this.selectUri = item.keyUri;
+                            }
+                          })
+                      }
+                      .alignItems(HorizontalAlign.End)
                     }
-                    .alignItems(HorizontalAlign.End)
+                    .margin(index !== 0 ? {top: $r('app.float.margin_top_value_12')}
+                      : {top: $r('app.float.wh_value_0')})
+                    .width(WidthPercent.WH_100_100)
+
+                    Divider()
+                      .color($r('sys.color.ohos_id_color_list_separator'))
+                      .margin({
+                        top: $r('app.float.distance_12'),
+                        right: $r('app.float.wh_value_3')
+                      })
+                      .visibility(index === (this.mAppCredAuthPresenter.credList.length - 1)
+                        ? Visibility.None : Visibility.Visible)
                   }
-                  .width(WidthPercent.WH_100_100)
                 }
                 .height($r('app.float.wh_value_64'))
               }, (item: CredentialAbstractVo) => JSON.stringify(item))
             }
             .scrollBar(BarState.Off)
-            .divider({
-              strokeWidth: $r('app.float.request_auth_strokeWidth'),
-              color: $r('sys.color.ohos_id_color_list_separator'),
-              endMargin: $r('app.float.request_auth_divider_endMargin') })
             .backgroundColor($r('sys.color.ohos_id_color_dialog_bg'))
             .visibility(this.mAppCredAuthPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
           }
@@ -149,44 +158,71 @@ struct RadioAuth {
         .height(WidthPercent.WH_50_100)
       } else {
         List() {
-          ForEach(this.mAppCredAuthPresenter.credList, (item: CredentialAbstractVo) => {
+          ForEach(this.mAppCredAuthPresenter.credList, (item: CredentialAbstractVo, index: number) => {
             ListItem() {
-              Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-                Column() {
-                  Text(item.alias)
-                    .fontSize($r('app.float.font_18'))
-                    .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                    .fontWeight(FontWeight.Medium)
-                    .textAlign(TextAlign.Start);
-                }
-                .alignItems(HorizontalAlign.Start)
+              Column() {
+                Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+                  Column() {
+                    Text(item.alias)
+                      .fontSize($r('app.float.font_18'))
+                      .fontColor($r('sys.color.ohos_id_color_text_primary'))
+                      .fontWeight(FontWeight.Medium)
+                      .textAlign(TextAlign.Start);
+                  }
+                  .alignItems(HorizontalAlign.Start)
 
-                Column() {
-                  Radio({ value: item.alias, group: 'appCredGroup' })
-                    .checked(false)
-                    .onChange((value: boolean) => {
-                      console.log(item.alias + ' status is ' + value);
-                      if (value) {
-                        this.selectUri = item.keyUri;
-                      }
-                    })
+                  Column() {
+                    Radio({ value: item.alias, group: 'appCredGroup' })
+                      .checked(false)
+                      .onChange((value: boolean) => {
+                        console.log(item.alias + ' status is ' + value);
+                        if (value) {
+                          this.selectUri = item.keyUri;
+                        }
+                      })
+                  }
+                  .alignItems(HorizontalAlign.End)
                 }
-                .alignItems(HorizontalAlign.End)
+                .margin(index !== 0 ? {top: $r('app.float.margin_top_value_12')}
+                  : {top: $r('app.float.wh_value_0')})
+                .width(WidthPercent.WH_100_100)
+
+                Divider()
+                  .color($r('sys.color.ohos_id_color_list_separator'))
+                  .margin({
+                    top: $r('app.float.distance_12')
+                  })
+                  .visibility(index === (this.mAppCredAuthPresenter.credList.length - 1)
+                    ? Visibility.None : Visibility.Visible)
               }
-              .width(WidthPercent.WH_100_100)
             }
             .height($r('app.float.wh_value_64'))
           }, (item: CredentialAbstractVo) => JSON.stringify(item))
+          ListItem() {
+            Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+              Column() {
+                Text()
+              }
+              .alignItems(HorizontalAlign.Start)
+
+              Column() {
+                Radio({ value: 'null', group: 'appCredGroup' })
+                  .checked(false)
+                  .onChange((value: boolean) => {
+                    if (value) {
+                      this.selectUri = 'null';
+                    }
+                  })
+              }
+            }
+            .visibility(Visibility.None)
+          }
         }
         .margin({
           left: $r('app.float.wh_value_24'),
           right: $r('app.float.wh_value_24')
         })
         .scrollBar(BarState.Off)
-        .divider({
-          strokeWidth: $r('app.float.request_auth_strokeWidth'),
-          color: $r('sys.color.ohos_id_color_list_separator'),
-          endMargin: $r('app.float.request_auth_divider_endMargin') })
         .backgroundColor($r('sys.color.ohos_id_color_dialog_bg'))
         .visibility(this.mAppCredAuthPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
       }
