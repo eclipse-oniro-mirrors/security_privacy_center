@@ -98,4 +98,8 @@ export class GlobalContext {
   clearSession(): void {
     this.session = undefined;
   }
+  
+  clearAbilityWantParamsUri(): void {
+    this.want.parameters.uri = '';
+  }
 }

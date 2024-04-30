@@ -234,6 +234,7 @@ struct CertificateComponent {
     let uri = GlobalContext.getContext().getAbilityWant().uri
       || GlobalContext.getContext().getAbilityWant().parameters?.uri;
     GlobalContext.getContext().clearAbilityWantUri();
+    GlobalContext.getContext().clearAbilityWantParamsUri();
 
     switch (UIExtensionFlag) {
       case false:

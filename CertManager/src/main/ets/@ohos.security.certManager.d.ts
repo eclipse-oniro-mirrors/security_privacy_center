@@ -105,13 +105,13 @@ declare namespace CertManagerFunc {
     function abort(handle: Uint8Array, callback: AsyncCallback<boolean>) : void;
     function abort(handle: Uint8Array) : Promise<boolean>;
 
-    function installSystemAPPCertificate(keystore: Uint8Array, keystorePwd: string, certAlias: string): Promise<CMResult>;
+    function installSystemAppCertificate(keystore: Uint8Array, keystorePwd: string, certAlias: string): Promise<CMResult>;
 
-    function getAllSystemAPPCertificates(): Promise<CMResult>;
+    function getAllSystemAppCertificates(): Promise<CMResult>;
 
-    function getSystemAPPCertificate(keyUri: string) : Promise<CMResult>;
+    function getSystemAppCertificate(keyUri: string) : Promise<CMResult>;
 
-    function uninstallSystemAPPCertificate(keyUri: string) : Promise<void>;
+    function uninstallSystemAppCertificate(keyUri: string) : Promise<void>;
 
     export interface CertInfo {
         uri: string;

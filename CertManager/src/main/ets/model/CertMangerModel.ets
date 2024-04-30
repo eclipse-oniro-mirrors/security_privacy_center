@@ -526,13 +526,14 @@ export class CertMangerModel {
   private async getSystemCredList(callback: Function): Promise<void> {
     console.log(TAG + 'getSystemList start');
     try {
-      let result = await CertManager.getAllSystemAPPCertificates();
+      let result = await CertManager.getAllSystemAppCertificates();
       let credList: CredentialAbstractVo[] = [];
       if (result.credentialList !== undefined) {
         for (let i = 0; i < result.credentialList.length; i++) {
           credList.push(new CredentialAbstractVo(String(result.credentialList[i].type),
             String(result.credentialList[i].alias), String(result.credentialList[i].keyUri)));
         }
+        console.log(TAG + 'getSystemCredList end');
         callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS, credList);
       } else {
         console.error(TAG + 'getSystemCredList failed, undefined.');
@@ -570,7 +571,7 @@ export class CertMangerModel {
   private async getSystemCredential(certUri: string, callback: Function): Promise<void> {
     console.log(TAG + 'getSystemCredential start');
     try {
-      let result = await CertManager.getSystemAPPCertificate(certUri);
+      let result = await CertManager.getSystemAppCertificate(certUri);
       if (result.credential !== undefined) {
         let certData: Uint8Array = result.credential.credData;
         let credInfo = new CredentialVo(String(result.credential.type), String(result.credential.alias),
@@ -605,7 +606,7 @@ export class CertMangerModel {
   private async deleteSystemCredential(certUri: string, callback: Function): Promise<void> {
     console.log(TAG, 'deleteSystemCredential start');
     try {
-      await CertManager.uninstallSystemAPPCertificate(certUri);
+      await CertManager.uninstallSystemAppCertificate(certUri);
       console.log(TAG, 'deleteSystemCredential end');
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS);
     } catch (err) {
@@ -735,10 +736,10 @@ export class CertMangerModel {
     pwd: string,
     callback: Function
   ): Promise<void> {
-    console.info(TAG, 'installSystemAPPCertificate start');
+    console.info(TAG, 'installSystemAppCertificate start');
     try {
-      await CertManager.installSystemAPPCertificate(data, pwd, alias);
-      console.info(TAG + 'installSystemAPPCertificate end');
+      await CertManager.installSystemAppCertificate(data, pwd, alias);
+      console.info(TAG + 'installSystemAppCertificate end');
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS);
     } catch (err) {
       let e: BusinessError = err as BusinessError;

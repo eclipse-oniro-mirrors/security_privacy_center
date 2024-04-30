@@ -139,7 +139,7 @@ struct CertInstallAliasInput {
             })
             .onClick(() => {
               let routerParams: RouterParams = router.getParams() as RouterParams;
-              let fileInfo: RouterFileVo = routerParams.fileInfo as RouterFileVo;
+              let fileInfo: RouterFileVo = routerParams?.fileInfo as RouterFileVo;
               let pwd: string = routerParams.pwd || '';
               this.mAppCredAuthPresenter.checkCertNameLength(fileInfo.uri, this.certAlias, fileInfo.suffix, pwd)
                 .then((result: number) => {

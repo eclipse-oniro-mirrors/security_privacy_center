@@ -1695,10 +1695,6 @@
     {
       "name": "scroll_bar_width",
       "value": "3vp"
-    },
-    {
-      "name": "margin_top_value_12",
-      "value": "-12vp"
     }
   ]
 }

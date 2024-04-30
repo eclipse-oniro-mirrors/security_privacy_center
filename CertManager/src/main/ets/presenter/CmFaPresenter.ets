@@ -20,7 +20,6 @@ import FileIoModel from '../model/FileIoModel';
 import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
 import { BusinessError } from '@ohos.base';
 import { RouterFileVo, RouterAppUidVo } from '../model/CertManagerVo/RouterInfoVo';
-import { GlobalContext } from '../common/GlobalContext';
 import checkUserAuthModel from '../model/CheckUserAuthModel';
 
 const TAG = 'CMFaPresenter: ';
@@ -44,7 +43,6 @@ export default class CmFaPresenter {
   }
 
   unrecognizedFileTips(): void {
-    GlobalContext.getContext().setAbilityWant({});
     AlertDialog.show({
       message: $r('app.string.Install_Error_NOT_FOUND'),
       autoCancel: true,

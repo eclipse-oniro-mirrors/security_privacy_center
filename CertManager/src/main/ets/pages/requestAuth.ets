@@ -114,15 +114,12 @@ struct RadioAuth {
                       }
                       .alignItems(HorizontalAlign.End)
                     }
-                    .margin(index !== 0 ? {top: $r('app.float.margin_top_value_12')}
-                      : {top: $r('app.float.wh_value_0')})
                     .width(WidthPercent.WH_100_100)
 
                     Divider()
                       .color($r('sys.color.ohos_id_color_list_separator'))
                       .margin({
-                        top: $r('app.float.distance_12'),
-                        right: $r('app.float.wh_value_3')
+                        top: $r('app.float.distance_12')
                       })
                       .visibility(index === (this.mAppCredAuthPresenter.credList.length - 1)
                         ? Visibility.None : Visibility.Visible)
@@ -183,8 +180,6 @@ struct RadioAuth {
                   }
                   .alignItems(HorizontalAlign.End)
                 }
-                .margin(index !== 0 ? {top: $r('app.float.margin_top_value_12')}
-                  : {top: $r('app.float.wh_value_0')})
                 .width(WidthPercent.WH_100_100)
 
                 Divider()
@@ -231,7 +226,6 @@ struct RadioAuth {
     .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
     .backgroundColor($r('sys.color.ohos_id_color_dialog_bg'))
   }
-
 
   aboutToAppear() {
     console.debug('enter requestAuth page');
