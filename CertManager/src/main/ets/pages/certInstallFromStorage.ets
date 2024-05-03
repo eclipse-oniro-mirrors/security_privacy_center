@@ -23,8 +23,9 @@ import { CustomContentDialog } from '@ohos.arkui.advanced.Dialog';
 import checkUserAuthModel from '../model/CheckUserAuthModel';
 
 const COPIES_NUM: number = 12;
+let storage = LocalStorage.GetShared()
 
-@Entry
+@Entry(storage)
 @Component
 struct CertificateComponent {
   @State columnMargin: string = '12vp';
