@@ -144,7 +144,7 @@ struct CertPwdInput {
                 if (this.passWordWarn !== CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION) {
                   GlobalContext.getContext().getPwdStore().setCertPwd(this.certPwd);
                   let fileInfo: RouterFileVo = router.getParams() as RouterFileVo;
-                  router.pushUrl({
+                  router.replaceUrl({
                     url: 'pages/certInstallAliasInput',
                     params: {
                       fileInfo: fileInfo,

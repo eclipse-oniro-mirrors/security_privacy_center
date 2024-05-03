@@ -188,7 +188,7 @@ export default class CmInstallPresenter {
             break;
         }
         router.clear();
-        router.pushUrl({
+        router.replaceUrl({
           url: 'pages/certManagerFa'
         });
       });

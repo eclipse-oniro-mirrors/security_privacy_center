@@ -28,6 +28,9 @@ struct RadioAuth {
   private authScroller: Scroller = new Scroller();
 
   dialogController: CustomDialogController = new CustomDialogController({
+    cancel: () => {
+      this.mAppCredAuthPresenter.cancelProcess();
+    },
     builder: CustomContentDialog({
       contentBuilder: () => {
         this.dialogControllerContent();

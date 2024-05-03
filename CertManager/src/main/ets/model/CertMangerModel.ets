@@ -693,7 +693,7 @@ export class CertMangerModel {
       let e: BusinessError = err as BusinessError;
       if (e.code === CertManager.CMErrorCode.CM_ERROR_INCORRECT_FORMAT) {
         callback(CMModelErrorCode.CM_MODEL_ERROR_INCORRECT_FORMAT)
-      } else if (e.code === CertManager.CMErrorCode.CM_ERROR_CERT_NUM_REACHED_LIMIT) {
+      } else if (e.code === CertManager.CMErrorCode.CM_ERROR_MAX_CERT_COUNT_REACHED) {
         callback(CMModelErrorCode.CM_MODEL_ERROR_MAX_QUANTITY_REACHED)
       } else if (e.code === CertManager.CMErrorCode.CM_ERROR_ALIAS_LENGTH_REACHED_LIMIT) {
         callback(CMModelErrorCode.CM_MODEL_ERROR_ALIAS_LENGTH_REACHED_LIMIT)
@@ -719,7 +719,7 @@ export class CertMangerModel {
       let e: BusinessError = err as BusinessError;
       if (e.code === CertManager.CMErrorCode.CM_ERROR_INCORRECT_FORMAT) {
         callback(CMModelErrorCode.CM_MODEL_ERROR_INCORRECT_FORMAT)
-      } else if (e.code === CertManager.CMErrorCode.CM_ERROR_CERT_NUM_REACHED_LIMIT) {
+      } else if (e.code === CertManager.CMErrorCode.CM_ERROR_MAX_CERT_COUNT_REACHED) {
         callback(CMModelErrorCode.CM_MODEL_ERROR_MAX_QUANTITY_REACHED)
       } else if (e.code === CertManager.CMErrorCode.CM_ERROR_ALIAS_LENGTH_REACHED_LIMIT) {
         callback(CMModelErrorCode.CM_MODEL_ERROR_ALIAS_LENGTH_REACHED_LIMIT)
@@ -745,7 +745,7 @@ export class CertMangerModel {
       let e: BusinessError = err as BusinessError;
       if (e.code === CertManager.CMErrorCode.CM_ERROR_INCORRECT_FORMAT) {
         callback(CMModelErrorCode.CM_MODEL_ERROR_INCORRECT_FORMAT);
-      } else if (e.code === CertManager.CMErrorCode.CM_ERROR_CERT_NUM_REACHED_LIMIT) {
+      } else if (e.code === CertManager.CMErrorCode.CM_ERROR_MAX_CERT_COUNT_REACHED) {
         callback(CMModelErrorCode.CM_MODEL_ERROR_MAX_QUANTITY_REACHED);
       } else if (e.code === CertManager.CMErrorCode.CM_ERROR_ALIAS_LENGTH_REACHED_LIMIT) {
         callback(CMModelErrorCode.CM_MODEL_ERROR_ALIAS_LENGTH_REACHED_LIMIT);
