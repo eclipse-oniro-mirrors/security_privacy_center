@@ -142,7 +142,7 @@ struct CertificateComponent {
                   })
 
                   Divider()
-                    .color($r("sys.color.ohos_id_color_list_separator"))
+                    .color($r('sys.color.ohos_id_color_list_separator'))
                     .margin({
                       left: $r('app.float.wh_value_12'),
                       right: $r('app.float.wh_value_12')
@@ -172,7 +172,7 @@ struct CertificateComponent {
 
 
                   Divider()
-                    .color($r("sys.color.ohos_id_color_list_separator"))
+                    .color($r('sys.color.ohos_id_color_list_separator'))
                     .margin({
                       left: $r('app.float.wh_value_12'),
                       right: $r('app.float.wh_value_12')
@@ -208,7 +208,7 @@ struct CertificateComponent {
               }
               .width(WidthPercent.WH_100_100)
             }
-            .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
+            .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
             .padding({ left: $r('app.float.wh_value_16'), right: $r('app.float.wh_value_16') })
             .width(WidthPercent.WH_100_100)
             .height(WidthPercent.WH_100_100)

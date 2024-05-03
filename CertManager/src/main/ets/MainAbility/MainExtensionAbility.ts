@@ -41,7 +41,7 @@ export default class MainExtensionAbility extends UIExtensionAbility {
     let storage: LocalStorage = new LocalStorage(param);
     let pullType: string = want.parameters.pullType as string;
 
-    if (pullType === "systemCredInstall" || pullType === "specifyInstall") {
+    if (pullType === 'systemCredInstall' || pullType === 'specifyInstall') {
       session.loadContent('pages/certInstallFromStorage', storage);
     } else {
       session.loadContent('pages/certManagerFa', storage);
