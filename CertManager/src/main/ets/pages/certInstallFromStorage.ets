@@ -228,47 +228,27 @@ struct CertificateComponent {
   }
 
   onPageShow() {
-    let UIExtensionFlag = GlobalContext.getContext().getFlag();
+    let uiExtensionFlag = GlobalContext.getContext().getFlag();
     let installType: string = GlobalContext.getContext().getAbilityWant().parameters?.installType as string;
     let uri = GlobalContext.getContext().getAbilityWant().uri
       || GlobalContext.getContext().getAbilityWant().parameters?.uri;
     GlobalContext.getContext().clearAbilityWantUri();
     GlobalContext.getContext().clearAbilityWantParamsUri();
-
-    switch (UIExtensionFlag) {
-      case false:
-        if (uri === 'certInstall') {
-          router.pushUrl({
-            url: 'pages/certInstallFromStorage'
-          })
-        } else if (uri === 'requestAuthorize') {
-          this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
-        } else {
-          console.info('The want type is not supported');
-        }
-        break;
-
-      case true:
-        if (uri === 'certInstall') {
-          router.pushUrl({
-            url: 'pages/certInstallFromStorage'
-          })
-        } else if (uri === 'requestAuthorize') {
-          this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
-        } else if (uri === 'systemCredInstall' && installType === 'systemCred') {
-          AppStorage.setOrCreate('installSystemCred', true);
-          AppStorage.setOrCreate('installUserCred', false);
-          this.mFaPresenter.startInstallEvidence();
-        } else if (uri === 'specifyInstall') {
-          let fileUri = GlobalContext.getContext().getAbilityWant().parameters?.fileUri as string;
-          this.mFaPresenter.startInstall(installType, fileUri);
-        } else {
-          console.info('The want type is not supported');
-        }
-        break;
-
-      default:
-        break;
+    if (uri === 'certInstall') {
+      router.pushUrl({
+        url: 'pages/certInstallFromStorage'
+      })
+    } else if (uri === 'requestAuthorize') {
+      this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
+    } else if (uiExtensionFlag && uri === 'systemCredInstall' && installType === 'systemCred') {
+      AppStorage.setOrCreate('installSystemCred', true);
+      AppStorage.setOrCreate('installUserCred', false);
+      this.mFaPresenter.startInstallEvidence();
+    } else if (uiExtensionFlag && uri === 'specifyInstall') {
+      let fileUri = GlobalContext.getContext().getAbilityWant().parameters?.fileUri as string;
+      this.mFaPresenter.startInstall(installType, fileUri);
+    } else {
+      console.info('The want type is not supported');
     }
   }
 }
