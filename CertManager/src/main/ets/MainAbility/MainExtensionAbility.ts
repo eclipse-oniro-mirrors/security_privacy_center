@@ -35,10 +35,17 @@ export default class MainExtensionAbility extends UIExtensionAbility {
       return;
     }
     let param: Record<string, Object> = {
-      'session': session
+      'session': session,
+      'want': want
     }
     let storage: LocalStorage = new LocalStorage(param);
-    session.loadContent('pages/certManagerFa', storage);
+    let pullType: string = want.parameters.pullType as string;
+
+    if (pullType === 'systemCredInstall' || pullType === 'specifyInstall') {
+      session.loadContent('pages/certInstallFromStorage', storage);
+    } else {
+      session.loadContent('pages/certManagerFa', storage);
+    }
     GlobalContext.getContext().setAbilityWant(want);
     GlobalContext.getContext().setSession(session);
     let pwdStore = new PwdStore();

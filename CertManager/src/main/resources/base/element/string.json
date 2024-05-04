@@ -302,7 +302,7 @@
     },
     {
       "name": "user_certificate_credentials",
-      "value": "用户证书凭据"
+      "value": "用户凭据"
     },
     {
       "name": "delete_success",
@@ -407,6 +407,10 @@
     {
       "name": "inputAliasWarn",
       "value": "已达到长度上限"
+    },
+    {
+      "name": "system_credentials",
+      "value": "系统凭据"
     }
   ]
 }

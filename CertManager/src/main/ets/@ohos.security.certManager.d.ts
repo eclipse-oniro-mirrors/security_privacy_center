@@ -105,6 +105,14 @@ declare namespace CertManagerFunc {
     function abort(handle: Uint8Array, callback: AsyncCallback<boolean>) : void;
     function abort(handle: Uint8Array) : Promise<boolean>;
 
+    function installSystemAppCertificate(keystore: Uint8Array, keystorePwd: string, certAlias: string): Promise<CMResult>;
+
+    function getAllSystemAppCertificates(): Promise<CMResult>;
+
+    function getSystemAppCertificate(keyUri: string) : Promise<CMResult>;
+
+    function uninstallSystemAppCertificate(keyUri: string) : Promise<void>;
+
     export interface CertInfo {
         uri: string;
         certAlias: string;
@@ -185,7 +193,7 @@ declare namespace CertManagerFunc {
         CM_ERROR_GENERIC = 17500001,
         CM_ERROR_NO_FOUND = 17500002,
         CM_ERROR_INCORRECT_FORMAT = 17500003,
-        CM_ERROR_CERT_NUM_REACHED_LIMIT = 17500004,
+        CM_ERROR_MAX_CERT_COUNT_REACHED = 17500004,
         CM_ERROR_NO_AUTHORIZATION = 17500005,
         CM_ERROR_ALIAS_LENGTH_REACHED_LIMIT = 17500006
     }

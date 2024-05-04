@@ -27,7 +27,7 @@ const COPIES_NUM: number = 12;
 
 class CertListItem {
   public targetPage: string = '';
-  public title: Resource = $r('app.string.trustedEvidence');
+  public title: Resource = $r('app.string.CA_cert');
 };
 
 @Entry
@@ -36,7 +36,7 @@ struct CertificateComponent {
   @State columnMargin: string = '12vp';
   @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
   private listItems: Array<CertListItem> = [
-    { targetPage: 'pages/trustedCa', title: $r('app.string.trustedEvidence') },
+    { targetPage: 'pages/trustedCa', title: $r('app.string.CA_cert') },
     { targetPage: 'pages/cerEvidenceFa', title: $r('app.string.userEvidence') }
   ];
   @Styles normalStyle() {

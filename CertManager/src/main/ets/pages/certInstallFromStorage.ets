@@ -121,64 +121,94 @@ struct CertificateComponent {
               HeadComponent({ headName: $r('app.string.installInStorageDevice') })
               Column({ space: this.columnMargin }) {
                 Column() {
-                  Column() {
-                    Row() {
-                      Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-                        Text($r('app.string.CA_cert'))
-                          .fontSize($r('sys.float.ohos_id_text_size_body1'))
-                          .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                          .fontWeight(FontWeight.Medium)
-                          .margin({ left: $r('app.float.wh_value_12') })
-                          .textAlign(TextAlign.Start)
-                      }
+                  Row() {
+                    Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+                      Text($r('app.string.CA_cert'))
+                        .fontSize($r('sys.float.ohos_id_text_size_body1'))
+                        .fontColor($r('sys.color.ohos_id_color_text_primary'))
+                        .fontWeight(FontWeight.Medium)
+                        .margin({ left: $r('app.float.wh_value_12') })
+                        .textAlign(TextAlign.Start)
                     }
-                    .stateStyles({
-                      normal: this.normalStyle,
-                      pressed: this.pressedStyle
-                    })
-                    .margin({ top: $r('app.float.wh_value_4') })
-                    .height($r('app.float.wh_value_48'))
-                    .onClick(() => {
-                      this.rootCertificateDialog.open();
-                    })
-
-                    Divider()
-                      .color($r("sys.color.ohos_id_color_list_separator"))
-                      .margin({
-                        left: $r('app.float.wh_value_12'),
-                        right: $r('app.float.wh_value_12')
-                      })
-
-                    Row() {
-                      Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-                        Text($r('app.string.user_certificate_credentials'))
-                          .fontSize($r('sys.float.ohos_id_text_size_body1'))
-                          .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                          .fontWeight(FontWeight.Medium)
-                          .margin({ left: $r('app.float.wh_value_12') })
-                          .textAlign(TextAlign.Start)
-                      }
-                      .onClick(() => {
-                        this.installCertFlag = false;
-                        this.checkUserAuth();
-                      })
-                    }
-                    .stateStyles({
-                      normal: this.normalStyle,
-                      pressed: this.pressedStyle
-                    })
-                    .height($r('app.float.wh_value_48'))
                   }
-                  .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
-                  .borderRadius($r('app.float.radius_20'))
-                  .height(ComponentConfig.WH_100_100)
-                  .width(ComponentConfig.WH_100_100)
+                  .stateStyles({
+                    normal: this.normalStyle,
+                    pressed: this.pressedStyle
+                  })
+                  .margin({ top: $r('app.float.wh_value_4') })
+                  .height($r('app.float.wh_value_48'))
+                  .onClick(() => {
+                    this.rootCertificateDialog.open();
+                  })
+
+                  Divider()
+                    .color($r('sys.color.ohos_id_color_list_separator'))
+                    .margin({
+                      left: $r('app.float.wh_value_12'),
+                      right: $r('app.float.wh_value_12')
+                    })
+
+                  Row() {
+                    Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+                      Text($r('app.string.system_credentials'))
+                        .fontSize($r('sys.float.ohos_id_text_size_body1'))
+                        .fontColor($r('sys.color.ohos_id_color_text_primary'))
+                        .fontWeight(FontWeight.Medium)
+                        .margin({ left: $r('app.float.wh_value_12') })
+                        .textAlign(TextAlign.Start)
+                    }
+                    .onClick(() => {
+                      this.installCertFlag = false;
+                      AppStorage.setOrCreate('installSystemCred', true);
+                      AppStorage.setOrCreate('installUserCred',false);
+                      this.mFaPresenter.startInstallEvidence();
+                    })
+                  }
+                  .stateStyles({
+                    normal: this.normalStyle,
+                    pressed: this.pressedStyle
+                  })
+                  .height($r('app.float.wh_value_48'))
+
+
+                  Divider()
+                    .color($r('sys.color.ohos_id_color_list_separator'))
+                    .margin({
+                      left: $r('app.float.wh_value_12'),
+                      right: $r('app.float.wh_value_12')
+                    })
+
+                  Row() {
+                    Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+                      Text($r('app.string.user_certificate_credentials'))
+                        .fontSize($r('sys.float.ohos_id_text_size_body1'))
+                        .fontColor($r('sys.color.ohos_id_color_text_primary'))
+                        .fontWeight(FontWeight.Medium)
+                        .margin({ left: $r('app.float.wh_value_12') })
+                        .textAlign(TextAlign.Start)
+                    }
+                    .onClick(() => {
+                      this.installCertFlag = false;
+                      AppStorage.setOrCreate('installUserCred', true);
+                      AppStorage.setOrCreate('installSystemCred',false);
+                      this.mFaPresenter.startInstallEvidence();
+                    })
+                  }
+                  .stateStyles({
+                    normal: this.normalStyle,
+                    pressed: this.pressedStyle
+                  })
+                  .height($r('app.float.wh_value_48'))
                 }
-                .height($r('app.float.wh_value_104'))
+                .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
+                .borderRadius($r('app.float.radius_20'))
+                .height(ComponentConfig.WH_100_100)
+                .width(ComponentConfig.WH_100_100)
+                .height($r('app.float.wh_value_152'))
               }
               .width(WidthPercent.WH_100_100)
             }
-            .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
+            .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
             .padding({ left: $r('app.float.wh_value_16'), right: $r('app.float.wh_value_16') })
             .width(WidthPercent.WH_100_100)
             .height(WidthPercent.WH_100_100)
@@ -198,15 +228,25 @@ struct CertificateComponent {
   }
 
   onPageShow() {
-    let uri = GlobalContext.getContext().getAbilityWant().uri;
+    let uiExtensionFlag = GlobalContext.getContext().getFlag();
+    let installType: string = GlobalContext.getContext().getAbilityWant().parameters?.installType as string;
+    let uri = GlobalContext.getContext().getAbilityWant().uri
+      || GlobalContext.getContext().getAbilityWant().parameters?.uri;
     GlobalContext.getContext().clearAbilityWantUri();
-
+    GlobalContext.getContext().clearAbilityWantParamsUri();
     if (uri === 'certInstall') {
       router.pushUrl({
         url: 'pages/certInstallFromStorage'
       })
     } else if (uri === 'requestAuthorize') {
       this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
+    } else if (uiExtensionFlag && uri === 'systemCredInstall' && installType === 'systemCred') {
+      AppStorage.setOrCreate('installSystemCred', true);
+      AppStorage.setOrCreate('installUserCred', false);
+      this.mFaPresenter.startInstallEvidence();
+    } else if (uiExtensionFlag && uri === 'specifyInstall') {
+      let fileUri = GlobalContext.getContext().getAbilityWant().parameters?.fileUri as string;
+      this.mFaPresenter.startInstall(installType, fileUri);
     } else {
       console.info('The want type is not supported');
     }
