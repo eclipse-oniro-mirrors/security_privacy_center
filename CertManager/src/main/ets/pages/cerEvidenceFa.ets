@@ -76,10 +76,6 @@ export struct componentPublic {
     .backgroundColor(this.isHoverBackgroundColor)
   }
 
-  aboutToAppear() {
-    this.mShowAppCaPresenter.updateAppCredList();
-  }
-
   getAuthorizedAppList(): void {
     this.authorInfo.getAuthorizedAppList(this.mShowAppCaPresenter.credInfo.keyUri);
   }
@@ -422,10 +418,6 @@ export struct componentSystem {
   }
   @Styles normalStyles(): void {
     .backgroundColor(this.isHoverBackgroundColor)
-  }
-
-  aboutToAppear() {
-    this.mSystemCredPresenter.updateSystemCredList()
   }
 
   sysCredDetailsDialog: CustomDialogController = new CustomDialogController({
