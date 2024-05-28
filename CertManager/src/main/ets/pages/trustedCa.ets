@@ -449,8 +449,11 @@ struct ComponentUser {
           value: $r('app.string.root_certificate_continue'),
           buttonStyle: ButtonStyleMode.TEXTUAL,
           action: () => {
-            this.setStatus.setUserCertificateStatus(this.mUserCaPresenterDetail.certInfo.uri, true);
-            this.setStatus.updateUserTrustedCertificateList();
+            this.setStatus.setUserCertificateStatus(this.mUserCaPresenterDetail.certInfo.uri, true).then(result => {
+              if (result) {
+                this.setStatus.updateUserTrustedCertificateList();
+              }
+            });
           }
         }
       ]
