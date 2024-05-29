@@ -18,7 +18,7 @@ import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
 import { CredentialAbstractVo } from '../model/CertManagerVo/CredentialAbstractVo';
 import { CredentialVo } from '../model/CertManagerVo/CredentialVo';
 import { AppAuthorVo } from '../model/CertManagerVo/AppAuthorVo';
-
+@Observed
 export default class CmShowSysCredPresenter {
   private static sInstance: CmShowSysCredPresenter;
   public credList: CredentialAbstractVo[] = [];

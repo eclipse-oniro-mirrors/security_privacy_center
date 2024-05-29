@@ -30,6 +30,8 @@ struct CertInstallAliasInput {
   @State certAlias: string = '';
   @State isCertLong: boolean = false;
 
+  private routerParams: RouterParams = router.getParams() as RouterParams;
+
   onPageShow() {
     let uri = GlobalContext.getContext().getAbilityWant().uri;
     GlobalContext.getContext().clearAbilityWantUri();
@@ -138,9 +140,8 @@ struct CertInstallAliasInput {
               right: $r('app.float.distance_24'),
             })
             .onClick(() => {
-              let routerParams: RouterParams = router.getParams() as RouterParams;
-              let fileInfo: RouterFileVo = routerParams?.fileInfo as RouterFileVo;
-              let pwd: string = routerParams.pwd || '';
+              let fileInfo: RouterFileVo = this.routerParams?.fileInfo as RouterFileVo;
+              let pwd: string = this.routerParams.pwd || '';
               this.mAppCredAuthPresenter.checkCertNameLength(fileInfo.uri, this.certAlias, fileInfo.suffix, pwd)
                 .then((result: number) => {
                   if (result !== CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {

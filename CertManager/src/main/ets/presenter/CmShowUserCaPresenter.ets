@@ -79,17 +79,21 @@ export default class CmShowUserCaPresenter {
     });
   }
 
-  setUserCertificateStatus(uri: string, status: boolean): void {
-    certManagerModel.setCertStatus(CMModelOptType.CM_MODEL_OPT_USER_CA, uri, status, (errCode: CMModelErrorCode) => {
-      if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
-        this.getUserTrustedCertificate(uri, () => {
-          console.info(TAG + 'setCerStatus then getUserTrustedCertificate,errCode is' + errCode);
-        });
-        this.updateUserTrustedCertificateList();
-      } else {
-        console.error(TAG + 'setUserCertificateStatus fail,errCode is ' + errCode);
-      }
-    });
+  setUserCertificateStatus(uri: string, status: boolean): Promise<boolean> {
+    return new Promise<boolean>(resolve => {
+      certManagerModel.setCertStatus(CMModelOptType.CM_MODEL_OPT_USER_CA, uri, status, (errCode: CMModelErrorCode) => {
+        if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
+          this.getUserTrustedCertificate(uri, () => {
+            console.info(TAG + 'setCerStatus then getUserTrustedCertificate,errCode is' + errCode);
+          });
+          this.updateUserTrustedCertificateList();
+          return resolve(true);
+        } else {
+          console.error(TAG + 'setUserCertificateStatus fail,errCode is ' + errCode);
+          return resolve(false);
+        }
+      });
+    })
   }
 
   deleteUserCertificate(uri: string, callback: Function): void {
