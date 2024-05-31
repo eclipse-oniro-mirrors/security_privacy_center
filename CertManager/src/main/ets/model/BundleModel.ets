@@ -30,11 +30,12 @@ export class BundleNameModel {
         appName: '',
       };
 
-      let appBundleName = await bundleManager.getBundleNameByUid(appUid);
-      console.log(TAG + 'appBundleName: ' + appBundleName);
+      let appCloneIdentity = await bundleManager.getAppCloneIdentity(appUid);
+      console.log(TAG + 'appBundleName: ' + appCloneIdentity.bundleName + 'appIndex: ' + appCloneIdentity.appIndex);
 
       let bundleFlags = bundleResManager.ResourceFlag.GET_RESOURCE_INFO_ALL;
-      let resourceInfo = bundleResManager.getBundleResourceInfo(appBundleName, bundleFlags);
+      let resourceInfo = bundleResManager.getBundleResourceInfo(appCloneIdentity.bundleName, bundleFlags,
+        appCloneIdentity.appIndex);
       appInfo.appName = resourceInfo.label;
       appInfo.appImage = resourceInfo.icon;
       console.log(TAG + 'get bundle info success');
