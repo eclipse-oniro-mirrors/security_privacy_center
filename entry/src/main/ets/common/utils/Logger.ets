@@ -19,8 +19,10 @@ import hilog from '@ohos.hilog';
  */
 class Logger {
   private domain: number;
+
   private preTag: string;
-  private format: string = "%{public}s";
+
+  private format: string = '%{public}s';
 
   constructor() {
     this.preTag = 'PrivacyCenter_';

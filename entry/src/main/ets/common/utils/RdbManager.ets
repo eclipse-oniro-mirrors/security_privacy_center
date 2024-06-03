@@ -85,7 +85,8 @@ export class RdbManager {
     return OPT_ERROR;
   }
 
-  async query(context: Context, predicates: relationalStore.RdbPredicates, columns?: Array<string>): Promise<relationalStore.ResultSet | undefined> {
+  async query(context: Context, predicates: relationalStore.RdbPredicates,
+    columns?: Array<string>): Promise<relationalStore.ResultSet | undefined> {
     try {
       let rdbStore: relationalStore.RdbStore | undefined = await this.getRdbStore(context);
       if (rdbStore === undefined) {
