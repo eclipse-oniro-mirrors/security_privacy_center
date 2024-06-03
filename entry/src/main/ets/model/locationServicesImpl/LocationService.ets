@@ -21,8 +21,8 @@ import { ListenerBean } from './ListenerBean';
 const TAG:string = 'LocationService'
 
 export class LocationService {
-  mIsStart: boolean = false;
-  mListener: ListenerBean = new ListenerBean(() => {
+  public mIsStart: boolean = false;
+  public mListener: ListenerBean = new ListenerBean(() => {
   });
 
   startService() {

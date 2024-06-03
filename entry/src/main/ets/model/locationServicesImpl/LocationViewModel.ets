@@ -16,12 +16,12 @@
 import LocationService from './LocationService';
 import Logger from '../../common/utils/Logger';
 
-const TAG:string = 'LocationViewModel'
+const TAG: string = 'LocationViewModel'
 
-export const LocationServiceOpenStatusKey = "LocationServiceStatus";
+export const locationServiceOpenStatusKey = 'LocationServiceStatus';
 
 export class LocationVM {
-  mIsStart: boolean = false;
+  public mIsStart: boolean = false;
 
   initViewModel() {
     if (this.mIsStart) {
@@ -36,7 +36,7 @@ export class LocationVM {
 
   updateServiceState(state: boolean) {
     Logger.info(TAG, `update location service state, state: ${state} `)
-    AppStorage.setOrCreate(LocationServiceOpenStatusKey, state);
+    AppStorage.setOrCreate(locationServiceOpenStatusKey, state);
   }
 
   enableLocation() {

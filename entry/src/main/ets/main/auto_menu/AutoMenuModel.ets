@@ -112,9 +112,9 @@ export class AutoMenuModel extends BaseModel {
         bundleName: menuInfo.dstBundleName,
         abilityName: menuInfo.dstAbilityName
       }).then((data) => {
-        Logger.info(TAG,`${menuInfo.dstBundleName} start successful.data: ${JSON.stringify(data)}`)
+        Logger.info(TAG, `${menuInfo.dstBundleName} start successful.data: ${JSON.stringify(data)}`)
       }).catch((err: BusinessError) => {
-        Logger.error(TAG,`${menuInfo.dstBundleName} start failed. Cause: ${JSON.stringify(err)}`)
+        Logger.error(TAG, `${menuInfo.dstBundleName} start failed. Cause: ${JSON.stringify(err)}`)
       })
     }
     //   jump page
@@ -157,7 +157,8 @@ export class AutoMenuModel extends BaseModel {
   }
 
   //   MenuConfig[] to MenuInfo[]
-  private async _convertMenuConfigToMenuInfo(context: Context, menuConfigList: MenuConfig[], userId: number): Promise<MenuInfo[]> {
+  private async _convertMenuConfigToMenuInfo(context: Context, menuConfigList: MenuConfig[],
+    userId: number): Promise<MenuInfo[]> {
     let menuInfoList: MenuInfo[] = [];
     for (let i = 0; i < menuConfigList.length; i++) {
       const menuConfig: MenuConfig = menuConfigList[i];

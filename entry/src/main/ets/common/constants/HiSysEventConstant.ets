@@ -14,11 +14,15 @@
  */
 
 export default class HiSysEventConstant {
-  static BUNDLE_NAME = 'com.ohos.certmanager';
-  static EVENT_DOMAIN = 'PRIVACY_UE';
-  static ACCESS_CLICK_EVENT_NAME = 'SECU_PRIV_ENTRANCE';
+  public static BUNDLE_NAME = 'com.ohos.certmanager';
+
+  public static EVENT_DOMAIN = 'PRIVACY_UE';
+
+  public static ACCESS_CLICK_EVENT_NAME = 'SECU_PRIV_ENTRANCE';
+
   // Settings - Privacy and Security - Privacy Permission List Management Event
-  static MAIN_PERMISSION_LIST_EVENT_NAME = 'MAIN_PERMISSION_LIST';
-  //Settings Privacy and Security Permissions Access My Location Information Switch
-  static PERMISSION_PAGE_LOCATION_EVENT_NAME = 'PERMISSION_PAGE_LOCATION';
+  public static MAIN_PERMISSION_LIST_EVENT_NAME = 'MAIN_PERMISSION_LIST';
+
+  // Settings Privacy and Security Permissions Access My Location Information Switch
+  public static PERMISSION_PAGE_LOCATION_EVENT_NAME = 'PERMISSION_PAGE_LOCATION';
 }

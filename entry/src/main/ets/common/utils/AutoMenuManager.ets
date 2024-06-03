@@ -29,12 +29,12 @@ import abilityAccessCtrl, { Permissions } from '@ohos.abilityAccessCtrl';
 import resourceManager from '@ohos.resourceManager';
 import dataSharePredicates from '@ohos.data.dataSharePredicates';
 
-const TAG = "AutoMenu";
+const TAG = 'AutoMenu';
 const DST_ABILITY_MODE = 1;
-//UIAbility access method
+// UIAbility access method
 const DST_UIABILITY_MODE = 0;
 
-//Database unique identifier
+// Database unique identifier
 const DISPLAY_ONLY_PRIMARY_USER = 'ONLY_PRIMARY_USER';
 const DISPLAY_ONLY_SUB_USER = 'ONLY_SUB_USER';
 const MAIN_USER_ID = 100;
@@ -48,10 +48,14 @@ const DISPLAY_MODEL_LIST = 'list';
 export class AutoMenuManager {
   //   Default configuration information，key is bundle name, value is config
   private _defaultMenuConfigMap: HashMap<string, DefaultMenuConfig> = new HashMap();
+
   //   key is bundle name, value is id.
   private _defaultBusinessIdMap: HashMap<string, string> = new HashMap();
+
   private _predicates: dataSharePredicates.DataSharePredicates = new dataSharePredicates.DataSharePredicates();
+
   private _shareArray = ['*'];
+
   private static _INSTANCE: AutoMenuManager;
 
   /**
@@ -222,7 +226,7 @@ export class AutoMenuManager {
 
   //   Read access method configuration information and convert it to the corresponding data class
   private async _readConfigFromSingleAbilityInfo(context: Context,
-                                                 abilityInfo: bundleManager.ExtensionAbilityInfo | bundleManager.AbilityInfo): Promise<MenuConfig[]> {
+    abilityInfo: bundleManager.ExtensionAbilityInfo | bundleManager.AbilityInfo): Promise<MenuConfig[]> {
     //   Get MetaData data
     let singleAbilityMenuConfigList: MenuConfig[] = [];
     for (let index = 0; index < abilityInfo.metadata.length; index++) {
@@ -245,17 +249,16 @@ export class AutoMenuManager {
     return singleAbilityMenuConfigList;
   }
 
-  //   Query the JSON data of metaData based on the package name
+  // Query the JSON data of metaData based on the package name
   private async _getFileByMetaData(context: Context, bundleName: string, fileName: string): Promise<string> {
     let resourceManager = resourceUtil.getBundleResourceManager(bundleName, context) as resourceManager.ResourceManager;
     return await RawFileUtil.getStringByFile(resourceManager, fileName);
   }
 
   private async _verifyMenuConfig(context: Context, menuConfig: MenuConfig, userId: number): Promise<boolean> {
-    //   Classification verification based on card or list mode, currently only list mode is supported
+    // Classification verification based on card or list mode, currently only list mode is supported
     try {
-      if (menuConfig.displayedMode === DISPLAY_MODEL_CARD
-        || menuConfig.displayedMode === DISPLAY_MODEL_LIST) {
+      if (menuConfig.displayedMode === DISPLAY_MODEL_CARD || menuConfig.displayedMode === DISPLAY_MODEL_LIST) {
         return await this._verificationListContent(context, userId, menuConfig);
       }
     } catch (err) {
@@ -289,7 +292,8 @@ export class AutoMenuManager {
     return '';
   }
 
-  private async _verificationListContent(context: common.Context, userId: number, menuConfig: MenuConfig): Promise<boolean> {
+  private async _verificationListContent(context: common.Context, userId: number,
+    menuConfig: MenuConfig): Promise<boolean> {
     if (menuConfig === undefined || menuConfig === null) {
       return false;
     }
@@ -365,7 +369,8 @@ export class AutoMenuManager {
   private _verificationPrimaryUser(displayUserConfig: string, userId: number): boolean {
     let isPrimaryUser: boolean = userId === MAIN_USER_ID;
     Logger.info(TAG, `verificationSubUser, displayUser: ${displayUserConfig}, isPrimaryUser: ${isPrimaryUser}`);
-    if ((isPrimaryUser && displayUserConfig === DISPLAY_ONLY_PRIMARY_USER) || (!isPrimaryUser && displayUserConfig === DISPLAY_ONLY_SUB_USER)) {
+    if ((isPrimaryUser && displayUserConfig === DISPLAY_ONLY_PRIMARY_USER) ||
+      (!isPrimaryUser && displayUserConfig === DISPLAY_ONLY_SUB_USER)) {
       return true;
     } else {
       return false;
