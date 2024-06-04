@@ -35,7 +35,8 @@ export class AutoMenuViewModel extends BaseViewModel<AutoMenuModel, AutoMenuView
     return new AutoMenuViewState();
   }
 
-  protected async processIntentWithModel(intents: BaseIntent, model: AutoMenuModel, viewStat: AutoMenuViewState): Promise<ProcessResult> {
+  protected async processIntentWithModel(intents: BaseIntent, model: AutoMenuModel,
+    viewStat: AutoMenuViewState): Promise<ProcessResult> {
     Logger.info(TAG, 'start processIntentWithModel: ' + intents.getIntentTag());
     if (intents instanceof AutoMenuInitIntent) {
       let menuInfoList: MenuInfo[] = await model.getMenuInfoListFromRdb(intents.context);

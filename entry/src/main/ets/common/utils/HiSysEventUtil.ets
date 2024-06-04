@@ -31,14 +31,15 @@ export default class HiSysEventUtil {
    * @params { clickedBundleName } Click on the application package name
    */
   static async reportAccessClick(clickedBundleName: string): Promise<void> {
-    Logger.info(TAG,"reportAccessClick start.")
+    Logger.info(TAG, 'reportAccessClick start.')
     let versionName: string = await GetSelfBundleInfoUtils.getVersionName();
     let eventParams: Record<string, string | number> = {
       'PNAMEID': HiSysEventConstant.BUNDLE_NAME,
       'PVERSIONID': versionName,
       'CLICK_ITEM': clickedBundleName,
     };
-    HiSysEventUtil.report(HiSysEventConstant.EVENT_DOMAIN, HiSysEventConstant.ACCESS_CLICK_EVENT_NAME, hiSysEvent.EventType.BEHAVIOR, eventParams);
+    HiSysEventUtil.report(HiSysEventConstant.EVENT_DOMAIN,
+      HiSysEventConstant.ACCESS_CLICK_EVENT_NAME, hiSysEvent.EventType.BEHAVIOR, eventParams);
   }
 
   /**
@@ -46,14 +47,15 @@ export default class HiSysEventUtil {
    * @params { operation } LOCATION
    */
   static async reportLocationClick(operation: string): Promise<void> {
-    Logger.info(TAG,"reportLocationClick start.")
+    Logger.info(TAG, 'reportLocationClick start.')
     let versionName: string = await GetSelfBundleInfoUtils.getVersionName();
     let eventParams: Record<string, string | number> = {
       'PNAMEID': HiSysEventConstant.BUNDLE_NAME,
       'PVERSIONID': versionName,
       'OPERATION': operation,
     };
-    HiSysEventUtil.report(HiSysEventConstant.EVENT_DOMAIN, HiSysEventConstant.MAIN_PERMISSION_LIST_EVENT_NAME, hiSysEvent.EventType.BEHAVIOR, eventParams);
+    HiSysEventUtil.report(HiSysEventConstant.EVENT_DOMAIN,
+      HiSysEventConstant.MAIN_PERMISSION_LIST_EVENT_NAME, hiSysEvent.EventType.BEHAVIOR, eventParams);
   }
 
   /**
@@ -67,7 +69,8 @@ export default class HiSysEventUtil {
       'PVERSIONID': versionName,
       'NEW_CHECKED_STATE': checkedState,
     };
-    HiSysEventUtil.report(HiSysEventConstant.EVENT_DOMAIN, HiSysEventConstant.PERMISSION_PAGE_LOCATION_EVENT_NAME, hiSysEvent.EventType.BEHAVIOR, eventParams);
+    HiSysEventUtil.report(HiSysEventConstant.EVENT_DOMAIN,
+      HiSysEventConstant.PERMISSION_PAGE_LOCATION_EVENT_NAME, hiSysEvent.EventType.BEHAVIOR, eventParams);
   }
 
   /**
@@ -81,11 +84,12 @@ export default class HiSysEventUtil {
     params['PNAMEID'] = HiSysEventConstant.BUNDLE_NAME;
     params['PVERSIONID'] = versionName;
     let eventParams: Record<string, string | number> = params;
-    HiSysEventUtil.report(HiSysEventConstant.EVENT_DOMAIN, eventName, hiSysEvent.EventType.BEHAVIOR, eventParams)
+    HiSysEventUtil.report(HiSysEventConstant.EVENT_DOMAIN, eventName, hiSysEvent.EventType.BEHAVIOR, eventParams);
   }
 
   private static report(domain: string, name: string, eventType: hiSysEvent.EventType, params: Object): void {
-    Logger.info(TAG, `start to report domain: ${domain},eventName: ${name},eventType: ${eventType}, reportData: ${params}`)
+    Logger.info(
+      TAG, `start to report domain: ${domain},eventName: ${name},eventType: ${eventType}, reportData: ${params}`);
     const sysEventInfo: hiSysEvent.SysEventInfo = {
       domain: domain,
       name: name,
@@ -94,11 +98,11 @@ export default class HiSysEventUtil {
     };
     hiSysEvent.write(sysEventInfo).then(
       () => {
-        Logger.info(TAG, `HiSysEventUtil reportHiSysEvent ${sysEventInfo.name} success.`)
+        Logger.info(TAG, `HiSysEventUtil reportHiSysEvent ${sysEventInfo.name} success.`);
       }
     ).catch(
       (err: BusinessError) => {
-        Logger.error(TAG, `error code: ${err.code}, error msg: ${err.message}`)
+        Logger.error(TAG, `error code: ${err.code}, error msg: ${err.message}`);
       }
     )
   }

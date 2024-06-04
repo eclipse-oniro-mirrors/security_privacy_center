@@ -171,10 +171,9 @@ class BundleInfoModel {
     })
   }
 
-  static readonly zh: string = '阿八嚓哒妸发旮哈靃讥咔垃呣拏噢妑七呥仨它唾畖窊夕丫币';
-  static readonly en: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  indexValue: string[] =
-    ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+  public static readonly zh: string = '';
+  public static readonly en: string = '';
+  public indexValue: string[] = []
 
   getStringZh(input: string): string {
     let result: string = '';
