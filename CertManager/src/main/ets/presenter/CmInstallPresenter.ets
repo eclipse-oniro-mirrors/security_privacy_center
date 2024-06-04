@@ -51,11 +51,11 @@ export default class CmInstallPresenter {
     console.debug(TAG + 'updateCertFileType suffix: ' + suffix);
     if ((suffix === 'cer') || (suffix === 'pem')) {
       this.optType = CMModelOptType.CM_MODEL_OPT_USER_CA;
-    } else if (((suffix === 'p12') || (suffix === 'jks') || (suffix === 'pfx'))
-      && AppStorage.get('installUserCred') === true) {
+    } else if (((suffix === 'p12') || (suffix === 'jks') || (suffix === 'pfx')) &&
+      AppStorage.get('installUserCred') === true) {
       this.optType = CMModelOptType.CM_MODEL_OPT_APP_CRED;
-    } else if (((suffix === 'p12') || (suffix === 'jks') || (suffix === 'pfx'))
-      && AppStorage.get('installSystemCred') === true) {
+    } else if (((suffix === 'p12') || (suffix === 'jks') || (suffix === 'pfx')) &&
+      AppStorage.get('installSystemCred') === true) {
       this.optType = CMModelOptType.CM_MODEL_OPT_SYSTEM_CRED;
     } else {
       console.debug(TAG, 'The file type is not supported. suffix: ' + suffix);
