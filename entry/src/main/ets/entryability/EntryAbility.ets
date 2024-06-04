@@ -17,32 +17,35 @@ import hilog from '@ohos.hilog';
 import UIAbility from '@ohos.app.ability.UIAbility';
 import Want from '@ohos.app.ability.Want';
 import window from '@ohos.window';
+import Logger from '../common/utils/Logger';
+
+const TAG: string = 'EntryAbility'
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam) {
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
+    Logger.info(TAG, 'Ability onCreate....');
   }
 
   onDestroy() {
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onDestroy');
+    Logger.info(TAG, 'Ability onDestroy....');
   }
 
   onWindowStageCreate(windowStage: window.WindowStage) {
     // Main window is created, set main page for this ability
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
+    Logger.info(TAG, 'Ability onWindowStageCreate....');
 
     windowStage.loadContent('pages/Index', (err, data) => {
       if (err.code) {
-        hilog.error(0x0000, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err) ?? '');
+        Logger.error(TAG, 'Failed to load the content. Cause: ' + JSON.stringify(err) ?? '');
         return;
       }
-      hilog.info(0x0000, 'testTag', 'Succeeded in loading the content. Data: %{public}s', JSON.stringify(data) ?? '');
+      Logger.info(TAG, 'Succeeded in loading the content. Data: ' + JSON.stringify(data) ?? '');
     });
   }
 
   onWindowStageDestroy() {
     // Main window is destroyed, release UI related resources
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageDestroy');
+    Logger.info(TAG, 'Ability onWindowStageDestroy....');
   }
 
   onForeground() {
@@ -52,6 +55,6 @@ export default class EntryAbility extends UIAbility {
 
   onBackground() {
     // Ability has back to background
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onBackground');
+    Logger.info(TAG, 'Ability onBackground....');
   }
 }

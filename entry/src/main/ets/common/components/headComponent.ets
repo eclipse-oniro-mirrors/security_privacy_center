@@ -31,7 +31,7 @@ export default struct HeadComponent {
         Image($r('app.media.ic_back'))
           .width($r('app.float.width_height_m'))
           .height($r('app.float.width_height_m'))
-          .fillColor($r("sys.color.ohos_id_color_primary"))
+          .fillColor($r('sys.color.ohos_id_color_primary'))
       }
       .margin({ right: $r('app.float.wh_value_16') })
       .backgroundColor(this.isTouch ? $r('app.color.color_E3E3E3_grey') : $r('app.color.color_00000000_transparent'))

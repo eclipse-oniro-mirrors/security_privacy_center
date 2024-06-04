@@ -14,7 +14,7 @@
  */
 
 export class ListenerBean {
-  updateServiceState: Function;
+  public updateServiceState: Function;
 
   constructor(updateServiceState:Function) {
     this.updateServiceState = updateServiceState

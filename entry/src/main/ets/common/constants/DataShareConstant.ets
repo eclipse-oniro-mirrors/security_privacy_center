@@ -20,10 +20,11 @@ import { AccessTableTypedef } from '../bean/AccessTableTypedef';
  * Rdb database config
  */
 export default class DataShareConstants {
-  static readonly STORE_CONFIG: relationalStore.StoreConfig = {
+  public static readonly STORE_CONFIG: relationalStore.StoreConfig = {
     name: 'access.db',
     securityLevel: relationalStore.SecurityLevel.S1
   };
+
   /**
    * Access table config
    */
@@ -50,6 +51,7 @@ export default class DataShareConstants {
       'dstAbilityMode', 'dstAbilityName', 'dstBundleName', 'bundleName'
     ]
   };
+
   /**
    * Access table config
    */

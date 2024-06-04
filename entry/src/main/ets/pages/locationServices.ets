@@ -41,9 +41,9 @@ struct LocationServices {
               alignItems: ItemAlign.Center
             }) {
               Text($r('app.string.positionInformation'))
-                .fontColor($r("app.color.font_color_182431"))
+                .fontColor($r('app.color.font_color_182431'))
                 .fontStyle(FontStyle.Normal)
-                .fontSize($r("app.float.location_font_size"))
+                .fontSize($r('app.float.location_font_size'))
                 .margin({ left: $r('app.float.distance_12') })
 
               Toggle({ type: ToggleType.Switch, isOn: this.locationServiceStatus })
@@ -62,16 +62,16 @@ struct LocationServices {
                   }
                 });
             }
-            .margin({ top: $r("app.float.padding_or_margin_m") })
+            .margin({ top: $r('app.float.padding_or_margin_m') })
             .height($r('app.float.wh_value_56'))
-            .backgroundColor($r("app.color.white_bg_color"))
-            .borderRadius($r("sys.float.ohos_id_corner_radius_default_l"))
+            .backgroundColor($r('app.color.white_bg_color'))
+            .borderRadius($r('sys.float.ohos_id_corner_radius_default_l'))
           }
         }
       }
       .margin({ left: $r('app.float.grid_row_margin'), right: $r('app.float.grid_row_margin') })
     }
-    .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
+    .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
     .width('100%')
     .height('100%')
   }

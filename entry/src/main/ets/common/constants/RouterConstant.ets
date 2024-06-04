@@ -18,7 +18,7 @@
  */
 export default class RouterConstant {
   //   home page
-  static INDEX_URL = 'pages/Index'
+  public static INDEX_URL = 'pages/Index'
 }
 
 /**
