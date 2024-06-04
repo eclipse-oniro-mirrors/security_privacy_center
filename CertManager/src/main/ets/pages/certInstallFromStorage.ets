@@ -222,7 +222,7 @@ struct CertificateComponent {
       .width(WidthPercent.WH_100_100)
       .height(WidthPercent.WH_100_100);
     }
-    .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
+    .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
     .width(WidthPercent.WH_100_100)
     .height(WidthPercent.WH_100_100);
   }
@@ -230,8 +230,8 @@ struct CertificateComponent {
   onPageShow() {
     let uiExtensionFlag = GlobalContext.getContext().getFlag();
     let installType: string = GlobalContext.getContext().getAbilityWant().parameters?.installType as string;
-    let uri = GlobalContext.getContext().getAbilityWant().uri
-      || GlobalContext.getContext().getAbilityWant().parameters?.uri;
+    let uri = GlobalContext.getContext().getAbilityWant().uri ||
+      GlobalContext.getContext().getAbilityWant().parameters?.uri;
     GlobalContext.getContext().clearAbilityWantUri();
     GlobalContext.getContext().clearAbilityWantParamsUri();
     if (uri === 'certInstall') {
