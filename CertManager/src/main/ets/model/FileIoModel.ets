@@ -20,18 +20,22 @@ import { BusinessError } from '@ohos.base';
 export class FileIoModel {
   getMediaFileData(mediaUri: string, callback: Function): void {
     console.log('CertManager FA getMediaFile start');
+    let file : fs.File | undefined = undefined;
     try {
-      let file = fs.openSync(mediaUri, fs.OpenMode.READ_ONLY);
+      file = fs.openSync(mediaUri, fs.OpenMode.READ_ONLY);
       let stat = fs.statSync(file.fd);
       let buf = new ArrayBuffer(Number(stat.size));
       let num = fs.readSync(file.fd, buf);
-      fs.closeSync(file.fd);
       console.log('CertManager FA getMediaFile success');
       callback(new Uint8Array(buf));
     } catch (err) {
       let e: BusinessError = err as BusinessError;
       console.error('CertManager FA getMediaFileData failed with err, message: ' + e.message + ', code: ' + e.code);
       callback(undefined);
+    } finally {
+      if (file !== undefined && file !== null) {
+        fs.closeSync(file.fd);
+      }
     }
   }
 
