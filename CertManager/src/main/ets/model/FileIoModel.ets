@@ -20,7 +20,7 @@ import { BusinessError } from '@ohos.base';
 export class FileIoModel {
   getMediaFileData(mediaUri: string, callback: Function): void {
     console.log('CertManager FA getMediaFile start');
-    let file : fs.File | undefined = undefined;
+    let file: fs.File | undefined = undefined;
     try {
       file = fs.openSync(mediaUri, fs.OpenMode.READ_ONLY);
       let stat = fs.statSync(file.fd);
@@ -33,8 +33,13 @@ export class FileIoModel {
       console.error('CertManager FA getMediaFileData failed with err, message: ' + e.message + ', code: ' + e.code);
       callback(undefined);
     } finally {
-      if (file !== undefined && file !== null) {
-        fs.closeSync(file.fd);
+      try {
+        if (file !== undefined && file !== null) {
+          fs.closeSync(file.fd);
+        }
+      } catch (err) {
+        let e: BusinessError = err as BusinessError;
+        console.error('CertManager FA close io stream failed with err, message: ' + e.message + ', code: ' + e.code);
       }
     }
   }
