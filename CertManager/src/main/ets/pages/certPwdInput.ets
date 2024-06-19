@@ -46,7 +46,7 @@ struct CertPwdInput {
     } else if (uri === 'requestAuthorize') {
       this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
     } else {
-      console.info('The want type is not supported');
+      console.error('The want type is not supported');
     }
   }
 

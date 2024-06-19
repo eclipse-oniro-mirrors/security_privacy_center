@@ -63,6 +63,9 @@
       },
       {
         "name": "ohos.permission.ACCESS_SECURITY_PRIVACY_CENTER"
+      },
+      {
+        "name": "ohos.permission.ACCESS_CERT_MANAGER"
       }
     ]
   }

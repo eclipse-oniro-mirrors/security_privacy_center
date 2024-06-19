@@ -52,7 +52,7 @@ export default class CmAppCredAuthPresenter {
       BundleModel.getAppInfoList(Number(uid), (errCode: CMModelErrorCode, appInfo: AppInfoVo) => {
         if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
           this.appName = appInfo.appName;
-          console.log('getAppNameFromUid success, appName = ' + this.appName);
+          console.info('getAppNameFromUid success, appName = ' + this.appName);
         } else {
           console.error('getAppNameFromUid fail, uid = ' + uid);
         }
@@ -68,7 +68,7 @@ export default class CmAppCredAuthPresenter {
       (errCode: CMModelErrorCode, credList: Array<CredentialAbstractVo>) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
         this.credList = credList;
-        console.log('updateAppCredList success.');
+        console.info('updateAppCredList success.');
       } else {
         console.error('updateAppCredList failed');
       }
@@ -81,7 +81,7 @@ export default class CmAppCredAuthPresenter {
       true, (errCode: CMModelErrorCode, result: string) => {
       router.clear();
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
-        console.log('requestAuthorize success result: ' + result);
+        console.info('requestAuthorize success result: ' + result);
         if (want.parameters != undefined) {
           want.parameters.authUri = result;
           let ret1: Common.AbilityResult = {
@@ -109,7 +109,7 @@ export default class CmAppCredAuthPresenter {
   }
 
   cancelProcess(): void {
-    console.log('cancelProcess start');
+    console.info('cancelProcess start');
     router.clear();
     let ret: Common.AbilityResult = {
       resultCode: FAIL,

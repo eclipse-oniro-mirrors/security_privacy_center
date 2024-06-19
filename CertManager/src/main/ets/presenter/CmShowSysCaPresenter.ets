@@ -57,7 +57,6 @@ export default class CmShowSysCaPresenter {
           }
         });
         this.certList = certList;
-        console.debug('updateSystemTrustedCertificateList success, list: ' + JSON.stringify(certList));
       } else {
         console.error(TAG + 'updateSystemTrustedCertificateList fail,errCode is' + errCode);
         this.certList = [];

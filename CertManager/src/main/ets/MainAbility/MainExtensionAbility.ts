@@ -20,15 +20,15 @@ import UIExtensionAbility from '@ohos.app.ability.UIExtensionAbility';
 
 export default class MainExtensionAbility extends UIExtensionAbility {
   onCreate(): void {
-    console.log('[CertManager] MainExtensionAbility onCreate');
+    console.info('[CertManager] MainExtensionAbility onCreate');
   }
 
   onDestroy(): void {
-    console.log('[CertManager] MainExtensionAbility onDestroy');
+    console.info('[CertManager] MainExtensionAbility onDestroy');
   }
 
   onSessionCreate(want: Want, session: UIExtensionContentSession): void {
-    console.log('[CertManager] MainExtensionAbility onSessionCreate');
+    console.info('[CertManager] MainExtensionAbility onSessionCreate');
 
     if (want === null || want === undefined) {
       console.error('[CertManager] invalid want param');
@@ -56,16 +56,16 @@ export default class MainExtensionAbility extends UIExtensionAbility {
   onSessionDestroy(): void {
     // Main window is destroyed, release UI related resources
     GlobalContext.getContext().clearSession();
-    console.log('[CertManager] MainExtensionAbility onSessionDestroy');
+    console.info('[CertManager] MainExtensionAbility onSessionDestroy');
   }
 
   onForeground(): void {
     // Ability has brought to foreground
-    console.log('[CertManager] MainExtensionAbility onForeground');
+    console.info('[CertManager] MainExtensionAbility onForeground');
   }
 
   onBackground(): void {
     // Ability has back to background
-    console.log('[CertManager] MainExtensionAbility onBackground');
+    console.info('[CertManager] MainExtensionAbility onBackground');
   }
 }

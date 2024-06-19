@@ -20,7 +20,7 @@ import { GlobalContext, PwdStore } from '../common/GlobalContext';
 
 export default class MainAbility extends Ability {
   onCreate(want: Want, launchParam): void {
-    console.log('[CertManager] MainAbility onCreate');
+    console.info('[CertManager] MainAbility onCreate');
 
     if (want === null || want === undefined) {
       console.error('[CertManager] invalid want param');
@@ -34,12 +34,12 @@ export default class MainAbility extends Ability {
   }
 
   onDestroy(): void {
-    console.log('[CertManager] MainAbility onDestroy');
+    console.info('[CertManager] MainAbility onDestroy');
   }
 
   onWindowStageCreate(windowStage: Window.WindowStage): void {
     // Main window is created, set main page for this ability
-    console.log('[CertManager] MainAbility onWindowStageCreate');
+    console.info('[CertManager] MainAbility onWindowStageCreate');
     windowStage.loadContent('pages/certManagerFa', (err, data) => {
       if (err.code) {
         console.error('onWindowStageCreate failed, cause:' + JSON.stringify(err));
@@ -50,21 +50,21 @@ export default class MainAbility extends Ability {
 
   onWindowStageDestroy(): void {
     // Main window is destroyed, release UI related resources
-    console.log('[CertManager] MainAbility onWindowStageDestroy');
+    console.info('[CertManager] MainAbility onWindowStageDestroy');
   }
 
   onForeground(): void {
     // Ability has brought to foreground
-    console.log('[CertManager] MainAbility onForeground');
+    console.info('[CertManager] MainAbility onForeground');
   }
 
   onBackground(): void {
     // Ability has back to background
-    console.log('[CertManager] MainAbility onBackground');
+    console.info('[CertManager] MainAbility onBackground');
   }
 
   onNewWant(want: Want): void {
-    console.log('[CertManager] MainAbility onNewWant');
+    console.info('[CertManager] MainAbility onNewWant');
 
     if (want === null || want === undefined) {
       console.error('[CertManager] invalid want param');

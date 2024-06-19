@@ -66,6 +66,7 @@
         "icon": "$media:icon",
         "label": "$string:entry_MainAbility",
         "exported": true,
+        "permissions": ['ohos.permission.ACCESS_CERT_MANAGER'],
         "type": "sys/commonUI",
         "skills": [
           {

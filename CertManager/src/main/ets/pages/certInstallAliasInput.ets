@@ -43,7 +43,7 @@ struct CertInstallAliasInput {
     } else if (uri === 'requestAuthorize') {
       this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
     } else {
-      console.info('The want type is not supported');
+      console.error('The want type is not supported');
     }
   }
 
@@ -145,7 +145,7 @@ struct CertInstallAliasInput {
               this.mAppCredAuthPresenter.checkCertNameLength(fileInfo.uri, this.certAlias, fileInfo.suffix, pwd)
                 .then((result: number) => {
                   if (result !== CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
-                    console.info('CertNameLength reached limit!');
+                    console.error('CertNameLength reached limit!');
                     this.isCertLong = true;
                   } else {
                     console.info('CertNameLength is within the limit!');

@@ -99,7 +99,7 @@ struct CertificateComponent {
     let titleStr = getContext().resourceManager.getStringSync($r('app.string.Identity_Authentication'));
     checkUserAuthModel.auth(titleStr, (authResult: boolean) => {
       if (authResult) {
-        console.log('checkUserAuth success');
+        console.info('checkUserAuth success');
         if (this.installCertFlag) {
           this.mFaPresenter.startInstallCert();
         } else {
@@ -248,7 +248,7 @@ struct CertificateComponent {
       let fileUri = GlobalContext.getContext().getAbilityWant().parameters?.fileUri as string;
       this.mFaPresenter.startInstall(installType, fileUri);
     } else {
-      console.info('The want type is not supported');
+      console.error('The want type is not supported');
     }
   }
 }

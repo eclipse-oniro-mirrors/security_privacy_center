@@ -41,7 +41,7 @@ export default struct HeadComponent {
       .visibility(this.icBackIsVisibility ? Visibility.Visible : Visibility.None)
       .onClick(() => {
         let length = Router.getLength();
-        console.log(TAG + 'router length: ' + Number(length));
+        console.info(TAG + 'router length: ' + Number(length));
         if (GlobalContext.getContext().getFlag()) {
           Number(length) == 1 ? GlobalContext.getContext().getSession().sendData({'action': 'exit'}) : Router.back();
         } else {

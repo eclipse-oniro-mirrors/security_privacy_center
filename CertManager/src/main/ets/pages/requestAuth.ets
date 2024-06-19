@@ -109,7 +109,7 @@ struct RadioAuth {
                         Radio({ value: item.alias, group: 'appCredGroup' })
                           .checked(false)
                           .onChange((value: boolean) => {
-                            console.log(item.alias + ' status is ' + value);
+                            console.info(item.alias + ' status is ' + value);
                             if (value) {
                               this.selectUri = item.keyUri;
                             }
@@ -175,7 +175,7 @@ struct RadioAuth {
                     Radio({ value: item.alias, group: 'appCredGroup' })
                       .checked(false)
                       .onChange((value: boolean) => {
-                        console.log(item.alias + ' status is ' + value);
+                        console.info(item.alias + ' status is ' + value);
                         if (value) {
                           this.selectUri = item.keyUri;
                         }
