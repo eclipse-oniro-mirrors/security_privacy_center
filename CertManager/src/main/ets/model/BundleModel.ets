@@ -23,7 +23,7 @@ const TAG = 'certManager BUNDLE:';
 
 export class BundleNameModel {
   async getAppInfoList(appUid: number, callback: Function): Promise<void> {
-    console.log(TAG + 'getAppInfoList enter uid: ' + appUid);
+    console.info(TAG + 'getAppInfoList enter uid: ' + appUid);
     try {
       let appInfo: AppInfoVo = {
         appImage: '',
@@ -31,14 +31,14 @@ export class BundleNameModel {
       };
 
       let appCloneIdentity = await bundleManager.getAppCloneIdentity(appUid);
-      console.log(TAG + 'appBundleName: ' + appCloneIdentity.bundleName + 'appIndex: ' + appCloneIdentity.appIndex);
+      console.info(TAG + 'appBundleName: ' + appCloneIdentity.bundleName + ', appIndex: ' + appCloneIdentity.appIndex);
 
       let bundleFlags = bundleResManager.ResourceFlag.GET_RESOURCE_INFO_ALL;
       let resourceInfo = bundleResManager.getBundleResourceInfo(appCloneIdentity.bundleName, bundleFlags,
         appCloneIdentity.appIndex);
       appInfo.appName = resourceInfo.label;
       appInfo.appImage = resourceInfo.icon;
-      console.log(TAG + 'get bundle info success');
+      console.info(TAG + 'get bundle info success');
 
       callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS, appInfo);
     } catch (err) {

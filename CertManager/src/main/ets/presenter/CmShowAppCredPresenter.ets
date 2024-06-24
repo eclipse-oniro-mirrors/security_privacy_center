@@ -129,19 +129,19 @@ export default class CmShowAppCredPresenter {
   }
 
   async removeGrantedAppList(uri: string): Promise<void> {
-    console.log('enter removeGrantedAppList');
+    console.info('enter removeGrantedAppList');
     for (let i = 0; i < this.appInfoList.length; i++) {
       if (!this.appInfoList[i].status) {
         try {
           let res = await certManagerModel.setAppAuthPromise(CMModelOptType.CM_MODEL_OPT_APP_CRED, uri,
             this.appInfoList[i].uid, false);
-          console.log('removeGrantedAppList succeed' + JSON.stringify(res));
+          console.info('removeGrantedAppList succeed');
         } catch (error) {
           let e: BusinessError = error as BusinessError;
           console.error('removeGrantedAppList error, message: ' + e.message + ', code: ' + e.code);
         }
       }
     }
-    console.log('leave removeGrantedAppList');
+    console.info('leave removeGrantedAppList');
   }
 }

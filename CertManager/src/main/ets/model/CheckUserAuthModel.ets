@@ -20,11 +20,11 @@ export class CheckUserAuthModel {
   public isAuthTypeSupported(authType: userAuth.UserAuthType): boolean {
     try {
       userAuth.getAvailableStatus(authType, userAuth.AuthTrustLevel.ATL1);
-      console.log('[CMa&CheckUserAuthModel]: ' + 'userAuthType' + authType + 'is supported');
+      console.info('[CM&CheckUserAuthModel]: ' + 'userAuthType' + authType + 'is supported');
       return true;
     } catch (error) {
       let err: BusinessError = error as BusinessError;
-      console.error(`[CMa&CheckUserAuthModel]: userAuthType ${authType} is not supported, message is ${err?.message}`);
+      console.error(`[CM&CheckUserAuthModel]: userAuthType ${authType} is not supported, message is ${err?.message}`);
       return false;
     }
   }
@@ -56,7 +56,7 @@ export class CheckUserAuthModel {
 
     try {
       let userAuthInstance = userAuth.getUserAuthInstance(authParam, widgetParam);
-      console.log('[CMa&CheckUserAuthModel]: get userAuth instance success');
+      console.info('[CM&CheckUserAuthModel]: get userAuth instance success');
       userAuthInstance.start();
 
       userAuthInstance.on('result', {
@@ -74,7 +74,7 @@ export class CheckUserAuthModel {
       })
     } catch (error) {
       let err: BusinessError = error as BusinessError;
-      console.error(`[CMa&CheckUserAuthModel]: auth catch error. code is ${err?.code}, message is ${err?.message}`);
+      console.error(`[CM&CheckUserAuthModel]: auth catch error. code is ${err?.code}, message is ${err?.message}`);
     }
   }
 }

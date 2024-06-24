@@ -60,7 +60,6 @@ export default class CmFaPresenter {
   }
 
   routeToNextInstallCert(fileUri: string): void {
-    console.debug(TAG, 'routeToNext fileUri ' + fileUri);
     FileIoModel.getMediaFileSuffix(fileUri, (suffix: string | undefined) => {
       if (suffix !== undefined) {
         console.debug(TAG, 'suffix = ', suffix);
@@ -80,7 +79,6 @@ export default class CmFaPresenter {
   }
 
   routeToNextInstallEvidence(fileUri: string): void {
-    console.debug(TAG, 'routeToNext fileUri ' + fileUri);
     FileIoModel.getMediaFileSuffix(fileUri, (suffix: string | undefined) => {
       if (suffix !== undefined) {
         console.debug(TAG, 'suffix = ', suffix);
@@ -148,7 +146,7 @@ export default class CmFaPresenter {
   uninstallAllCert(): void {
     certManagerModel.delAllCertOrCred(CMModelOptType.CM_MODEL_OPT_USER_CA, (errCode: CMModelErrorCode) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
-        console.log(TAG + 'uninstallAllCert CM_MODEL_OPT_USER_CA success');
+        console.info(TAG + 'uninstallAllCert CM_MODEL_OPT_USER_CA success');
       } else {
         console.error(TAG + 'uninstallAllCert CM_MODEL_OPT_USER_CA failed');
       }
@@ -156,7 +154,7 @@ export default class CmFaPresenter {
 
     certManagerModel.delAllCertOrCred(CMModelOptType.CM_MODEL_OPT_APP_CRED, (errCode: CMModelErrorCode) => {
       if (errCode === CMModelErrorCode.CM_MODEL_ERROR_SUCCESS) {
-        console.log(TAG + 'uninstallAllCert CM_MODEL_OPT_APP_CRED success');
+        console.info(TAG + 'uninstallAllCert CM_MODEL_OPT_APP_CRED success');
       } else {
         console.error(TAG + 'uninstallAllCert CM_MODEL_OPT_APP_CRED failed');
       }
@@ -168,7 +166,7 @@ export default class CmFaPresenter {
       let titleStr = getContext().resourceManager.getStringSync($r('app.string.Identity_Authentication'));
       checkUserAuthModel.auth(titleStr, (authResult: boolean) => {
         if (authResult) {
-          console.log('checkUserAuth success');
+          console.info('checkUserAuth success');
           this.routeToNextInstallCert(fileUri);
         }
       })
@@ -181,7 +179,7 @@ export default class CmFaPresenter {
       AppStorage.setOrCreate('installUserCred', false);
       this.routeToNextInstallEvidence(fileUri);
     } else {
-      console.info(TAG, 'The installType is not supported');
+      console.error(TAG, 'The installType is not supported');
     }
   }
 }

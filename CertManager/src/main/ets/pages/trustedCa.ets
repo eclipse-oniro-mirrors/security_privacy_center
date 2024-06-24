@@ -404,7 +404,6 @@ struct ComponentSystem {
     .borderRadius($r('app.float.wh_value_20'))
     .onClick(() => {
       this.setStatus.getSystemTrustedCertificate(this.uri, () => {
-        console.info('this.setStatus.certInfo.status is:' + JSON.stringify(this.setStatus.certInfo));
         this.systemDetailsDialog.open();
       });
     })
@@ -762,7 +761,6 @@ struct ComponentUser {
     .borderRadius($r('app.float.wh_value_20'))
     .onClick(() => {
       this.mUserCaPresenterDetail.getUserTrustedCertificate(this.uri, () => {
-        console.info('userCerInfo is:' + JSON.stringify(this.setStatus.certInfo));
         this.userDetailsDialog.open();
       });
     });
@@ -821,7 +819,7 @@ struct TrustedEvidence {
     } else if (uri === 'requestAuthorize') {
       this.mFaPresenter.startRequestAuth(GlobalContext.getContext().getAbilityWant().parameters?.appUid as string);
     } else {
-      console.info('The want type is not supported');
+      console.error('The want type is not supported');
     }
   }
 

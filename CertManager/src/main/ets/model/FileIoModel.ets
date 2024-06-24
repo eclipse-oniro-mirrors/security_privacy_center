@@ -19,14 +19,14 @@ import { BusinessError } from '@ohos.base';
 
 export class FileIoModel {
   getMediaFileData(mediaUri: string, callback: Function): void {
-    console.log('CertManager FA getMediaFile start');
+    console.info('CertManager FA getMediaFile start');
     let file: fs.File | undefined = undefined;
     try {
       file = fs.openSync(mediaUri, fs.OpenMode.READ_ONLY);
       let stat = fs.statSync(file.fd);
       let buf = new ArrayBuffer(Number(stat.size));
       let num = fs.readSync(file.fd, buf);
-      console.log('CertManager FA getMediaFile success');
+      console.info('CertManager FA getMediaFile success');
       callback(new Uint8Array(buf));
     } catch (err) {
       let e: BusinessError = err as BusinessError;
@@ -46,7 +46,7 @@ export class FileIoModel {
 
   getMediaFileSuffix(mediaUri: string, callback: Function): void {
     try {
-      console.log('CertManager FA getMediaFileSuffix start  uri: ' + mediaUri);
+      console.info('CertManager FA getMediaFileSuffix start');
       let uri = new fileUri.FileUri(mediaUri);
       let suffix = uri.name.substring(uri.name.lastIndexOf('.') + 1);
       callback(suffix);
