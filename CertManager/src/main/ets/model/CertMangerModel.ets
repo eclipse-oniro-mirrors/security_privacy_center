@@ -280,22 +280,6 @@ export class CertMangerModel {
     }
   }
 
-  checkPassword(data: Uint8Array, pwd: string, callback: Function): void {
-    console.info(TAG + 'checkPassword start');
-    try {
-      cert.createTrustAnchorsWithKeyStore(data, pwd).then((data) => {
-        console.info(TAG + 'checkPassword success');
-        callback(0)
-      }).catch((err: BusinessError) => {
-        console.info(TAG + 'checkPassword failed:' + JSON.stringify(err));
-        callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION)
-      })
-    } catch (err) {
-      console.error(TAG + 'call create failed:' + JSON.stringify(err));
-      callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION);
-    }
-  }
-
   private async getSystemTrustedCertificateList(callback: Function): Promise<void> {
     console.info(TAG + 'getSystemTrustedCertificateList start');
     try {

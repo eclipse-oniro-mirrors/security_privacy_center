@@ -68,21 +68,6 @@ export default class CmInstallPresenter {
     });
   }
 
-  AuthenticationPassword(uri: string, suffix: string, pwd: string): Promise<number> {
-    return new Promise((resolve) => {
-      this.updateCertFileType(suffix);
-      this.getFileDataFromUri(uri, (data: Uint8Array) => {
-        certManagerModel.checkPassword(data, pwd, (err: CMModelErrorCode) => {
-          if (err === CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION) {
-            resolve(err)
-          } else {
-            resolve(0)
-          }
-        })
-      })
-    })
-  }
-
   checkCertNameLength(uri: string, alias: string, suffix: string, pwd: string): Promise<number> {
     return new Promise((resolve) => {
       this.updateCertFileType(suffix);
