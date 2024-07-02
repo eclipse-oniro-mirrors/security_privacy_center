@@ -138,23 +138,14 @@ struct CertPwdInput {
           .onClick(() => {
             let fileInfo: RouterFileVo = router.getParams() as RouterFileVo;
             this.isPasswordError = false;
-            this.mAppCredAuthPresenter.AuthenticationPassword(fileInfo.uri, fileInfo.suffix, this.certPwd)
-              .then((result: number) => {
-                this.passWordWarn = result;
-                if (this.passWordWarn !== CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION) {
-                  GlobalContext.getContext().getPwdStore().setCertPwd(this.certPwd);
-                  let fileInfo: RouterFileVo = router.getParams() as RouterFileVo;
-                  router.replaceUrl({
-                    url: 'pages/certInstallAliasInput',
-                    params: {
-                      fileInfo: fileInfo,
-                      pwd: this.certPwd
-                    }
-                  })
-                } else {
-                  this.isPasswordError = true;
-                }
-              })
+            GlobalContext.getContext().getPwdStore().setCertPwd(this.certPwd);
+            router.replaceUrl({
+              url: 'pages/certInstallAliasInput',
+              params: {
+                fileInfo: fileInfo,
+                pwd: this.certPwd
+              }
+            })
           })
         }
         .margin({ bottom: $r('app.float.wh_value_24') })
