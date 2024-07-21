@@ -32,7 +32,8 @@ export enum CMModelErrorCode {
   CM_MODEL_ERROR_NOT_FOUND = -5,
   CM_MODEL_ERROR_INCORRECT_FORMAT = -6,
   CM_MODEL_ERROR_MAX_QUANTITY_REACHED = -7,
-  CM_MODEL_ERROR_ALIAS_LENGTH_REACHED_LIMIT = -8
+  CM_MODEL_ERROR_ALIAS_LENGTH_REACHED_LIMIT = -8,
+  CM_MODEL_ERROR_PASSWORD_ERR = -9
 }
 
 export enum CMModelOptType {
@@ -710,6 +711,8 @@ export class CertMangerModel {
         callback(CMModelErrorCode.CM_MODEL_ERROR_MAX_QUANTITY_REACHED)
       } else if (e.code === CertManager.CMErrorCode.CM_ERROR_ALIAS_LENGTH_REACHED_LIMIT) {
         callback(CMModelErrorCode.CM_MODEL_ERROR_ALIAS_LENGTH_REACHED_LIMIT)
+      } else if (e.code === CertManager.CMErrorCode.CM_ERROR_PASSWORD_IS_ERR) {
+        callback(CMModelErrorCode.CM_MODEL_ERROR_PASSWORD_ERR);
       } else {
         console.error(TAG + 'installPublicCertificate failed with err, message: ' + e.message + ', code: ' + e.code);
         callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION);
@@ -736,6 +739,8 @@ export class CertMangerModel {
         callback(CMModelErrorCode.CM_MODEL_ERROR_MAX_QUANTITY_REACHED);
       } else if (e.code === CertManager.CMErrorCode.CM_ERROR_ALIAS_LENGTH_REACHED_LIMIT) {
         callback(CMModelErrorCode.CM_MODEL_ERROR_ALIAS_LENGTH_REACHED_LIMIT);
+      } else if (e.code === CertManager.CMErrorCode.CM_ERROR_PASSWORD_IS_ERR) {
+        callback(CMModelErrorCode.CM_MODEL_ERROR_PASSWORD_ERR);
       } else {
         console.error(TAG + 'installSystemAppCertificate failed with err, message: ' + e.message + ', code: ' + e.code);
         callback(CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION);

@@ -148,35 +148,50 @@ export default class CmInstallPresenter {
     }
   }
 
-  installCert(uri: string, alias: string, suffix: string): void {
-    this.updateCertFileType(suffix);
-    this.getFileDataFromUri(uri, (data: Uint8Array) => {
-      certManagerModel.installCertOrCred(this.optType, alias, data,
-        GlobalContext.getContext().getPwdStore().getCertPwd(), (errCode: CMModelErrorCode) => {
-        console.info(TAG + 'installCertOrCred result: ' + JSON.stringify(errCode));
-        GlobalContext.getContext().getPwdStore().clearCertPwd();
-        switch (errCode) {
-          case CMModelErrorCode.CM_MODEL_ERROR_SUCCESS:
-            this.installSuccessTips();
-            break;
-
-          case CMModelErrorCode.CM_MODEL_ERROR_INCORRECT_FORMAT:
-            this.errorFormatTips();
-            break;
-
-          case CMModelErrorCode.CM_MODEL_ERROR_MAX_QUANTITY_REACHED:
-            this.maxQuantityReachedTips();
-            break;
-
-          default:
-            this.installFailedTips();
-            break;
-        }
-        router.clear();
-        router.replaceUrl({
-          url: 'pages/certManagerFa'
-        });
+  installCert(uri: string, alias: string, suffix: string): Promise<CMModelErrorCode> {
+    return new Promise((resolve => {
+      this.updateCertFileType(suffix);
+      this.getFileDataFromUri(uri, (data: Uint8Array) => {
+        certManagerModel.installCertOrCred(this.optType, alias, data,
+          GlobalContext.getContext().getPwdStore().getCertPwd(), (errCode: CMModelErrorCode) => {
+            GlobalContext.getContext().getPwdStore().clearCertPwd();
+            this.handleInstallResult(errCode);
+            resolve(errCode);
+          });
       });
+    }));
+  }
+
+  private handleInstallResult(errCode: CMModelErrorCode) {
+    console.info(TAG + 'installCertOrCred result: ' + JSON.stringify(errCode));
+    let isNeedJumpHomePage = true;
+    switch (errCode) {
+      case CMModelErrorCode.CM_MODEL_ERROR_SUCCESS:
+        this.installSuccessTips();
+        break;
+
+      case CMModelErrorCode.CM_MODEL_ERROR_INCORRECT_FORMAT:
+        this.errorFormatTips();
+        break;
+
+      case CMModelErrorCode.CM_MODEL_ERROR_MAX_QUANTITY_REACHED:
+        this.maxQuantityReachedTips();
+        break;
+
+      case CMModelErrorCode.CM_MODEL_ERROR_PASSWORD_ERR:
+        isNeedJumpHomePage = false;
+        break;
+
+      default:
+        this.installFailedTips();
+        break;
+    }
+    if (!isNeedJumpHomePage) {
+      return;
+    }
+    router.clear();
+    router.replaceUrl({
+      url: 'pages/certManagerFa'
     });
   }
 }
