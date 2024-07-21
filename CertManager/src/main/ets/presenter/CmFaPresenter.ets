@@ -21,6 +21,7 @@ import { CMModelErrorCode, CMModelOptType } from '../model/CertMangerModel';
 import { BusinessError } from '@ohos.base';
 import { RouterFileVo, RouterAppUidVo } from '../model/CertManagerVo/RouterInfoVo';
 import checkUserAuthModel from '../model/CheckUserAuthModel';
+import CmInstallPresenter from './CmInstallPresenter';
 
 const TAG = 'CMFaPresenter: ';
 const gridCountNum: number = 4;
@@ -63,14 +64,8 @@ export default class CmFaPresenter {
     FileIoModel.getMediaFileSuffix(fileUri, (suffix: string | undefined) => {
       if (suffix !== undefined) {
         console.debug(TAG, 'suffix = ', suffix);
-        let fileInfo = new RouterFileVo(fileUri, suffix);
         if ((suffix === 'cer') || (suffix === 'pem')) {
-          router.pushUrl({
-            url: 'pages/certInstallAliasInput',
-            params: {
-              fileInfo: fileInfo
-            }
-          })
+          CmInstallPresenter.getInstance().installCert(fileUri, '', suffix);
         } else {
           this.unrecognizedFileTips();
         }

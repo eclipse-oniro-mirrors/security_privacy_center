@@ -27,7 +27,7 @@ import PreventScreenshotsPresenter from '../model/PreventScreenshotsModel';
 @Entry
 @Component
 struct CertPwdInput {
-  certPwd: string = '';
+  @State certPwd: string = '';
   @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
   @State isPasswordError: boolean = false;
   @State passWordWarn: number = 0;
@@ -95,7 +95,7 @@ struct CertPwdInput {
             .width(ComponentConfig.WH_100_100)
             .textAlign(TextAlign.Center)
             .fontColor($r('sys.color.ohos_id_color_warning'))
-            .visibility(this.passWordWarn === CMModelErrorCode.CM_MODEL_ERROR_EXCEPTION
+            .visibility(this.passWordWarn === CMModelErrorCode.CM_MODEL_ERROR_PASSWORD_ERR
               ? Visibility.Visible : Visibility.None)
         }
       }
@@ -135,17 +135,17 @@ struct CertPwdInput {
             left: $r('app.float.distance_16'),
             right: $r('app.float.distance_24'),
           })
+          .enabled(this.certPwd !== undefined && this.certPwd.length > 0)
           .onClick(() => {
             let fileInfo: RouterFileVo = router.getParams() as RouterFileVo;
             this.isPasswordError = false;
             GlobalContext.getContext().getPwdStore().setCertPwd(this.certPwd);
-            router.replaceUrl({
-              url: 'pages/certInstallAliasInput',
-              params: {
-                fileInfo: fileInfo,
-                pwd: this.certPwd
+            CmInstallPresenter.getInstance().installCert(fileInfo.uri, '', fileInfo.suffix).then((resultCode) => {
+              this.passWordWarn = resultCode;
+              if (resultCode === CMModelErrorCode.CM_MODEL_ERROR_PASSWORD_ERR) {
+                this.isPasswordError = true;
               }
-            })
+            });
           })
         }
         .margin({ bottom: $r('app.float.wh_value_24') })
