@@ -254,14 +254,6 @@ struct CustomDialogDeleteWarning {
       }) {
         Row({}) {
           Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 0 }, sm: { span: 0, offset: 0 },
-            md: { span: 0, offset: 0 }, lg: { span: 2, offset: 0 }
-          });
-
-          Column() {
             Text($r("app.string.CustomDialogExampleUser_warning_Button_title_text"))
               .height($r("app.float.wh_value_56"))
               .fontSize($r("sys.float.ohos_id_text_size_dialog_tittle"))
@@ -335,14 +327,6 @@ struct CustomDialogDeleteWarning {
             xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
             md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
           });
-
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 12 }, sm: { span: 0, offset: 12 },
-            md: { span: 0, offset: 12 }, lg: { span: 2, offset: 10 }
-          });
         }
       }
     }
@@ -376,14 +360,6 @@ struct CustomDialogExampleUser {
         margin: vp2px(1) === 2 ? '24vp' : '0vp'
       }) {
         Row({}) {
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 0 }, sm: { span: 0, offset: 0 },
-            md: { span: 0, offset: 0 }, lg: { span: 2, offset: 0 }
-          });
-
           Column() {
             Text($r("app.string.CustomDialogExample_firText"))
               .fontSize($r("sys.float.ohos_id_text_size_dialog_tittle"))
@@ -552,14 +528,6 @@ struct CustomDialogExampleUser {
             xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
             md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
           });
-
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 12 }, sm: { span: 0, offset: 12 },
-            md: { span: 0, offset: 12 }, lg: { span: 2, offset: 10 }
-          });
         }
       }
     }
@@ -587,14 +555,6 @@ struct CustomDialogExampleSystem {
         margin: vp2px(1) === 2 ? '24vp' : '0vp'
       }) {
         Row({}) {
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 0 }, sm: { span: 0, offset: 0 },
-            md: { span: 0, offset: 0 }, lg: { span: 2, offset: 0 }
-          });
-
           Column() {
             Text($r("app.string.CustomDialogExample_firText"))
               .fontSize($r("sys.float.ohos_id_text_size_dialog_tittle"))
@@ -736,14 +696,6 @@ struct CustomDialogExampleSystem {
           .useSizeType({
             xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
             md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
-          });
-
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 12 }, sm: { span: 0, offset: 12 },
-            md: { span: 0, offset: 12 }, lg: { span: 2, offset: 10 }
           });
         }
       }
@@ -1124,15 +1076,6 @@ struct TrustedEvidence {
           .useSizeType({
             xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
             md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
-          });
-
-          Column() {
-          }
-          .width(WidthPercent.WH_100_100)
-          .height(WidthPercent.WH_100_100)
-          .useSizeType({
-            xs: { span: 0, offset: 12 }, sm: { span: 0, offset: 12 },
-            md: { span: 0, offset: 12 }, lg: { span: 2, offset: 10 }
           });
         }
         .width(WidthPercent.WH_100_100)
