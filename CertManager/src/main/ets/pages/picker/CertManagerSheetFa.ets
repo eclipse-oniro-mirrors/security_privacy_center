@@ -26,7 +26,6 @@ import { CredUserDetailPage } from './CredUserDetailPage';
 import { AuthorizedAppManagementPage } from './AuthorizedAppManagementPage';
 import { CredPwdInputPage } from './CredPwdInputPage';
 import Want from '@ohos.app.ability.Want';
-import certManagerDialog from '@ohos.security.certmanagerDialog';
 import deviceInfo from '@ohos.deviceInfo';
 import UIExtensionContentSession from '@ohos.app.ability.UIExtensionContentSession';
 import { TrustedEvidence } from '../trustedCa';
@@ -37,6 +36,12 @@ const TAG: string = 'CertManagerSheetFa';
 
 let storage = LocalStorage.getShared();
 
+const PAGE_MAIN: number = 1;
+const PAGE_CA_CERTIFICATE: number = 2;
+const PAGE_CREDENTIAL: number = 3;
+const PAGE_INSTALL_CERTIFICATE: number = 4;
+const PAGE_TYPE: string = 'pageType';
+
 @Entry(storage)
 @Component
 export struct CertManagerSheetFa {
@@ -46,15 +51,15 @@ export struct CertManagerSheetFa {
 
   @State private stack: NavPathStack = new NavPathStack();
 
-  @State private pageType: number = 1;
+  @State private pageType: number = PAGE_MAIN;
 
   aboutToAppear(): void {
     const parameters = this.want?.parameters;
-    if (parameters === undefined || parameters['pageType'] === undefined) {
+    if (parameters === undefined || parameters[PAGE_TYPE] === undefined) {
       console.warn(TAG + 'page type param is undefined');
       return;
     }
-    this.pageType = parameters['pageType'] as number;
+    this.pageType = parameters[PAGE_TYPE] as number;
     console.log(TAG + 'page type = ' + this.pageType);
   }
 
@@ -100,11 +105,11 @@ export struct CertManagerSheetFa {
   @Builder
   private buildContent() {
     Navigation(this.stack) {
-      if (this.pageType === certManagerDialog.CertificateDialogPageType.PAGE_CA_CERTIFICATE) {
+      if (this.pageType === PAGE_CA_CERTIFICATE) {
         this.buildCaCertPage()
-      } else if (this.pageType === certManagerDialog.CertificateDialogPageType.PAGE_CREDENTIAL) {
+      } else if (this.pageType === PAGE_CREDENTIAL) {
         this.buildCredListPage()
-      } else if (this.pageType === certManagerDialog.CertificateDialogPageType.PAGE_INSTALL_CERTIFICATE) {
+      } else if (this.pageType === PAGE_INSTALL_CERTIFICATE) {
         this.buildInstallPage()
       } else {
         this.buildHomePage()
