@@ -723,7 +723,8 @@ export struct evidenceList {
                                 keyUri: item.keyUri,
                                 systemCredPresenter: $mShowSysCredPresenter,
                                 onItemClicked: this.isStartBySheet ? () => {
-                                  this.selected?.(NavEntryKey.CRED_SYSTEM_DETAIL_ENTRY, new CredSystemDetailParam(this.mShowSysCredPresenter));
+                                  this.selected?.(NavEntryKey.CRED_SYSTEM_DETAIL_ENTRY,
+                                    new CredSystemDetailParam(this.mShowSysCredPresenter));
                                 } : undefined
                               })
                             }
