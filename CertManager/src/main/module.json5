@@ -89,7 +89,7 @@
       },
       {
         "name": "CertPickerUIExtAbility",
-        "srcEntry": "./ets/MainAbility/CertPickerUiExtAbility.ts",
+        "srcEntry": "./ets/MainAbility/CertPickerUiExtAbility.ets",
         "exported": true,
         "permissions": ['ohos.permission.ACCESS_CERT_MANAGER'],
         "type": "sys/commonUI"

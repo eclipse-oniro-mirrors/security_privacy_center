@@ -925,7 +925,8 @@ export struct TrustedEvidence {
                                 setStatus: $mShowUserCaPresenter,
                                 indexNum: index,
                                 onItemClicked: this.isStartBySheet ? () => {
-                                  this.selected?.(NavEntryKey.CA_USER_DETAIL_ENTRY, new CaUserDetailParam(this.mShowUserCaPresenter));
+                                  this.selected?.(NavEntryKey.CA_USER_DETAIL_ENTRY,
+                                    new CaUserDetailParam(this.mShowUserCaPresenter));
                                 } : undefined
                               })
                             }

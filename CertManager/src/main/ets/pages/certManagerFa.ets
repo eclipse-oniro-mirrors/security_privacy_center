@@ -69,18 +69,19 @@ export struct CertificateComponent {
                 List() {
                   ForEach(this.listItems, (item: CertListItem) => {
                     ListItem() {
-                      SubEntryComponent({ targetPage: item.targetPage, title: item.title, onItemClicked: targetRouter => {
-                        if (this.isStartBySheet) {
-                          if (targetRouter === 'pages/trustedCa') {
-                            this.selected?.(NavEntryKey.CA_CERTIFICATE_ENTRY);
+                      SubEntryComponent({ targetPage: item.targetPage, title: item.title,
+                        onItemClicked: targetRouter => {
+                          if (this.isStartBySheet) {
+                            if (targetRouter === 'pages/trustedCa') {
+                              this.selected?.(NavEntryKey.CA_CERTIFICATE_ENTRY);
+                            } else {
+                              this.selected?.(NavEntryKey.CREDENTIAL_LIST_ENTRY);
+                            }
                           } else {
-                            this.selected?.(NavEntryKey.CREDENTIAL_LIST_ENTRY);
+                            router.pushUrl({
+                              url: targetRouter
+                            });
                           }
-                        } else {
-                          router.pushUrl({
-                            url: targetRouter
-                          });
-                        }
                       } })
                     }
                     .stateStyles({

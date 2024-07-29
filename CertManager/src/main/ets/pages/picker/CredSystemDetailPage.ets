@@ -22,7 +22,7 @@ import CmShowSysCredPresenter from '../../presenter/CmShowSysCredPresenter';
 const TAG: string = 'CredSystemDetailPage: ';
 
 export class CredSystemDetailParam {
-  presenter: CmShowSysCredPresenter;
+  public presenter: CmShowSysCredPresenter;
 
   constructor(presenter: CmShowSysCredPresenter) {
     this.presenter = presenter;

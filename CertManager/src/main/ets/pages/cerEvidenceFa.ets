@@ -774,7 +774,8 @@ export struct evidenceList {
                                 keyUri: item.keyUri,
                                 mShowAppCaPresenter: $mShowAppCaPresenter,
                                 onItemClicked: this.isStartBySheet ? () => {
-                                  this.selected?.(NavEntryKey.CRED_USER_DETAIL_ENTRY, new CredUserDetailParam(this.mShowAppCaPresenter));
+                                  this.selected?.(NavEntryKey.CRED_USER_DETAIL_ENTRY,
+                                    new CredUserDetailParam(this.mShowAppCaPresenter));
                                 } : undefined
                               })
                             }

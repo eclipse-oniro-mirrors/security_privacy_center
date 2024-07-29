@@ -28,7 +28,7 @@ import { BusinessError } from '@ohos.base';
 const TAG: string = 'CaUserDetailPage: ';
 
 export class CaUserDetailParam {
-  showUserCaPresenter: CmShowUserCaPresenter;
+  public showUserCaPresenter: CmShowUserCaPresenter;
 
   constructor(presenter: CmShowUserCaPresenter) {
     this.showUserCaPresenter = presenter;
@@ -65,12 +65,13 @@ export struct CaUserDetailPage {
         value: $r('app.string.root_certificate_continue'),
         buttonStyle: ButtonStyleMode.TEXTUAL,
         action: () => {
-          this.showUserCaPresenter.setUserCertificateStatus(this.showUserCaPresenter.certInfo.uri, true).then(result => {
-            if (result) {
-              this.showUserCaPresenter.updateUserTrustedCertificateList();
-            } else {
-              this.toggleStatus = false;
-            }
+          this.showUserCaPresenter.setUserCertificateStatus(this.showUserCaPresenter.certInfo.uri, true)
+            .then(result => {
+              if (result) {
+                this.showUserCaPresenter.updateUserTrustedCertificateList();
+              } else {
+                this.toggleStatus = false;
+              }
           });
         }
       }
