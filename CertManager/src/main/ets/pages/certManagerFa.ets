@@ -21,6 +21,7 @@ import { GlobalContext } from '../common/GlobalContext';
 import router from '@ohos.router';
 import promptAction from '@ohos.promptAction';
 import { CustomContentDialog } from '@ohos.arkui.advanced.Dialog';
+import { NavEntryKey } from '../common/NavEntryKey';
 
 const DISPLAY_DURATION: number = 2000;
 const COPIES_NUM: number = 12;
@@ -32,7 +33,7 @@ class CertListItem {
 
 @Entry
 @Component
-struct CertificateComponent {
+export struct CertificateComponent {
   @State columnMargin: string = '12vp';
   @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
   private listItems: Array<CertListItem> = [
@@ -46,6 +47,9 @@ struct CertificateComponent {
     .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
   };
 
+  isStartBySheet: boolean = false;
+  selected?: (path: string) => void;
+
   build() {
     Column() {
       GridRow({
@@ -54,37 +58,73 @@ struct CertificateComponent {
       }) {
         GridCol({ span: COPIES_NUM }) {
           Column({ space: this.columnMargin }) {
-            HeadComponent({ headName: $r('app.string.certificateTab') })
-            Column({ space: this.columnMargin }) {
-              List() {
-                ForEach(this.listItems, (item: CertListItem) => {
-                  ListItem() {
-                    SubEntryComponent({ targetPage: item.targetPage, title: item.title })
-                  }
-                  .stateStyles({
-                    normal: this.normalStyle,
-                    pressed: this.pressedStyle
-                  });
-                }, (item: CertListItem) => JSON.stringify(item))
-              }
-              .padding($r('app.float.wh_value_4'))
-              .divider({
-                strokeWidth: $r('app.float.sys_list_divider_strokeWidth_value'),
-                color: $r('sys.color.ohos_id_color_list_separator'),
-                startMargin: $r('app.float.wh_value_8'),
-                endMargin: $r('app.float.wh_value_8')
+            HeadComponent({ headName: $r('app.string.certificateTab'), icBackIsVisibility: !this.isStartBySheet })
+              .margin({
+                top: this.isStartBySheet ? 8 : 0,
+                left: 12,
+                right: 12
               })
-              .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
-              .backgroundColor($r('sys.color.ohos_id_color_list_card_bg'))
+            Scroll() {
+              Column({ space: this.columnMargin }) {
+                List() {
+                  ForEach(this.listItems, (item: CertListItem) => {
+                    ListItem() {
+                      SubEntryComponent({ targetPage: item.targetPage, title: item.title, onItemClicked: targetRouter => {
+                        if (this.isStartBySheet) {
+                          if (targetRouter === 'pages/trustedCa') {
+                            this.selected?.(NavEntryKey.CA_CERTIFICATE_ENTRY);
+                          } else {
+                            this.selected?.(NavEntryKey.CREDENTIAL_LIST_ENTRY);
+                          }
+                        } else {
+                          router.pushUrl({
+                            url: targetRouter
+                          });
+                        }
+                      } })
+                    }
+                    .stateStyles({
+                      normal: this.normalStyle,
+                      pressed: this.pressedStyle
+                    });
+                  }, (item: CertListItem) => JSON.stringify(item))
+                }
+                .padding($r('app.float.wh_value_4'))
+                .divider({
+                  strokeWidth: $r('app.float.sys_list_divider_strokeWidth_value'),
+                  color: $r('sys.color.ohos_id_color_list_separator'),
+                  startMargin: $r('app.float.wh_value_8'),
+                  endMargin: $r('app.float.wh_value_8')
+                })
+                .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+                .backgroundColor($r('sys.color.ohos_id_color_list_card_bg'))
 
-              CertInstallComponent({ mFaPresenter: $mFaPresenter })
+                CertInstallComponent({ mFaPresenter: $mFaPresenter, onItemClicked: () => {
+                  if (this.isStartBySheet) {
+                    this.selected?.(NavEntryKey.INSTALL_ENTRY);
+                  } else {
+                    router.pushUrl({
+                      url: 'pages/certInstallFromStorage'
+                    }, router.RouterMode.Standard)
+                  }
+                } })
 
-              DeleteAll({ mFaPresenter: $mFaPresenter })
+                DeleteAll({ mFaPresenter: $mFaPresenter })
+              }
+              .width(WidthPercent.WH_100_100)
             }
+            .align(Alignment.Top)
+            .scrollable(ScrollDirection.Vertical)
+            .scrollBar(BarState.Auto)
             .width(WidthPercent.WH_100_100)
+            .edgeEffect(EdgeEffect.Spring)
+            .layoutWeight(1)
+            .padding({
+              left: 16,
+              right: 16
+            })
           }
           .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
-          .padding({ left: $r('app.float.wh_value_12'), right: $r('app.float.wh_value_12') })
           .width(WidthPercent.WH_100_100)
           .height(WidthPercent.WH_100_100)
         }
@@ -226,6 +266,8 @@ export struct CertInstallComponent {
     .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
   };
 
+  onItemClicked?: () => void;
+
   build() {
     Column() {
       Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
@@ -258,9 +300,7 @@ export struct CertInstallComponent {
     .height($r('app.float.wh_value_56'))
     .borderRadius($r('app.float.radius_24'))
     .onClick(() => {
-      router.pushUrl({
-        url: 'pages/certInstallFromStorage'
-      }, router.RouterMode.Standard)
+      this.onItemClicked?.();
     });
   }
 }

@@ -148,21 +148,21 @@ export default class CmInstallPresenter {
     }
   }
 
-  installCert(uri: string, alias: string, suffix: string): Promise<CMModelErrorCode> {
+  installCert(uri: string, alias: string, suffix: string, isNeedJumpBack: boolean): Promise<CMModelErrorCode> {
     return new Promise((resolve => {
       this.updateCertFileType(suffix);
       this.getFileDataFromUri(uri, (data: Uint8Array) => {
         certManagerModel.installCertOrCred(this.optType, alias, data,
           GlobalContext.getContext().getPwdStore().getCertPwd(), (errCode: CMModelErrorCode) => {
             GlobalContext.getContext().getPwdStore().clearCertPwd();
-            this.handleInstallResult(errCode);
+            this.handleInstallResult(errCode, isNeedJumpBack);
             resolve(errCode);
           });
       });
     }));
   }
 
-  private handleInstallResult(errCode: CMModelErrorCode) {
+  private handleInstallResult(errCode: CMModelErrorCode, isNeedJumpBack: boolean) {
     console.info(TAG + 'installCertOrCred result: ' + JSON.stringify(errCode));
     let isNeedJumpHomePage = true;
     switch (errCode) {
@@ -186,7 +186,7 @@ export default class CmInstallPresenter {
         this.installFailedTips();
         break;
     }
-    if (!isNeedJumpHomePage) {
+    if (!isNeedJumpHomePage || !isNeedJumpBack) {
       return;
     }
     router.clear();

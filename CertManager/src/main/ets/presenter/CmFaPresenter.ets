@@ -65,7 +65,7 @@ export default class CmFaPresenter {
       if (suffix !== undefined) {
         console.debug(TAG, 'suffix = ', suffix);
         if ((suffix === 'cer') || (suffix === 'pem')) {
-          CmInstallPresenter.getInstance().installCert(fileUri, '', suffix);
+          CmInstallPresenter.getInstance().installCert(fileUri, '', suffix, true);
         } else {
           this.unrecognizedFileTips();
         }

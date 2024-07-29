@@ -27,6 +27,9 @@ export default struct HeadComponent {
   private headName: string | Resource = '';
   @State isTouch: boolean = false;
 
+  isStartBySheet: boolean = false;
+  onBackClicked?: () => void;
+
   build() {
     Row() {
       Stack({ alignContent: Alignment.Center }) {
@@ -40,6 +43,10 @@ export default struct HeadComponent {
         : $r('sys.color.ohos_id_color_sub_background'))
       .visibility(this.icBackIsVisibility ? Visibility.Visible : Visibility.None)
       .onClick(() => {
+        if (this.isStartBySheet) {
+          this.onBackClicked?.();
+          return;
+        }
         let length = Router.getLength();
         console.info(TAG + 'router length: ' + Number(length));
         if (GlobalContext.getContext().getFlag()) {
