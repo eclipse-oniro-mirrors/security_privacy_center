@@ -5,6 +5,7 @@
     "pages/trustedCa",
     "pages/cerEvidenceFa",
     "pages/requestAuth",
-    "pages/certInstallFromStorage"
+    "pages/certInstallFromStorage",
+    "pages/picker/CertManagerSheetFa"
   ]
 }

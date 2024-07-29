@@ -21,15 +21,28 @@ import ComponentConfig from '../common/component/ComponentConfig';
 import router from '@ohos.router';
 import { CustomContentDialog } from '@ohos.arkui.advanced.Dialog';
 import checkUserAuthModel from '../model/CheckUserAuthModel';
+import { NavEntryKey } from '../common/NavEntryKey';
+import picker from '@ohos.file.picker';
+import FileIoModel from '../model/FileIoModel';
+import CmInstallPresenter from '../presenter/CmInstallPresenter';
+import { BusinessError } from '@ohos.base';
+import { RouterFileVo } from '../model/CertManagerVo/RouterInfoVo';
+import { CredPwdInputParam } from './picker/CredPwdInputPage';
 
 const COPIES_NUM: number = 12;
 
+const TAG: string = 'CertInstallFromStorage: ';
+
 @Entry
 @Component
-struct CertificateComponent {
+export struct CertInstallFromStorage {
   @State columnMargin: string = '12vp';
   @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
   @State installCertFlag: boolean = false;
+
+  isStartBySheetFirst: boolean = false;
+  isStartBySheet: boolean = false;
+  selected?: (path: string, param?: Object) => void;
 
   @Styles normalStyle() {
     .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
@@ -101,9 +114,83 @@ struct CertificateComponent {
       if (authResult) {
         console.info('checkUserAuth success');
         if (this.installCertFlag) {
-          this.mFaPresenter.startInstallCert();
+          if (this.isStartBySheet) {
+            this.startInstallCertBySheet();
+          } else {
+            this.mFaPresenter.startInstallCert();
+          }
         } else {
-          this.mFaPresenter.startInstallEvidence();
+          if (this.isStartBySheet) {
+            this.startInstallEvidenceBySheet();
+          } else {
+            this.mFaPresenter.startInstallEvidence();
+          }
+        }
+      }
+    })
+  }
+
+  startInstallCertBySheet(): void {
+    try {
+      let documentSelectOptions = new picker.DocumentSelectOptions();
+      let documentPicker = new picker.DocumentViewPicker();
+      console.info(TAG + 'start documentPicker.select');
+      documentPicker.select(documentSelectOptions).then((documentSelectResult) => {
+        if (documentSelectResult.length >= 1) {
+          this.routeToNextInstallCert(String(documentSelectResult[0]))
+        } else {
+          console.error(TAG + 'documentPicker.select length invalid:' + documentSelectResult.length);
+        }
+      }).catch((err: BusinessError) => {
+        console.error(TAG + 'documentPicker.select failed with err, message: ' + err.message + ', code: ' + err.code);
+      });
+    } catch (err) {
+      let e: BusinessError = err as BusinessError;
+      console.error(TAG + 'DocumentViewPicker failed with err, message: ' + e.message + ', code: ' + e.code);
+    }
+  }
+
+  routeToNextInstallCert(fileUri: string): void {
+    FileIoModel.getMediaFileSuffix(fileUri, (suffix: string | undefined) => {
+      if (suffix !== undefined) {
+        console.debug(TAG, 'suffix = ', suffix);
+        if ((suffix === 'cer') || (suffix === 'pem')) {
+          CmInstallPresenter.getInstance().installCert(fileUri, '', suffix, false);
+        } else {
+          this.mFaPresenter.unrecognizedFileTips();
+        }
+      }
+    })
+  }
+
+  startInstallEvidenceBySheet(): void {
+    try {
+      let documentSelectOptions = new picker.DocumentSelectOptions();
+      let documentPicker = new picker.DocumentViewPicker();
+      console.info(TAG + 'start documentPicker.select');
+      documentPicker.select(documentSelectOptions).then((documentSelectResult) => {
+        if (documentSelectResult.length >= 1) {
+          this.routeToNextInstallEvidence(String(documentSelectResult[0]))
+        } else {
+          console.error(TAG + 'documentPicker.select length invalid:' + documentSelectResult.length);
+        }
+      }).catch((err: BusinessError) => {
+        console.error(TAG + 'documentPicker.select failed with err, message: ' + err.message + ', code: ' + err.code);
+      });
+    } catch (err) {
+      let e: BusinessError = err as BusinessError;
+      console.error(TAG + 'DocumentViewPicker failed with err, message: ' + e.message + ', code: ' + e.code);
+    }
+  }
+
+  routeToNextInstallEvidence(fileUri: string): void {
+    FileIoModel.getMediaFileSuffix(fileUri, (suffix: string | undefined) => {
+      if (suffix !== undefined) {
+        console.debug(TAG, 'suffix = ', suffix);
+        if ((suffix === 'p12') || (suffix === 'pfx')) {
+          this.selected?.(NavEntryKey.CRED_PWD_INPUT_ENTRY, new CredPwdInputParam(new RouterFileVo(fileUri, suffix)));
+        } else {
+          this.mFaPresenter.unrecognizedFileTips();
         }
       }
     })
@@ -118,8 +205,17 @@ struct CertificateComponent {
         GridCol({ span: COPIES_NUM }) {
           Row({}) {
             Column({ space: this.columnMargin }) {
-              HeadComponent({ headName: $r('app.string.installInStorageDevice') })
-              Column({ space: this.columnMargin }) {
+              HeadComponent({ headName: $r('app.string.installInStorageDevice'), isStartBySheet: this.isStartBySheet,
+                icBackIsVisibility: !this.isStartBySheetFirst,
+                onBackClicked: () => {
+                  this.selected?.(NavEntryKey.POP);
+                }})
+                .margin({
+                  top: this.isStartBySheet ? 8 : 0,
+                  left: 12,
+                  right: 12
+                })
+              Scroll() {
                 Column() {
                   Row() {
                     Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
@@ -135,8 +231,9 @@ struct CertificateComponent {
                     normal: this.normalStyle,
                     pressed: this.pressedStyle
                   })
-                  .margin({ top: $r('app.float.wh_value_4') })
-                  .height($r('app.float.wh_value_48'))
+                  .constraintSize({
+                    minHeight: $r('app.float.wh_value_48')
+                  })
                   .onClick(() => {
                     this.rootCertificateDialog.open();
                   })
@@ -161,15 +258,20 @@ struct CertificateComponent {
                       this.installCertFlag = false;
                       AppStorage.setOrCreate('installSystemCred', true);
                       AppStorage.setOrCreate('installUserCred',false);
-                      this.mFaPresenter.startInstallEvidence();
+                      if (this.isStartBySheet) {
+                        this.startInstallEvidenceBySheet();
+                      } else {
+                        this.mFaPresenter.startInstallEvidence();
+                      }
                     })
                   }
                   .stateStyles({
                     normal: this.normalStyle,
                     pressed: this.pressedStyle
                   })
-                  .height($r('app.float.wh_value_48'))
-
+                  .constraintSize({
+                    minHeight: $r('app.float.wh_value_48')
+                  })
 
                   Divider()
                     .color($r('sys.color.ohos_id_color_list_separator'))
@@ -191,28 +293,40 @@ struct CertificateComponent {
                       this.installCertFlag = false;
                       AppStorage.setOrCreate('installUserCred', true);
                       AppStorage.setOrCreate('installSystemCred',false);
-                      this.mFaPresenter.startInstallEvidence();
+                      if (this.isStartBySheet) {
+                        this.startInstallEvidenceBySheet();
+                      } else {
+                        this.mFaPresenter.startInstallEvidence();
+                      }
                     })
                   }
                   .stateStyles({
                     normal: this.normalStyle,
                     pressed: this.pressedStyle
                   })
-                  .height($r('app.float.wh_value_48'))
+                  .constraintSize({
+                    minHeight: $r('app.float.wh_value_48')
+                  })
                 }
+                .padding($r('app.float.wh_value_4'))
                 .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
                 .borderRadius($r('app.float.radius_20'))
-                .height(ComponentConfig.WH_100_100)
                 .width(ComponentConfig.WH_100_100)
-                .height($r('app.float.wh_value_152'))
               }
+              .align(Alignment.Top)
+              .scrollable(ScrollDirection.Vertical)
+              .scrollBar(BarState.Auto)
               .width(WidthPercent.WH_100_100)
+              .edgeEffect(EdgeEffect.Spring)
+              .layoutWeight(1)
+              .padding({
+                left: 16,
+                right: 16
+              })
             }
             .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
-            .padding({ left: $r('app.float.wh_value_16'), right: $r('app.float.wh_value_16') })
             .width(WidthPercent.WH_100_100)
             .height(WidthPercent.WH_100_100)
-
           }
           .width(WidthPercent.WH_100_100)
           .height(WidthPercent.WH_100_100);

@@ -1,0 +1,93 @@
+/**
+ * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import HeadComponent from '../../common/component/headComponent';
+import { WidthPercent } from '../../common/util/ConfigData';
+import { AppAuthorVo } from '../../model/CertManagerVo/AppAuthorVo';
+import CmShowAppCredPresenter from '../../presenter/CmShowAppCredPresenter';
+import { DialogComponent } from '../cerEvidenceFa';
+import { BusinessError } from '@ohos.base';
+
+const TAG: string = 'AuthorizedAppManagementPage: ';
+
+export class AuthorizedAppManagementParam {
+  public presenter: CmShowAppCredPresenter;
+
+  constructor(presenter: CmShowAppCredPresenter) {
+    this.presenter = presenter;
+  }
+}
+
+@Component
+export struct AuthorizedAppManagementPage {
+  private stack?: NavPathStack;
+
+  @State presenter: CmShowAppCredPresenter = CmShowAppCredPresenter.getInstance();
+
+  build() {
+    NavDestination() {
+      Column() {
+        HeadComponent({ headName: $r('app.string.managerAuthApp'), isStartBySheet: true, onBackClicked: () => {
+          this.stack?.pop();
+        } })
+          .margin({
+            left: $r('app.float.wh_value_12'),
+            top: 8
+          })
+
+        Scroll() {
+          List() {
+            ForEach(this.presenter.appInfoList, (item: AppAuthorVo, index) => {
+              ListItem() {
+                DialogComponent({ appImage: item.appImage, appName: item.appName,
+                  indexNum: index, uidItem: $presenter,
+                  onChanged: async () => {
+                    await this.presenter.removeGrantedAppList(this.presenter.credInfo.keyUri);
+                    this.presenter.getAuthorizedAppList(this.presenter.credInfo.keyUri);
+                  } })
+              }
+            })
+          }
+          .scrollBar(BarState.Off)
+          .divider({
+            strokeWidth: $r('app.float.Evidence_strokeWidth'),
+            color: $r('sys.color.ohos_id_color_list_separator'),
+            startMargin: 64
+          })
+        }
+        .align(Alignment.Top)
+        .edgeEffect(EdgeEffect.Spring)
+        .layoutWeight(1)
+        .scrollBar(BarState.Off)
+        .padding({
+          left: $r('app.float.wh_value_24')
+        })
+      }
+    }
+    .hideTitleBar(true)
+    .width(WidthPercent.WH_100_100)
+    .height(WidthPercent.WH_100_100)
+    .backgroundColor($r('sys.color.background_secondary'))
+    .onReady((ctx: NavDestinationContext) => {
+      this.stack = ctx.pathStack;
+      try {
+        this.presenter = (ctx.pathInfo.param as AuthorizedAppManagementParam).presenter;
+      } catch (err) {
+        let error = err as BusinessError;
+        console.error(TAG + 'Get presenter failed: ' + error?.code + ', message: ' + error?.message);
+      }
+    })
+  }
+}

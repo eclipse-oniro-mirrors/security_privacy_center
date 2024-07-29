@@ -140,7 +140,7 @@ struct CertPwdInput {
             let fileInfo: RouterFileVo = router.getParams() as RouterFileVo;
             this.isPasswordError = false;
             GlobalContext.getContext().getPwdStore().setCertPwd(this.certPwd);
-            CmInstallPresenter.getInstance().installCert(fileInfo.uri, '', fileInfo.suffix).then((resultCode) => {
+            CmInstallPresenter.getInstance().installCert(fileInfo.uri, '', fileInfo.suffix, true).then((resultCode) => {
               this.passWordWarn = resultCode;
               if (resultCode === CMModelErrorCode.CM_MODEL_ERROR_PASSWORD_ERR) {
                 this.isPasswordError = true;

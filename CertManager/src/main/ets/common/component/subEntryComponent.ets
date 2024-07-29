@@ -22,6 +22,8 @@ export struct SubEntryComponent {
   private targetPage: string = '';
   private title: string | Resource = '';
 
+  onItemClicked?: (targetRouter: string) => void;
+
   @Styles normalStyle() {
     .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
   };
@@ -31,7 +33,7 @@ export struct SubEntryComponent {
   };
 
   build() {
-    Navigator({ target: this.targetPage }) {
+    Column() {
       Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
         Row() {
           Text(this.title)
@@ -58,6 +60,9 @@ export struct SubEntryComponent {
         pressed: this.pressedStyle
       })
     }
+    .onClick(event => {
+      this.onItemClicked?.(this.targetPage);
+    })
     .height($r('app.float.wh_value_48'))
     .backgroundColor($r('sys.color.ohos_id_color_foreground_contrary'));
   }

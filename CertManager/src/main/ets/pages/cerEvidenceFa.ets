@@ -23,6 +23,9 @@ import { AppAuthorVo } from '../model/CertManagerVo/AppAuthorVo';
 import router from '@ohos.router';
 import { CustomContentDialog } from '@ohos.arkui.advanced.Dialog';
 import CmShowSysCredPresenter from '../presenter/CmShowSysCredPresenter';
+import { NavEntryKey } from '../common/NavEntryKey';
+import { CredSystemDetailParam } from './picker/CredSystemDetailPage';
+import { CredUserDetailParam } from './picker/CredUserDetailPage';
 
 const COPIES_NUM: number = 12;
 
@@ -32,6 +35,8 @@ export struct DialogComponent {
   private appName: string = '';
   private appImage: string = '';
   private indexNum: number = 0;
+
+  onChanged?: () => void;
 
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
@@ -53,7 +58,10 @@ export struct DialogComponent {
         .height($r('app.float.credentials_app_Toggle_hg'))
         .selectedColor($r('app.color.credentials_app_Toggle_selectColor'))
         .onChange((isOn: boolean) => {
-          this.uidItem.appInfoList[this.indexNum].status = isOn
+          this.uidItem.appInfoList[this.indexNum].status = isOn;
+          if (!isOn) {
+            this.onChanged?.();
+          }
         })
         .margin({ right: $r('app.float.wh_value_16') })
 
@@ -75,6 +83,8 @@ export struct componentPublic {
   @Styles normalStyles(): void {
     .backgroundColor(this.isHoverBackgroundColor)
   }
+
+  onItemClicked?: () => void;
 
   getAuthorizedAppList(): void {
     this.authorInfo.getAuthorizedAppList(this.mShowAppCaPresenter.credInfo.keyUri);
@@ -400,7 +410,11 @@ export struct componentPublic {
     .onClick(() => {
       this.mShowAppCaPresenter.getAppCred(this.keyUri, () => {
         this.getAuthorizedAppList();
-        this.credDetailsDialog.open();
+        if (this.onItemClicked !== undefined) {
+          this.onItemClicked();
+        } else {
+          this.credDetailsDialog.open();
+        }
       });
     })
   }
@@ -419,6 +433,8 @@ export struct componentSystem {
   @Styles normalStyles(): void {
     .backgroundColor(this.isHoverBackgroundColor)
   }
+
+  onItemClicked?: () => void;
 
   sysCredDetailsDialog: CustomDialogController = new CustomDialogController({
     builder: CustomContentDialog({
@@ -599,7 +615,11 @@ export struct componentSystem {
     .borderRadius($r('app.float.wh_value_20'))
     .onClick(() => {
       this.mSystemCredPresenter.getSystemCred(this.keyUri, () => {
-        this.sysCredDetailsDialog.open();
+        if (this.onItemClicked !== undefined) {
+          this.onItemClicked();
+        } else {
+          this.sysCredDetailsDialog.open();
+        }
       });
     })
   }
@@ -608,7 +628,7 @@ export struct componentSystem {
 
 @Entry
 @Component
-struct evidenceList {
+export struct evidenceList {
   @State mShowAppCaPresenter: CmShowAppCredPresenter = CmShowAppCredPresenter.getInstance();
   @State mShowSysCredPresenter: CmShowSysCredPresenter = CmShowSysCredPresenter.getInstance();
   @State mFaPresenter: CMFaPresenter = CMFaPresenter.getInstance();
@@ -619,6 +639,10 @@ struct evidenceList {
   @State selectedFontColor: Resource = $r('app.color.font_color_007DFF');
   private controller: TabsController = new TabsController();
   @State animationDurationNum: number = 400;
+
+  isStartBySheetFirst: boolean = false;
+  isStartBySheet: boolean = false;
+  selected?: (path: string, param?: Object) => void;
 
   @Builder
   TabBuilder(index: number) {
@@ -676,9 +700,14 @@ struct evidenceList {
           offset: { xs: 0, sm: 0, md: 0, lg: 0 } }) {
           Row() {
             Column() {
-              HeadComponent({ headName: $r('app.string.userEvidence') })
+              HeadComponent({ headName: $r('app.string.userEvidence'), isStartBySheet: this.isStartBySheet,
+                icBackIsVisibility: !this.isStartBySheetFirst,
+                onBackClicked: () => {
+                  this.selected?.(NavEntryKey.POP);
+                }})
                 .margin({
-                  left: $r('app.float.wh_value_16')
+                  left: $r('app.float.wh_value_16'),
+                  top: this.isStartBySheet ? 8 : 0
                 })
 
               Column() {
@@ -692,11 +721,17 @@ struct evidenceList {
                               componentSystem({
                                 alias: item.alias,
                                 keyUri: item.keyUri,
-                                systemCredPresenter: $mShowSysCredPresenter
+                                systemCredPresenter: $mShowSysCredPresenter,
+                                onItemClicked: this.isStartBySheet ? () => {
+                                  this.selected?.(NavEntryKey.CRED_SYSTEM_DETAIL_ENTRY,
+                                    new CredSystemDetailParam(this.mShowSysCredPresenter));
+                                } : undefined
                               })
                             }
                           }, (item:CredentialAbstractVo) => JSON.stringify(item))
                         }
+                        .backgroundColor($r('sys.color.ohos_id_color_list_card_bg'))
+                        .borderRadius($r('sys.float.padding_level10'))
                         .scrollBar(BarState.Off)
                         .padding({
                           right: $r('app.float.wh_value_4'),
@@ -715,34 +750,17 @@ struct evidenceList {
                       .position({ y: $r('app.float.wh_value_0') })
                       .scrollable(ScrollDirection.Vertical)
                       .scrollBar(BarState.Off)
-                      .margin({
+                      .width(WidthPercent.WH_100_100)
+                      .height(WidthPercent.WH_100_100)
+                      .align(Alignment.Top)
+                      .edgeEffect(EdgeEffect.Spring)
+                      .padding({
                         left: $r('app.float.wh_value_12'),
-                        right: $r('app.float.wh_value_12')
+                        right: $r('app.float.wh_value_12'),
+                        bottom: $r('app.float.wh_value_24')
                       })
-                      .borderRadius($r('app.float.Evidence_borderRadius'))
-                      .backgroundColor($r('sys.color.ohos_id_color_list_card_bg'))
-
-                      ScrollBar({ scroller: this.systemScroller, direction: ScrollBarDirection.Vertical,
-                        state: BarState.Auto }) {
-                        Text()
-                          .width($r('app.float.wh_value_3'))
-                          .height($r('app.float.wh_value_50'))
-                          .borderRadius($r('app.float.wh_value_10'))
-                          .backgroundColor($r('sys.color.ohos_id_color_foreground'))
-                          .opacity($r('app.float.text_opacity_0_4'))
-                      }
-                      .width($r('app.float.wh_value_3'))
-                      .margin({
-                        right: $r('app.float.wh_value_3')
-                      })
-                      .visibility(this.mShowSysCredPresenter.credList.length > 0
-                        ? Visibility.Visible : Visibility.None)
                     }
                     .width(WidthPercent.WH_100_100)
-                    .margin({
-                      bottom: $r('app.float.wh_value_24')
-                    })
-                    .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
                   }
                   .tabBar(this.TabBuilder(0))
 
@@ -755,11 +773,17 @@ struct evidenceList {
                               componentPublic({
                                 alias: item.alias,
                                 keyUri: item.keyUri,
-                                mShowAppCaPresenter: $mShowAppCaPresenter
+                                mShowAppCaPresenter: $mShowAppCaPresenter,
+                                onItemClicked: this.isStartBySheet ? () => {
+                                  this.selected?.(NavEntryKey.CRED_USER_DETAIL_ENTRY,
+                                    new CredUserDetailParam(this.mShowAppCaPresenter));
+                                } : undefined
                               })
                             }
                           }, (item: CredentialAbstractVo) => JSON.stringify(item))
                         }
+                        .backgroundColor($r('sys.color.ohos_id_color_list_card_bg'))
+                        .borderRadius($r('sys.float.padding_level10'))
                         .scrollBar(BarState.Off)
                         .padding({
                           right: $r('app.float.wh_value_4'),
@@ -775,34 +799,19 @@ struct evidenceList {
                         .visibility(this.mShowAppCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
                       }
                       .position({ y: $r('app.float.wh_value_0') })
+                      .width(WidthPercent.WH_100_100)
+                      .height(WidthPercent.WH_100_100)
+                      .align(Alignment.Top)
+                      .edgeEffect(EdgeEffect.Spring)
                       .scrollable(ScrollDirection.Vertical)
                       .scrollBar(BarState.Off)
-                      .margin({
+                      .padding({
                         left: $r('app.float.wh_value_12'),
-                        right: $r('app.float.wh_value_12')
+                        right: $r('app.float.wh_value_12'),
+                        bottom: $r('app.float.wh_value_24')
                       })
-                      .borderRadius($r('app.float.Evidence_borderRadius'))
-                      .backgroundColor($r('sys.color.ohos_id_color_list_card_bg'))
-
-                      ScrollBar({ scroller: this.publicScroller, direction: ScrollBarDirection.Vertical,
-                        state: BarState.Auto }) {
-                        Text()
-                          .width($r('app.float.wh_value_3'))
-                          .height($r('app.float.wh_value_50'))
-                          .borderRadius($r('app.float.wh_value_10'))
-                          .backgroundColor($r('sys.color.ohos_id_color_foreground'))
-                          .opacity($r('app.float.text_opacity_0_4'))
-                      }
-                      .width($r('app.float.wh_value_3'))
-                      .margin({
-                        right: $r('app.float.wh_value_3')
-                      })
-                      .visibility(this.mShowAppCaPresenter.credList.length > 0 ? Visibility.Visible : Visibility.None)
                     }
                     .width(WidthPercent.WH_100_100)
-                    .margin({
-                      bottom: $r('app.float.wh_value_24')
-                    })
                     .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
                   }
                   .tabBar(this.TabBuilder(1))
@@ -814,9 +823,6 @@ struct evidenceList {
                 .barHeight($r('app.float.tabs_barHeight_value'))
                 .animationDuration(this.animationDurationNum)
                 .width(WidthPercent.WH_100_100)
-                .margin({
-                  bottom: $r('app.float.wh_value_24')
-                })
                 .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
                 .onChange((index: number) => {
                   this.currentIndex = index;
