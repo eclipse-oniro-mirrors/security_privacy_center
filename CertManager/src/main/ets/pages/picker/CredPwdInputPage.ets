@@ -22,6 +22,7 @@ import { GlobalContext } from '../../common/GlobalContext';
 import CmInstallPresenter from '../../presenter/CmInstallPresenter';
 
 import PreventScreenshotsPresenter from '../../model/PreventScreenshotsModel';
+import UIExtensionContentSession from '@ohos.app.ability.UIExtensionContentSession';
 
 const TAG: string = 'CredPwdInputPage: ';
 
@@ -47,12 +48,14 @@ export struct CredPwdInputPage {
 
   @State mPreventScreenshotsPresenter: PreventScreenshotsPresenter = PreventScreenshotsPresenter.getInstance();
 
+  private sheetSession?: UIExtensionContentSession;
+
   onPageShow(): void {
-    this.mPreventScreenshotsPresenter.PreventScreenshots(true, true);
+    this.mPreventScreenshotsPresenter.PreventScreenshots(true, this.sheetSession);
   }
 
   onPageHide(): void {
-    this.mPreventScreenshotsPresenter.PreventScreenshots(false, true);
+    this.mPreventScreenshotsPresenter.PreventScreenshots(false, this.sheetSession);
   }
 
   build() {

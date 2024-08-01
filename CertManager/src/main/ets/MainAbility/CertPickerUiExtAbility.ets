@@ -40,7 +40,6 @@ export default class CertPickerUiExtAbility extends UIExtensionAbility {
     }
     let storage: LocalStorage = new LocalStorage(param);
     session.loadContent('pages/picker/CertManagerSheetFa', storage);
-    GlobalContext.getContext().setSession(session, true);
     let pwdStore = new PwdStore();
     GlobalContext.getContext().setPwdStore(pwdStore);
     try {

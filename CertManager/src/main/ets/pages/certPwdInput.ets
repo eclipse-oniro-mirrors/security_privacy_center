@@ -35,7 +35,7 @@ struct CertPwdInput {
   @State mPreventScreenshotsPresenter: PreventScreenshotsPresenter = PreventScreenshotsPresenter.getInstance();
 
   onPageShow() {
-    this.mPreventScreenshotsPresenter.PreventScreenshots(true, false);
+    this.mPreventScreenshotsPresenter.PreventScreenshots(true, GlobalContext.getContext().getSession());
     let uri = GlobalContext.getContext().getAbilityWant().uri;
     GlobalContext.getContext().clearAbilityWantUri();
 
@@ -51,7 +51,7 @@ struct CertPwdInput {
   }
 
   onPageHide() {
-    this.mPreventScreenshotsPresenter.PreventScreenshots(false, false);
+    this.mPreventScreenshotsPresenter.PreventScreenshots(false, GlobalContext.getContext().getSession());
   }
 
   build() {

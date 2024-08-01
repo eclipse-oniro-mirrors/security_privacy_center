@@ -82,7 +82,9 @@ export struct CertManagerSheetFa {
     } else if (name === NavEntryKey.AUTHORIZED_APP_ENTRY) {
       AuthorizedAppManagementPage()
     } else if (name === NavEntryKey.CRED_PWD_INPUT_ENTRY) {
-      CredPwdInputPage()
+      CredPwdInputPage({
+        sheetSession: this.session
+      })
     }
   }
 
