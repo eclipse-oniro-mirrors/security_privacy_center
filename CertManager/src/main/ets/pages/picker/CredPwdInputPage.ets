@@ -21,6 +21,8 @@ import { RouterFileVo } from '../../model/CertManagerVo/RouterInfoVo';
 import { GlobalContext } from '../../common/GlobalContext';
 import CmInstallPresenter from '../../presenter/CmInstallPresenter';
 
+import PreventScreenshotsPresenter from '../../model/PreventScreenshotsModel';
+
 const TAG: string = 'CredPwdInputPage: ';
 
 export class CredPwdInputParam {
@@ -42,6 +44,16 @@ export struct CredPwdInputPage {
   @State certPwd: string = '';
   @State isPasswordError: boolean = false;
   @State passWordWarn: number = 0;
+
+  @State mPreventScreenshotsPresenter: PreventScreenshotsPresenter = PreventScreenshotsPresenter.getInstance();
+
+  onPageShow(): void {
+    this.mPreventScreenshotsPresenter.PreventScreenshots(true, true);
+  }
+
+  onPageHide(): void {
+    this.mPreventScreenshotsPresenter.PreventScreenshots(false, true);
+  }
 
   build() {
     NavDestination() {

@@ -50,7 +50,7 @@ export default struct HeadComponent {
         let length = Router.getLength();
         console.info(TAG + 'router length: ' + Number(length));
         if (GlobalContext.getContext().getFlag()) {
-          Number(length) == 1 ? GlobalContext.getContext().getSession().sendData({'action': 'exit'}) : Router.back();
+          Number(length) == 1 ? GlobalContext.getContext().getSession(this.isStartBySheet).sendData({'action': 'exit'}) : Router.back();
         } else {
           Number(length) == 1 ? GlobalContext.getContext().getCmContext().terminateSelf() : Router.back();
         }

@@ -47,7 +47,7 @@ export default class MainExtensionAbility extends UIExtensionAbility {
       session.loadContent('pages/certManagerFa', storage);
     }
     GlobalContext.getContext().setAbilityWant(want);
-    GlobalContext.getContext().setSession(session);
+    GlobalContext.getContext().setSession(session, false);
     let pwdStore = new PwdStore();
     GlobalContext.getContext().setPwdStore(pwdStore);
     GlobalContext.getContext().setFlag(true);

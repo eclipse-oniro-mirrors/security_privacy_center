@@ -40,11 +40,9 @@ export default class CertPickerUiExtAbility extends UIExtensionAbility {
     }
     let storage: LocalStorage = new LocalStorage(param);
     session.loadContent('pages/picker/CertManagerSheetFa', storage);
-    GlobalContext.getContext().setAbilityWant(want);
-    GlobalContext.getContext().setSession(session);
+    GlobalContext.getContext().setSession(session, true);
     let pwdStore = new PwdStore();
     GlobalContext.getContext().setPwdStore(pwdStore);
-    GlobalContext.getContext().setFlag(true);
     try {
       session.setWindowBackgroundColor('#00000000');
     } catch (err) {

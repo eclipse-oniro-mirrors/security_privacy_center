@@ -44,6 +44,8 @@ export class GlobalContext {
   private session: UIExtensionContentSession;
   private flag: Boolean;
 
+  private sheetSession: UIExtensionContentSession;
+
   public static getContext(): GlobalContext {
     if (!GlobalContext.instance) {
       GlobalContext.instance = new GlobalContext();
@@ -63,8 +65,12 @@ export class GlobalContext {
     return this.want;
   }
 
-  getSession(): UIExtensionContentSession {
-    return this.session;
+  getSession(isSheetPage: boolean): UIExtensionContentSession {
+    if (isSheetPage) {
+      return this.sheetSession;
+    } else {
+      return this.session;
+    }
   }
 
   getFlag(): Boolean {
@@ -83,8 +89,12 @@ export class GlobalContext {
     this.want = want;
   }
 
-  setSession(session: UIExtensionContentSession): void {
-    this.session = session;
+  setSession(session: UIExtensionContentSession, isSheetPage: boolean): void {
+    if (isSheetPage) {
+      this.sheetSession = session;
+    } else {
+      this.session = session;
+    }
   }
 
   setFlag(flag: Boolean): void {

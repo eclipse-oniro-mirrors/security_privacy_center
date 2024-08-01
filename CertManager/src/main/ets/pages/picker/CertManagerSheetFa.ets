@@ -94,7 +94,7 @@ export struct CertManagerSheetFa {
     .bindSheet(true, this.buildContent(), {
       height: SheetSize.FIT_CONTENT,
       preferType: ['2in1', 'tablet'].includes(deviceInfo.deviceType) ? SheetType.CENTER : null,
-      showClose: this.stack.size() === 0,
+      showClose: true,
       shouldDismiss: ((sheetDismiss: SheetDismiss) => {
         sheetDismiss.dismiss();
         this.session?.sendData({'action': 'exit'})
