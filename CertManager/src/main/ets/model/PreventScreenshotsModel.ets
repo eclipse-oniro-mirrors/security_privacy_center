@@ -31,9 +31,8 @@ export default class PreventScreenshotsModel {
     return PreventScreenshotsModel.sInstance;
   }
 
-  PreventScreenshots(flag: boolean) {
+  PreventScreenshots(flag: boolean, session: UIExtensionContentSession | undefined) {
     let isPrivacyMode: boolean = flag;
-    let session: UIExtensionContentSession = GlobalContext.getContext().getSession();
     if (session !== undefined) {
       session.setWindowPrivacyMode(isPrivacyMode);
       return;

@@ -21,6 +21,9 @@ import { RouterFileVo } from '../../model/CertManagerVo/RouterInfoVo';
 import { GlobalContext } from '../../common/GlobalContext';
 import CmInstallPresenter from '../../presenter/CmInstallPresenter';
 
+import PreventScreenshotsPresenter from '../../model/PreventScreenshotsModel';
+import UIExtensionContentSession from '@ohos.app.ability.UIExtensionContentSession';
+
 const TAG: string = 'CredPwdInputPage: ';
 
 export class CredPwdInputParam {
@@ -42,6 +45,18 @@ export struct CredPwdInputPage {
   @State certPwd: string = '';
   @State isPasswordError: boolean = false;
   @State passWordWarn: number = 0;
+
+  @State mPreventScreenshotsPresenter: PreventScreenshotsPresenter = PreventScreenshotsPresenter.getInstance();
+
+  private sheetSession?: UIExtensionContentSession;
+
+  onPageShow(): void {
+    this.mPreventScreenshotsPresenter.PreventScreenshots(true, this.sheetSession);
+  }
+
+  onPageHide(): void {
+    this.mPreventScreenshotsPresenter.PreventScreenshots(false, this.sheetSession);
+  }
 
   build() {
     NavDestination() {
