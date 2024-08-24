@@ -39,6 +39,7 @@ export struct CertInstallFromStorage {
   @State columnMargin: string = '12vp';
   @State mFaPresenter: CmFaPresenter = CmFaPresenter.getInstance();
   @State installCertFlag: boolean = false;
+  private context: Context = getContext(this);
 
   isStartBySheetFirst: boolean = false;
   isStartBySheet: boolean = false;
@@ -117,13 +118,13 @@ export struct CertInstallFromStorage {
           if (this.isStartBySheet) {
             this.startInstallCertBySheet();
           } else {
-            this.mFaPresenter.startInstallCert();
+            this.mFaPresenter.startInstallCert(this.context);
           }
         } else {
           if (this.isStartBySheet) {
             this.startInstallEvidenceBySheet();
           } else {
-            this.mFaPresenter.startInstallEvidence();
+            this.mFaPresenter.startInstallEvidence(this.context);
           }
         }
       }
@@ -133,7 +134,7 @@ export struct CertInstallFromStorage {
   startInstallCertBySheet(): void {
     try {
       let documentSelectOptions = new picker.DocumentSelectOptions();
-      let documentPicker = new picker.DocumentViewPicker();
+      let documentPicker = new picker.DocumentViewPicker(this.context);
       console.info(TAG + 'start documentPicker.select');
       documentPicker.select(documentSelectOptions).then((documentSelectResult) => {
         if (documentSelectResult.length >= 1) {
@@ -166,7 +167,7 @@ export struct CertInstallFromStorage {
   startInstallEvidenceBySheet(): void {
     try {
       let documentSelectOptions = new picker.DocumentSelectOptions();
-      let documentPicker = new picker.DocumentViewPicker();
+      let documentPicker = new picker.DocumentViewPicker(this.context);
       console.info(TAG + 'start documentPicker.select');
       documentPicker.select(documentSelectOptions).then((documentSelectResult) => {
         if (documentSelectResult.length >= 1) {
@@ -261,7 +262,7 @@ export struct CertInstallFromStorage {
                       if (this.isStartBySheet) {
                         this.startInstallEvidenceBySheet();
                       } else {
-                        this.mFaPresenter.startInstallEvidence();
+                        this.mFaPresenter.startInstallEvidence(this.context);
                       }
                     })
                   }
@@ -296,7 +297,7 @@ export struct CertInstallFromStorage {
                       if (this.isStartBySheet) {
                         this.startInstallEvidenceBySheet();
                       } else {
-                        this.mFaPresenter.startInstallEvidence();
+                        this.mFaPresenter.startInstallEvidence(this.context);
                       }
                     })
                   }
@@ -357,7 +358,7 @@ export struct CertInstallFromStorage {
     } else if (uiExtensionFlag && uri === 'systemCredInstall' && installType === 'systemCred') {
       AppStorage.setOrCreate('installSystemCred', true);
       AppStorage.setOrCreate('installUserCred', false);
-      this.mFaPresenter.startInstallEvidence();
+      this.mFaPresenter.startInstallEvidence(this.context);
     } else if (uiExtensionFlag && uri === 'specifyInstall') {
       let fileUri = GlobalContext.getContext().getAbilityWant().parameters?.fileUri as string;
       this.mFaPresenter.startInstall(installType, fileUri);
