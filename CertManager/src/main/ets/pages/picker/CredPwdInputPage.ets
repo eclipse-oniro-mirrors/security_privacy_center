@@ -132,6 +132,7 @@ export struct CredPwdInputPage {
       .width(WidthPercent.WH_100_100)
       .height(WidthPercent.WH_AUTO)
     }
+    .expandSafeArea([SafeAreaType.KEYBOARD])
     .hideTitleBar(true)
     .width(WidthPercent.WH_100_100)
     .height(this.sheetParam?.lastSheetPage === NavEntryKey.CRED_PWD_INPUT_ENTRY ?

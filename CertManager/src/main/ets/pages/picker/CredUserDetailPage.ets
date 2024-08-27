@@ -45,13 +45,9 @@ export struct CredUserDetailPage {
 
   @State private itemBackgroundColor: ResourceColor = '';
 
-  @Styles pressedStyles(): void {
-    .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
-  }
+  @Styles pressedStyles(): void { .backgroundColor($r('sys.color.ohos_id_color_click_effect')) }
 
-  @Styles normalStyles(): void {
-    .backgroundColor(this.itemBackgroundColor)
-  }
+  @Styles normalStyles(): void { .backgroundColor(this.itemBackgroundColor) }
 
   deleteWarnDialog: CustomDialogController = new CustomDialogController({
     builder: AlertDialog({
