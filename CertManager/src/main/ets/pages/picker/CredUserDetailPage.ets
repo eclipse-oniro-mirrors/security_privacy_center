@@ -45,13 +45,11 @@ export struct CredUserDetailPage {
 
   @State private itemBackgroundColor: ResourceColor = '';
 
-  @Styles
-  pressedStyles(): void {
+  @Styles pressedStyles(): void {
     .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
   }
 
-  @Styles
-  normalStyles(): void {
+  @Styles normalStyles(): void {
     .backgroundColor(this.itemBackgroundColor)
   }
 
@@ -142,7 +140,8 @@ export struct CredUserDetailPage {
     }
     .hideTitleBar(true)
     .width(WidthPercent.WH_100_100)
-    .height(this.sheetParam?.lastSheetPage === NavEntryKey.CRED_USER_DETAIL_ENTRY ? WidthPercent.WH_AUTO : this.sheetParam?.sheetMinHeight)
+    .height(this.sheetParam?.lastSheetPage === NavEntryKey.CRED_USER_DETAIL_ENTRY ?
+      WidthPercent.WH_AUTO : this.sheetParam?.sheetMinHeight)
     .backgroundColor($r('sys.color.background_secondary'))
     .onReady((ctx: NavDestinationContext) => {
       this.stack = ctx.pathStack;

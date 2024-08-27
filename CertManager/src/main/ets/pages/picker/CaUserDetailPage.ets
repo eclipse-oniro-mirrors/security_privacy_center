@@ -173,7 +173,8 @@ export struct CaUserDetailPage {
     }
     .hideTitleBar(true)
     .width(WidthPercent.WH_100_100)
-    .height(this.sheetParam?.lastSheetPage === NavEntryKey.CA_USER_DETAIL_ENTRY ? WidthPercent.WH_AUTO : this.sheetParam?.sheetMinHeight)
+    .height(this.sheetParam?.lastSheetPage === NavEntryKey.CA_USER_DETAIL_ENTRY ?
+      WidthPercent.WH_AUTO : this.sheetParam?.sheetMinHeight)
     .backgroundColor($r('sys.color.background_secondary'))
     .onReady((ctx: NavDestinationContext) => {
       this.stack = ctx.pathStack;
