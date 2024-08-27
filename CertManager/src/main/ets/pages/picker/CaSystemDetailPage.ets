@@ -14,6 +14,7 @@
  */
 
 import HeadComponent from '../../common/component/headComponent';
+import { NavEntryKey } from '../../common/NavEntryKey';
 import { WidthPercent } from '../../common/util/ConfigData';
 import CmShowSysCaPresenter from '../../presenter/CmShowSysCaPresenter';
 import {
@@ -22,6 +23,7 @@ import {
   DialogIssuerComponent,
   DialogSubjectComponent
 } from '../trustedCa';
+import { SheetParam } from './SheetParam';
 
 @Component
 export struct CaSystemDetailPage {
@@ -29,38 +31,78 @@ export struct CaSystemDetailPage {
 
   private stack?: NavPathStack;
 
+  @State headRectHeight: number = 64;
+  @State headRectHeightReal: number = 0;
+  @Prop sheetParam: SheetParam;
+  private scroller: Scroller = new Scroller();
+  @State scrollerHeight: number = 0;
+
   build() {
     NavDestination() {
-      Column() {
-        HeadComponent({ headName: $r('app.string.CustomDialogExample_firText'), isStartBySheet: true, onBackClicked: () => {
-          this.stack?.pop();
-        } })
-          .margin({
-            left: $r('app.float.wh_value_12'),
-            top: 8
+      Stack({ alignContent: Alignment.Top }) {
+        Column() {
+          HeadComponent({ headName: $r('app.string.CustomDialogExample_firText'), isStartBySheet: true, onBackClicked: () => {
+            this.stack?.pop();
+          } })
+            .margin({
+              left: $r('app.float.wh_value_12'),
+              top: 8
+            })
+        }.zIndex(1)
+        .onAreaChange((oldArea, newArea) => {
+          this.headRectHeight = newArea.height as number;
+          this.headRectHeightReal = newArea.height as number;
+        })
+
+        Stack({ alignContent: Alignment.TopEnd }) {
+          Scroll(this.scroller) {
+            this.buildContent()
+          }
+          .padding({
+            left: 16, right: 16,
+            bottom: $r('app.float.wh_value_24')
+          })
+          .align(Alignment.Top)
+          .scrollable(ScrollDirection.Vertical)
+          .edgeEffect(EdgeEffect.Spring)
+          .scrollBar(BarState.Off)
+          .width(WidthPercent.WH_100_100)
+          .height(WidthPercent.WH_AUTO)
+          .constraintSize({
+            minHeight: this.getScrollMinHeight()
+          }).onAreaChange((oldArea, newArea) => {
+            this.scrollerHeight = newArea.height as number;
           })
 
-        Scroll() {
-          this.buildContent()
-        }
-        .padding({
-          left: 16, right: 16
+          Column() {
+            ScrollBar({
+              scroller: this.scroller,
+              direction: ScrollBarDirection.Vertical,
+              state: BarState.Auto
+            }).margin({
+              bottom: $r('app.float.wh_value_24')
+            })
+          }.height(this.scrollerHeight)
+        }.padding({
+          top: this.headRectHeight
         })
-        .align(Alignment.Top)
-        .scrollable(ScrollDirection.Vertical)
-        .edgeEffect(EdgeEffect.Spring)
-        .scrollBar(BarState.Auto)
-        .width(WidthPercent.WH_100_100)
-        .layoutWeight(1)
       }
     }
     .hideTitleBar(true)
     .width(WidthPercent.WH_100_100)
-    .height(WidthPercent.WH_100_100)
+    .height(this.sheetParam?.lastSheetPage === NavEntryKey.CA_SYSTEM_DETAIL_ENTRY ? WidthPercent.WH_AUTO : this.sheetParam?.sheetMinHeight)
     .backgroundColor($r('sys.color.background_secondary'))
     .onReady((ctx: NavDestinationContext) => {
       this.stack = ctx.pathStack;
     })
+  }
+
+  getScrollMinHeight() {
+    if (this.sheetParam === undefined || this.headRectHeightReal === 0 ||
+      this.sheetParam.sheetMinHeight < this.headRectHeightReal) {
+      return 0;
+    }
+    return this.sheetParam.sheetMinHeight - this.headRectHeightReal;
   }
 
   @Builder

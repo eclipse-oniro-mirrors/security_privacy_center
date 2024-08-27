@@ -19,6 +19,8 @@ import { AppAuthorVo } from '../../model/CertManagerVo/AppAuthorVo';
 import CmShowAppCredPresenter from '../../presenter/CmShowAppCredPresenter';
 import { DialogComponent } from '../cerEvidenceFa';
 import { BusinessError } from '@ohos.base';
+import { SheetParam } from './SheetParam';
+import { NavEntryKey } from '../../common/NavEntryKey';
 
 const TAG: string = 'AuthorizedAppManagementPage: ';
 
@@ -35,50 +37,80 @@ export struct AuthorizedAppManagementPage {
   private stack?: NavPathStack;
 
   @State presenter: CmShowAppCredPresenter = CmShowAppCredPresenter.getInstance();
+  @Prop sheetParam: SheetParam;
+  @State private headRectHeight: number = 64;
+  @State private headRectHeightReal: number = 0;
+  private scroller: Scroller = new Scroller();
+  @State private scrollerHeight: number = 0;
 
   build() {
     NavDestination() {
-      Column() {
-        HeadComponent({ headName: $r('app.string.managerAuthApp'), isStartBySheet: true, onBackClicked: () => {
-          this.stack?.pop();
-        } })
-          .margin({
-            left: $r('app.float.wh_value_12'),
-            top: 8
-          })
+      Stack({ alignContent: Alignment.Top }) {
+        Column() {
+          HeadComponent({ headName: $r('app.string.managerAuthApp'), isStartBySheet: true, onBackClicked: () => {
+            this.stack?.pop();
+          } })
+            .margin({
+              left: $r('app.float.wh_value_12'),
+              top: 8
+            })
+        }.zIndex(1)
+        .onAreaChange((oldArea, newArea) => {
+          this.headRectHeight = newArea.height as number;
+          this.headRectHeightReal = newArea.height as number;
+        })
 
-        Scroll() {
-          List() {
-            ForEach(this.presenter.appInfoList, (item: AppAuthorVo, index) => {
-              ListItem() {
-                DialogComponent({ appImage: item.appImage, appName: item.appName,
-                  indexNum: index, uidItem: $presenter,
-                  onChanged: async () => {
-                    await this.presenter.removeGrantedAppList(this.presenter.credInfo.keyUri);
-                    this.presenter.getAuthorizedAppList(this.presenter.credInfo.keyUri);
-                  } })
-              }
+        Stack({ alignContent: Alignment.TopEnd }) {
+          Scroll(this.scroller) {
+            List() {
+              ForEach(this.presenter.appInfoList, (item: AppAuthorVo, index) => {
+                ListItem() {
+                  DialogComponent({ appImage: item.appImage, appName: item.appName,
+                    indexNum: index, uidItem: $presenter,
+                    onChanged: async () => {
+                      await this.presenter.removeGrantedAppList(this.presenter.credInfo.keyUri);
+                      this.presenter.getAuthorizedAppList(this.presenter.credInfo.keyUri);
+                    } })
+                }
+              })
+            }
+            .scrollBar(BarState.Off)
+            .divider({
+              strokeWidth: $r('app.float.Evidence_strokeWidth'),
+              color: $r('sys.color.ohos_id_color_list_separator'),
+              startMargin: 64
             })
           }
-          .scrollBar(BarState.Off)
-          .divider({
-            strokeWidth: $r('app.float.Evidence_strokeWidth'),
-            color: $r('sys.color.ohos_id_color_list_separator'),
-            startMargin: 64
+          .align(Alignment.Top)
+          .edgeEffect(EdgeEffect.Spring)
+          .constraintSize({
+            minHeight: this.getScrollMinHeight()
           })
-        }
-        .align(Alignment.Top)
-        .edgeEffect(EdgeEffect.Spring)
-        .layoutWeight(1)
-        .scrollBar(BarState.Off)
-        .padding({
-          left: $r('app.float.wh_value_24')
+          .scrollBar(BarState.Off)
+          .padding({
+            left: $r('app.float.wh_value_24'),
+            bottom: $r('app.float.wh_value_24')
+          }).onAreaChange((oldArea, newArea) => {
+            this.scrollerHeight = newArea.height as number;
+          })
+
+          Column() {
+            ScrollBar({
+              scroller: this.scroller,
+              direction: ScrollBarDirection.Vertical,
+              state: BarState.Auto
+            }).margin({
+              bottom: $r('app.float.wh_value_24')
+            })
+          }.height(this.scrollerHeight)
+        }.padding({
+          top: this.headRectHeight
         })
       }
     }
     .hideTitleBar(true)
     .width(WidthPercent.WH_100_100)
-    .height(WidthPercent.WH_100_100)
+    .height(this.sheetParam?.lastSheetPage === NavEntryKey.AUTHORIZED_APP_ENTRY ? WidthPercent.WH_AUTO : this.sheetParam?.sheetMinHeight)
     .backgroundColor($r('sys.color.background_secondary'))
     .onReady((ctx: NavDestinationContext) => {
       this.stack = ctx.pathStack;
@@ -89,5 +121,13 @@ export struct AuthorizedAppManagementPage {
         console.error(TAG + 'Get presenter failed: ' + error?.code + ', message: ' + error?.message);
       }
     })
+  }
+
+  getScrollMinHeight() {
+    if (this.sheetParam === undefined || this.headRectHeightReal === 0 ||
+      this.sheetParam.sheetMinHeight < this.headRectHeightReal) {
+      return 0;
+    }
+    return this.sheetParam.sheetMinHeight - this.headRectHeightReal;
   }
 }

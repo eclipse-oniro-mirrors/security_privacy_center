@@ -20,6 +20,7 @@ import { BusinessError } from '@ohos.base';
 import CmShowAppCredPresenter from '../../presenter/CmShowAppCredPresenter';
 import { NavEntryKey } from '../../common/NavEntryKey';
 import { AuthorizedAppManagementParam } from './AuthorizedAppManagementPage';
+import { SheetParam } from './SheetParam';
 
 const TAG: string = 'CredUserDetailPage: ';
 
@@ -37,7 +38,22 @@ export struct CredUserDetailPage {
 
   private stack?: NavPathStack;
 
-  @State private bottomRectHeight: Length = $r('sys.float.padding_level8');
+  @State private bottomRectHeight: number = 80;
+  @State private headRectHeight: number = 64;
+  @State private headRectHeightReal: number = 0;
+  @Prop private sheetParam: SheetParam;
+
+  @State private itemBackgroundColor: ResourceColor = '';
+
+  @Styles
+  pressedStyles(): void {
+    .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
+  }
+
+  @Styles
+  normalStyles(): void {
+    .backgroundColor(this.itemBackgroundColor)
+  }
 
   deleteWarnDialog: CustomDialogController = new CustomDialogController({
     builder: AlertDialog({
@@ -64,27 +80,39 @@ export struct CredUserDetailPage {
   build() {
     NavDestination() {
       Stack({ alignContent: Alignment.Bottom }) {
-        Column() {
-          HeadComponent({ headName: $r('app.string.evidenceDetails'), isStartBySheet: true, onBackClicked: () => {
-            this.stack?.pop();
-          } })
-            .margin({
-              left: $r('app.float.wh_value_12'),
-              top: 8
-            })
+        Stack({ alignContent: Alignment.Top }) {
+          Column() {
+            HeadComponent({ headName: $r('app.string.evidenceDetails'), isStartBySheet: true, onBackClicked: () => {
+              this.stack?.pop();
+            } })
+              .margin({
+                left: $r('app.float.wh_value_12'),
+                top: 8
+              })
+          }.onAreaChange((oldArea, newArea) => {
+            this.headRectHeight = newArea.height as number;
+            this.headRectHeightReal = newArea.height as number;
+          }).zIndex(1)
 
-          Scroll() {
-            this.buildContent()
-          }
-          .align(Alignment.Top)
-          .scrollable(ScrollDirection.Vertical)
-          .scrollBar(BarState.Auto)
-          .edgeEffect(EdgeEffect.Spring)
-          .width(WidthPercent.WH_100_100)
-          .layoutWeight(1)
+          Column() {
+            Scroll() {
+              this.buildContent()
+            }
+            .align(Alignment.Top)
+            .scrollable(ScrollDirection.Vertical)
+            .scrollBar(BarState.Auto)
+            .edgeEffect(EdgeEffect.Spring)
+            .width(WidthPercent.WH_100_100)
+            .height(WidthPercent.WH_AUTO)
+            .constraintSize({
+              minHeight: this.getScrollMinHeight()
+            })
+          }.padding({
+            top: this.headRectHeight
+          })
         }
         .width(WidthPercent.WH_100_100)
-        .height(WidthPercent.WH_100_100)
+        .height(WidthPercent.WH_AUTO)
         .padding({
           bottom: this.bottomRectHeight
         })
@@ -101,6 +129,9 @@ export struct CredUserDetailPage {
               bottom: $r('app.float.distance_24')
             })
             .width(WidthPercent.WH_100_100)
+            .constraintSize({
+              minHeight: $r('app.float.wh_value_40')
+            })
         }.onAreaChange((oldArea: Area, newArea: Area) => {
           this.bottomRectHeight = newArea.height as number;
         })
@@ -111,7 +142,7 @@ export struct CredUserDetailPage {
     }
     .hideTitleBar(true)
     .width(WidthPercent.WH_100_100)
-    .height(WidthPercent.WH_100_100)
+    .height(this.sheetParam?.lastSheetPage === NavEntryKey.CRED_USER_DETAIL_ENTRY ? WidthPercent.WH_AUTO : this.sheetParam?.sheetMinHeight)
     .backgroundColor($r('sys.color.background_secondary'))
     .onReady((ctx: NavDestinationContext) => {
       this.stack = ctx.pathStack;
@@ -192,12 +223,32 @@ export struct CredUserDetailPage {
       })
       .margin({
         top: $r('app.float.wh_value_12'),
-        left: $r('app.float.wh_value_24'),
-        right: $r('app.float.wh_value_24')
+        left: $r('app.float.wh_value_16'),
+        right: $r('app.float.wh_value_16')
       })
-      .height('48vp')
+      .borderRadius($r('sys.float.corner_radius_level8'))
+      .backgroundColor(this.itemBackgroundColor)
+      .onHover((isHover?: boolean) => {
+        this.itemBackgroundColor = isHover ? $r('sys.color.ohos_id_color_hover') : '';
+      })
+      .stateStyles({
+        pressed: this.pressedStyles,
+        normal: this.normalStyles
+      })
+      .padding($r('app.float.wh_value_8'))
+      .constraintSize({
+        minHeight: $r('app.float.wh_value_48')
+      })
     }
     .width(WidthPercent.WH_100_100)
     .alignItems(HorizontalAlign.Start)
+  }
+
+  getScrollMinHeight() {
+    if (this.sheetParam === undefined || this.headRectHeightReal === 0 ||
+      this.sheetParam.sheetMinHeight < (this.headRectHeightReal + this.bottomRectHeight)) {
+      return 0;
+    }
+    return this.sheetParam.sheetMinHeight - this.headRectHeightReal - this.bottomRectHeight;
   }
 }

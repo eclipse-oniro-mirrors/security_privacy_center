@@ -16,16 +16,20 @@
 import { NavEntryKey } from '../../common/NavEntryKey';
 import { WidthPercent } from '../../common/util/ConfigData';
 import { TrustedEvidence } from '../trustedCa';
+import { SheetParam } from './SheetParam';
 
 @Component
 export struct CaCertPage {
   private stack?: NavPathStack;
+
+  @Prop sheetParam: SheetParam;
 
   build() {
     NavDestination() {
       Column() {
         TrustedEvidence({
           isStartBySheet: true,
+          sheetParam: this.sheetParam,
           selected: (path, param) => {
             if (path === undefined || path === null || path.length === 0) {
               return;
@@ -41,7 +45,7 @@ export struct CaCertPage {
     }
     .hideTitleBar(true)
     .width(WidthPercent.WH_100_100)
-    .height(WidthPercent.WH_100_100)
+    .height(this.sheetParam?.lastSheetPage === NavEntryKey.CA_CERTIFICATE_ENTRY ? WidthPercent.WH_AUTO : this.sheetParam?.sheetMinHeight)
     .backgroundColor($r('sys.color.background_secondary'))
     .onReady((ctx: NavDestinationContext) => {
       this.stack = ctx.pathStack;

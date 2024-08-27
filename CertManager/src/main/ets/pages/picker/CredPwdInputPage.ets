@@ -20,9 +20,8 @@ import { CMModelErrorCode } from '../../model/CertMangerModel';
 import { RouterFileVo } from '../../model/CertManagerVo/RouterInfoVo';
 import { GlobalContext } from '../../common/GlobalContext';
 import CmInstallPresenter from '../../presenter/CmInstallPresenter';
-
-import PreventScreenshotsPresenter from '../../model/PreventScreenshotsModel';
-import UIExtensionContentSession from '@ohos.app.ability.UIExtensionContentSession';
+import { SheetParam } from './SheetParam';
+import { NavEntryKey } from '../../common/NavEntryKey';
 
 const TAG: string = 'CredPwdInputPage: ';
 
@@ -40,48 +39,52 @@ export struct CredPwdInputPage {
 
   private credFile?: RouterFileVo;
 
-  @State private bottomRectHeight: Length = $r('sys.float.padding_level8');
+  @State private bottomRectHeight: number = 80;
+  @State private headRectHeight: number = 64;
+  @State private headRectHeightReal: number = 0;
 
   @State certPwd: string = '';
   @State isPasswordError: boolean = false;
   @State passWordWarn: number = 0;
-
-  @State mPreventScreenshotsPresenter: PreventScreenshotsPresenter = PreventScreenshotsPresenter.getInstance();
-
-  private sheetSession?: UIExtensionContentSession;
-
-  onPageShow(): void {
-    this.mPreventScreenshotsPresenter.PreventScreenshots(true, this.sheetSession);
-  }
-
-  onPageHide(): void {
-    this.mPreventScreenshotsPresenter.PreventScreenshots(false, this.sheetSession);
-  }
+  @Prop sheetParam: SheetParam;
 
   build() {
     NavDestination() {
       Stack({ alignContent: Alignment.Bottom }) {
-        Column() {
-          HeadComponent({ headName: $r('app.string.certificatePwdTab'), isStartBySheet: true, onBackClicked: () => {
-            this.stack?.pop();
-          } })
-            .margin({
-              left: $r('app.float.wh_value_12'),
-              top: 8
-            })
+        Stack({ alignContent: Alignment.Top }) {
+          Column() {
+            HeadComponent({ headName: $r('app.string.certificatePwdTab'), isStartBySheet: true, onBackClicked: () => {
+              this.stack?.pop();
+            } })
+              .margin({
+                left: $r('app.float.wh_value_12'),
+                top: 8
+              })
+          }.zIndex(1)
+          .onAreaChange((oldArea, newArea) => {
+            this.headRectHeight = newArea.height as number;
+            this.headRectHeightReal = newArea.height as number;
+          })
 
-          Scroll() {
-            this.buildContent()
-          }
-          .align(Alignment.Top)
-          .scrollable(ScrollDirection.Vertical)
-          .scrollBar(BarState.Auto)
-          .edgeEffect(EdgeEffect.Spring)
-          .width(WidthPercent.WH_100_100)
-          .layoutWeight(1)
+          Stack({ alignContent: Alignment.TopEnd }) {
+            Scroll() {
+              this.buildContent()
+            }
+            .align(Alignment.Top)
+            .scrollable(ScrollDirection.Vertical)
+            .scrollBar(BarState.Off)
+            .edgeEffect(EdgeEffect.Spring)
+            .width(WidthPercent.WH_100_100)
+            .height(WidthPercent.WH_AUTO)
+            .constraintSize({
+              minHeight: this.getScrollMinHeight()
+            })
+          }.padding({
+            top: this.headRectHeight
+          })
         }
         .width(WidthPercent.WH_100_100)
-        .height(WidthPercent.WH_100_100)
+        .height(WidthPercent.WH_AUTO)
         .padding({
           bottom: this.bottomRectHeight
         })
@@ -125,15 +128,13 @@ export struct CredPwdInputPage {
         .padding({
           left: 16, right: 16
         })
-        .expandSafeArea([SafeAreaType.KEYBOARD])
       }
       .width(WidthPercent.WH_100_100)
-      .height(WidthPercent.WH_100_100)
-      .expandSafeArea([SafeAreaType.KEYBOARD])
+      .height(WidthPercent.WH_AUTO)
     }
     .hideTitleBar(true)
     .width(WidthPercent.WH_100_100)
-    .height(WidthPercent.WH_100_100)
+    .height(this.sheetParam?.lastSheetPage === NavEntryKey.CRED_PWD_INPUT_ENTRY ? WidthPercent.WH_AUTO : this.sheetParam?.sheetMinHeight)
     .backgroundColor($r('sys.color.background_secondary'))
     .onReady((ctx: NavDestinationContext) => {
       this.stack = ctx.pathStack;
@@ -192,5 +193,13 @@ export struct CredPwdInputPage {
     }
     .width(WidthPercent.WH_100_100)
     .alignItems(HorizontalAlign.Start)
+  }
+
+  getScrollMinHeight() {
+    if (this.sheetParam === undefined || this.headRectHeightReal === 0 ||
+      this.sheetParam.sheetMinHeight < (this.headRectHeightReal + this.bottomRectHeight)) {
+      return 0;
+    }
+    return this.sheetParam.sheetMinHeight - this.headRectHeightReal - this.bottomRectHeight;
   }
 }
