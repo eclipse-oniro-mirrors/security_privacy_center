@@ -28,6 +28,7 @@ import CmInstallPresenter from '../presenter/CmInstallPresenter';
 import { BusinessError } from '@ohos.base';
 import { RouterFileVo } from '../model/CertManagerVo/RouterInfoVo';
 import { CredPwdInputParam } from './picker/CredPwdInputPage';
+import { SheetParam } from './picker/SheetParam';
 
 const COPIES_NUM: number = 12;
 
@@ -44,6 +45,11 @@ export struct CertInstallFromStorage {
   isStartBySheetFirst: boolean = false;
   isStartBySheet: boolean = false;
   selected?: (path: string, param?: Object) => void;
+  @Prop sheetParam: SheetParam;
+  @State private headRectHeight: number = 64;
+  @State private headRectHeightReal: number = 0;
+  private scroller: Scroller = new Scroller();
+  @State private scrollerHeight: number = 0;
 
   @Styles normalStyle() {
     .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
@@ -205,141 +211,174 @@ export struct CertInstallFromStorage {
       }) {
         GridCol({ span: COPIES_NUM }) {
           Row({}) {
-            Column({ space: this.columnMargin }) {
-              HeadComponent({ headName: $r('app.string.installInStorageDevice'), isStartBySheet: this.isStartBySheet,
-                icBackIsVisibility: !this.isStartBySheetFirst,
-                onBackClicked: () => {
-                  this.selected?.(NavEntryKey.POP);
-                }})
-                .margin({
-                  top: this.isStartBySheet ? 8 : 0,
-                  left: 12,
-                  right: 12
-                })
-              Scroll() {
-                Column() {
-                  Row() {
-                    Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-                      Text($r('app.string.CA_cert'))
-                        .fontSize($r('sys.float.ohos_id_text_size_body1'))
-                        .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                        .fontWeight(FontWeight.Medium)
-                        .margin({ left: $r('app.float.wh_value_12') })
-                        .textAlign(TextAlign.Start)
-                    }
-                  }
-                  .stateStyles({
-                    normal: this.normalStyle,
-                    pressed: this.pressedStyle
+            Stack({ alignContent: Alignment.Top }) {
+              Column() {
+                HeadComponent({ headName: $r('app.string.installInStorageDevice'), isStartBySheet: this.isStartBySheet,
+                  icBackIsVisibility: !this.isStartBySheetFirst,
+                  onBackClicked: () => {
+                    this.selected?.(NavEntryKey.POP);
+                  }})
+                  .margin({
+                    top: this.isStartBySheet ? 8 : 0,
+                    left: 12,
+                    right: 12
                   })
-                  .constraintSize({
-                    minHeight: $r('app.float.wh_value_48')
-                  })
-                  .onClick(() => {
-                    this.rootCertificateDialog.open();
-                  })
+              }.zIndex(1)
+              .onAreaChange((oldArea, newArea) => {
+                this.headRectHeight = newArea.height as number;
+                this.headRectHeightReal = newArea.height as number;
+              })
 
-                  Divider()
-                    .color($r('sys.color.ohos_id_color_list_separator'))
-                    .margin({
-                      left: $r('app.float.wh_value_12'),
-                      right: $r('app.float.wh_value_12')
-                    })
-
-                  Row() {
-                    Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-                      Text($r('app.string.system_credentials'))
-                        .fontSize($r('sys.float.ohos_id_text_size_body1'))
-                        .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                        .fontWeight(FontWeight.Medium)
-                        .margin({ left: $r('app.float.wh_value_12') })
-                        .textAlign(TextAlign.Start)
-                    }
-                    .onClick(() => {
-                      this.installCertFlag = false;
-                      AppStorage.setOrCreate('installSystemCred', true);
-                      AppStorage.setOrCreate('installUserCred',false);
-                      if (this.isStartBySheet) {
-                        this.startInstallEvidenceBySheet();
-                      } else {
-                        this.mFaPresenter.startInstallEvidence(this.context);
+              Stack({ alignContent: Alignment.TopEnd }) {
+                Scroll(this.scroller) {
+                  Column() {
+                    Row() {
+                      Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+                        Text($r('app.string.CA_cert'))
+                          .fontSize($r('sys.float.ohos_id_text_size_body1'))
+                          .fontColor($r('sys.color.ohos_id_color_text_primary'))
+                          .fontWeight(FontWeight.Medium)
+                          .margin({ left: $r('app.float.wh_value_12') })
+                          .textAlign(TextAlign.Start)
                       }
-                    })
-                  }
-                  .stateStyles({
-                    normal: this.normalStyle,
-                    pressed: this.pressedStyle
-                  })
-                  .constraintSize({
-                    minHeight: $r('app.float.wh_value_48')
-                  })
-
-                  Divider()
-                    .color($r('sys.color.ohos_id_color_list_separator'))
-                    .margin({
-                      left: $r('app.float.wh_value_12'),
-                      right: $r('app.float.wh_value_12')
-                    })
-
-                  Row() {
-                    Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-                      Text($r('app.string.user_certificate_credentials'))
-                        .fontSize($r('sys.float.ohos_id_text_size_body1'))
-                        .fontColor($r('sys.color.ohos_id_color_text_primary'))
-                        .fontWeight(FontWeight.Medium)
-                        .margin({ left: $r('app.float.wh_value_12') })
-                        .textAlign(TextAlign.Start)
                     }
+                    .stateStyles({
+                      normal: this.normalStyle,
+                      pressed: this.pressedStyle
+                    })
+                    .constraintSize({
+                      minHeight: $r('app.float.wh_value_48')
+                    })
                     .onClick(() => {
-                      this.installCertFlag = false;
-                      AppStorage.setOrCreate('installUserCred', true);
-                      AppStorage.setOrCreate('installSystemCred',false);
-                      if (this.isStartBySheet) {
-                        this.startInstallEvidenceBySheet();
-                      } else {
-                        this.mFaPresenter.startInstallEvidence(this.context);
+                      this.rootCertificateDialog.open();
+                    })
+
+                    Divider()
+                      .color($r('sys.color.ohos_id_color_list_separator'))
+                      .margin({
+                        left: $r('app.float.wh_value_12'),
+                        right: $r('app.float.wh_value_12')
+                      })
+
+                    Row() {
+                      Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+                        Text($r('app.string.system_credentials'))
+                          .fontSize($r('sys.float.ohos_id_text_size_body1'))
+                          .fontColor($r('sys.color.ohos_id_color_text_primary'))
+                          .fontWeight(FontWeight.Medium)
+                          .margin({ left: $r('app.float.wh_value_12') })
+                          .textAlign(TextAlign.Start)
                       }
+                      .onClick(() => {
+                        this.installCertFlag = false;
+                        AppStorage.setOrCreate('installSystemCred', true);
+                        AppStorage.setOrCreate('installUserCred',false);
+                        if (this.isStartBySheet) {
+                          this.startInstallEvidenceBySheet();
+                        } else {
+                          this.mFaPresenter.startInstallEvidence(this.context);
+                        }
+                      })
+                    }
+                    .stateStyles({
+                      normal: this.normalStyle,
+                      pressed: this.pressedStyle
+                    })
+                    .constraintSize({
+                      minHeight: $r('app.float.wh_value_48')
+                    })
+
+                    Divider()
+                      .color($r('sys.color.ohos_id_color_list_separator'))
+                      .margin({
+                        left: $r('app.float.wh_value_12'),
+                        right: $r('app.float.wh_value_12')
+                      })
+
+                    Row() {
+                      Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+                        Text($r('app.string.user_certificate_credentials'))
+                          .fontSize($r('sys.float.ohos_id_text_size_body1'))
+                          .fontColor($r('sys.color.ohos_id_color_text_primary'))
+                          .fontWeight(FontWeight.Medium)
+                          .margin({ left: $r('app.float.wh_value_12') })
+                          .textAlign(TextAlign.Start)
+                      }
+                      .onClick(() => {
+                        this.installCertFlag = false;
+                        AppStorage.setOrCreate('installUserCred', true);
+                        AppStorage.setOrCreate('installSystemCred',false);
+                        if (this.isStartBySheet) {
+                          this.startInstallEvidenceBySheet();
+                        } else {
+                          this.mFaPresenter.startInstallEvidence(this.context);
+                        }
+                      })
+                    }
+                    .stateStyles({
+                      normal: this.normalStyle,
+                      pressed: this.pressedStyle
+                    })
+                    .constraintSize({
+                      minHeight: $r('app.float.wh_value_48')
                     })
                   }
-                  .stateStyles({
-                    normal: this.normalStyle,
-                    pressed: this.pressedStyle
-                  })
-                  .constraintSize({
-                    minHeight: $r('app.float.wh_value_48')
-                  })
+                  .padding($r('app.float.wh_value_4'))
+                  .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
+                  .borderRadius($r('app.float.radius_20'))
+                  .width(ComponentConfig.WH_100_100)
                 }
-                .padding($r('app.float.wh_value_4'))
-                .backgroundColor($r('sys.color.ohos_id_color_card_bg'))
-                .borderRadius($r('app.float.radius_20'))
-                .width(ComponentConfig.WH_100_100)
-              }
-              .align(Alignment.Top)
-              .scrollable(ScrollDirection.Vertical)
-              .scrollBar(BarState.Auto)
-              .width(WidthPercent.WH_100_100)
-              .edgeEffect(EdgeEffect.Spring)
-              .layoutWeight(1)
-              .padding({
-                left: 16,
-                right: 16
+                .align(Alignment.Top)
+                .scrollable(ScrollDirection.Vertical)
+                .scrollBar(BarState.Off)
+                .width(WidthPercent.WH_100_100)
+                .edgeEffect(EdgeEffect.Spring)
+                .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100)
+                .padding({
+                  left: 16,
+                  right: 16,
+                  bottom: $r('app.float.wh_value_24')
+                }).constraintSize({
+                  minHeight: this.getScrollMinHeight()
+                }).onAreaChange((oldArea, newArea) => {
+                  this.scrollerHeight = newArea.height as number;
+                })
+
+                Column() {
+                  ScrollBar({
+                    scroller: this.scroller,
+                    direction: ScrollBarDirection.Vertical,
+                    state: BarState.Auto
+                  }).margin({
+                    bottom: $r('app.float.wh_value_24')
+                  })
+                }.height(this.scrollerHeight)
+              }.padding({
+                top: this.headRectHeight
               })
             }
             .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
             .width(WidthPercent.WH_100_100)
-            .height(WidthPercent.WH_100_100)
+            .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100)
           }
           .width(WidthPercent.WH_100_100)
-          .height(WidthPercent.WH_100_100);
+          .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100);
         }
       }
-      .margin(vp2px(1) === 2 ? $r('app.float.item_common_horizontal_margin') : $r('app.float.wh_value_0'))
       .width(WidthPercent.WH_100_100)
-      .height(WidthPercent.WH_100_100);
+      .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100);
     }
     .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
     .width(WidthPercent.WH_100_100)
-    .height(WidthPercent.WH_100_100);
+    .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100);
+  }
+
+  getScrollMinHeight() {
+    if (this.sheetParam === undefined || this.headRectHeightReal === 0 ||
+      this.sheetParam.sheetMinHeight < this.headRectHeightReal) {
+      return 0;
+    }
+    return this.sheetParam.sheetMinHeight - this.headRectHeightReal;
   }
 
   onPageShow() {

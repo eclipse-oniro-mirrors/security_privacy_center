@@ -16,16 +16,20 @@
 import { NavEntryKey } from '../../common/NavEntryKey';
 import { WidthPercent } from '../../common/util/ConfigData';
 import { CertInstallFromStorage } from '../certInstallFromStorage';
+import { SheetParam } from './SheetParam';
 
 @Component
 export struct InstallPage {
   private stack?: NavPathStack;
+
+  @Prop sheetParam: SheetParam;
 
   build() {
     NavDestination() {
       Column() {
         CertInstallFromStorage({
           isStartBySheet: true,
+          sheetParam: this.sheetParam,
           selected: (path, param) => {
             if (path === NavEntryKey.POP) {
               this.stack?.pop();
@@ -38,7 +42,7 @@ export struct InstallPage {
     }
     .hideTitleBar(true)
     .width(WidthPercent.WH_100_100)
-    .height(WidthPercent.WH_100_100)
+    .height(WidthPercent.WH_AUTO)
     .backgroundColor($r('sys.color.background_secondary'))
     .onReady((ctx: NavDestinationContext) => {
       this.stack = ctx.pathStack;

@@ -24,6 +24,8 @@ import {
 } from '../trustedCa';
 import { AlertDialog } from '@ohos.arkui.advanced.Dialog';
 import { BusinessError } from '@ohos.base';
+import { SheetParam } from './SheetParam';
+import { NavEntryKey } from '../../common/NavEntryKey';
 
 const TAG: string = 'CaUserDetailPage: ';
 
@@ -41,9 +43,12 @@ export struct CaUserDetailPage {
 
   private stack?: NavPathStack;
 
-  @State private bottomRectHeight: Length = $r('sys.float.padding_level8');
+  @State private bottomRectHeight: number = 80;
+  @State private headRectHeight: number = 64;
+  @State private headRectHeightReal: number = 0;
 
   @State toggleStatus: boolean = false;
+  @Prop sheetParam: SheetParam;
 
   rootCertificateDialog: CustomDialogController = new CustomDialogController({
     alignment: DialogAlignment.Center,
@@ -105,30 +110,43 @@ export struct CaUserDetailPage {
   build() {
     NavDestination() {
       Stack({ alignContent: Alignment.Bottom }) {
-        Column() {
-          HeadComponent({ headName: $r('app.string.CustomDialogExample_firText'), isStartBySheet: true, onBackClicked: () => {
-            this.stack?.pop();
-          } })
-            .margin({
-              left: $r('app.float.wh_value_12'),
-              top: 8
-            })
-
-          Scroll() {
-            this.buildContent()
-          }
-          .padding({
-            left: 16, right: 16
+        Stack({ alignContent: Alignment.Top }) {
+          Column() {
+            HeadComponent({ headName: $r('app.string.CustomDialogExample_firText'), isStartBySheet: true, onBackClicked: () => {
+              this.stack?.pop();
+            } })
+              .margin({
+                left: $r('app.float.wh_value_12'),
+                top: 8
+              })
+          }.zIndex(1)
+          .onAreaChange((oldArea, newArea) => {
+            this.headRectHeight = newArea.height as number;
+            this.headRectHeightReal = newArea.height as number;
           })
-          .align(Alignment.Top)
-          .scrollable(ScrollDirection.Vertical)
-          .scrollBar(BarState.Auto)
-          .edgeEffect(EdgeEffect.Spring)
-          .width(WidthPercent.WH_100_100)
-          .layoutWeight(1)
+
+          Stack({ alignContent: Alignment.TopEnd }) {
+            Scroll() {
+              this.buildContent()
+            }
+            .padding({
+              left: 16, right: 16
+            })
+            .align(Alignment.Top)
+            .scrollable(ScrollDirection.Vertical)
+            .scrollBar(BarState.Auto)
+            .edgeEffect(EdgeEffect.Spring)
+            .width(WidthPercent.WH_100_100)
+            .height(WidthPercent.WH_AUTO)
+            .constraintSize({
+              minHeight: this.getScrollMinHeight()
+            })
+          }.padding({
+            top: this.headRectHeight
+          })
         }
         .width(WidthPercent.WH_100_100)
-        .height(WidthPercent.WH_100_100)
+        .height(WidthPercent.WH_AUTO)
         .padding({
           bottom: this.bottomRectHeight
         })
@@ -155,7 +173,8 @@ export struct CaUserDetailPage {
     }
     .hideTitleBar(true)
     .width(WidthPercent.WH_100_100)
-    .height(WidthPercent.WH_100_100)
+    .height(this.sheetParam?.lastSheetPage === NavEntryKey.CA_USER_DETAIL_ENTRY ?
+      WidthPercent.WH_AUTO : this.sheetParam?.sheetMinHeight)
     .backgroundColor($r('sys.color.background_secondary'))
     .onReady((ctx: NavDestinationContext) => {
       this.stack = ctx.pathStack;
@@ -238,5 +257,13 @@ export struct CaUserDetailPage {
     }
     .width(WidthPercent.WH_100_100)
     .alignItems(HorizontalAlign.Start)
+  }
+
+  getScrollMinHeight() {
+    if (this.sheetParam === undefined || this.headRectHeightReal === 0 ||
+      this.sheetParam.sheetMinHeight < (this.headRectHeightReal + this.bottomRectHeight)) {
+      return 0;
+    }
+    return this.sheetParam.sheetMinHeight - this.headRectHeightReal - this.bottomRectHeight;
   }
 }

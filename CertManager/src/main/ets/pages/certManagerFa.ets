@@ -22,6 +22,7 @@ import router from '@ohos.router';
 import promptAction from '@ohos.promptAction';
 import { CustomContentDialog } from '@ohos.arkui.advanced.Dialog';
 import { NavEntryKey } from '../common/NavEntryKey';
+import { SheetParam } from './picker/SheetParam';
 
 const DISPLAY_DURATION: number = 2000;
 const COPIES_NUM: number = 12;
@@ -49,6 +50,11 @@ export struct CertificateComponent {
 
   isStartBySheet: boolean = false;
   selected?: (path: string) => void;
+  @State private headRectHeight: number = 64;
+  @State private headRectHeightReal: number = 0;
+  @Prop sheetParam: SheetParam;
+  private scroller: Scroller = new Scroller();
+  @State private scrollerHeight: number = 0;
 
   build() {
     Column() {
@@ -57,86 +63,122 @@ export struct CertificateComponent {
         gutter: vp2px(1) === 2 ? $r('app.float.wh_value_12') : $r('app.float.wh_value_0')
       }) {
         GridCol({ span: COPIES_NUM }) {
-          Column({ space: this.columnMargin }) {
-            HeadComponent({ headName: $r('app.string.certificateTab'), icBackIsVisibility: !this.isStartBySheet })
-              .margin({
-                top: this.isStartBySheet ? 8 : 0,
-                left: 12,
-                right: 12
-              })
-            Scroll() {
-              Column({ space: this.columnMargin }) {
-                List() {
-                  ForEach(this.listItems, (item: CertListItem) => {
-                    ListItem() {
-                      SubEntryComponent({ targetPage: item.targetPage, title: item.title,
-                        onItemClicked: targetRouter => {
-                          if (this.isStartBySheet) {
-                            if (targetRouter === 'pages/trustedCa') {
-                              this.selected?.(NavEntryKey.CA_CERTIFICATE_ENTRY);
-                            } else {
-                              this.selected?.(NavEntryKey.CREDENTIAL_LIST_ENTRY);
-                            }
-                          } else {
-                            router.pushUrl({
-                              url: targetRouter
-                            });
-                          }
-                      } })
-                    }
-                    .stateStyles({
-                      normal: this.normalStyle,
-                      pressed: this.pressedStyle
-                    });
-                  }, (item: CertListItem) => JSON.stringify(item))
-                }
-                .padding($r('app.float.wh_value_4'))
-                .divider({
-                  strokeWidth: $r('app.float.sys_list_divider_strokeWidth_value'),
-                  color: $r('sys.color.ohos_id_color_list_separator'),
-                  startMargin: $r('app.float.wh_value_8'),
-                  endMargin: $r('app.float.wh_value_8')
+          Stack({ alignContent: Alignment.Top }) {
+            Column() {
+              HeadComponent({ headName: $r('app.string.certificateTab'), icBackIsVisibility: !this.isStartBySheet })
+                .margin({
+                  top: this.isStartBySheet ? 8 : 0,
+                  left: 12,
+                  right: 12
                 })
-                .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
-                .backgroundColor($r('sys.color.ohos_id_color_list_card_bg'))
+            }.onAreaChange((oldArea, newArea) => {
+              this.headRectHeight = newArea.height as number;
+              this.headRectHeightReal = newArea.height as number;
+            }).zIndex(1)
 
-                CertInstallComponent({ mFaPresenter: $mFaPresenter, onItemClicked: () => {
-                  if (this.isStartBySheet) {
-                    this.selected?.(NavEntryKey.INSTALL_ENTRY);
-                  } else {
-                    router.pushUrl({
-                      url: 'pages/certInstallFromStorage'
-                    }, router.RouterMode.Standard)
+            Stack({ alignContent: Alignment.TopEnd }) {
+              Scroll(this.scroller) {
+                Column({ space: this.columnMargin }) {
+                  List() {
+                    ForEach(this.listItems, (item: CertListItem) => {
+                      ListItem() {
+                        SubEntryComponent({ targetPage: item.targetPage, title: item.title,
+                          onItemClicked: targetRouter => {
+                            if (this.isStartBySheet) {
+                              if (targetRouter === 'pages/trustedCa') {
+                                this.selected?.(NavEntryKey.CA_CERTIFICATE_ENTRY);
+                              } else {
+                                this.selected?.(NavEntryKey.CREDENTIAL_LIST_ENTRY);
+                              }
+                            } else {
+                              router.pushUrl({
+                                url: targetRouter
+                              });
+                            }
+                          } })
+                      }
+                      .stateStyles({
+                        normal: this.normalStyle,
+                        pressed: this.pressedStyle
+                      });
+                    }, (item: CertListItem) => JSON.stringify(item))
                   }
-                } })
+                  .padding($r('app.float.wh_value_4'))
+                  .divider({
+                    strokeWidth: $r('app.float.sys_list_divider_strokeWidth_value'),
+                    color: $r('sys.color.ohos_id_color_list_separator'),
+                    startMargin: $r('app.float.wh_value_8'),
+                    endMargin: $r('app.float.wh_value_8')
+                  })
+                  .borderRadius($r('app.float.user_list_divider_borderRadius_value'))
+                  .backgroundColor($r('sys.color.ohos_id_color_list_card_bg'))
 
-                DeleteAll({ mFaPresenter: $mFaPresenter })
+                  CertInstallComponent({ mFaPresenter: $mFaPresenter, onItemClicked: () => {
+                    if (this.isStartBySheet) {
+                      this.selected?.(NavEntryKey.INSTALL_ENTRY);
+                    } else {
+                      router.pushUrl({
+                        url: 'pages/certInstallFromStorage'
+                      }, router.RouterMode.Standard)
+                    }
+                  } })
+
+                  DeleteAll({ mFaPresenter: $mFaPresenter })
+                }
+                .width(WidthPercent.WH_100_100)
               }
+              .align(Alignment.Top)
+              .scrollable(ScrollDirection.Vertical)
+              .scrollBar(BarState.Off)
               .width(WidthPercent.WH_100_100)
+              .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100)
+              .edgeEffect(EdgeEffect.Spring)
+              .padding({
+                left: 16,
+                right: 16,
+                bottom: $r('app.float.wh_value_24')
+              })
+              .constraintSize({
+                minHeight: this.getScrollMinHeight()
+              }).onAreaChange((oldArea, newArea) => {
+                this.scrollerHeight = newArea.height as number;
+              })
+
+              Column() {
+                ScrollBar({
+                  scroller: this.scroller,
+                  direction: ScrollBarDirection.Vertical,
+                  state: BarState.Auto
+                }).margin({
+                  bottom: $r('app.float.wh_value_24')
+                })
+              }.height(this.scrollerHeight)
             }
-            .align(Alignment.Top)
-            .scrollable(ScrollDirection.Vertical)
-            .scrollBar(BarState.Auto)
-            .width(WidthPercent.WH_100_100)
-            .edgeEffect(EdgeEffect.Spring)
-            .layoutWeight(1)
             .padding({
-              left: 16,
-              right: 16
+              top: this.headRectHeight
             })
+            .width(WidthPercent.WH_100_100)
+            .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100)
           }
-          .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
           .width(WidthPercent.WH_100_100)
-          .height(WidthPercent.WH_100_100)
+          .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100)
         }
       }
       .margin(vp2px(1) === 2 ? $r('app.float.item_common_horizontal_margin') : $r('app.float.wh_value_0'))
       .width(WidthPercent.WH_100_100)
-      .height(WidthPercent.WH_100_100);
+      .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100);
     }
     .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
     .width(WidthPercent.WH_100_100)
-    .height(WidthPercent.WH_100_100);
+    .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100)
+  }
+
+  getScrollMinHeight() {
+    if (this.sheetParam === undefined || this.headRectHeightReal === 0 ||
+      this.sheetParam.sheetMinHeight < this.headRectHeightReal) {
+      return 0;
+    }
+    return this.sheetParam.sheetMinHeight - this.headRectHeightReal;
   }
 
   onPageShow() {
