@@ -18,6 +18,8 @@ import { WidthPercent } from '../../common/util/ConfigData';
 import { AlertDialog, CustomContentDialog } from '@ohos.arkui.advanced.Dialog';
 import { BusinessError } from '@ohos.base';
 import CmShowSysCredPresenter from '../../presenter/CmShowSysCredPresenter';
+import { SheetParam } from './SheetParam';
+import { NavEntryKey } from '../../common/NavEntryKey';
 
 const TAG: string = 'CredSystemDetailPage: ';
 
@@ -35,7 +37,10 @@ export struct CredSystemDetailPage {
 
   private stack?: NavPathStack;
 
-  @State private bottomRectHeight: Length = $r('sys.float.padding_level8');
+  @State private bottomRectHeight: number = 80;
+  @State private headRectHeight: number = 64;
+  @State private headRectHeightReal: number = 0;
+  @Prop private sheetParam: SheetParam;
 
   deleteWarnDialog: CustomDialogController = new CustomDialogController({
     builder: AlertDialog({
@@ -63,27 +68,40 @@ export struct CredSystemDetailPage {
   build() {
     NavDestination() {
       Stack({ alignContent: Alignment.Bottom }) {
-        Column() {
-          HeadComponent({ headName: $r('app.string.evidenceDetails'), isStartBySheet: true, onBackClicked: () => {
-            this.stack?.pop();
-          } })
-            .margin({
-              left: $r('app.float.wh_value_12'),
-              top: 8
-            })
+        Stack({ alignContent: Alignment.Top }) {
+          Column() {
+            HeadComponent({ headName: $r('app.string.evidenceDetails'), isStartBySheet: true, onBackClicked: () => {
+              this.stack?.pop();
+            } })
+              .margin({
+                left: $r('app.float.wh_value_12'),
+                top: 8
+              })
+          }.zIndex(1)
+          .onAreaChange((oldArea, newArea) => {
+            this.headRectHeight = newArea.height as number;
+            this.headRectHeightReal = newArea.height as number;
+          })
 
-          Scroll() {
-            this.buildContent()
-          }
-          .align(Alignment.Top)
-          .scrollable(ScrollDirection.Vertical)
-          .scrollBar(BarState.Auto)
-          .edgeEffect(EdgeEffect.Spring)
-          .width(WidthPercent.WH_100_100)
-          .layoutWeight(1)
+          Column() {
+            Scroll() {
+              this.buildContent()
+            }
+            .align(Alignment.Top)
+            .scrollable(ScrollDirection.Vertical)
+            .scrollBar(BarState.Auto)
+            .edgeEffect(EdgeEffect.Spring)
+            .width(WidthPercent.WH_100_100)
+            .height(WidthPercent.WH_AUTO)
+            .constraintSize({
+              minHeight: this.getScrollMinHeight()
+            })
+          }.padding({
+            top: this.headRectHeight
+          })
         }
         .width(WidthPercent.WH_100_100)
-        .height(WidthPercent.WH_100_100)
+        .height(WidthPercent.WH_AUTO)
         .padding({
           bottom: this.bottomRectHeight
         })
@@ -100,6 +118,9 @@ export struct CredSystemDetailPage {
               bottom: $r('app.float.distance_24')
             })
             .width(WidthPercent.WH_100_100)
+            .constraintSize({
+              minHeight: $r('app.float.wh_value_40')
+            })
         }.onAreaChange((oldArea: Area, newArea: Area) => {
           this.bottomRectHeight = newArea.height as number;
         })
@@ -110,7 +131,8 @@ export struct CredSystemDetailPage {
     }
     .hideTitleBar(true)
     .width(WidthPercent.WH_100_100)
-    .height(WidthPercent.WH_100_100)
+    .height(this.sheetParam?.lastSheetPage === NavEntryKey.CRED_SYSTEM_DETAIL_ENTRY ?
+      WidthPercent.WH_AUTO : this.sheetParam?.sheetMinHeight)
     .backgroundColor($r('sys.color.background_secondary'))
     .onReady((ctx: NavDestinationContext) => {
       this.stack = ctx.pathStack;
@@ -171,5 +193,13 @@ export struct CredSystemDetailPage {
     }
     .width(WidthPercent.WH_100_100)
     .alignItems(HorizontalAlign.Start)
+  }
+
+  getScrollMinHeight() {
+    if (this.sheetParam === undefined || this.headRectHeightReal === 0 ||
+      this.sheetParam.sheetMinHeight < (this.headRectHeightReal + this.bottomRectHeight)) {
+      return 0;
+    }
+    return this.sheetParam.sheetMinHeight - this.headRectHeightReal - this.bottomRectHeight;
   }
 }

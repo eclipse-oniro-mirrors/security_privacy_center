@@ -16,16 +16,20 @@
 import { NavEntryKey } from '../../common/NavEntryKey';
 import { WidthPercent } from '../../common/util/ConfigData';
 import { evidenceList } from '../cerEvidenceFa';
+import { SheetParam } from './SheetParam';
 
 @Component
 export struct CredListPage {
   private stack?: NavPathStack;
+
+  @Prop sheetParam: SheetParam;
 
   build() {
     NavDestination() {
       Column() {
         evidenceList({
           isStartBySheet: true,
+          sheetParam: this.sheetParam,
           selected: (path, param) => {
             if (path === NavEntryKey.POP) {
               this.stack?.pop();
@@ -38,7 +42,8 @@ export struct CredListPage {
     }
     .hideTitleBar(true)
     .width(WidthPercent.WH_100_100)
-    .height(WidthPercent.WH_100_100)
+    .height(this.sheetParam?.lastSheetPage === NavEntryKey.CREDENTIAL_LIST_ENTRY ?
+      WidthPercent.WH_AUTO : this.sheetParam?.sheetMinHeight)
     .backgroundColor($r('sys.color.background_secondary'))
     .onReady((ctx: NavDestinationContext) => {
       this.stack = ctx.pathStack;

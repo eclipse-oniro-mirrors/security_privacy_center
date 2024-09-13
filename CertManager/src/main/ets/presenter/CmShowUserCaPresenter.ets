@@ -86,7 +86,6 @@ export default class CmShowUserCaPresenter {
           this.getUserTrustedCertificate(uri, () => {
             console.info(TAG + 'setCerStatus then getUserTrustedCertificate,errCode is' + errCode);
           });
-          this.updateUserTrustedCertificateList();
           return resolve(true);
         } else {
           console.error(TAG + 'setUserCertificateStatus fail,errCode is ' + errCode);
