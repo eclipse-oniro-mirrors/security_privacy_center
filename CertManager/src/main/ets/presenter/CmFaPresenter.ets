@@ -90,10 +90,14 @@ export default class CmFaPresenter {
     })
   }
 
-  startInstallCert(): void {
+  startInstallCert(context: Context): void {
+    if (context === undefined || context === null) {
+      console.error(TAG + 'startInstallCert, context is undefined');
+      return;
+    }
     try {
       let documentSelectOptions = new picker.DocumentSelectOptions();
-      let documentPicker = new picker.DocumentViewPicker();
+      let documentPicker = new picker.DocumentViewPicker(context);
       console.info(TAG + 'start documentPicker.select');
       documentPicker.select(documentSelectOptions).then((documentSelectResult) => {
         if (documentSelectResult.length >= 1) {
@@ -110,10 +114,14 @@ export default class CmFaPresenter {
     }
   }
 
-  startInstallEvidence(): void {
+  startInstallEvidence(context: Context): void {
+    if (context === undefined || context === null) {
+      console.error(TAG + 'startInstallEvidence, context is undefined');
+      return;
+    }
     try {
       let documentSelectOptions = new picker.DocumentSelectOptions();
-      let documentPicker = new picker.DocumentViewPicker();
+      let documentPicker = new picker.DocumentViewPicker(context);
       console.info(TAG + 'start documentPicker.select');
       documentPicker.select(documentSelectOptions).then((documentSelectResult) => {
         if (documentSelectResult.length >= 1) {

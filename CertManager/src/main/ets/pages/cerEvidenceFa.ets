@@ -26,6 +26,7 @@ import CmShowSysCredPresenter from '../presenter/CmShowSysCredPresenter';
 import { NavEntryKey } from '../common/NavEntryKey';
 import { CredSystemDetailParam } from './picker/CredSystemDetailPage';
 import { CredUserDetailParam } from './picker/CredUserDetailPage';
+import { SheetParam } from './picker/SheetParam';
 
 const COPIES_NUM: number = 12;
 
@@ -185,7 +186,7 @@ export struct componentPublic {
         .alignSelf(ItemAlign.Start)
 
       if (this.authorInfo.appInfoList.length > ConfigValue.APP_AUTH_MAX_LENGTH) {
-        Stack({ alignContent: Alignment.End }) {
+        Stack({ alignContent: Alignment.TopEnd }) {
           Scroll(this.authorScroller) {
             List() {
               ForEach(this.authorInfo.appInfoList, (item: AppAuthorVo, index) => {
@@ -643,6 +644,11 @@ export struct evidenceList {
   isStartBySheetFirst: boolean = false;
   isStartBySheet: boolean = false;
   selected?: (path: string, param?: Object) => void;
+  @Prop sheetParam: SheetParam;
+  @State headRectHeight: number = 64;
+  @State headRectHeightReal: number = 0;
+  @State systemScrollerHeight: number = 0;
+  @State publicScrollerHeight: number = 0;
 
   @Builder
   TabBuilder(index: number) {
@@ -699,21 +705,27 @@ export struct evidenceList {
         GridCol({ span: { xs: COPIES_NUM, sm: COPIES_NUM, md: COPIES_NUM, lg: COPIES_NUM },
           offset: { xs: 0, sm: 0, md: 0, lg: 0 } }) {
           Row() {
-            Column() {
-              HeadComponent({ headName: $r('app.string.userEvidence'), isStartBySheet: this.isStartBySheet,
-                icBackIsVisibility: !this.isStartBySheetFirst,
-                onBackClicked: () => {
-                  this.selected?.(NavEntryKey.POP);
-                }})
-                .margin({
-                  left: $r('app.float.wh_value_16'),
-                  top: this.isStartBySheet ? 8 : 0
-                })
+            Stack({ alignContent: Alignment.Top }) {
+              Column() {
+                HeadComponent({ headName: $r('app.string.userEvidence'), isStartBySheet: this.isStartBySheet,
+                  icBackIsVisibility: !this.isStartBySheetFirst,
+                  onBackClicked: () => {
+                    this.selected?.(NavEntryKey.POP);
+                  }})
+                  .margin({
+                    left: $r('app.float.wh_value_16'),
+                    top: this.isStartBySheet ? 8 : 0
+                  })
+              }.zIndex(1)
+              .onAreaChange((oldArea, newArea) => {
+                this.headRectHeight = newArea.height as number;
+                this.headRectHeightReal = newArea.height as number;
+              })
 
               Column() {
                 Tabs({barPosition: BarPosition.Start, index: 0, controller: this.controller}) {
                   TabContent() {
-                    Stack({alignContent: Alignment.End}) {
+                    Stack({alignContent: Alignment.TopEnd}) {
                       Scroll(this.systemScroller) {
                         List() {
                           ForEach(this.mShowSysCredPresenter.credList, (item: CredentialAbstractVo) => {
@@ -751,21 +763,36 @@ export struct evidenceList {
                       .scrollable(ScrollDirection.Vertical)
                       .scrollBar(BarState.Off)
                       .width(WidthPercent.WH_100_100)
-                      .height(WidthPercent.WH_100_100)
+                      .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100)
                       .align(Alignment.Top)
                       .edgeEffect(EdgeEffect.Spring)
                       .padding({
-                        left: $r('app.float.wh_value_12'),
-                        right: $r('app.float.wh_value_12'),
-                        bottom: $r('app.float.wh_value_24')
+                        left: $r('app.float.wh_value_16'),
+                        right: $r('app.float.wh_value_16'),
+                        bottom: this.isStartBySheet ? $r('app.float.wh_value_80') : $r('app.float.wh_value_24')
                       })
+                      .constraintSize({
+                        minHeight: this.getScrollMinHeight()
+                      }).onAreaChange((oldArea, newArea) => {
+                        this.systemScrollerHeight = newArea.height as number;
+                      })
+
+                      Column() {
+                        ScrollBar({
+                          scroller: this.systemScroller,
+                          direction: ScrollBarDirection.Vertical,
+                          state: BarState.Auto
+                        }).margin({
+                          bottom: this.isStartBySheet ? $r('app.float.wh_value_80') : $r('app.float.wh_value_24')
+                        })
+                      }.height(this.systemScrollerHeight)
                     }
                     .width(WidthPercent.WH_100_100)
                   }
                   .tabBar(this.TabBuilder(0))
 
                   TabContent() {
-                    Stack({ alignContent: Alignment.End }) {
+                    Stack({ alignContent: Alignment.TopEnd }) {
                       Scroll(this.publicScroller) {
                         List() {
                           ForEach(this.mShowAppCaPresenter.credList, (item: CredentialAbstractVo) => {
@@ -800,19 +827,33 @@ export struct evidenceList {
                       }
                       .position({ y: $r('app.float.wh_value_0') })
                       .width(WidthPercent.WH_100_100)
-                      .height(WidthPercent.WH_100_100)
+                      .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100)
                       .align(Alignment.Top)
                       .edgeEffect(EdgeEffect.Spring)
                       .scrollable(ScrollDirection.Vertical)
                       .scrollBar(BarState.Off)
                       .padding({
-                        left: $r('app.float.wh_value_12'),
-                        right: $r('app.float.wh_value_12'),
-                        bottom: $r('app.float.wh_value_24')
+                        left: $r('app.float.wh_value_16'),
+                        right: $r('app.float.wh_value_16'),
+                        bottom: this.isStartBySheet ? $r('app.float.wh_value_80') : $r('app.float.wh_value_24')
                       })
+                      .constraintSize({
+                        minHeight: this.getScrollMinHeight()
+                      }).onAreaChange((oldArea, newArea) => {
+                        this.publicScrollerHeight = newArea.height as number;
+                      })
+
+                      Column() {
+                        ScrollBar({
+                          scroller: this.publicScroller,
+                          direction: ScrollBarDirection.Vertical,
+                          state: BarState.Auto
+                        }).margin({
+                          bottom: this.isStartBySheet ? $r('app.float.wh_value_80') : $r('app.float.wh_value_24')
+                        })
+                      }.height(this.publicScrollerHeight)
                     }
                     .width(WidthPercent.WH_100_100)
-                    .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
                   }
                   .tabBar(this.TabBuilder(1))
                 }
@@ -822,29 +863,38 @@ export struct evidenceList {
                 .barWidth($r('app.float.tabs_barWidth_value'))
                 .barHeight($r('app.float.tabs_barHeight_value'))
                 .animationDuration(this.animationDurationNum)
+                .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100)
                 .width(WidthPercent.WH_100_100)
-                .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
                 .onChange((index: number) => {
                   this.currentIndex = index;
-                });
+                })
               }
-              .height(WidthPercent.WH_94_100)
+              .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100)
               .width(WidthPercent.WH_100_100)
+              .padding({
+                top: this.headRectHeight
+              })
             }
-            .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
             .width(WidthPercent.WH_100_100)
-            .height(WidthPercent.WH_100_100)
+            .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100)
           }
           .width(WidthPercent.WH_100_100)
-          .height(WidthPercent.WH_100_100);
+          .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100)
         }
-        .margin(vp2px(1) === 2 ? $r('app.float.item_common_horizontal_margin') : $r('app.float.wh_value_0'))
       }
       .width(WidthPercent.WH_100_100)
-      .height(WidthPercent.WH_100_100);
+      .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100)
     }
     .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
     .width(WidthPercent.WH_100_100)
-    .height(WidthPercent.WH_100_100);
+    .height(this.isStartBySheet ? WidthPercent.WH_AUTO : WidthPercent.WH_100_100)
+  }
+
+  getScrollMinHeight() {
+    if (this.sheetParam === undefined || this.headRectHeightReal === 0 ||
+      this.sheetParam.sheetMinHeight < this.headRectHeightReal) {
+      return 0;
+    }
+    return this.sheetParam.sheetMinHeight - this.headRectHeightReal - 56;
   }
 }
