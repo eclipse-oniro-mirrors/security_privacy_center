@@ -442,6 +442,9 @@ struct ComponentUser {
 
   rootCertificateDialog: CustomDialogController = new CustomDialogController({
     alignment: DialogAlignment.Center,
+    cancel: () => {
+      this.setStatus.updateUserTrustedCertificateList();
+    },
     builder: CustomContentDialog({
       contentBuilder: () => {
         this.rootCertificateContent();
@@ -472,6 +475,9 @@ struct ComponentUser {
 
   userDetailsDialog: CustomDialogController = new CustomDialogController({
     alignment: DialogAlignment.Center,
+    cancel: () => {
+      this.setStatus.updateUserTrustedCertificateList();
+    },
     builder: CustomContentDialog({
       contentBuilder: () => {
         this.userDetailContent(this.setStatus.certList[this.indexNum].status);
@@ -490,7 +496,6 @@ struct ComponentUser {
           value: $r('app.string.CustomDialogExampleUser_Flex_secButton_text'),
           buttonStyle: ButtonStyleMode.TEXTUAL,
           action: () => {
-            this.setStatus.updateUserTrustedCertificateList();
             this.onShowDeleteWarnDialog();
           },
           role: ButtonRole.ERROR
@@ -500,6 +505,9 @@ struct ComponentUser {
   })
 
   deleteCertWarnDialog: CustomDialogController = new CustomDialogController({
+    cancel: () => {
+      this.setStatus.updateUserTrustedCertificateList();
+    },
     builder: CustomContentDialog({
       contentBuilder: () => {
         this.deleteWarnContent();
@@ -510,8 +518,8 @@ struct ComponentUser {
           value: $r('app.string.deleteAllCredCancel'),
           buttonStyle: ButtonStyleMode.TEXTUAL,
           action: () => {
-            this.setStatus.updateUserTrustedCertificateList();
             this.deleteCertWarnDialog?.close();
+            this.setStatus.updateUserTrustedCertificateList();
           }
         },
         {
