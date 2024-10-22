@@ -6,6 +6,7 @@
     "pages/cerEvidenceFa",
     "pages/requestAuth",
     "pages/certInstallFromStorage",
+    "pages/CertificateInstallPage",
     "pages/picker/CertManagerSheetFa"
   ]
 }
