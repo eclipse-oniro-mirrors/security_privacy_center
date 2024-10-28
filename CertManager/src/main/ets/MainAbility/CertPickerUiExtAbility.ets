@@ -17,6 +17,10 @@ import Want from '@ohos.app.ability.Want';
 import UIExtensionContentSession from '@ohos.app.ability.UIExtensionContentSession';
 import { GlobalContext, PwdStore } from '../common/GlobalContext';
 import UIExtensionAbility from '@ohos.app.ability.UIExtensionAbility';
+import { BusinessError } from '@ohos.base';
+
+const PAGE_CA_INSTALL = 5;
+const TAG = 'CertPickerUiExtAbility';
 
 export default class CertPickerUiExtAbility extends UIExtensionAbility {
   onCreate(): void {
@@ -39,9 +43,22 @@ export default class CertPickerUiExtAbility extends UIExtensionAbility {
       'want': want
     }
     let storage: LocalStorage = new LocalStorage(param);
-    session.loadContent('pages/picker/CertManagerSheetFa', storage);
-    let pwdStore = new PwdStore();
-    GlobalContext.getContext().setPwdStore(pwdStore);
+    try {
+      if (this.isStartToInstall(want.parameters)) {
+        session.loadContent('pages/CertificateInstallPage', storage);
+      } else {
+        session.loadContent('pages/picker/CertManagerSheetFa', storage);
+        let pwdStore = new PwdStore();
+        GlobalContext.getContext().setPwdStore(pwdStore);
+        GlobalContext.getContext().setAbilityWant(want);
+      }
+    } catch (err) {
+      let error = err as BusinessError;
+      console.error(TAG, `onSessionCreat load content failed: ${error?.code}, msg:${error?.message}`);
+      session.terminateSelf();
+      return;
+    }
+
     try {
       session.setWindowBackgroundColor('#00000000');
     } catch (err) {
@@ -49,6 +66,12 @@ export default class CertPickerUiExtAbility extends UIExtensionAbility {
     }
   }
 
+  private isStartToInstall(parameters: Record<string, Object> | undefined): boolean {
+    if(parameters === undefined) {
+      return false;
+    }
+    return parameters['pageType'] === PAGE_CA_INSTALL;
+  }
   onSessionDestroy(): void {
     // Main window is destroyed, release UI related resources
     GlobalContext.getContext().clearSession();

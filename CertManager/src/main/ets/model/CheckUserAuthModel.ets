@@ -43,6 +43,7 @@ export class CheckUserAuthModel {
     } else {
       /* The user does not set identity authentication. */
       callback(true);
+      return;
     }
 
     const authParam: userAuth.AuthParam = {

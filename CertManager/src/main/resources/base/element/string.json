@@ -411,6 +411,25 @@
     {
       "name": "system_credentials",
       "value": "系统凭据"
+    },
+    {
+      "name": "cert_install_success",
+      "value": "安装成功"
+    },
+    {
+      "name": "cert_install_failed",
+      "value": "安装失败"
+    },
+    { "name": "cert_install_tip",
+      "value": "“%s”请求安装CA 证书"
+    },
+    {
+      "name": "cert_install_success_tip",
+      "value": "CA 证书已安装。"
+    },
+    {
+      "name":"cert_install_warning",
+      "value":"为网站启用此证书将允许第三方查看发送给网站的任何私人数据。"
     }
   ]
 }

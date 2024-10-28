@@ -411,6 +411,26 @@
     {
       "name": "system_credentials",
       "value": "System credentials"
+    },
+    {
+      "name": "cert_install_success",
+      "value": "Installation succeeded"
+    },
+    {
+      "name": "cert_install_failed",
+      "value": "Installation failed"
+    },
+    {
+      "name": "cert_install_tip",
+      "value": "\"%s\" is requesting to install the CA certificate"
+    },
+    {
+      "name": "cert_install_success_tip",
+      "value": "CA certificate installed."
+    },
+    {
+      "name":"cert_install_warning",
+      "value":"Enabling this certificate for a website will allow third parties to view any private data sent to the website."
     }
   ]
 }

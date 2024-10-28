@@ -33,7 +33,8 @@ export enum CMModelErrorCode {
   CM_MODEL_ERROR_INCORRECT_FORMAT = -6,
   CM_MODEL_ERROR_MAX_QUANTITY_REACHED = -7,
   CM_MODEL_ERROR_ALIAS_LENGTH_REACHED_LIMIT = -8,
-  CM_MODEL_ERROR_PASSWORD_ERR = -9
+  CM_MODEL_ERROR_PASSWORD_ERR = -9,
+  CM_MODEL_ERROR_ADVANCED_SECURITY = -10
 }
 
 export enum CMModelOptType {
@@ -258,8 +259,8 @@ export class CertMangerModel {
     console.info(TAG + 'installCertOrCred start');
     switch (optType) {
       case CMModelOptType.CM_MODEL_OPT_USER_CA:
-        this.installUserCertificate(data, alias, (errCode: CMModelErrorCode) => {
-          callback(errCode);
+        this.installUserCertificate(data, alias, (errCode: CMModelErrorCode, uri: string) => {
+          callback(errCode, uri);
         });
         break;
       case CMModelOptType.CM_MODEL_OPT_APP_CRED:
@@ -671,12 +672,12 @@ export class CertMangerModel {
       return;
     }
     try {
-      await CertManager.installUserTrustedCertificate({
+      let result = await CertManager.installUserTrustedCertificate({
         inData: data,
         alias: alias
       });
       console.info(TAG + 'installUserCertificate end');
-      callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS);
+      callback(CMModelErrorCode.CM_MODEL_ERROR_SUCCESS, result.uri);
     } catch (err) {
       let e: BusinessError = err as BusinessError;
       if (e.code === CertManager.CMErrorCode.CM_ERROR_INCORRECT_FORMAT) {
