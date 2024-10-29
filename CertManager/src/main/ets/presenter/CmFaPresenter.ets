@@ -22,6 +22,7 @@ import { BusinessError } from '@ohos.base';
 import { RouterFileVo, RouterAppUidVo } from '../model/CertManagerVo/RouterInfoVo';
 import checkUserAuthModel from '../model/CheckUserAuthModel';
 import CmInstallPresenter from './CmInstallPresenter';
+import FilterParams from '../common/constants/FileFilterParams';
 
 const TAG = 'CMFaPresenter: ';
 const gridCountNum: number = 4;
@@ -97,6 +98,8 @@ export default class CmFaPresenter {
     }
     try {
       let documentSelectOptions = new picker.DocumentSelectOptions();
+      documentSelectOptions.maxSelectNumber = FilterParams.MAX_SELECT_FILE_NUM;
+      documentSelectOptions.fileSuffixFilters = FilterParams.CERT_FILE_SUFFIX;
       let documentPicker = new picker.DocumentViewPicker(context);
       console.info(TAG + 'start documentPicker.select');
       documentPicker.select(documentSelectOptions).then((documentSelectResult) => {
@@ -121,6 +124,8 @@ export default class CmFaPresenter {
     }
     try {
       let documentSelectOptions = new picker.DocumentSelectOptions();
+      documentSelectOptions.maxSelectNumber = FilterParams.MAX_SELECT_FILE_NUM;
+      documentSelectOptions.fileSuffixFilters = FilterParams.CREDENTIAL_FILE_SUFFIX;
       let documentPicker = new picker.DocumentViewPicker(context);
       console.info(TAG + 'start documentPicker.select');
       documentPicker.select(documentSelectOptions).then((documentSelectResult) => {

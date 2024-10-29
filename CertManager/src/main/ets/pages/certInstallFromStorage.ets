@@ -29,6 +29,7 @@ import { BusinessError } from '@ohos.base';
 import { RouterFileVo } from '../model/CertManagerVo/RouterInfoVo';
 import { CredPwdInputParam } from './picker/CredPwdInputPage';
 import { SheetParam } from './picker/SheetParam';
+import FilterParams from '../common/constants/FileFilterParams';
 
 const COPIES_NUM: number = 12;
 
@@ -140,6 +141,8 @@ export struct CertInstallFromStorage {
   startInstallCertBySheet(): void {
     try {
       let documentSelectOptions = new picker.DocumentSelectOptions();
+      documentSelectOptions.maxSelectNumber = FilterParams.MAX_SELECT_FILE_NUM;
+      documentSelectOptions.fileSuffixFilters = FilterParams.CERT_FILE_SUFFIX;
       let documentPicker = new picker.DocumentViewPicker(this.context);
       console.info(TAG + 'start documentPicker.select');
       documentPicker.select(documentSelectOptions).then((documentSelectResult) => {
@@ -173,6 +176,8 @@ export struct CertInstallFromStorage {
   startInstallEvidenceBySheet(): void {
     try {
       let documentSelectOptions = new picker.DocumentSelectOptions();
+      documentSelectOptions.maxSelectNumber = FilterParams.MAX_SELECT_FILE_NUM;
+      documentSelectOptions.fileSuffixFilters = FilterParams.CREDENTIAL_FILE_SUFFIX;
       let documentPicker = new picker.DocumentViewPicker(this.context);
       console.info(TAG + 'start documentPicker.select');
       documentPicker.select(documentSelectOptions).then((documentSelectResult) => {
