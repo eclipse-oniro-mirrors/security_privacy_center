@@ -20,7 +20,7 @@ import { CMModelErrorCode } from '../../model/CertMangerModel';
 import { RouterFileVo } from '../../model/CertManagerVo/RouterInfoVo';
 import { GlobalContext } from '../../common/GlobalContext';
 import CmInstallPresenter from '../../presenter/CmInstallPresenter';
-import { SheetParam } from './SheetParam';
+import { SheetParam } from '../../common/util/SheetParam';
 import { NavEntryKey } from '../../common/NavEntryKey';
 
 const TAG: string = 'CredPwdInputPage: ';

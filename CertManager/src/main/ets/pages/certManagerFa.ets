@@ -22,7 +22,7 @@ import router from '@ohos.router';
 import promptAction from '@ohos.promptAction';
 import { CustomContentDialog } from '@ohos.arkui.advanced.Dialog';
 import { NavEntryKey } from '../common/NavEntryKey';
-import { SheetParam } from './picker/SheetParam';
+import { SheetParam } from '../common/util/SheetParam';
 
 const DISPLAY_DURATION: number = 2000;
 const COPIES_NUM: number = 12;
