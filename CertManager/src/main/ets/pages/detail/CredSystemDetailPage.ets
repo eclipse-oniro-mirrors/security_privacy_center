@@ -15,26 +15,25 @@
 
 import HeadComponent from '../../common/component/headComponent';
 import { WidthPercent } from '../../common/util/ConfigData';
-import { AlertDialog } from '@ohos.arkui.advanced.Dialog';
+import { AlertDialog, CustomContentDialog } from '@ohos.arkui.advanced.Dialog';
 import { BusinessError } from '@ohos.base';
-import CmShowAppCredPresenter from '../../presenter/CmShowAppCredPresenter';
+import CmShowSysCredPresenter from '../../presenter/CmShowSysCredPresenter';
+import { SheetParam } from '../../common/util/SheetParam';
 import { NavEntryKey } from '../../common/NavEntryKey';
-import { AuthorizedAppManagementParam } from './AuthorizedAppManagementPage';
-import { SheetParam } from './SheetParam';
 
-const TAG: string = 'CredUserDetailPage: ';
+const TAG: string = 'CredSystemDetailPage: ';
 
-export class CredUserDetailParam {
-  public presenter: CmShowAppCredPresenter;
+export class CredSystemDetailParam {
+  public presenter: CmShowSysCredPresenter;
 
-  constructor(presenter: CmShowAppCredPresenter) {
+  constructor(presenter: CmShowSysCredPresenter) {
     this.presenter = presenter;
   }
 }
 
 @Component
-export struct CredUserDetailPage {
-  private presenter: CmShowAppCredPresenter = CmShowAppCredPresenter.getInstance();
+export struct CredSystemDetailPage {
+  private presenter: CmShowSysCredPresenter = CmShowSysCredPresenter.getInstance();
 
   private stack?: NavPathStack;
 
@@ -42,12 +41,6 @@ export struct CredUserDetailPage {
   @State private headRectHeight: number = 64;
   @State private headRectHeightReal: number = 0;
   @Prop private sheetParam: SheetParam;
-
-  @State private itemBackgroundColor: ResourceColor = '';
-
-  @Styles pressedStyles(): void { .backgroundColor($r('sys.color.ohos_id_color_click_effect')) }
-
-  @Styles normalStyles(): void { .backgroundColor(this.itemBackgroundColor) }
 
   deleteWarnDialog: CustomDialogController = new CustomDialogController({
     builder: AlertDialog({
@@ -63,7 +56,8 @@ export struct CredUserDetailPage {
         value: $r('app.string.deleteAllCredDelete'),
         buttonStyle: ButtonStyleMode.TEXTUAL,
         action: () => {
-          this.presenter.deleteAppCred(this.presenter.credInfo.keyUri);
+          this.presenter.deleteSystemCred(this.presenter.credInfo.keyUri);
+          this.presenter.updateSystemCredList();
           this.stack?.pop();
         },
         role: ButtonRole.ERROR
@@ -83,10 +77,11 @@ export struct CredUserDetailPage {
                 left: $r('app.float.wh_value_12'),
                 top: 8
               })
-          }.onAreaChange((oldArea, newArea) => {
+          }.zIndex(1)
+          .onAreaChange((oldArea, newArea) => {
             this.headRectHeight = newArea.height as number;
             this.headRectHeightReal = newArea.height as number;
-          }).zIndex(1)
+          })
 
           Column() {
             Scroll() {
@@ -136,13 +131,13 @@ export struct CredUserDetailPage {
     }
     .hideTitleBar(true)
     .width(WidthPercent.WH_100_100)
-    .height(this.sheetParam?.lastSheetPage === NavEntryKey.CRED_USER_DETAIL_ENTRY ?
+    .height(this.sheetParam?.lastSheetPage === NavEntryKey.CRED_SYSTEM_DETAIL_ENTRY ?
       WidthPercent.WH_AUTO : this.sheetParam?.sheetMinHeight)
     .backgroundColor($r('sys.color.background_secondary'))
     .onReady((ctx: NavDestinationContext) => {
       this.stack = ctx.pathStack;
       try {
-        this.presenter = (ctx.pathInfo.param as CredUserDetailParam).presenter;
+        this.presenter = (ctx.pathInfo.param as CredSystemDetailParam).presenter;
       } catch (err) {
         let error = err as BusinessError;
         console.error(TAG + 'Get presenter failed: ' + error?.code + ', message: ' + error?.message);
@@ -195,45 +190,6 @@ export struct CredUserDetailPage {
         })
         .opacity($r('app.float.opacity_100_60'))
         .alignSelf(ItemAlign.Start)
-
-      Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-        Column() {
-          Text($r('app.string.managerAuthApp'))
-            .fontSize($r('sys.float.ohos_id_text_size_body1'))
-            .fontColor($r('sys.color.ohos_id_color_text_primary'))
-            .fontWeight(FontWeight.Medium)
-        }
-
-        Row() {
-          Image($r('app.media.ic_settings_arrow'))
-            .width($r('app.float.managerAuthApp_image_wh'))
-            .height($r('app.float.managerAuthApp_image_hg'))
-            .fillColor($r('sys.color.ohos_id_color_primary'))
-            .opacity($r('app.float.managerAuthApp_image_opacity'))
-        }
-      }
-      .onClick(() => {
-        this.stack?.pushPath(new NavPathInfo(NavEntryKey.AUTHORIZED_APP_ENTRY,
-          new AuthorizedAppManagementParam(this.presenter)));
-      })
-      .margin({
-        top: $r('app.float.wh_value_12'),
-        left: $r('app.float.wh_value_16'),
-        right: $r('app.float.wh_value_16')
-      })
-      .borderRadius($r('sys.float.corner_radius_level8'))
-      .backgroundColor(this.itemBackgroundColor)
-      .onHover((isHover?: boolean) => {
-        this.itemBackgroundColor = isHover ? $r('sys.color.ohos_id_color_hover') : '';
-      })
-      .stateStyles({
-        pressed: this.pressedStyles,
-        normal: this.normalStyles
-      })
-      .padding($r('app.float.wh_value_8'))
-      .constraintSize({
-        minHeight: $r('app.float.wh_value_48')
-      })
     }
     .width(WidthPercent.WH_100_100)
     .alignItems(HorizontalAlign.Start)

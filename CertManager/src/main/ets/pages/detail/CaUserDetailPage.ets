@@ -21,10 +21,10 @@ import {
   DialogFingerPrintComponent,
   DialogIssuerComponent,
   DialogSubjectComponent
-} from '../trustedCa';
+} from './CaSystemDetailPage';
 import { AlertDialog } from '@ohos.arkui.advanced.Dialog';
 import { BusinessError } from '@ohos.base';
-import { SheetParam } from './SheetParam';
+import { SheetParam } from '../../common/util/SheetParam';
 import { NavEntryKey } from '../../common/NavEntryKey';
 
 const TAG: string = 'CaUserDetailPage: ';

@@ -27,8 +27,8 @@ import FileIoModel from '../model/FileIoModel';
 import CmInstallPresenter from '../presenter/CmInstallPresenter';
 import { BusinessError } from '@ohos.base';
 import { RouterFileVo } from '../model/CertManagerVo/RouterInfoVo';
-import { CredPwdInputParam } from './picker/CredPwdInputPage';
-import { SheetParam } from './picker/SheetParam';
+import { CredPwdInputParam } from './detail/CredPwdInputPage';
+import { SheetParam } from '../common/util/SheetParam';
 import FilterParams from '../common/constants/FileFilterParams';
 
 const COPIES_NUM: number = 12;

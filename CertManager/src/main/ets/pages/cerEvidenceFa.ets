@@ -24,51 +24,12 @@ import router from '@ohos.router';
 import { CustomContentDialog } from '@ohos.arkui.advanced.Dialog';
 import CmShowSysCredPresenter from '../presenter/CmShowSysCredPresenter';
 import { NavEntryKey } from '../common/NavEntryKey';
-import { CredSystemDetailParam } from './picker/CredSystemDetailPage';
-import { CredUserDetailParam } from './picker/CredUserDetailPage';
-import { SheetParam } from './picker/SheetParam';
+import { CredSystemDetailParam } from './detail/CredSystemDetailPage';
+import { CredUserDetailParam } from './detail/CredUserDetailPage';
+import { SheetParam } from '../common/util/SheetParam';
+import { DialogComponent } from './detail/AuthorizedAppManagementPage';
 
 const COPIES_NUM: number = 12;
-
-@Component
-export struct DialogComponent {
-  @Link uidItem: CmShowAppCredPresenter;
-  private appName: string = '';
-  private appImage: string = '';
-  private indexNum: number = 0;
-
-  onChanged?: () => void;
-
-  build() {
-    Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
-      Row() {
-        Image(this.appImage)
-          .width($r('app.float.credentials_app_image_wh'))
-          .height($r('app.float.credentials_app_image_hg'))
-
-        Text(this.appName)
-          .fontSize($r('sys.float.ohos_id_text_size_body2'))
-          .fontColor($r('sys.color.ohos_id_color_text_primary'))
-          .fontWeight(FontWeight.Medium)
-          .margin({ left: $r('app.float.credentials_app_name_margin') })
-      }
-      .alignItems(VerticalAlign.Center)
-
-      Toggle({ type: ToggleType.Switch, isOn: true })
-        .width($r('app.float.credentials_app_Toggle_wh'))
-        .height($r('app.float.credentials_app_Toggle_hg'))
-        .selectedColor($r('app.color.credentials_app_Toggle_selectColor'))
-        .onChange((isOn: boolean) => {
-          this.uidItem.appInfoList[this.indexNum].status = isOn;
-          if (!isOn) {
-            this.onChanged?.();
-          }
-        })
-        .margin({ right: $r('app.float.wh_value_16') })
-
-    }.height($r('app.float.wh_value_72'))
-  }
-}
 
 @Component
 export struct componentPublic {

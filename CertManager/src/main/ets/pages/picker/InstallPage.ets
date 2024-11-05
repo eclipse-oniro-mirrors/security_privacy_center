@@ -16,7 +16,7 @@
 import { NavEntryKey } from '../../common/NavEntryKey';
 import { WidthPercent } from '../../common/util/ConfigData';
 import { CertInstallFromStorage } from '../certInstallFromStorage';
-import { SheetParam } from './SheetParam';
+import { SheetParam } from '../../common/util/SheetParam';
 
 @Component
 export struct InstallPage {

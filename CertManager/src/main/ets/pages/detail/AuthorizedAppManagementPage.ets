@@ -17,9 +17,8 @@ import HeadComponent from '../../common/component/headComponent';
 import { WidthPercent } from '../../common/util/ConfigData';
 import { AppAuthorVo } from '../../model/CertManagerVo/AppAuthorVo';
 import CmShowAppCredPresenter from '../../presenter/CmShowAppCredPresenter';
-import { DialogComponent } from '../cerEvidenceFa';
 import { BusinessError } from '@ohos.base';
-import { SheetParam } from './SheetParam';
+import { SheetParam } from '../../common/util/SheetParam';
 import { NavEntryKey } from '../../common/NavEntryKey';
 
 const TAG: string = 'AuthorizedAppManagementPage: ';
@@ -29,6 +28,46 @@ export class AuthorizedAppManagementParam {
 
   constructor(presenter: CmShowAppCredPresenter) {
     this.presenter = presenter;
+  }
+}
+
+@Component
+export struct DialogComponent {
+  @Link uidItem: CmShowAppCredPresenter;
+  private appName: string = '';
+  private appImage: string = '';
+  private indexNum: number = 0;
+
+  onChanged?: () => void;
+
+  build() {
+    Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+      Row() {
+        Image(this.appImage)
+          .width($r('app.float.credentials_app_image_wh'))
+          .height($r('app.float.credentials_app_image_hg'))
+
+        Text(this.appName)
+          .fontSize($r('sys.float.ohos_id_text_size_body2'))
+          .fontColor($r('sys.color.ohos_id_color_text_primary'))
+          .fontWeight(FontWeight.Medium)
+          .margin({ left: $r('app.float.credentials_app_name_margin') })
+      }
+      .alignItems(VerticalAlign.Center)
+
+      Toggle({ type: ToggleType.Switch, isOn: true })
+        .width($r('app.float.credentials_app_Toggle_wh'))
+        .height($r('app.float.credentials_app_Toggle_hg'))
+        .selectedColor($r('app.color.credentials_app_Toggle_selectColor'))
+        .onChange((isOn: boolean) => {
+          this.uidItem.appInfoList[this.indexNum].status = isOn;
+          if (!isOn) {
+            this.onChanged?.();
+          }
+        })
+        .margin({ right: $r('app.float.wh_value_16') })
+
+    }.height($r('app.float.wh_value_72'))
   }
 }
 
