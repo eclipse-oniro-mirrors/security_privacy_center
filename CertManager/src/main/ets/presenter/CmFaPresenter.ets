@@ -65,7 +65,7 @@ export default class CmFaPresenter {
     FileIoModel.getMediaFileSuffix(fileUri, (suffix: string | undefined) => {
       if (suffix !== undefined) {
         console.debug(TAG, 'suffix = ', suffix);
-        if ((suffix === 'cer') || (suffix === 'pem')) {
+        if ((suffix === 'cer') || (suffix === 'pem') || (suffix === 'crt') || (suffix === 'der')) {
           CmInstallPresenter.getInstance().installCert(fileUri, '', suffix, true);
         } else {
           this.unrecognizedFileTips();
