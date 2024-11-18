@@ -49,7 +49,7 @@ export default class CmInstallPresenter {
 
   updateCertFileType(suffix: string): void {
     console.debug(TAG + 'updateCertFileType suffix: ' + suffix);
-    if ((suffix === 'cer') || (suffix === 'pem')) {
+    if ((suffix === 'cer') || (suffix === 'pem') || (suffix === 'crt') || (suffix === 'der')) {
       this.optType = CMModelOptType.CM_MODEL_OPT_USER_CA;
     } else if (((suffix === 'p12') || (suffix === 'jks') || (suffix === 'pfx')) &&
       AppStorage.get('installUserCred') === true) {

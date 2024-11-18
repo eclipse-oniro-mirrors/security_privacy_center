@@ -15,6 +15,6 @@
 
 export default class FilterParams {
   public static readonly MAX_SELECT_FILE_NUM = 1;
-  public static readonly CERT_FILE_SUFFIX = ['.pem,.cer'];
+  public static readonly CERT_FILE_SUFFIX = ['.pem,.cer,.crt,.der'];
   public static readonly CREDENTIAL_FILE_SUFFIX = ['.pfx,.p12'];
 }
