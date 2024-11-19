@@ -51,10 +51,10 @@ export default class CmInstallPresenter {
     console.debug(TAG + 'updateCertFileType suffix: ' + suffix);
     if ((suffix === 'cer') || (suffix === 'pem') || (suffix === 'crt') || (suffix === 'der')) {
       this.optType = CMModelOptType.CM_MODEL_OPT_USER_CA;
-    } else if (((suffix === 'p12') || (suffix === 'jks') || (suffix === 'pfx')) &&
+    } else if (((suffix === 'p12') || (suffix === 'pfx')) &&
       AppStorage.get('installUserCred') === true) {
       this.optType = CMModelOptType.CM_MODEL_OPT_APP_CRED;
-    } else if (((suffix === 'p12') || (suffix === 'jks') || (suffix === 'pfx')) &&
+    } else if (((suffix === 'p12') || (suffix === 'pfx')) &&
       AppStorage.get('installSystemCred') === true) {
       this.optType = CMModelOptType.CM_MODEL_OPT_SYSTEM_CRED;
     } else {
