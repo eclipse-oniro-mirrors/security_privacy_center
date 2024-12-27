@@ -1,10 +1,23 @@
+# 隐私部件
+
+- [简介](#简介)
+- [目录](#目录)
+- [编译构建](#编译构建)
+- [说明](#说明)
+- [相关仓](#相关仓)
+
 ## 简介
 
-OpenHarmony上“设置”应用中的“隐私”菜单中，需要按需展示其它领域的相关菜单入口，并且用户点击之后需提供跳转拉起对应的业务功能处理页面的能力，因此需提供接入机制，其它领域适配之后，可以实现正常的菜单展示功能。
+隐私是OpenHarmony上向用户提供位置总开关管理功能以及给一些隐私权限相关的应用提供入口的一个模块。
 
-​	安全隐私接入框架架构图如下所示：
+隐私页面位于“设置”应用中的“隐私”菜单中，主要包含如下两个部分：
 
-![image-20240315200205500](doc/image/20240318-193751.png)
+- 位置总开关管理页面：用户可以在这里管理设备的位置服务总开关。
+- 隐私权限相关接入应用入口列表：展示一个菜单列表，用于给一些应用提供入口。应用按照使用说明中的指导进行配置，隐私就会在页面上展示出一个入口，用户可以从这里点击进入。
+
+隐私架构图如下所示：
+
+![spc-structure](doc/image/spc-structure.png)
 
 ## 目录
 
@@ -25,12 +38,28 @@ OpenHarmony上“设置”应用中的“隐私”菜单中，需要按需展示
                 └── resources					# 资源文件目录
 ```
 
-## 使用说明  
+## 编译构建
 
-如果需要编译安全隐私接入框架的代码，需要使用新版本的[full SDK](https://gitee.com/openharmony/docs/blob/master/zh-cn/application-dev/faqs/full-sdk-compile-guide.md)。
+1. 搭建鸿蒙开发环境
+   - [DevEco Studio官网]([DevEco Studio-HarmonyOS Next Beta版-华为开发者联盟](https://developer.huawei.com/consumer/cn/deveco-studio/))下载新版IDE，并按照IDE指引完成`File-->Settings-->OpenHarmony SDK`的配置。
+   - 按照[ 如何替换full-SDK](https://gitee.com/openharmony/docs/blob/master/zh-cn/application-dev/faqs/full-sdk-switch-guide.md)文档完成full-SDK的替换，请使用使用新版本的[full SDK](https://gitee.com/openharmony/docs/blob/master/zh-cn/application-dev/faqs/full-sdk-compile-guide.md)。
+2. 拉取代码并编译
+   - 使用`git clone https://gitee.com/openharmony/security_privacy_center.git`命令拉取代码。
+   - 使用DevEco Studio打开项目，按照提示Sync项目，之后在`Build-->Build Haps/App(s)-->Build Hap(s)`开启项目编译。
 
-如果仅需接入安全隐私中心，则使用发布版本的public SDK即可。应用接入指导参考：[应用接入指导说明](https://gitee.com/openharmony/docs/blob/master/zh-cn/application-dev/security/SecurityPrivacyCenter/auto-menu-guidelines.md)。
+## 说明  
+
+### 接口说明
+
+不涉及
+
+### 使用说明
+
+如果应用仅需接入安全隐私中心，则使用发布版本的public SDK即可；应用接入方法可以参考：[应用接入指导说明](https://gitee.com/openharmony/docs/blob/master/zh-cn/application-dev/security/SecurityPrivacyCenter/auto-menu-guidelines.md)。
 
 ## 相关仓
 
-**security_privacy_center**
+**[security_privacy_center](https://gitee.com/openharmony/security_privacy_center)**
+
+**[security_certificate_manager](https://gitee.com/openharmony/security_certificate_manager)**
+
