@@ -39,7 +39,7 @@
 
 ## 编译构建
 
-1. 搭建鸿蒙开发环境
+1. 搭建开发环境
    - [DevEco Studio官网](https://developer.huawei.com/consumer/cn/deveco-studio/)下载新版IDE，并按照IDE指引完成`File-->Settings-->OpenHarmony SDK`的配置。
    - 按照[ 如何替换full-SDK](https://gitee.com/openharmony/docs/blob/master/zh-cn/application-dev/faqs/full-sdk-switch-guide.md)文档完成full-SDK的替换，请使用新版本的[full SDK](https://gitee.com/openharmony/docs/blob/master/zh-cn/application-dev/faqs/full-sdk-compile-guide.md)。
 2. 拉取代码并编译
