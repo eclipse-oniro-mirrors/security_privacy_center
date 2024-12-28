@@ -8,7 +8,7 @@
 
 ## 简介
 
-隐私是OpenHarmony上向用户提供位置总开关管理功能以及给一些隐私权限相关的应用提供入口的一个模块。
+隐私是OpenHarmony上向用户提供位置总开关管理功能以及给一些隐私权限相关的应用提供入口的一个部件。
 
 隐私页面位于“设置”应用中的“隐私”菜单中，主要包含如下两个部分：
 
@@ -24,7 +24,6 @@
 ```
 /security_privacy_center/
 ├── AppScope									# 应用配置
-├── CertManager							        # 证书管理应用
 └── entry
         └── src
             └── main
@@ -41,8 +40,8 @@
 ## 编译构建
 
 1. 搭建鸿蒙开发环境
-   - [DevEco Studio官网]([DevEco Studio-HarmonyOS Next Beta版-华为开发者联盟](https://developer.huawei.com/consumer/cn/deveco-studio/))下载新版IDE，并按照IDE指引完成`File-->Settings-->OpenHarmony SDK`的配置。
-   - 按照[ 如何替换full-SDK](https://gitee.com/openharmony/docs/blob/master/zh-cn/application-dev/faqs/full-sdk-switch-guide.md)文档完成full-SDK的替换，请使用使用新版本的[full SDK](https://gitee.com/openharmony/docs/blob/master/zh-cn/application-dev/faqs/full-sdk-compile-guide.md)。
+   - [DevEco Studio官网](https://developer.huawei.com/consumer/cn/deveco-studio/)下载新版IDE，并按照IDE指引完成`File-->Settings-->OpenHarmony SDK`的配置。
+   - 按照[ 如何替换full-SDK](https://gitee.com/openharmony/docs/blob/master/zh-cn/application-dev/faqs/full-sdk-switch-guide.md)文档完成full-SDK的替换，请使用新版本的[full SDK](https://gitee.com/openharmony/docs/blob/master/zh-cn/application-dev/faqs/full-sdk-compile-guide.md)。
 2. 拉取代码并编译
    - 使用`git clone https://gitee.com/openharmony/security_privacy_center.git`命令拉取代码。
    - 使用DevEco Studio打开项目，按照提示Sync项目，之后在`Build-->Build Haps/App(s)-->Build Hap(s)`开启项目编译。
