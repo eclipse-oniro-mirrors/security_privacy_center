@@ -59,6 +59,7 @@
                 <filteritem type="filepath" name="entry/src/main/resources/base/media/icon.png" desc="self developed image"/>
                 <filteritem type="filepath" name="CertManager/doc/image/image-20220727141455437.png" desc="self developed image"/>
                 <filteritem type="filepath" name="doc/image/20240318-193751.png" desc="self developed image"/>
+                <filteritem type="filepath" name="doc/image/spc-structure.png" desc="self developed image"/>
             </filefilter>
             <filefilter name="copyrightPolicyFilter" desc="Filters for copyright header policies">
             </filefilter>
