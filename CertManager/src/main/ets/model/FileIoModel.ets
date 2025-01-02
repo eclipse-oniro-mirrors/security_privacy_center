@@ -49,7 +49,8 @@ export class FileIoModel {
       console.info('CertManager FA getMediaFileSuffix start');
       let uri = new fileUri.FileUri(mediaUri);
       let suffix = uri.name.substring(uri.name.lastIndexOf('.') + 1);
-      callback(suffix);
+      let suffixLowerCase = suffix.toLowerCase();
+      callback(suffixLowerCase);
     } catch (err) {
       let e: BusinessError = err as BusinessError;
       console.error('CertManager FA getMediaFileSuffix failed with err, message: ' + e.message + ', code: ' + e.code);
