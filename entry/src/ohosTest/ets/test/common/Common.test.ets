@@ -72,8 +72,8 @@ export default function BundleInfoBeanTest() {
         .getAppContext(), $r('app.media.ic_back'))
       ResourceUtil.getBundleResourceManager('', abilityDelegatorRegistry.getAbilityDelegator().getAppContext())
       expect(ResourceUtil.getBundleResourceManager('', null)).assertNull()
-      ResourceUtil.getBundleResourceManager('com.ohos.privacycenter', abilityDelegatorRegistry.getAbilityDelegator()
-        .getAppContext())
+      ResourceUtil.getBundleResourceManager('com.ohos.security.privacycenter',
+        abilityDelegatorRegistry.getAbilityDelegator().getAppContext())
     })
     it('StringUtilTest', 0, () => {
       StringUtil.isEmpty('')
@@ -90,7 +90,7 @@ export default function BundleInfoBeanTest() {
     it('ConstantsTest', 0, () => {
       expect(Constants.TITLE_BAR_HEIGHT).assertEqual(56)
       expect(DataShareConstants.STORE_CONFIG.name).assertEqual('access.db')
-      expect(HiSysEventConstant.BUNDLE_NAME).assertEqual('com.ohos.privacycenter')
+      expect(HiSysEventConstant.BUNDLE_NAME).assertEqual('com.ohos.security.privacycenter')
       expect(RouterConstant.INDEX_URL).assertEqual('pages/Index')
     })
 
