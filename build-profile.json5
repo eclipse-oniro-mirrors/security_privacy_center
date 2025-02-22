@@ -60,18 +60,6 @@
           ]
         }
       ]
-    },
-    {
-      "name": "CertManager",
-      "srcPath": "./CertManager",
-      "targets": [
-        {
-          "name": "default",
-          "applyToProducts": [
-            "default"
-          ]
-        }
-      ]
     }
   ]
 }
