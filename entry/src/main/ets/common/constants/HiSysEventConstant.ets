@@ -14,7 +14,7 @@
  */
 
 export default class HiSysEventConstant {
-  public static BUNDLE_NAME = 'com.ohos.certmanager';
+  public static BUNDLE_NAME = 'com.ohos.security.privacycenter';
 
   public static EVENT_DOMAIN = 'PRIVACY_UE';
 
