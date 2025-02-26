@@ -59,7 +59,11 @@
         "name": "ohos.permission.GET_BUNDLE_INFO"
       },
       {
-        "name": "ohos.permission.GET_INSTALLED_BUNDLE_LIST"
+        "name": "ohos.permission.GET_INSTALLED_BUNDLE_LIST",
+        "reason": "$string:EntryAbility_label",
+        "usedScene": {
+          "abilities": [],
+        }
       },
       {
         "name": "ohos.permission.ACCESS_SECURITY_PRIVACY_CENTER"
