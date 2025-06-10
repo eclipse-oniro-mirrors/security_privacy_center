@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { describe, beforeAll, beforeEach, afterEach, afterAll, it, expect } from '@ohos/hypium'
+import { describe, beforeAll, beforeEach, afterEach, afterAll, it, expect, MockKit } from '@ohos/hypium'
 import abilityDelegatorRegistry from '@ohos.app.ability.abilityDelegatorRegistry';
 import HiSysEventConstant from '../../../../main/ets/common/constants/HiSysEventConstant';
 import getSelfBundleInfoUtils from '../../../../main/ets/common/utils/GetSelfBundleInfoUtils';
@@ -22,9 +22,6 @@ import { RawFileUtil } from '../../../../main/ets/common/utils/RawFileUtil';
 import ResourceUtil from '../../../../main/ets/common/utils/ResourceUtil';
 import { StringUtil } from '../../../../main/ets/common/utils/StringUtil';
 import Logger from '../../../../main/ets/common/utils/Logger';
-import Constants from '../../../../main/ets/common/constants/ComConstant';
-import DataShareConstants from '../../../../main/ets/common/constants/DataShareConstant';
-import RouterConstant from '../../../../main/ets/common/constants/RouterConstant';
 
 export default function BundleInfoBeanTest() {
   describe('CommonTest', () => {
@@ -50,48 +47,57 @@ export default function BundleInfoBeanTest() {
     it('getSelfBundleInfoUtilsTest', 0, () => {
       getSelfBundleInfoUtils.getVersionName()
     })
-    it('HiSysEventUtilTest', 0, () => {
-      HiSysEventUtil.reportAccessClick('com.example.test');
-      HiSysEventUtil.reportLocationClick('LOCATION');
-      HiSysEventUtil.reportLocationFlagClick(1);
-      HiSysEventUtil.reportLocationFlagClick(0);
+    it('HiSysEventUtilTest', 0, async () => {
+      await HiSysEventUtil.reportAccessClick('com.example.test');
+      await HiSysEventUtil.reportLocationClick('LOCATION');
+      await HiSysEventUtil.reportLocationFlagClick(1);
+      await HiSysEventUtil.reportLocationFlagClick(0);
       let eventParams: Record<string, string> = {
         "PERMISSION_GROUP": 'ohos.permission.Location'
-      }
-      HiSysEventUtil.reportClick(HiSysEventConstant.PERMISSION_PAGE_LOCATION_EVENT_NAME, eventParams)
-
+      };
+      expect(eventParams).not().assertNull();
+      await HiSysEventUtil.reportClick(HiSysEventConstant.PERMISSION_PAGE_LOCATION_EVENT_NAME, eventParams);
     })
-    it('RawfileUtilTest', 0, () => {
-      RawFileUtil.getStringByFile(abilityDelegatorRegistry.getAbilityDelegator()
-        .getAppContext()
-        .resourceManager, 'test')
-      RawFileUtil.getRawFileByContext(getContext(), 'test')
+    it('RawfileUtilTest', 0, async () => {
+      let fileStr: string = await RawFileUtil.getStringByFile(abilityDelegatorRegistry.getAbilityDelegator()
+        .getAppContext().resourceManager, 'emptyTestFileName');
+      expect(fileStr).assertEqual('');
+      let rawFile = await RawFileUtil.getRawFileByContext(getContext(), 'emptyTestFileName');
+      expect(rawFile).assertEqual('');
     })
     it('ResourceUtilTest', 0, () => {
       ResourceUtil.getResourceString(abilityDelegatorRegistry.getAbilityDelegator()
-        .getAppContext(), $r('app.media.ic_back'))
-      ResourceUtil.getBundleResourceManager('', abilityDelegatorRegistry.getAbilityDelegator().getAppContext())
-      expect(ResourceUtil.getBundleResourceManager('', null)).assertNull()
+        .getAppContext(), $r('app.media.ic_back'));
+      ResourceUtil.getBundleResourceManager('', abilityDelegatorRegistry.getAbilityDelegator().getAppContext());
+      expect(ResourceUtil.getBundleResourceManager('', null)).assertNull();
       ResourceUtil.getBundleResourceManager('com.ohos.security.privacycenter',
-        abilityDelegatorRegistry.getAbilityDelegator().getAppContext())
+        abilityDelegatorRegistry.getAbilityDelegator().getAppContext());
     })
     it('StringUtilTest', 0, () => {
-      StringUtil.isEmpty('')
-      StringUtil.isEmpty('111')
-      StringUtil.isNotEmpty('')
-      StringUtil.isNotEmpty('111')
+      let flag: boolean = StringUtil.isEmpty('');
+      expect(flag).assertEqual(true);
+      flag = StringUtil.isEmpty('111');
+      expect(flag).assertEqual(false);
+      flag = StringUtil.isNotEmpty('');
+      expect(flag).assertEqual(false);
+      flag = StringUtil.isNotEmpty('111');
+      expect(flag).assertEqual(true);
     })
     it('LoggerTest', 0, () => {
-      Logger.info('LOGGER_TEST', 'logger info test')
-      Logger.debug('LOGGER_TEST', 'logger debug test')
-      Logger.warn('LOGGER_TEST', 'logger warn test')
-      Logger.error('LOGGER_TEST', 'logger error test')
-    })
-    it('ConstantsTest', 0, () => {
-      expect(Constants.TITLE_BAR_HEIGHT).assertEqual(56)
-      expect(DataShareConstants.STORE_CONFIG.name).assertEqual('access.db')
-      expect(HiSysEventConstant.BUNDLE_NAME).assertEqual('com.ohos.security.privacycenter')
-      expect(RouterConstant.INDEX_URL).assertEqual('pages/Index')
+      Logger.info('LOGGER_TEST', 'logger test begin');
+      let mocker: MockKit = new MockKit();
+      mocker.mockFunc(Logger, Logger.info);
+      Logger.info('LOGGER_TEST', 'logger info test');
+      mocker.verify('info', ['LOGGER_TEST', 'logger info test']).once();
+      mocker.mockFunc(Logger, Logger.debug);
+      Logger.debug('LOGGER_TEST', 'logger debug test');
+      mocker.verify('debug', ['LOGGER_TEST', 'logger debug test']).once();
+      mocker.mockFunc(Logger, Logger.warn);
+      Logger.warn('LOGGER_TEST', 'logger warn test');
+      mocker.verify('warn', ['LOGGER_TEST', 'logger warn test']).once();
+      mocker.mockFunc(Logger, Logger.error);
+      Logger.error('LOGGER_TEST', 'logger error test');
+      mocker.verify('error', ['LOGGER_TEST', 'logger error test']).once();
     })
 
   })

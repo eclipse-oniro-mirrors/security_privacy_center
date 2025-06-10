@@ -42,30 +42,30 @@ export default function LocationServiceTest() {
     it('LocationServiceTest_startService_01', 0, () => {
       LocationService.mIsStart = false;
       LocationService.startService()
-      expect(0).assertEqual(0)
+      expect(LocationService).not().assertNull();
     })
     it('LocationServiceTest_startService_02', 0, () => {
       LocationService.mIsStart = true;
       LocationService.startService()
-      expect(0).assertEqual(0)
+      expect(LocationService).not().assertNull();
     })
     it('LocationServiceTest_registerListener', 0, () => {
       let listener: ListenerBean = new ListenerBean(() => {
       })
       LocationService.registerListener(listener)
-      expect(0).assertEqual(0)
+      expect(LocationService).not().assertNull();
     })
     it('LocationServiceTest_getServiceState', 0, async () => {
       LocationService.getServiceState()
-      expect(0).assertEqual(0)
+      expect(LocationService).not().assertNull();
     })
     it('LocationServiceTest_enableLocation', 0, () => {
       LocationService.enableLocation()
-      expect(0).assertEqual(0)
+      expect(LocationService).not().assertNull();
     })
     it('LocationServiceTest_disableLocation', 0, () => {
       LocationService.disableLocation()
-      expect(0).assertEqual(0)
+      expect(LocationService).not().assertNull();
     })
 
   })

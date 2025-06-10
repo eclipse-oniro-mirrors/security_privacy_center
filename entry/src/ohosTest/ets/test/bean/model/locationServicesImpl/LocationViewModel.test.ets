@@ -41,32 +41,31 @@ export default function LocationViewModelTest() {
     it('LocationViewModelTest_initViewModel_01', 0, () => {
       LocationViewModel.mIsStart = false;
       LocationViewModel.initViewModel()
-      expect(0).assertEqual(0)
+      expect(LocationViewModel).not().assertNull();
     })
     it('LocationViewModelTest_initViewModel_02', 0, () => {
       LocationViewModel.mIsStart = true;
       LocationViewModel.initViewModel()
-      expect(0).assertEqual(0)
+      expect(LocationViewModel).not().assertNull();
     })
     it('LocationViewModelTest_updateServiceState_01', 0, () => {
       let state = false;
       LocationViewModel.updateServiceState(state)
-      expect(0).assertEqual(0)
+      expect(LocationViewModel).not().assertNull();
     })
     it('LocationViewModelTest_updateServiceState_02', 0, () => {
       let state = true;
       LocationViewModel.updateServiceState(state)
-      expect(0).assertEqual(0)
+      expect(LocationViewModel).not().assertNull();
     })
     it('LocationViewModelTest_enableLocation', 0, () => {
       LocationViewModel.enableLocation()
-      expect(0).assertEqual(0)
+      expect(LocationViewModel).not().assertNull();
     })
     it('LocationViewModelTest_disableLocation', 0, () => {
       LocationViewModel.disableLocation()
-      expect(0).assertEqual(0)
+      expect(LocationViewModel).not().assertNull();
     })
-
 
   })
 }
