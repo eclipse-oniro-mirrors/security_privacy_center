@@ -42,7 +42,7 @@ struct Index {
   @State isSplitMode: boolean = false;
   scroller: Scroller = new Scroller();
   @State windowWidth: number = 0;
-
+  @State statusBarHeight: number = 0
   @Styles
   PressedStyles() {
     .backgroundColor($r('sys.color.ohos_id_color_click_effect'))
@@ -58,7 +58,9 @@ struct Index {
     autoMenuViewModel.processIntent(new AutoMenuRefreshIntent(this.context));
     this.getBundleInfo();
   }
-
+  aboutToAppear(): void {
+    this.statusBarHeight = AppStorage.get('STATUS_BAR_HEIGHT') as number
+  }
   //  Get all package information
   getBundleInfo() {
     BundleInfoModel.getAllBundleInfoByFunctionAccess()
@@ -170,6 +172,6 @@ struct Index {
     .height(Constants.WIDTH_HEIGHT_FULL_SCREEN)
     .width(Constants.WIDTH_HEIGHT_FULL_SCREEN)
     .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
-
+    .padding({top:this.statusBarHeight })
   }
 }
