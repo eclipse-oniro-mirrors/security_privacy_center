@@ -19,6 +19,8 @@
 export default class RouterConstant {
   //   home page
   public static INDEX_URL = 'pages/Index'
+  // 定位服务页（供外部拉起时跳转）
+  public static LOCATION_PAGE_URL = 'pages/locationServices'
 }
 
 /**
