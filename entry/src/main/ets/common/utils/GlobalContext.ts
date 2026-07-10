@@ -13,27 +13,27 @@
  * limitations under the License.
  */
 
-/**
- * Routing address configuration
- */
-export default class RouterConstant {
-  //   home page
-  public static INDEX_URL = 'pages/Index'
-  // 定位服务页（供外部拉起时跳转）
-  public static LOCATION_PAGE_URL = 'pages/locationServices'
-}
+import UIExtensionContentSession from '@ohos.app.ability.UIExtensionContentSession';
+export class GlobalContext {
+  private constructor() {
+  };
 
-/**
- * The page entry method needs to be consistent with the settings
- * When setting the incoming backMode to 1, click return to jump to the pull-up page
- */
-export enum PageRouteMode {
-  /**
-   * Internal jump
-   */
-  INSIDE,
-  /**
-   * External jump
-   */
-  OUTSIDE
+  private static instance: GlobalContext;
+  private session: UIExtensionContentSession;
+
+  public static getContext(): GlobalContext {
+    if (!GlobalContext.instance) {
+      GlobalContext.instance = new GlobalContext();
+    }
+    return GlobalContext.instance;
+  }
+
+
+  getSession(): UIExtensionContentSession {
+    return this.session;
+  }
+
+  setSession(session: UIExtensionContentSession): void {
+    this.session = session;
+  }
 }
