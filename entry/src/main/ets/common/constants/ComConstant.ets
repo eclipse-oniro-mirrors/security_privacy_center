@@ -19,9 +19,9 @@ export default class Constants {
 
   public static TITLE_BAR_MIN_HEIGHT = 56;
 
-  public static TITLE_BAR_IMAGE_HEIGHT = 24;
+  public static TITLE_BAR_IMAGE_HEIGHT = 32;
 
-  public static TITLE_BAR_IMAGE_WIDTH = 24;
+  public static TITLE_BAR_IMAGE_WIDTH = 32;
 
   public static TITLE_BAR_MARGIN_RIGHT = 4;
 
@@ -34,7 +34,7 @@ export default class Constants {
 
   public static DEFAULT_MARGIN_END = 12;
 
-  public static CLICK_SHADOW_LENGTH = 48;
+  public static CLICK_SHADOW_LENGTH = 34;
 
   public static CONSTRAIN_MIN_HEIGHT = 48;
 

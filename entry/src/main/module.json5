@@ -48,6 +48,15 @@
         ]
       }
     ],
+    "extensionAbilities": [{
+      "name": "EntryUIExtensionAbility",  // 建议明确命名
+      "type":  'sys/commonUI',  // 必须声明type为ui
+      "srcEntrance": "./ets/entryability/UIExtSettingAbility.ets",  // 入口文件路径
+      "exported": true,  // 允许外部调用
+      "permissions": [
+        "ohos.permission.ACCESS_SECURITY_PRIVACY_CENTER"
+      ]
+    }],
     "requestPermissions": [
       {
         "name": "ohos.permission.MANAGE_SECURE_SETTINGS"
