@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2026 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -19,9 +19,9 @@ export default class Constants {
 
   public static TITLE_BAR_MIN_HEIGHT = 56;
 
-  public static TITLE_BAR_IMAGE_HEIGHT = 24;
+  public static TITLE_BAR_IMAGE_HEIGHT = 32;
 
-  public static TITLE_BAR_IMAGE_WIDTH = 24;
+  public static TITLE_BAR_IMAGE_WIDTH = 32;
 
   public static TITLE_BAR_MARGIN_RIGHT = 4;
 
@@ -34,7 +34,7 @@ export default class Constants {
 
   public static DEFAULT_MARGIN_END = 12;
 
-  public static CLICK_SHADOW_LENGTH = 48;
+  public static CLICK_SHADOW_LENGTH = 34;
 
   public static CONSTRAIN_MIN_HEIGHT = 48;
 

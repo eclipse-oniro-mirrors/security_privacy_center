@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2026 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -19,6 +19,8 @@
 export default class RouterConstant {
   //   home page
   public static INDEX_URL = 'pages/Index'
+  // 定位服务页（供外部拉起时跳转）
+  public static LOCATION_PAGE_URL = 'pages/locationServices'
 }
 
 /**

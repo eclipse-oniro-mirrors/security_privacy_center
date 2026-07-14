@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2026 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -27,6 +27,7 @@ const TAG: string = 'LocationServicesPage'
 @Component
 struct LocationServices {
   @StorageLink('LocationServiceStatus') locationServiceStatus: boolean = false;
+  @State statusBarHeight: number = 0
 
   build() {
     Column() {
@@ -41,7 +42,6 @@ struct LocationServices {
               alignItems: ItemAlign.Center
             }) {
               Text($r('app.string.positionInformation'))
-                .fontColor($r('app.color.font_color_182431'))
                 .fontStyle(FontStyle.Normal)
                 .fontSize($r('app.float.location_font_size'))
                 .margin({ left: $r('app.float.distance_12') })
@@ -64,8 +64,8 @@ struct LocationServices {
             }
             .margin({ top: $r('app.float.padding_or_margin_m') })
             .height($r('app.float.wh_value_56'))
-            .backgroundColor($r('app.color.white_bg_color'))
             .borderRadius($r('sys.float.ohos_id_corner_radius_default_l'))
+            .backgroundColor($r('sys.color.ohos_id_color_list_card_bg'))
           }
         }
       }
@@ -74,11 +74,13 @@ struct LocationServices {
     .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
     .width('100%')
     .height('100%')
+    .padding({top:this.statusBarHeight })
   }
 
   aboutToAppear(): void {
     Logger.info(TAG, 'location service about to appear');
     ViewModel.initViewModel();
+    this.statusBarHeight = AppStorage.get('STATUS_BAR_HEIGHT') as number
   }
 
   aboutToDisappear(): void {
