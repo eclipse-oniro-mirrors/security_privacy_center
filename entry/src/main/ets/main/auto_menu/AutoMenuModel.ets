@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2026 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -105,18 +105,6 @@ export class AutoMenuModel extends BaseModel {
   }
 
   handleMenuClick(menuInfo: MenuInfo) {
-    // Accessing the framework through UIAbility
-    if (menuInfo.dstAbilityMode === DST_UIABILITY_MODE) {
-      let context = getContext() as common.UIAbilityContext;
-      context.startAbility({
-        bundleName: menuInfo.dstBundleName,
-        abilityName: menuInfo.dstAbilityName
-      }).then((data) => {
-        Logger.info(TAG, `${menuInfo.dstBundleName} start successful.data: ${JSON.stringify(data)}`)
-      }).catch((err: BusinessError) => {
-        Logger.error(TAG, `${menuInfo.dstBundleName} start failed. Cause: ${JSON.stringify(err)}`)
-      })
-    }
     //   jump page
     if (menuInfo.dstAbilityMode === DST_PAGE_MODE) {
       router.pushUrl({
@@ -129,7 +117,8 @@ export class AutoMenuModel extends BaseModel {
     }
     //   Jump UIExtensionAbility
     HiSysEventUtil.reportAccessClick(menuInfo.dstBundleName)
-    if (menuInfo.dstAbilityMode === DST_ABILITY_MODE) {
+    // if (menuInfo.dstAbilityMode === DST_ABILITY_MODE) {
+    Logger.info(TAG,'menuInfo'+JSON.stringify(menuInfo))
       router.pushUrl({
         url: 'pages/UiExtensionPage',
         params: {
@@ -141,7 +130,7 @@ export class AutoMenuModel extends BaseModel {
       }).catch((err: BusinessError) => {
         Logger.error(TAG, `Failed to jump to the second page.Code is ${err.code},message is ${err.message}`);
       })
-    }
+    // }
   }
 
   private async _refreshDb(context: Context, menuInfoList: MenuInfo[]) {

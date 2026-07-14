@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024-2024 Huawei Device Co., Ltd.
+ * Copyright (c) 2024-2026 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,6 +16,7 @@
 import router from '@ohos.router';
 import common from '@ohos.app.ability.common';
 import Constants from '../constants/ComConstant';
+import { GlobalContext } from '../utils/GlobalContext';
 
 @Component
 export default struct TitleBar {
@@ -24,6 +25,18 @@ export default struct TitleBar {
   @State isBackOnTouch: boolean = false;
   @Prop isSplitMode: boolean = false;
   onBackClick?: () => void;
+  /**
+   * 外界宿主设置执行Pop动作
+   */
+  onBackInSettings(): void {
+  console.info('TitleBar', 'onBackInSettings');
+  const intent: Record<string, Object> = { 'action': 'pop' };
+  try {
+    GlobalContext.getContext().getSession()?.sendData(intent);
+  } catch (e) {
+    console.error('TitleBar', `onBack catch err. code:${e?.code} message:${e?.message}`);
+  }
+}
 
   build() {
     //   In column mode, the homepage does not display a return button
@@ -39,12 +52,12 @@ export default struct TitleBar {
         }
         .width(Constants.CLICK_SHADOW_LENGTH)
         .height(Constants.CLICK_SHADOW_LENGTH)
-        .borderRadius($r('sys.float.ohos_id_corner_radius_clicked'))
+        .borderRadius(Constants.CLICK_SHADOW_LENGTH/2)
         .flexShrink(0)
         .alignItems(VerticalAlign.Center)
         .justifyContent(FlexAlign.Center)
         .visibility(this.isSplitMode ? Visibility.None : Visibility.Visible)
-        .backgroundColor(this.isBackOnTouch ? $r('sys.color.ohos_id_color_click_effect') : '')
+        .backgroundColor(this.isBackOnTouch ? $r('sys.color.ohos_id_color_click_effect') : "#d9e2e2e2")
         .hoverEffect(HoverEffect.Highlight)
         .onTouch(event => {
           if (event === undefined) {
@@ -59,7 +72,7 @@ export default struct TitleBar {
         })
         .onClick(() => {
           let length = router.getLength();
-          Number(length) === 1 ? this.context.terminateSelf() : router.back();
+          Number(length) === 1 ? this.onBackInSettings(): router.back();
         })
 
         Text(JSON.parse(this.title))
