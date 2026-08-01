@@ -64,10 +64,6 @@
       "value": "音乐与音频"
     },
     {
-      "name": "operation_group_health_and_fitness",
-      "value": "健身运动"
-    },
-    {
       "name": "operation_group_calendar",
       "value": "日历"
     },
@@ -179,14 +175,6 @@
       "value": "查看 OAID"
     },
     {
-      "name": "operation_group_application_tracing_desc",
-      "value": "开放匿名广告标识符（Open Anonymous Device Identifier,OAID）是一种非永久性设备标识符。使用OAID保护用户个人数据隐私安全的前提下提供给App开发者用于设备识别、跨设备跟踪、提供个性化广告或内容推荐。"
-    },
-    {
-      "name": "privacy_introduction",
-      "value": "华为讲隐私视作每个人的基本权利，所有华为产品力求使用最少得用户数据，尽可能采用本地处理，富裕用户对信息的知情权和控制权。"
-    },
-    {
       "name": "use_privacy",
       "value": "了解我们如何使用您的数据"
     },
@@ -195,40 +183,16 @@
       "value": "我们隐私保护的主张和承诺"
     },
     {
-      "name": "privacy_protect_proposition_uri",
-      "value": "https://consumer.huawei.com/cn/privacy"
-    },
-    {
-      "name": "privacy_item2",
-      "value": "华为消费者业务隐私声明"
-    },
-    {
-      "name": "consumer_business_privacy_statement_uri",
-      "value": "https://consumer.huawei.com/cn/privacy/privacy-policy"
-    },
-    {
       "name": "privacy_item3",
       "value": "Cookies 政策"
-    },
-    {
-      "name": "cookies_policy_uri",
-      "value": "https://consumer.huawei.com/cn/legal/cookie-pilicy"
     },
     {
       "name": "privacy_item4",
       "value": "我们获得的隐私安全认证"
     },
     {
-      "name": "privacy_and_security_certification_uri",
-      "value": "https://consumer.huawei.com/cn/privacy/certification"
-    },
-    {
       "name": "more_privacy",
       "value": "了解更多隐私保护信息"
-    },
-    {
-      "name": "more_privacy_protection_information_uri",
-      "value": "https://privacy.consumer.huawei.com/tool?lang=zh-cn&themeName=blue"
     },
     {
       "name": "app_state_foreground",
@@ -423,10 +387,6 @@
       "value": "音乐与音频权限"
     },
     {
-      "name": "health_and_fitness_portrait_permission_title",
-      "value": "健身运动权限"
-    },
-    {
       "name": "calendar_portrait_permission_title",
       "value": "日历权限"
     },
@@ -465,10 +425,6 @@
     {
       "name": "music_and_audio_portrait_permission_subtitle",
       "value": "音乐与音频访问权限"
-    },
-    {
-      "name": "health_and_fitness_portrait_permission_subtitle",
-      "value": "健身运动权限"
     },
     {
       "name": "calendar_portrait_permission_subtitle",
