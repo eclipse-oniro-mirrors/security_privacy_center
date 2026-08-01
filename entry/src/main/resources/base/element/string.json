@@ -64,10 +64,6 @@
       "value": "Music & audio"
     },
     {
-      "name": "operation_group_health_and_fitness",
-      "value": "Physical activity"
-    },
-    {
       "name": "operation_group_calendar",
       "value": "Calendar"
     },
@@ -180,14 +176,6 @@
       "value": "View OAID"
     },
     {
-      "name": "operation_group_application_tracing_desc",
-      "value": "Your Open Anonymous Device Identifier (OAID) is a non-permanent device identifier that allows app developers to track your activity and serve personalized content,without revealing your personal data"
-    },
-    {
-      "name": "privacy_introduction",
-      "value": "Huawei values your privacy. our products are designed to use and upload as little user data as possible - and only when necessary.\n\nwe respect both your right to know and your right to control how your date is used."
-    },
-    {
       "name": "use_privacy",
       "value": "How we use your data"
     },
@@ -196,40 +184,16 @@
       "value": "Our privacy commitment"
     },
     {
-      "name": "privacy_protect_proposition_uri",
-      "value": "https://consumer.huawei.com/cn/privacy"
-    },
-    {
-      "name": "privacy_item2",
-      "value": "Huawei Consumer Business Privacy Statement"
-    },
-    {
-      "name": "consumer_business_privacy_statement_uri",
-      "value": "https://consumer.huawei.com/cn/privacy/privacy-policy/"
-    },
-    {
       "name": "privacy_item3",
       "value": "Use of cookies"
-    },
-    {
-      "name": "cookies_policy_uri",
-      "value": "https://consumer.huawei.com/cn/legal/cookie-policy"
     },
     {
       "name": "privacy_item4",
       "value": "Privacy & security certifications"
     },
     {
-      "name": "privacy_and_security_certification_uri",
-      "value": "https://consumer.huawei.com/cn/privacy/certification"
-    },
-    {
       "name": "more_privacy",
       "value": "More about privacy protection"
-    },
-    {
-      "name": "more_privacy_protection_information_uri",
-      "value": "https://privacy.consumer.huawei.com/tool?lang-cn&themeName=blue"
     },
     {
       "name": "app_state_foreground",
@@ -424,10 +388,6 @@
       "value": "Music & audio Permission"
     },
     {
-      "name": "health_and_fitness_portrait_permission_title",
-      "value": "Physical activity permission"
-    },
-    {
       "name": "calendar_portrait_permission_title",
       "value": "Calendar Permission"
     },
@@ -466,10 +426,6 @@
     {
       "name": "music_and_audio_portrait_permission_subtitle",
       "value": "Music & audio access for this app"
-    },
-    {
-      "name": "health_and_fitness_portrait_permission_subtitle",
-      "value": "Physical activity access for this app"
     },
     {
       "name": "calendar_portrait_permission_subtitle",
