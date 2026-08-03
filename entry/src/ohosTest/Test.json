@@ -3,7 +3,7 @@
   "driver": {
     "type": "OHJSUnitTest",
     "test-timeout": "300000",
-    "bundle-name": "com.huawei.hmos.security.privacycenter",
+    "bundle-name": "com.ohos.security.privacycenter",
     "module-name": "entry_test",
     "shell-timeout": 7000,
     "testcase-timeout": "esmodule",
