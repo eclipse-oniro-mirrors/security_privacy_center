@@ -14,11 +14,7 @@
  */
 
 import { describe, beforeAll, beforeEach, afterEach, afterAll, it, expect } from '@ohos/hypium'
-import bundleManager from '@ohos.bundle.bundleManager';
-import BundleInfoModel from '../../../main/ets/model/bundleInfo/BundleInfoModel';
-import { BundleInfoBean } from '../../../main/ets/common/bean/BundleInfoBean';
-import { MenuConfig } from '../../../main/ets/common/bean/MenuConfig';
-import AccessTypedef from '../../../main/ets/common/bean/MenuInfo';
+import BundleInfoModel from '../../../main/ets/common/utils/BundleInfoModel';
 import Logger from '../../../main/ets/common/utils/Logger';
 import { AutoMenuViewModel } from '../../../main/ets/main/auto_menu/AutoMenuViewModel';
 import { AutoMenuInitIntent, AutoMenuRefreshIntent } from '../../../main/ets/main/auto_menu/AutoMenuIntent';
@@ -49,67 +45,11 @@ export default function ModelTest() {
       // This API supports only one parameter: clear action function.
     })
 
-    it('BundleInfoModelTest_01', 0, async () => {
-      let bundleName: string = 'com.ohos.security.privacycenter'
-      await bundleManager.getApplicationInfo(bundleName, bundleManager.ApplicationFlag.GET_APPLICATION_INFO_DEFAULT)
-        .then((data) => {
-          BundleInfoModel.getAllBundleLabelAndIcon([data]).then((value) => {
-            expect(value).not().assertNull()
-          })
-        })
-    })
-    it('BundleInfoModelTest_03', 0, async () => {
-      let bundleName: string = 'com.ohos.security.privacycenter'
-      await bundleManager.getApplicationInfo(bundleName, bundleManager.ApplicationFlag.GET_APPLICATION_INFO_DEFAULT)
-        .then((info) => {
-          let bundleInfo: BundleInfoBean = {
-            bundleName: info.name,
-            icon: '',
-            iconId: info.iconId,
-            label: '',
-            labelId: info.labelId,
-            permissionName: '',
-            permissionLabel: '',
-            zhTag: '',
-            indexTag: '',
-            language: '',
-            labelResource: info.labelResource,
-            iconResource: info.iconResource,
-            checkedState: '',
-            checkedStateLabel: ''
-          }
-          BundleInfoModel.updateAppLabelAndIcon(bundleInfo).then(() => {
-          })
-        })
-    })
     it('BundleInfoModelTest_04', 0, async () => {
       let bundleName: string = ''
       await BundleInfoModel.getAllBundleInfoByFunctionAccess().then(data => {
         expect(data).not().assertNull()
       })
-    })
-    it('BundleInfoModelTest_05', 0, async () => {
-      let bundleName: string = 'com.ohos.security.privacycenter'
-      await bundleManager.getApplicationInfo(bundleName, bundleManager.ApplicationFlag.GET_APPLICATION_INFO_DEFAULT)
-        .then((info) => {
-          let bundleInfo: BundleInfoBean = {
-            bundleName: info.name,
-            icon: '',
-            iconId: info.iconId,
-            label: '',
-            labelId: info.labelId,
-            permissionName: '',
-            permissionLabel: '',
-            zhTag: '',
-            indexTag: '',
-            language: '',
-            labelResource: info.labelResource,
-            iconResource: info.iconResource,
-            checkedState: '',
-            checkedStateLabel: ''
-          }
-          BundleInfoModel.addLocalTag(bundleInfo)
-        })
     })
     it('AutoMenuTest_01', 0, async () => {
       Logger.info(TAG, 'AutoMenuTest_01 is start')

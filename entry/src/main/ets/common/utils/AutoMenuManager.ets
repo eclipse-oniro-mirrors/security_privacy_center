@@ -24,7 +24,7 @@ import DefaultMenuConfig from '../bean/DefaultMenuConfig';
 import HashMap from '@ohos.util.HashMap';
 import common from '@ohos.app.ability.common';
 import bundleManager from '@ohos.bundle.bundleManager';
-import BundleInfoModel from '../../model/bundleInfo/BundleInfoModel';
+import BundleInfoModel from './BundleInfoModel';
 import abilityAccessCtrl, { Permissions } from '@ohos.abilityAccessCtrl';
 import resourceManager from '@ohos.resourceManager';
 import dataSharePredicates from '@ohos.data.dataSharePredicates';

@@ -15,7 +15,7 @@
 
 import Logger from '../common/utils/Logger';
 import common from '@ohos.app.ability.common';
-import BundleInfoModel from '../model/bundleInfo/BundleInfoModel';
+import BundleInfoModel from '../common/utils/BundleInfoModel';
 import bundleManager from '@ohos.bundle.bundleManager';
 import { StringUtil } from '../common/utils/StringUtil';
 import Constants from '../common/constants/ComConstant';
